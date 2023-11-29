@@ -11,3 +11,8 @@ export const setUI = (payload) => ({
   type: types.SET_UI,
   payload,
 });
+
+export const setUserDetails = (payload) => ({
+  type: types.SET_USER_DETAILS,
+  payload,
+});

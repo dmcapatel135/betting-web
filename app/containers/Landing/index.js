@@ -1,11 +1,13 @@
-import React, { Fragment, useEffect } from 'react';
-import i18next from 'i18next';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { Welcome } from 'Components';
 import { setNotif } from 'Actions';
+import Template from '../../components/Template/Template';
+import HeroSection from './HeroSection';
+import CoinSection from './CoinSection';
+import Resources from './Resources';
 
 function Landing(props) {
   const { t } = props;
@@ -17,13 +19,11 @@ function Landing(props) {
   }, []);
 
   return (
-    <Fragment>
-      <Helmet>
-        <html lang={i18next.language} dir={i18next.dir(i18next.language)} />
-      </Helmet>
-
-      <Welcome />
-    </Fragment>
+    <Template>
+      <HeroSection />
+      <CoinSection />
+      <Resources />
+    </Template>
   );
 }
 

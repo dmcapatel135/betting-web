@@ -87,7 +87,8 @@
   }
 }
 
-@layer utilities {}
+@layer utilities {
+}
 
 .react {
   position: absolute;
@@ -109,7 +110,7 @@
   right: 0;
   transform: translate(-15px, 15px);
   border-radius: 10px;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .notif-text-icon {
@@ -147,5 +148,18 @@
 
   100% {
     transform: translate(-15px, 15px) scale(1);
+  }
+}
+
+.running-div {
+  animation: marquee 50s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }

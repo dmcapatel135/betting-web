@@ -9,6 +9,10 @@ import rootSaga from './redux/rootSaga';
 import { NotifMessage } from 'Components';
 import { LocaleContext } from 'Contexts';
 import { Landing } from './containers/pageListAsync';
+import Login from './containers/Login/Login';
+import Register from './containers/Register/Register';
+import ForgotPassword from './containers/ForgotPassword/ForgotPassword';
+import Dashboard from './containers/Dashboard/Dashboard';
 
 const sagaMiddleware = createSagaMiddleware();
 const reducer = createReducer();
@@ -31,6 +35,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={LOCALE + '/'} element={<Landing />} />
+          <Route path={'/login'} element={<Login />} />
+          <Route path={'/register'} element={<Register />} />
+          <Route path={'/forgot_password'} element={<ForgotPassword />} />
+          <Route path={'/dashboard'} element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
       <NotifMessage />
