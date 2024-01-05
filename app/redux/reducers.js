@@ -1,11 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import ui from './modules/ui';
-import notification from './modules/notification';
+import user from './modules/user';
 
 export default function createReducer() {
   const rootReducer = combineReducers({
-    ui,
-    notification,
+    user,
   });
 
   return rootReducer;

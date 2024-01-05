@@ -5,11 +5,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, '../app'),
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../tempDist'),
     filename: '[name].[chunkhash].js',
     publicPath: '/',
   },
@@ -26,6 +27,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [{ from: 'public' }],
     }),
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
@@ -59,17 +61,17 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      API: path.resolve(__dirname, '../app/api/'),
-      Actions: path.resolve(__dirname, '../app/redux/actions/'),
-      Contexts: path.resolve(__dirname, '../app/contexts/'),
-      Components: path.resolve(__dirname, '../app/components/'),
-      Containers: path.resolve(__dirname, '../app/containers/'),
-      Utils: path.resolve(__dirname, '../app/utils/'),
-      Helpers: path.resolve(__dirname, '../app/helpers/'),
+      '@': path.resolve(__dirname, '../app/'),
+      '@api': path.resolve(__dirname, '../app/api/'),
+      '@actions': path.resolve(__dirname, '../app/redux/actions/'),
+      '@hooks': path.resolve(__dirname, '../app/hooks/'),
+      '@contexts': path.resolve(__dirname, '../app/contexts/'),
+      '@components': path.resolve(__dirname, '../app/components/'),
+      '@containers': path.resolve(__dirname, '../app/containers/'),
+      '@utils': path.resolve(__dirname, '../app/utils/'),
     },
   },
   devServer: {
-    open: true,
     static: path.resolve(__dirname, '../public'),
     compress: true,
     port: 3000,

@@ -1,48 +1,68 @@
-import './i18n';
-import React, { useContext } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import createReducer from './redux/reducers';
-import rootSaga from './redux/rootSaga';
-import { NotifMessage } from 'Components';
-import { LocaleContext } from 'Contexts';
-import { Landing } from './containers/pageListAsync';
-import Login from './containers/Login/Login';
-import Register from './containers/Register/Register';
-import ForgotPassword from './containers/ForgotPassword/ForgotPassword';
-import Dashboard from './containers/Dashboard/Dashboard';
+import React, { Fragment, useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
-const sagaMiddleware = createSagaMiddleware();
-const reducer = createReducer();
-const store = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
-  devTools:
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__(),
-});
-
-sagaMiddleware.run(rootSaga);
+import {
+  DashboardLayout,
+  OuterLayout,
+  Landing,
+  Dashboard,
+  NotFound,
+  Login,
+  JoinNow,
+  ForgotPassword,
+  MyBets,
+  MyTransactions,
+} from '@containers/pageListAsync';
 
 function App() {
-  const { LOCALE } = useContext(LocaleContext);
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // Scroll to top on url change
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    // Scroll to element on hash change
+    const element = document.getElementById(hash.replace('#', ''));
+    if (element) {
+      element.scrollIntoView(true);
+    }
+  }, [hash]);
 
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path={LOCALE + '/'} element={<Landing />} />
-          <Route path={'/login'} element={<Login />} />
-          <Route path={'/register'} element={<Register />} />
-          <Route path={'/forgot_password'} element={<ForgotPassword />} />
-          <Route path={'/dashboard'} element={<Dashboard />} />
-        </Routes>
-      </BrowserRouter>
-      <NotifMessage />
-    </Provider>
+    <Fragment>
+      <Routes>
+        <Route path="/" element={<OuterLayout />}>
+          <Route index element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/join-now" element={<JoinNow />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="my-bets" element={<MyBets />} />
+          <Route path="my-transactions" element={<MyTransactions />} />
+        </Route>
+
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+        </Route>
+
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
+    </Fragment>
   );
 }
 

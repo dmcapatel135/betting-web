@@ -1,18 +1,18 @@
 import * as types from './actionConstants';
 
-/* Notification */
-export const setNotif = (payload) => ({
-  type: types.SET_NOTIF,
+export const init = () => ({
+  type: types.INIT,
+});
+
+export const cleanup = () => ({
+  type: types.CLEANUP,
+});
+
+export const setUser = (payload) => ({
+  type: types.SET_USER,
   payload,
 });
 
-/* UI */
-export const setUI = (payload) => ({
-  type: types.SET_UI,
-  payload,
-});
-
-export const setUserDetails = (payload) => ({
-  type: types.SET_USER_DETAILS,
-  payload,
+export const refreshUserDetails = () => ({
+  type: types.REFRESH_USER_DETAILS,
 });
