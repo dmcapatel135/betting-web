@@ -1,9 +1,12 @@
-import Sidebar from '@components/Sidebar';
-import { Drawer } from '@mui/material';
-import { reactIcons } from '@utils/icons';
-// import { images } from '@utils/images';
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+
+import Sidebar from '@components/Sidebar';
+import { reactIcons } from '@utils/icons';
+// import { images } from '@utils/images';
+
+import { Drawer } from '@mui/material';
+import { images } from '@utils/images';
 
 const mobileMenuList = [
   {
@@ -101,12 +104,12 @@ const Navbar = () => {
           <div className="lg:col-span-3 md:col-span-3 col-span-6 ">
             <div className="flex items-center h-[48px] md:h-full">
               <img
-                src="/images/bikoicon/football.png"
+                src={images.football}
                 alt="football"
                 className=" sm:w-[100px]  lg:w-[150px] xxl:w-full  sm:h-[65px] lg:h-[85px] xxl:h-full hidden sm:block"
               />
               <img
-                src="/images/bikoicon/bikosports.png"
+                src={images.bikoSport}
                 alt="logo"
                 className="w-[117px]  h-[30px] sm:w-[130px] sm:[h-30px] lg:w-[180px] md:h-[44px] mx-2 cursor-pointer"
                 onClick={() => navigate('/')}
@@ -148,7 +151,7 @@ const Navbar = () => {
             <div className="pr-2 sm:block hidden md:order-4">
               <div onClick={() => setOption(!option)} className="relative">
                 <img
-                  src="/images/bikoicon/user.png"
+                  src={images.user}
                   alt="menu"
                   className="cursor-pointer w-8 h-8 lg:w-10 lg:h-10 "
                 />

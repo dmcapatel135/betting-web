@@ -105,3 +105,7 @@ export const BetCard = loadable(() => import('./BetCard'), {
 export const HeroSection = loadable(() => import('./HeroSection'), {
   fallback: <Loading />,
 });
+
+export const RightSideSection = loadable(() => import('./RightSideSection'), {
+  fallback: <Loading />,
+});

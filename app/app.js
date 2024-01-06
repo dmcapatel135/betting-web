@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import {
-  DashboardLayout,
+  // DashboardLayout,
   OuterLayout,
   Landing,
   Dashboard,
@@ -43,7 +43,7 @@ function App() {
           <Route path="my-transactions" element={<MyTransactions />} />
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<OuterLayout />}>
           <Route index element={<Dashboard />} />
         </Route>
 

@@ -17,11 +17,11 @@ const OuterLayout = () => {
         <div className="md:col-span-2 md:block hidden">
           <Sidebar />{' '}
         </div>
-        <div className="md:col-span-7 col-span-full bg-white">
+        <div className="md:col-span-10 col-span-full bg-white">
           {' '}
           <Outlet />{' '}
         </div>
-        <div className="md:col-span-3 col-span-full">
+        {/* <div className="md:col-span-3 col-span-full">
           <div className="bg-white border-l-[1px] h-full py-2 md:p-2 border-[#A3A3A3]">
             <img
               src="/images/bikoicon/appimg.png"
@@ -33,11 +33,11 @@ const OuterLayout = () => {
               alt="app"
               className="md:p-2"
             />
-            {/* <BetWallet />
+            <BetWallet />
             <CompanyContact />
-            <CustomerCareContact /> */}
+            <CustomerCareContact />
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </>

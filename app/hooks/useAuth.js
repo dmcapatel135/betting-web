@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { init, cleanup } from '@actions';
 import { validateData } from '@utils/validation';
-import { emailRegex, passwordRegex } from '@utils/regex';
+import { passwordRegex } from '@utils/regex';
 import { postReq, showErrorMessage } from '@utils/apiHandlers';
 
 const useAuth = () => {
@@ -41,7 +41,7 @@ const useAuth = () => {
         const response = await postReq('/auth/login', data);
         if (response.status) {
           toast.success(
-            'Welcome! You have successfully logged in to the Hushbot Platform',
+            'Welcome! You have successfully logged in to the Bikosports Platform',
           );
           dispatch(init());
           navigateAuthenticatedUser();
@@ -64,7 +64,7 @@ const useAuth = () => {
         });
         if (response.status) {
           toast.success(
-            'Welcome! You have successfully logged in to the Hushbot Platform',
+            'Welcome! You have successfully logged in to the Bikosports Platform',
           );
           dispatch(init());
           navigateAuthenticatedUser();
@@ -81,10 +81,11 @@ const useAuth = () => {
     if (error) return [null, error];
     if (valid) {
       const response = await postReq('/auth/send-code', {
-        email: data.email,
+        // email: data.email,
         dialCode: data.dialCode,
         mobile: data.dialCode + data.mobile,
         country: data.country,
+        type: data.type,
       });
       if (response.status) {
         return [response.data];
@@ -97,12 +98,12 @@ const useAuth = () => {
 
   const sendForgotPasswordCode = useCallback(async (data) => {
     const [valid, error] = await validateData(forgotPasswordSchema, {
-      email: data.email,
+      mobile: data.dialCode + data.mobile,
     });
     if (error) return [null, error];
     if (valid) {
       const response = await postReq('/auth/forgot-password', {
-        email: data.email,
+        mobile: data.dialCode + data.mobile,
       });
       if (response.status) {
         return [response.data];
@@ -116,7 +117,7 @@ const useAuth = () => {
   const resetPassword = useCallback(async (data) => {
     const [valid, error] = await validateData(resetPasswordSchema, {
       code: data.code,
-      email: data.email,
+      mobile: data.mobile,
       newPassword: data.newPassword,
       confirmPassword: data.confirmPassword,
     });
@@ -124,7 +125,7 @@ const useAuth = () => {
     if (valid) {
       const response = await postReq('/auth/reset-password', {
         code: data.code,
-        email: data.email,
+        mobile: data.dialCode + data.mobile,
         newPassword: data.newPassword,
       });
       if (response.status) {
@@ -148,20 +149,18 @@ const useAuth = () => {
 };
 
 const loginSchema = yup.object({
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(emailRegex, 'Invalid email address'),
+  emailOrMobile: yup.string().required('Mobile number is required'),
+  // dialCode: yup.string().required('Dial code is required'),
   password: yup.string().required('Password is required'),
 });
 
 const registerSchema = yup.object({
-  firstname: yup.string().required('First name is required'),
-  lastname: yup.string().required('Last name is required'),
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(emailRegex, 'Invalid email address'),
+  // firstname: yup.string().required('First name is required'),
+  // lastname: yup.string().required('Last name is required'),
+  // email: yup
+  //   .string()
+  //   .required('Email is required')
+  //   .matches(emailRegex, 'Invalid email address'),
   mobile: yup.string().required('Mobile number is required'),
   dialCode: yup.string().required('Dial code is required'),
   country: yup.string().required('Country is required'),
@@ -175,18 +174,20 @@ const registerSchema = yup.object({
 });
 
 const forgotPasswordSchema = yup.object({
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(emailRegex, 'Invalid email address'),
+  // email: yup
+  //   .string()
+  //   .required('Email is required')
+  //   .matches(emailRegex, 'Invalid email address'),
+  mobile: yup.string().required('Mobile number is required'),
 });
 
 const resetPasswordSchema = yup.object({
   code: yup.string().required('Verification code is required').length(6),
-  email: yup
-    .string()
-    .required('Email is required')
-    .matches(emailRegex, 'Invalid email address'),
+  // email: yup
+  //   .string()
+  //   .required('Email is required')
+  //   .matches(emailRegex, 'Invalid email address'),
+  mobile: yup.string().required('Mobile number is required'),
   newPassword: yup
     .string()
     .required('New Password is required')

@@ -19,7 +19,12 @@ export const validateData = async (schema, data) => {
 };
 
 export const renderError = (error = '') => {
-  if (error) return <div className="text-red-600 mt-1 text-12">{error}</div>;
+  if (error)
+    return (
+      <div className="text-[#FF0000] mt-1 text-12">
+        <span className="text-[#FF0000]">{error}</span>
+      </div>
+    );
 };
 
 export const emailValidation = yup.object({

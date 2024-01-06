@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { navigations, popularCountries, tournaments } from './constants';
-import { reactIcons } from '@utils/icons';
 import PropTypes from 'prop-types';
+
+import { reactIcons } from '@utils/icons';
+
+import { navigations, popularCountries, tournaments } from './constants';
 
 function Sidebar({ isMobileSidebar }) {
   const [isOpenTournament, setIsOpenTournament] = useState(false);
