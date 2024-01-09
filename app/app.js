@@ -6,13 +6,14 @@ import {
   // DashboardLayout,
   OuterLayout,
   Landing,
-  Dashboard,
+  // Dashboard,
   NotFound,
   Login,
   JoinNow,
   ForgotPassword,
   MyBets,
   MyTransactions,
+  Batting,
 } from '@containers/pageListAsync';
 
 function App() {
@@ -44,7 +45,7 @@ function App() {
         </Route>
 
         <Route path="/dashboard" element={<OuterLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Batting />} />
         </Route>
 
         <Route path="/*" element={<NotFound />} />

@@ -25,9 +25,9 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     setIsLoading(true);
-    e.preventDefault();
+    // e.preventDefault();
     const data = {
       emailOrMobile: form.dialCode + form.emailOrMobile,
       password: form.password,
@@ -75,6 +75,11 @@ function Login() {
                         selectonChange={handleChange}
                         value={form.emailOrMobile}
                         selectValue={form.dialCode}
+                        onKeyDown={(e) => {
+                          if (e.code == 'Enter') {
+                            handleSubmit();
+                          }
+                        }}
                       />
                       {renderError(error.emailOrMobile)}
                     </div>
@@ -89,6 +94,11 @@ function Login() {
                           name="password"
                           value={form.password}
                           onChange={handleChange}
+                          onKeyDown={(e) => {
+                            if (e.code == 'Enter') {
+                              handleSubmit();
+                            }
+                          }}
                         />
                         <span
                           className="cursor-pointer ay-center right-3 text-yellow"
@@ -105,10 +115,7 @@ function Login() {
                         {renderError(error.password)}
                       </div>
                     </div>
-                    <div className="flex mb-2 justify-between">
-                      <span className="text-gray-900 text-10 md:text-12">
-                        Min. 4 Characters
-                      </span>
+                    <div className="flex mb-2 justify-end">
                       <span
                         className="text-gray-900 text-10 md:text-12 cursor-pointer"
                         onClick={() => navigate('/forgot-password')}
@@ -117,7 +124,7 @@ function Login() {
                       </span>
                     </div>
                     <button
-                      className={`w-full h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                      className={`w-full h-[40px] xxl:h-[48px]  lg:w-full xxl:w-[110px] border-[1px] outline-none lg:font-14 xxl:font-18 ${
                         isLoading
                           ? 'bg-lightgray border-lightgray'
                           : 'bg-yellow border-yellow'

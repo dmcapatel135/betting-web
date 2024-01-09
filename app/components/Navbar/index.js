@@ -96,6 +96,7 @@ const Navbar = () => {
   const [option, setOption] = useState(false);
   const [isOpenMenuList, setIsOpenMenuList] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('MENU');
+  const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
   return (
     <nav>
@@ -228,8 +229,8 @@ const Navbar = () => {
           )}
         </div>
         <hr className="border-[1px]"></hr>
-        <div className="col-span-full  block w-full -top-[10px] absolute">
-          {option && (
+        <div className="col-span-full   block w-full -top-[10px] absolute">
+          {openDrawer && (
             <Drawer
               anchor="right"
               PaperProps={{
@@ -243,8 +244,8 @@ const Navbar = () => {
                   marginTop: '55px',
                 },
               }}
-              open={option}
-              onClose={() => setOption(false)}
+              open={openDrawer}
+              onClose={() => setOpenDrawer(false)}
               className=""
             >
               <div className="h-screen">

@@ -51,9 +51,8 @@ function JoinNow() {
     }
   };
 
-  const handleSendRegisterCode = async (e) => {
+  const handleSendRegisterCode = async () => {
     setIsLoading(true);
-    e.preventDefault();
     const data = {
       dialCode: form.dialCode,
       mobile: form.emailOrMobile,
@@ -178,6 +177,11 @@ function JoinNow() {
                           selectonChange={handleChange}
                           value={form.emailOrMobile}
                           selectValue={form.dialCode}
+                          onKeyDown={(e) => {
+                            if (e.code == 'Enter') {
+                              handleSendRegisterCode();
+                            }
+                          }}
                         />
                         {renderError(error?.mobile)}
                       </div>
@@ -194,6 +198,11 @@ function JoinNow() {
                             name="password"
                             value={form.password}
                             onChange={handleChange}
+                            onKeyDown={(e) => {
+                              if (e.code == 'Enter') {
+                                handleSendRegisterCode();
+                              }
+                            }}
                           />
                           <span
                             className="cursor-pointer ay-center right-3 text-yellow"
@@ -210,13 +219,8 @@ function JoinNow() {
                           {renderError(error?.password)}
                         </div>
                       </div>
-                      <div className="flex mb-2 justify-between">
-                        <span className="text-gray-900 text-10 md:text-12">
-                          Min. 4 Characters
-                        </span>
-                      </div>
                       <button
-                        className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                        className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 outline-none ${
                           isLoading
                             ? 'bg-lightgray border-lightgray'
                             : 'bg-yellow border-yellow'
@@ -240,8 +244,8 @@ function JoinNow() {
                             });
                           }}
                         />
-                        <span className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-28px]"></span>
-                        <span className="text-gray-900 text-10 md:text-12 md:ml-4 lg:ml-0 ">
+                        <span className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-12px]"></span>
+                        <span className="text-gray-900 text-10 md:text-12 md:ml-4 lg:ml-2 ">
                           By creating an account you accept the{' '}
                           <Link className="underline hover:text-yellow">
                             Terms and Conditions
@@ -315,7 +319,7 @@ function JoinNow() {
                           </p>
                           {verificationResponse &&
                             verificationResponse.mobile.attempt > 1 && (
-                              <p className="text-sm mb-2">
+                              <p className="text-12 text-gray-900 mb-2">
                                 Remaining retries{' '}
                                 <span className="text-primary-yellow ml-1 duration-200">
                                   {' '}

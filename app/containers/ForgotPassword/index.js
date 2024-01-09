@@ -40,9 +40,9 @@ function ForgotPassword() {
     setFormData({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSendVerificationCode = async (e) => {
+  const handleSendVerificationCode = async () => {
     setIsLoading(true);
-    e.preventDefault();
+    // e.preventDefault();
     setError({});
     const data = {
       mobile: form.emailOrMobile,
@@ -58,9 +58,9 @@ function ForgotPassword() {
     }
   };
 
-  const handleResetPassword = async (e) => {
+  const handleResetPassword = async () => {
     setIsLoading(true);
-    e.preventDefault();
+    // e.preventDefault();
     const data = {
       mobile: form.emailOrMobile,
       dialCode: form.dialCode,
@@ -128,17 +128,17 @@ function ForgotPassword() {
           >
             <div className="grid grid-cols-12 md:p-3">
               <div className="col-span-3 lg:block hidden px-4">
-                <AuthSideSection />
+                <AuthSideSection imgHeight="345px" />
               </div>
-              <div className="lg:col-span-9 col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
-                {!isResetPasswordScreen ? (
+              <div className="lg:col-span-9 h-[450px] col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
+                {isResetPasswordScreen ? (
                   <div className="text-center">
                     <div className="text-black mt-2 md:mt-16 mb-5">
                       <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
                         Forgotten Your Password
                       </h1>
                       <p className="text-12 text-[#3D3D3D] px-2 md:px-12 font-[400]">
-                        Enter the mobile number registered to your betPawa
+                        Enter the mobile number registered to your Bikosports
                         account and we&apos;ll send you a verification code.
                       </p>
                     </div>
@@ -152,6 +152,11 @@ function ForgotPassword() {
                           selectonChange={handleChange}
                           value={form.emailOrMobile}
                           selectValue={form.dialCode}
+                          onKeyDown={(e) => {
+                            if (e.code == 'Enter') {
+                              handleSendVerificationCode();
+                            }
+                          }}
                         />
                         {renderError(error.mobile)}
                       </div>
@@ -169,7 +174,7 @@ function ForgotPassword() {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center ">
                     <div className="text-black mt-3 mb-0">
                       <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
                         Enter Your Verification Code{' '}
@@ -189,6 +194,11 @@ function ForgotPassword() {
                           selectonChange={handleChange}
                           value={form.emailOrMobile}
                           selectValue={form.dialCode}
+                          onKeyDown={(e) => {
+                            if (e.code == 'Enter') {
+                              handleResetPassword();
+                            }
+                          }}
                         />
                       </div>
                       <div className="flex  justify-end">
@@ -209,7 +219,7 @@ function ForgotPassword() {
                         />
                       </div>
                       <div className="flex mb-2 justify-end">
-                        <p className="text-sm my-2 text-gray-900 mb-2">
+                        <p className="my-2 text-gray-900 text-12 mb-2">
                           Not recieved an code?{' '}
                           <button
                             disabled={resendTimer ? true : false}
@@ -219,17 +229,19 @@ function ForgotPassword() {
                             {resendTimer ? resendTimer : 'Resend Code'}
                           </button>
                         </p>
-                        {verificationResponse &&
-                          verificationResponse.attempt > 1 && (
-                            <p className="text-sm text-gray-900 my-2">
+                      </div>
+                      {verificationResponse &&
+                        verificationResponse.attempt > 1 && (
+                          <div>
+                            <p className="text-12 text-gray-900 my-2">
                               Remaining retries{' '}
                               <span className="text-primary-yellow ml-1 duration-200">
                                 {verificationResponse.maxAttempt -
                                   verificationResponse.attempt}
                               </span>
                             </p>
-                          )}
-                      </div>
+                          </div>
+                        )}
                       <div className="grid grid-cols-2 my-2 w-full">
                         <div className="text-left mr-2">
                           <label className="text-gray-900 text-12">
@@ -244,6 +256,11 @@ function ForgotPassword() {
                               name="newPassword"
                               value={form.newPassword}
                               onChange={handleChange}
+                              onKeyDown={(e) => {
+                                if (e.code == 'Enter') {
+                                  handleResetPassword();
+                                }
+                              }}
                             />
                             <span
                               className="cursor-pointer ay-center right-3 text-yellow"
@@ -273,6 +290,11 @@ function ForgotPassword() {
                               name="confirmPassword"
                               value={form.confirmPassword}
                               onChange={handleChange}
+                              onKeyDown={(e) => {
+                                if (e.code == 'Enter') {
+                                  handleResetPassword();
+                                }
+                              }}
                             />
                             <span
                               className="cursor-pointer ay-center right-3 text-yellow"
@@ -292,7 +314,7 @@ function ForgotPassword() {
                       </div>
 
                       <button
-                        className={`w-full my-5 md:my-0 h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                        className={`w-full  md:my-0 h-[40px]  xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
                           isLoading
                             ? 'bg-lightgray border-lightgray'
                             : 'bg-yellow border-yellow'

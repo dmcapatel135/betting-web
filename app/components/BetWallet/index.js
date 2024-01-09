@@ -127,7 +127,7 @@ function BetWallet() {
       </div>
       <div className="flex container_main items-center px-3">
         <input type="checkbox" checked />
-        <span className="checkmark !left-[5px]"></span>
+        <span className="checkmark top-[5px] !left-[5px]"></span>
         <span className="text-black text-12 ml-4">
           Accept odds change.{' '}
           <Link className="underline hover:text-yellow">Learn More</Link>

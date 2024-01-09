@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function AuthSideSection({ bgBtn }) {
+function AuthSideSection({ bgBtn, imgHeight }) {
   const navigate = useNavigate();
   return (
     <div>
@@ -47,13 +47,14 @@ function AuthSideSection({ bgBtn }) {
       <img
         src="/images/bikoicon/jackpots.png"
         alt="img"
-        className="rounded-[8px]"
+        className={`rounded-[8px] ${imgHeight ? 'h-[345px]' : ''}`}
       />
     </div>
   );
 }
 AuthSideSection.propTypes = {
   bgBtn: PropTypes.bool,
+  imgHeight: PropTypes.string,
 };
 
 export default AuthSideSection;

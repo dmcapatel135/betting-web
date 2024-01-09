@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { countryList } from '@api/country';
 
-function MobileInputField({ onChange, selectonChange, value, selectValue }) {
+function MobileInputField({
+  onChange,
+  selectonChange,
+  value,
+  selectValue,
+  onKeyDown,
+}) {
   return (
     <div className="relative">
       <div className="absolute">
@@ -30,6 +36,7 @@ function MobileInputField({ onChange, selectonChange, value, selectValue }) {
         className="h-[40px] text-14 text-gray-900 pl-[85px] w-full outline-none border-[1px] border-[#FEAE04] rounded-[8px]"
         onChange={onChange}
         value={value}
+        onKeyDown={onKeyDown}
       />
     </div>
   );
@@ -40,5 +47,6 @@ MobileInputField.propTypes = {
   selectonChange: PropTypes.func.isRequired,
   value: PropTypes.string,
   selectValue: PropTypes.string,
+  onKeyDown: PropTypes.func,
 };
 export default MobileInputField;

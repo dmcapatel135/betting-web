@@ -45,3 +45,7 @@ export const MyBets = loadable(() => import('./MyBets'), {
 export const MyTransactions = loadable(() => import('./MyTransactions'), {
   fallback: <Loading />,
 });
+
+export const Batting = loadable(() => import('./Batting'), {
+  fallback: <Loading />,
+});

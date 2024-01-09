@@ -5,7 +5,7 @@ export const navigations = [
     icon: images.homeIcon,
     active_icon: images.homeIconActive,
     title: 'HOME',
-    path: '/',
+    path: '/dashboard',
   },
   //   { icon: '/images/portfolio.png', title: 'Portfolio', path: 'portfolio' },
   //   { icon: '/images/wallet6.png', title: 'Wallet', path: 'wallet' },

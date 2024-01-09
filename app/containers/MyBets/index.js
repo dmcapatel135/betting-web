@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { BetDetailCard, RightSideSection } from '@components';
+import { BetDetailCard } from '@components';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -53,9 +53,7 @@ function MyBets() {
           </div>
         </div>
       </div>
-      <div className="col-span-4">
-        <RightSideSection />
-      </div>
+      <div className="col-span-4">{/* <RightSideSection /> */}</div>
     </div>
   );
 }
