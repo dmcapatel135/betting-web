@@ -131,7 +131,7 @@ function ForgotPassword() {
                 <AuthSideSection imgHeight="345px" />
               </div>
               <div className="lg:col-span-9 h-[450px] col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
-                {isResetPasswordScreen ? (
+                {!isResetPasswordScreen ? (
                   <div className="text-center">
                     <div className="text-black mt-2 md:mt-16 mb-5">
                       <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
@@ -201,11 +201,6 @@ function ForgotPassword() {
                           }}
                         />
                       </div>
-                      <div className="flex  justify-end">
-                        <span className="text-gray-900 text-10 md:text-12 cursor-pointer">
-                          Change Number?
-                        </span>
-                      </div>
                       <div className="text-left">
                         <label className="text-gray-900 text-12">
                           Verification Code
@@ -217,9 +212,10 @@ function ForgotPassword() {
                           onChange={handleChange}
                           className="h-[40px] text-gray-900  text-14 w-full outline-none px-5  border-[1px] border-[#FEAE04] rounded-[8px]"
                         />
+                        {renderError(error.code)}
                       </div>
-                      <div className="flex mb-2 justify-end">
-                        <p className="my-2 text-gray-900 text-12 mb-2">
+                      <div className="flex justify-end">
+                        <p className="my-2 text-gray-900 text-12">
                           Not recieved an code?{' '}
                           <button
                             disabled={resendTimer ? true : false}
@@ -232,8 +228,8 @@ function ForgotPassword() {
                       </div>
                       {verificationResponse &&
                         verificationResponse.attempt > 1 && (
-                          <div>
-                            <p className="text-12 text-gray-900 my-2">
+                          <div className="flex justify-end">
+                            <p className="text-12 text-gray-900">
                               Remaining retries{' '}
                               <span className="text-primary-yellow ml-1 duration-200">
                                 {verificationResponse.maxAttempt -
@@ -314,7 +310,7 @@ function ForgotPassword() {
                       </div>
 
                       <button
-                        className={`w-full  md:my-0 h-[40px]  xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                        className={`w-full  md:my-0 h-[40px] mt-2  xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
                           isLoading
                             ? 'bg-lightgray border-lightgray'
                             : 'bg-yellow border-yellow'
