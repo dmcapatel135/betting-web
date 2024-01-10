@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Balance from '@components/Balance';
+import { reactIcons } from '@utils/icons';
 
 function BetWallet() {
+  const [openDialog, setOpenDailog] = useState();
+  const [tab, setTab] = useState('sport');
   return (
-    <div className="w-full border-[1px] border-blue  rounded-[8px]">
+    <div className="w-full border-[1px] border-blue  rounded-[8px] relative">
       {/* <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
         <p className="text-12 text-black">Not logged in -</p>
         <div className="flex my-2">
@@ -21,16 +24,28 @@ function BetWallet() {
       <Balance />
       <div className="px-3 my-3">
         <div className="flex text-black border-[1px] h-10 w-full rounded-[8px]">
-          <div className="w-1/2 flex justify-center bg-gradient-color-1 rounded-l-lg items-center">
-            <span className="text-12 text-white">Sport</span>
+          <div
+            className={`w-1/2 flex justify-center cursor-pointer ${
+              tab == 'sport'
+                ? 'bg-gradient-color-1 text-white'
+                : 'bg-white text-black'
+            } rounded-l-lg items-center`}
+            onClick={() => setTab('sport')}
+          >
+            <span className="text-12 ">Sport</span>
             <img
               src="/images/bikoicon/icon-football.png"
               alt="icon"
               className="mx-2"
             />
-            <span className="text-12 text-white">0</span>
+            <span className="text-12 ">0</span>
           </div>
-          <div className="w-1/2 flex justify-center items-center">
+          <div
+            className={`w-1/2 flex justify-center cursor-pointer ${
+              tab == 'virtual' ? 'bg-gradient-color-1 text-white' : 'bg-white'
+            } rounded-r-lg items-center`}
+            onClick={() => setTab('virtual')}
+          >
             <span className="text-12">Virtual</span>
             <img
               src="/images/bikoicon/icon-virtual-sport.png"
@@ -76,7 +91,12 @@ function BetWallet() {
       <hr className="border-[1px]"></hr>
       <div className="px-3 my-5">
         <div className="h-10 flex justify-center items-center bg-[#02CBDB] rounded-[8px]">
-          <span className="text-14 font-[700]">Booking code Generated</span>
+          <span
+            className="text-14 font-[700] cursor-pointer"
+            onClick={() => setOpenDailog(true)}
+          >
+            Booking code Generated
+          </span>
         </div>
       </div>
       <div className="border-t-[1px] border-b-[1px] my-5 border-blue">
@@ -136,7 +156,7 @@ function BetWallet() {
       <div className="px-3">
         <span>Your stake</span>
         <div className="h-10 border-[1px] border-yellow rounded-xl flex justify-between my-2">
-          <div className="h-[38px] flex justify-center items-center bg-lightestgray w-16 text-center rounded-l-xl">
+          <div className="h-[38px] flex justify-center items-center bg-[#C2C4C6] w-16 text-center rounded-l-xl">
             <span className="text-24">-</span>
           </div>
           <div className="h-10 w-24 flex justify-center items-center">
@@ -178,6 +198,46 @@ function BetWallet() {
           PLACE BET
         </button>
       </div>
+      {openDialog && (
+        <div className="absolute top-0 bg-[#0000002e] backdrop-blur-[2px] h-full rounded-[8px] ">
+          <div className="w-[300px] h-24 bg-white z-50 m-4">
+            <div className="flex justify-between py-1 px-2 ">
+              <div className="flex text-gray-900">
+                <img src="/images/bikoicon/person_play.png" className="h-5" />
+                <span className="text-12 mx-1">
+                  Booking code successfull generated.
+                </span>
+              </div>
+              <span
+                className="text-gray-900 cursor-pointer"
+                onClick={() => setOpenDailog(false)}
+              >
+                {reactIcons.close}
+              </span>
+            </div>
+            <div>
+              <div className="w-[280px] border-[1px] border-yellow my-2 h-8 mx-3">
+                <div className="h-8 flex justify-between">
+                  <div className="w-28 bg-yellow">
+                    <span className="text-12 text-white px-3">
+                      Booking Code
+                    </span>
+                  </div>
+                  <div className="flex">
+                    <span className="mx-3 text-12 font-[700] text-yellow">
+                      6232sd
+                    </span>
+                    <img
+                      src="/images/bikoicon/content_copy.png"
+                      className="h-6 cursor-pointer"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

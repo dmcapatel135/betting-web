@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import {
@@ -10,6 +10,7 @@ import {
 import { useAuth } from '@hooks';
 import { reactIcons } from '@utils/icons';
 import { renderError } from '@utils/validation';
+import { isLoggedIn } from '@utils/apiHandlers';
 
 const initialState = {
   emailOrMobile: '',
@@ -24,6 +25,12 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate('/dashboard');
+    }
+  });
 
   const handleSubmit = async () => {
     setIsLoading(true);

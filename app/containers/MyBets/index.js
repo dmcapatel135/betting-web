@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 
-import { BetDetailCard } from '@components';
+import {
+  BetDetailCard,
+  Betslip,
+  CompanyContact,
+  CustomerCareContact,
+  TalkToUs,
+} from '@components';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -53,7 +59,14 @@ function MyBets() {
           </div>
         </div>
       </div>
-      <div className="col-span-4">{/* <RightSideSection /> */}</div>
+      <div className="col-span-4 mt-3">
+        {/* <RightSideSection /> */}
+        {/* <BetWallet /> */}
+        <Betslip wallet="true" />
+        <CompanyContact />
+        <CustomerCareContact />
+        <TalkToUs />
+      </div>
     </div>
   );
 }

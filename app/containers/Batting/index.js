@@ -1,17 +1,26 @@
-import { BetCard, BetWallet } from '@components';
+import {
+  BetCard,
+  BetWallet,
+  Betslip,
+  CompanyContact,
+  CustomerCareContact,
+  TalkToUs,
+} from '@components';
 import Tabs from '@components/Tabs';
 import React, { useState } from 'react';
 
 const tabsName = [
-  { id: 1, tabName: 'MECHI KALI' },
-  { id: 2, tabName: 'MECHI ZA LEO' },
-  { id: 3, tabName: 'MECHI ZIJAZO' },
+  { id: 1, tabName: 'STRONG MATCH' },
+  { id: 2, tabName: 'TODAY MATCHES' },
+  { id: 3, tabName: 'UPCOMING MATCHES' },
   { id: 4, tabName: 'LIVE NOW' },
 ];
 
 function Batting() {
   const [step, setStep] = useState(1);
   const [tab, setTab] = useState(1);
+  const [value, setValue] = useState(true);
+
   return (
     <main className="md:pl-5  md:py-2">
       <div className="grid grid-cols-12">
@@ -34,7 +43,13 @@ function Batting() {
                     } mx-3`}
                     onClick={() => setTab(item.id)}
                   >
-                    <span className="text-14 sm:text-12 cursor-pointer lg:text-14">
+                    <span
+                      className={`text-14 sm:text-12 cursor-pointer lg:text-14 ${
+                        item.tabName == 'LIVE NOW'
+                          ? 'text-yellow'
+                          : 'text-white'
+                      }`}
+                    >
                       {item.tabName}
                     </span>
                   </div>
@@ -106,12 +121,14 @@ function Batting() {
             </div>
           </div>
           <div className="px-3">
-            <BetCard />
+            <BetCard onClick={() => setValue(true)} />
           </div>
         </div>
-        <div className="col-span-4">
-          {/* <RightSideSection /> */}
-          <BetWallet />
+        <div className="col-span-4 mr-3 ml-1">
+          {value ? <BetWallet /> : <Betslip />}
+          <CompanyContact />
+          <CustomerCareContact />
+          <TalkToUs />
         </div>
       </div>
     </main>

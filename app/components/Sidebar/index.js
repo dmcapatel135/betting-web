@@ -36,7 +36,7 @@ function Sidebar({ isMobileSidebar }) {
                   to={item.path}
                   className={({ isActive }) =>
                     `px-3 py-2 lg:py-2  md:text-12 xxl:text-14 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
-                      isActive
+                      isActive || selectMenuName === item.title
                         ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
                         : ' hover:bg-primary-yellow  flex items-center gap-3'
                     }`

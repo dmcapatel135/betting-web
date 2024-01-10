@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BetCard, RightSideSection } from '@components';
 import Tabs from '@components/Tabs';
+import { isLoggedIn } from '@utils/apiHandlers';
+import { useNavigate } from 'react-router-dom';
 
 const tabsName = [
-  { id: 1, tabName: 'MECHI KALI' },
-  { id: 2, tabName: 'MECHI ZA LEO' },
-  { id: 3, tabName: 'MECHI ZIJAZO' },
+  { id: 1, tabName: 'STRONG MATCH' },
+  { id: 2, tabName: 'TODAYs MATCHES' },
+  { id: 3, tabName: 'UPCOMING MATCHES' },
   { id: 4, tabName: 'LIVE NOW' },
 ];
 
 const Landing = () => {
   const [step, setStep] = useState(1);
   const [tab, setTab] = useState(1);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      navigate('/dashboard');
+    }
+  });
+
   return (
     <main className="md:pl-5  md:py-2">
       <div className="grid grid-cols-12">

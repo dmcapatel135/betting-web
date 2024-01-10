@@ -109,3 +109,11 @@ export const HeroSection = loadable(() => import('./HeroSection'), {
 export const RightSideSection = loadable(() => import('./RightSideSection'), {
   fallback: <Loading />,
 });
+
+export const Betslip = loadable(() => import('./Betslip'), {
+  fallback: <Loading />,
+});
+
+export const TalkToUs = loadable(() => import('./TalkToUs'), {
+  fallback: <Loading />,
+});

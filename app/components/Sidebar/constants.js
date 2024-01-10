@@ -13,7 +13,7 @@ export const navigations = [
     icon: images.liveNowIcon,
     active_icon: images.liveNowIconActive,
     title: 'LIVE NOW',
-    path: 'live-now',
+    path: '/live-now',
   },
   {
     icon: images.upcomingIcon,

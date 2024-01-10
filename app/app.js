@@ -15,6 +15,7 @@ import {
   MyTransactions,
   Batting,
 } from '@containers/pageListAsync';
+import ProtectedRoutes from './ProtctedRoutes';
 
 function App() {
   const { pathname, hash } = useLocation();
@@ -45,7 +46,14 @@ function App() {
         </Route>
 
         <Route path="/dashboard" element={<OuterLayout />}>
-          <Route index element={<Batting />} />
+          <Route
+            index
+            element={
+              <ProtectedRoutes>
+                <Batting />
+              </ProtectedRoutes>
+            }
+          />
         </Route>
 
         <Route path="/*" element={<NotFound />} />

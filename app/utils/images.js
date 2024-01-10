@@ -2,7 +2,7 @@ export const images = {
   football: '/images/bikoicon/football.png',
   bikoSport: '/images/bikoicon/bikosports.png',
   user: '/images/bikoicon/user.png',
-  homeIcon: '/images/bikoicon/home.png',
+  homeIcon: '/images/bikoicon/homeblue.png',
   homeIconActive: '/images/bikoicon/home.png',
   liveNowIcon: '/images/bikoicon/livenow.svg',
   liveNowIconActive: '/images/bikoicon/livenowwhite.png',

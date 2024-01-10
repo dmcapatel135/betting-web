@@ -16,6 +16,7 @@ const useAuth = () => {
     const response = await postReq('/auth/logout');
     if (response.status) {
       dispatch(cleanup());
+      window.location = '/';
       return true;
     }
   }, [dispatch]);

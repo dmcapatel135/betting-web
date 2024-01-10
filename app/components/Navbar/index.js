@@ -7,6 +7,8 @@ import { reactIcons } from '@utils/icons';
 
 import { Drawer } from '@mui/material';
 import { images } from '@utils/images';
+import { useAuth } from '@hooks';
+import { isLoggedIn } from '@utils/apiHandlers';
 
 const mobileMenuList = [
   {
@@ -98,6 +100,8 @@ const Navbar = () => {
   const [selectMenuName, setSelectMenuName] = useState('MENU');
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
+
   return (
     <nav>
       <div className="h-[50px] sm:h-[65px] lg:h-[85px] xxl:h-[110px] bg-gradient-color-1 relative">
@@ -133,18 +137,33 @@ const Navbar = () => {
           </div>
           <div className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-evenly mx-2 md:mx-0">
             {/* <div className="flex justify-between"> */}
-            <button
-              className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </button>
-            <button
-              className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-1 md:order-2"
-              onClick={() => navigate('/join-now')}
-            >
-              Join Now
-            </button>
+            {isLoggedIn() ? (
+              <div className="text-white">
+                <span className="text-16 font-[700]">TSH 102.00</span>
+              </div>
+            ) : (
+              <button
+                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
+                onClick={() => navigate('/login')}
+              >
+                Login
+              </button>
+            )}
+            {isLoggedIn() ? (
+              <button
+                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
+                onClick={() => navigate('/login')}
+              >
+                Deposit
+              </button>
+            ) : (
+              <button
+                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-1 md:order-2"
+                onClick={() => navigate('/join-now')}
+              >
+                Join Now
+              </button>
+            )}
             <select className="h-[32px] lg:h-[40px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-[#E7A024] rounded-[8px] md:order-2">
               <option>English</option>
             </select>
@@ -157,23 +176,40 @@ const Navbar = () => {
                   className="cursor-pointer w-8 h-8 lg:w-10 lg:h-10 "
                 />
               </div>
-              {option && (
-                <div className="absolute rounded-md bg-white mt-4 w-40 right-5 z-30 shadow-lg">
-                  <div className="text-gray-900 px-5 py-3 text-14 font-[400] font-roboto cursor-pointer">
-                    <ul>
-                      <li className="py-1" onClick={() => navigate('/my-bets')}>
+              {isLoggedIn() && option && (
+                <div
+                  className="absolute rounded-md bg-white mt-4 w-40 right-5 z-30 shadow-lg"
+                  onMouseLeave={() => setOption(!option)}
+                >
+                  <div className="text-gray-900  py-3 text-14 font-[400] font-roboto cursor-pointer">
+                    <ul className="">
+                      <li
+                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                        onClick={() => navigate('/my-bets')}
+                      >
                         My Bets
                       </li>
-                      <li className="py-1">Deposit</li>
-                      <li className="py-1">Withdraw</li>
+                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                        Deposit
+                      </li>
+                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                        Withdraw
+                      </li>
                       <li
-                        className="py-1"
+                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                         onClick={() => navigate('/my-transactions')}
                       >
                         Transactions
                       </li>
-                      <li className="py-1">Help</li>
-                      <li className="py-1">Logout</li>
+                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                        Help
+                      </li>
+                      <li
+                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                        onClick={() => logout()}
+                      >
+                        Logout
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -230,7 +266,7 @@ const Navbar = () => {
         </div>
         <hr className="border-[1px]"></hr>
         <div className="col-span-full   block w-full -top-[10px] absolute">
-          {openDrawer && (
+          {isLoggedIn() && openDrawer && (
             <Drawer
               anchor="right"
               PaperProps={{
