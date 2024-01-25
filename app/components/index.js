@@ -117,3 +117,15 @@ export const Betslip = loadable(() => import('./Betslip'), {
 export const TalkToUs = loadable(() => import('./TalkToUs'), {
   fallback: <Loading />,
 });
+
+export const JackpotDetailCard = loadable(() => import('./JackpotDetailCard'), {
+  fallback: <Loading />,
+});
+
+export const JackpotCard = loadable(() => import('./JackpotCard'), {
+  fallback: <Loading />,
+});
+
+export const JackpotDailyCard = loadable(() => import('./JackpotDailyCard'), {
+  fallback: <Loading />,
+});

@@ -146,7 +146,7 @@ function JoinNow() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-8">
+      <div className="col-span-12 md:col-span-8">
         <div className="h-fit">
           <div
             className="border-[1px] rounded-[8px] shadow-inner border-[#A3A3A3] m-5"
@@ -359,7 +359,7 @@ function JoinNow() {
           </div>
         </div>
       </div>
-      <div className="col-span-4">
+      <div className="col-span-4 md:block hidden">
         <RightSideSection />
       </div>
     </div>

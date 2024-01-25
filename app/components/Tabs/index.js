@@ -1,49 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TabsName = [
-  {
-    tabName: 'Soccer',
-    id: 1,
-    icon: '/images/bikoicon/other.png',
-    active_icon: '/images/bikoicon/sports_soccer.png',
-  },
-  {
-    tabName: 'BasketBall',
-    id: 2,
-    icon: '/images/bikoicon/sports_and_outdoors.png',
-    active_icon: '/images/bikoicon/basketballwhite.png',
-  },
-  {
-    tabName: 'Boxing',
-    id: 3,
-    icon: '/images/bikoicon/boxing.png',
-    active_icon: '/images/bikoicon/boxingwhite.png',
-  },
-  {
-    tabName: 'Rugby',
-    id: 4,
-    icon: '/images/bikoicon/rugby.png',
-    active_icon: '/images/bikoicon/rugbywhite.png',
-  },
-  {
-    tabName: 'Cricket',
-    id: 5,
-    icon: '/images/bikoicon/cricket.png',
-    active_icon: '/images/bikoicon/cricketwhite.png',
-  },
-  {
-    tabName: 'Other',
-    id: 6,
-    icon: '/images/bikoicon/other.png',
-    active_icon: '/images/bikoicon/sports_soccer.png',
-  },
-];
+// const TabsName = [
+//   {
+//     name: 'Soccer',
+//     icon: '/images/bikoicon/other.png',
+//     active_icon: '/images/bikoicon/sports_soccer.png',
+//   },
+//   {
+//     name: 'BasketBall',
+//     icon: '/images/bikoicon/sports_and_outdoors.png',
+//     active_icon: '/images/bikoicon/basketballwhite.png',
+//   },
+//   {
+//     name: 'Boxing',
+//     icon: '/images/bikoicon/boxing.png',
+//     active_icon: '/images/bikoicon/boxingwhite.png',
+//   },
+//   {
+//     name: 'Rugby',
+//     icon: '/images/bikoicon/rugby.png',
+//     active_icon: '/images/bikoicon/rugbywhite.png',
+//   },
+//   {
+//     name: 'Cricket',
+//     icon: '/images/bikoicon/cricket.png',
+//     active_icon: '/images/bikoicon/cricketwhite.png',
+//   },
+// ];
 
-function Tabs({ step, setStep }) {
+function Tabs({ step, setStep, popularSports }) {
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const [nextIndex, setNextIndex] = useState(15);
   return (
     <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
-      {TabsName.map((item) => {
+      {popularSports?.map((item) => {
         return (
           <div
             key={item.id}
@@ -52,18 +43,76 @@ function Tabs({ step, setStep }) {
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black'
             } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}
-            onClick={() => setStep(item.id)}
+            onClick={() => {
+              setStep(item.id);
+            }}
           >
             <div className="flex  h-12  md:justify-center items-center">
               <img
                 src={step === item.id ? item.active_icon : item.icon}
                 alt="profile_icon"
+                className="w-6 h-6"
               />
-              <span className="px-2 text-14 xxl:text-16">{item.tabName}</span>
+              <span className="px-2 text-14 xxl:text-16">
+                {item.name == 'Basketball' ? 'BasketBall' : item.name}
+              </span>
             </div>
           </div>
         );
       })}
+      {/* <div
+        className={`${
+          !step ? 'bg-gradient-color-1 text-white ' : 'bg-white text-black'
+        } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg relative`}
+        onClick={() => setStep(null)}
+      >
+        <div className="flex  h-12  md:justify-center items-center">
+          <span className="px-2 text-14 xxl:text-16">{'Other'}</span>
+        </div>
+        {!step && (
+          <div className="absolute bg-white w-[690px]  -right-3 border-[1px] border-lightgray rounded-md  h-fit z-50">
+            <div className="grid grid-cols-12 p-3">
+              {allSports?.slice(currentIndex, nextIndex)?.map((item) => {
+                return (
+                  <div className="col-span-4" key={item.id}>
+                    <div className="py-2">
+                      <span className="text-black">{item.name}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-end m-5">
+              <div className="flex">
+                <button
+                  onClick={() => {
+                    if (currentIndex > 15) {
+                      setNextIndex(nextIndex);
+                      setCurrentIndex(nextIndex - 15);
+                    }
+                    console.log('----working', currentIndex, nextIndex);
+                  }}
+                  className="h-8 w-12 mx-2 px-2 bg-blue rounded-sm"
+                >
+                  {' '}
+                  Prev
+                </button>
+                <button
+                  onClick={() => {
+                    if (allSports?.length > nextIndex) {
+                      setCurrentIndex(nextIndex);
+                      setNextIndex(nextIndex + 15);
+                    }
+                  }}
+                  className="h-8 w-12 px-2 bg-blue rounded-sm"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div> */}
     </div>
   );
 }
@@ -71,6 +120,8 @@ function Tabs({ step, setStep }) {
 Tabs.propTypes = {
   step: PropTypes.number,
   setStep: PropTypes.func,
+  allSports: PropTypes.array,
+  popularSports: PropTypes.array,
 };
 
 export default Tabs;

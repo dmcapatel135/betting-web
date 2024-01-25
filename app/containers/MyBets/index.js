@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 
 import {
   BetDetailCard,
+  // BetWallet,
   Betslip,
   CompanyContact,
   CustomerCareContact,
   TalkToUs,
 } from '@components';
+import ShareBetModal from '@components/ShareBetModal.js';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -25,13 +27,14 @@ function MyBets() {
   const [step, setStep] = useState(1);
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-8">
-        <div className="p-5">
-          <div className="">
+      <ShareBetModal />
+      <div className="col-span-12 md:col-span-8">
+        <div className="md:p-5 p-2">
+          <div className="md:block hidden">
             <img src="/images/bikoicon/main.png" alt="main" />
           </div>
           <div>
-            <div className="border-[1px] mt-5 border-blue px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-12 xxl:h-16">
+            <div className="border-[1px]  mt-5 border-blue px-1 md:px-0 flex bg-white w-full rounded-lg cursor-pointer  md:h-12 xxl:h-16">
               {TabsName.map((item) => {
                 return (
                   <div
@@ -40,7 +43,7 @@ function MyBets() {
                       step === item.id
                         ? 'bg-gradient-color-1 text-white'
                         : 'bg-white text-black'
-                    } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-28 rounded-lg`}
+                    } px-1 md:px-0 xl:px-3 mx-3 my-1 w-fit md:w-28  rounded-lg`}
                     onClick={() => setStep(item.id)}
                   >
                     <div className="flex  h-10  md:justify-center items-center">
@@ -59,7 +62,7 @@ function MyBets() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 mt-3">
+      <div className="col-span-4 mt-3 md:block hidden">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

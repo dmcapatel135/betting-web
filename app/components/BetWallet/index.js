@@ -34,7 +34,11 @@ function BetWallet() {
           >
             <span className="text-12 ">Sport</span>
             <img
-              src="/images/bikoicon/icon-football.png"
+              src={
+                tab === 'sport'
+                  ? '/images/bikoicon/icon-football.png'
+                  : '/images/bikoicon/football.svg'
+              }
               alt="icon"
               className="mx-2"
             />
@@ -48,7 +52,11 @@ function BetWallet() {
           >
             <span className="text-12">Virtual</span>
             <img
-              src="/images/bikoicon/icon-virtual-sport.png"
+              src={
+                tab === 'virtual'
+                  ? '/images/bikoicon/icon-virtual-sport.svg'
+                  : '/images/bikoicon/icon-virtual-sport.png'
+              }
               alt="icon"
               className="mx-2"
             />

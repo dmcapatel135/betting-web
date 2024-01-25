@@ -15,42 +15,42 @@ const mobileMenuList = [
     id: 1,
     title: 'HOME',
     icon: '/images/bikoicon/home.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/home-active.png',
     path: '/',
   },
   {
     id: 2,
     title: 'MENU',
     icon: '/images/bikoicon/menu_mobile.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/menu-icon.png',
     path: '',
   },
   {
     id: 3,
     title: 'LIVE',
     icon: '/images/bikoicon/livenowwhite.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/live-now-active.png',
     path: '/',
   },
   {
     id: 4,
     title: 'JACKPOT',
     icon: '/images/bikoicon/jackpotwhite.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/jackpot-active.png',
     path: '/',
   },
   {
     id: 5,
     title: 'SEARCH',
     icon: '/images/bikoicon/search.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/search-active.png',
     path: '/',
   },
   {
     id: 6,
     title: 'SLIP',
     icon: '/images/bikoicon/slip.png',
-    active_icon: '',
+    active_icon: '/images/bikoicon/slip-active.png',
     path: '/',
   },
 ];
@@ -127,7 +127,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search for events and tournaments"
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-full pl-10 bg-darkjunglegreen border-[1px] text-14 border-[#E7A024] rounded-[8px] outline-none"
+                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-full pl-10 bg-[#351B5B] border-[1px] text-14 border-[#E7A024] rounded-[8px] outline-none"
               />
               <span className="absolute text-white  ay-center left-1 top-4 lg:top-5 text-18 lg:text-[24px]">
                 {reactIcons.search}
@@ -150,10 +150,7 @@ const Navbar = () => {
               </button>
             )}
             {isLoggedIn() ? (
-              <button
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
-                onClick={() => navigate('/login')}
-              >
+              <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
                 Deposit
               </button>
             ) : (
@@ -189,7 +186,10 @@ const Navbar = () => {
                       >
                         My Bets
                       </li>
-                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                      <li
+                        onClick={() => navigate('/deposit')}
+                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                      >
                         Deposit
                       </li>
                       <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
@@ -240,7 +240,14 @@ const Navbar = () => {
             >
               <div className="my-2 text-center">
                 <div className="flex justify-center relative">
-                  <img src={item.icon} className="w-6 h-6" />
+                  <img
+                    src={
+                      selectMenuName === item.title
+                        ? item.active_icon
+                        : item.icon
+                    }
+                    className="w-6 h-6"
+                  />
                   {item.title === 'SLIP' && (
                     <div className="w-[14px] h-[14px]  bg-white flex justify-center items-center rounded-full left-4 -top-1 text-black absolute">
                       <span className="text-8">1</span>

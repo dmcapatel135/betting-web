@@ -6,7 +6,12 @@ import { toast } from 'react-toastify';
 import { init, cleanup } from '@actions';
 import { validateData } from '@utils/validation';
 import { passwordRegex } from '@utils/regex';
-import { postReq, showErrorMessage } from '@utils/apiHandlers';
+import {
+  postReq,
+  removeAuthCookie,
+  setAuthCookie,
+  showErrorMessage,
+} from '@utils/apiHandlers';
 
 const useAuth = () => {
   const navigate = useNavigate();
@@ -15,6 +20,7 @@ const useAuth = () => {
   const logout = useCallback(async () => {
     const response = await postReq('/auth/logout');
     if (response.status) {
+      removeAuthCookie();
       dispatch(cleanup());
       window.location = '/';
       return true;
@@ -41,6 +47,7 @@ const useAuth = () => {
       if (valid) {
         const response = await postReq('/auth/login', data);
         if (response.status) {
+          setAuthCookie();
           toast.success(
             'Welcome! You have successfully logged in to the Bikosports Platform',
           );

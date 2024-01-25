@@ -49,3 +49,19 @@ export const MyTransactions = loadable(() => import('./MyTransactions'), {
 export const Batting = loadable(() => import('./Batting'), {
   fallback: <Loading />,
 });
+
+export const SingleBetDetails = loadable(() => import('./SingleBetDetails'), {
+  fallback: <Loading />,
+});
+
+export const Jackpot = loadable(() => import('./Jackpot'), {
+  fallback: <Loading />,
+});
+
+export const Deposit = loadable(() => import('./Deposit'), {
+  fallback: <Loading />,
+});
+
+export const Withdraw = loadable(() => import('./Withdraw'), {
+  fallback: <Loading />,
+});

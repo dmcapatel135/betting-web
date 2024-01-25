@@ -26,11 +26,11 @@ const Landing = () => {
   return (
     <main className="md:pl-5  md:py-2">
       <div className="grid grid-cols-12">
-        <div className="col-span-8">
+        <div className="col-span-12 md:col-span-8">
           <div className="md:block hidden pr-2">
             <Tabs step={step} setStep={setStep} />
           </div>
-          <div className="my-0 md:my-2  mr-2 bg-gradient-color-1 rounded-b-[8px]">
+          <div className="my-0 md:my-2  md:mr-2 bg-gradient-color-1 rounded-b-[8px]">
             <img src="/images/bikoicon/main.png" />
 
             <div className="mt-5  hidden md:flex justify-evenly px-5">
@@ -116,11 +116,11 @@ const Landing = () => {
               </div>
             </div>
           </div>
-          <div className="px-3">
+          <div className="px-3 mb-3">
             <BetCard />
           </div>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-4 md:block hidden">
           <RightSideSection />
         </div>
       </div>

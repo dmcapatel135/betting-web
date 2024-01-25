@@ -81,14 +81,14 @@ function BetDetailCard() {
           <img src="/images/bikoicon/rebet.png" alt="icon" className="mx-2" />
           Rebet
         </button>
-        <button className="flex bg-maroon text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
+        {/* <button className="flex bg-maroon text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
           <img src="/images/bikoicon/lost.png" alt="icon" className="mx-2" />
           LOST
         </button>
         <button className="flex bg-green text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
           <img src="/images/bikoicon/won.png" alt="icon" className="mx-2" />
           WON
-        </button>
+        </button> */}
       </div>
     </div>
   );

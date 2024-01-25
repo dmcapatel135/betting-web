@@ -4,15 +4,51 @@ import { toast } from 'react-toastify';
 
 const isDevelopment = NODE_ENV !== 'production';
 const isProductionApp = APP_ENV === 'production';
+
+export const setAuthCookie = () => {
+  return Cookies.set(
+    isDevelopment
+      ? 'test__user__isLoggedIn'
+      : isProductionApp
+      ? '__user__isLoggedIn'
+      : `${APP_ENV}__user__isLoggedIn`,
+    'true',
+    { expires: 1 },
+  );
+};
+
+export const removeAuthCookie = () => {
+  return Cookies.remove(
+    isDevelopment
+      ? 'test__user__isLoggedIn'
+      : isProductionApp
+      ? '__user__isLoggedIn'
+      : `${APP_ENV}__user__isLoggedIn`,
+    'true',
+    { expires: 1 },
+  );
+};
+
 export const isLoggedIn = () => {
   return Boolean(
     Cookies.get(
-      isDevelopment || isProductionApp
+      isDevelopment
+        ? 'test__user__isLoggedIn'
+        : isProductionApp
         ? '__user__isLoggedIn'
         : `${APP_ENV}__user__isLoggedIn`,
     ),
   );
 };
+// export const isLoggedIn = () => {
+//   return Boolean(
+//     Cookies.get(
+//       isDevelopment || isProductionApp
+//         ? '__user__isLoggedIn'
+//         : `${APP_ENV}__user__isLoggedIn`,
+//     ),
+//   );
+// };
 
 export const showErrorMessage = (message) => {
   if (message instanceof Array) {
