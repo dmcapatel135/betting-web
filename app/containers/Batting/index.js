@@ -64,7 +64,7 @@ function Batting() {
   // get all sports name
   const getAllSports = async () => {
     const response = await getReq('/sports');
-    setAllSports(response.data);
+    setAllSports(response?.data);
     const result = response?.data
       ?.filter(
         (obj) =>

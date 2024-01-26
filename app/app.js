@@ -19,6 +19,7 @@ import {
 } from '@containers/pageListAsync';
 import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
+import Withdraw from '@containers/Withdraw';
 
 function App() {
   const { pathname, hash } = useLocation();
@@ -44,9 +45,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/join-now" element={<JoinNow />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="my-bets" element={<MyBets />} />
-          <Route path="my-transactions" element={<MyTransactions />} />
-          <Route path="deposit" element={<Deposit />} />
         </Route>
 
         <Route path="/dashboard" element={<OuterLayout />}>
@@ -74,6 +72,10 @@ function App() {
               </ProtectedRoutes>
             }
           />
+          <Route path="my-bets" element={<MyBets />} />
+          <Route path="my-transactions" element={<MyTransactions />} />
+          <Route path="deposit" element={<Deposit />} />
+          <Route path="withdraw" element={<Withdraw />} />
         </Route>
 
         <Route path="/*" element={<NotFound />} />

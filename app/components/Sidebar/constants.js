@@ -31,7 +31,7 @@ export const navigations = [
     icon: images.jackpotIcon,
     active_icon: images.jackpotIconActive,
     title: 'JACKPOT',
-    path: 'jackpot',
+    path: '/dashboard/jackpot',
   },
   {
     icon: images.popularIcon,

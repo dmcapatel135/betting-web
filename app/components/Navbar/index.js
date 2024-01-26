@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import Sidebar from '@components/Sidebar';
 import { reactIcons } from '@utils/icons';
@@ -150,9 +150,11 @@ const Navbar = () => {
               </button>
             )}
             {isLoggedIn() ? (
-              <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
-                Deposit
-              </button>
+              <Link to="/deposit">
+                <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
+                  Deposit
+                </button>
+              </Link>
             ) : (
               <button
                 className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-1 md:order-2"
@@ -182,22 +184,25 @@ const Navbar = () => {
                     <ul className="">
                       <li
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        onClick={() => navigate('/my-bets')}
+                        onClick={() => navigate('/dashboard/my-bets')}
                       >
                         My Bets
                       </li>
                       <li
-                        onClick={() => navigate('/deposit')}
+                        onClick={() => navigate('/dashboard/deposit')}
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                       >
                         Deposit
                       </li>
-                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                      <li
+                        onClick={() => navigate('/dashboard/withdraw')}
+                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                      >
                         Withdraw
                       </li>
                       <li
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        onClick={() => navigate('/my-transactions')}
+                        onClick={() => navigate('/dashboard/my-transactions')}
                       >
                         Transactions
                       </li>

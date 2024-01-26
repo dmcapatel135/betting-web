@@ -5,9 +5,10 @@ import {
   MobileInputField,
   TalkToUs,
 } from '@components';
-import React from 'react';
+import React, { useState } from 'react';
 
 function Deposit() {
+  const [paymentMethod, setPaymentMethod] = useState('Tigo');
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
@@ -41,7 +42,7 @@ function Deposit() {
                   <input
                     type="text"
                     placeholder="Enter Amount"
-                    className="border-[1px] border-yellow w-full h-10 rounded-lg px-3"
+                    className="border-[1px] border-yellow text-14 outline-none text-gray-900 w-full h-10 rounded-lg px-3"
                   />
                 </div>
                 <div>
@@ -65,41 +66,144 @@ function Deposit() {
                 <div className="my-2">
                   <p className="font-[500] text-16">HOW TO DEPOSIT ON PHONE</p>
                   <div className="flex my-2">
-                    <img
-                      src="/images/bikoicon/tigo2.png"
-                      className="mr-2 w-14 h-14"
-                    />
-                    <img
-                      src="/images/bikoicon/mpesa2.png"
-                      className="mr-2 w-14 h-14"
-                    />
-                    <img
-                      src="/images/bikoicon/airtel2.png"
-                      className="mr-2 w-14 h-14"
-                    />
-                    <img
-                      src="/images/bikoicon/halo2.png"
-                      className="mr-2 w-14 h-14"
-                    />
+                    <div
+                      className={`mr-2 ${
+                        paymentMethod === 'Tigo'
+                          ? 'border-2 border-blue rounded-sm'
+                          : 'border-none'
+                      }`}
+                    >
+                      <img
+                        src="/images/bikoicon/tigo.png"
+                        className="w-14 h-14 cursor-pointer"
+                        onClick={() => setPaymentMethod('Tigo')}
+                      />
+                    </div>
+                    <div
+                      className={`mr-2 ${
+                        paymentMethod === 'Mpesa'
+                          ? 'border-2 border-blue rounded-sm'
+                          : 'border-none'
+                      }`}
+                    >
+                      <img
+                        src="/images/bikoicon/mpesa2.png"
+                        className=" w-14 h-14 cursor-pointer"
+                        onClick={() => setPaymentMethod('Mpesa')}
+                      />
+                    </div>
+                    <div
+                      className={`mr-2 ${
+                        paymentMethod === 'Airtel'
+                          ? 'border-2 border-blue rounded-sm'
+                          : 'border-none'
+                      }`}
+                    >
+                      <img
+                        src="/images/bikoicon/airtel2.png"
+                        className=" w-14 h-14 cursor-pointer"
+                        onClick={() => setPaymentMethod('Airtel')}
+                      />
+                    </div>
+                    <div
+                      className={`mr-2 ${
+                        paymentMethod === 'Hpesa'
+                          ? 'border-2 border-blue rounded-sm'
+                          : 'border-none'
+                      }`}
+                    >
+                      <img
+                        src="/images/bikoicon/halo2.png"
+                        className="w-14 h-14 cursor-pointer"
+                        onClick={() => setPaymentMethod('Hpesa')}
+                      />
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <p className="font-[500] text-16">
-                    KUWEKA PESA KUPITIA TIGOPESA
-                  </p>
-                  <ol className="text-12">
-                    <li>1. Piga *150*01#</li>
-                    <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
-                    <li>3. Chagua 3 Weka namba ya kampuni/biashara: 101010</li>
-                    <li>
-                      4. Weka Namba yako ya Account (phone number) au Receipt
-                      (kama unalipia bila account)
-                    </li>
-                    <li>
-                      5. Weka kiasi: XX,XXX/= , Na namba ya siri kumalizia
-                    </li>
-                  </ol>
-                </div>
+                {paymentMethod === 'Tigo' && (
+                  <div>
+                    <p className="font-[500] text-16">
+                      KUWEKA PESA KUPITIA TIGOPESA
+                    </p>
+                    <ol className="text-12">
+                      <li>1. Piga *150*01#</li>
+                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                      <li>
+                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                      </li>
+                      <li>
+                        4. Weka Namba yako ya Account (phone number) au Receipt
+                        (kama unalipia bila account)
+                      </li>
+                      <li>
+                        5. Weka kiasi: XX,XXX/= , Na namba ya siri kumalizia
+                      </li>
+                    </ol>
+                  </div>
+                )}
+                {paymentMethod === 'Mpesa' && (
+                  <div>
+                    <p className="font-[500] text-16">
+                      KUWEKA PESA KUPITIA MPESA
+                    </p>
+                    <ol className="text-12">
+                      <li>1. Piga *150*01#</li>
+                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                      <li>
+                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                      </li>
+                      <li>
+                        4. Weka Namba yako ya Account (phone number) au Receipt
+                        (kama unalipia bila account)
+                      </li>
+                      <li>
+                        5. Weka kiasi: XX,XXX/= , Na namba ya siri kumalizia
+                      </li>
+                    </ol>
+                  </div>
+                )}
+                {paymentMethod === 'Airtel' && (
+                  <div>
+                    <p className="font-[500] text-16">
+                      KUWEKA PESA KUPITIA AIRTEL
+                    </p>
+                    <ol className="text-12">
+                      <li>1. Piga *150*01#</li>
+                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                      <li>
+                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                      </li>
+                      <li>
+                        4. Weka Namba yako ya Account (phone number) au Receipt
+                        (kama unalipia bila account)
+                      </li>
+                      <li>
+                        5. Weka kiasi: XX,XXX/= , Na namba ya siri kumalizia
+                      </li>
+                    </ol>
+                  </div>
+                )}
+                {paymentMethod === 'Hpesa' && (
+                  <div>
+                    <p className="font-[500] text-16">
+                      KUWEKA PESA KUPITIA HALOPESA
+                    </p>
+                    <ol className="text-12">
+                      <li>1. Piga *150*01#</li>
+                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                      <li>
+                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                      </li>
+                      <li>
+                        4. Weka Namba yako ya Account (phone number) au Receipt
+                        (kama unalipia bila account)
+                      </li>
+                      <li>
+                        5. Weka kiasi: XX,XXX/= , Na namba ya siri kumalizia
+                      </li>
+                    </ol>
+                  </div>
+                )}
               </div>
             </div>
           </div>
