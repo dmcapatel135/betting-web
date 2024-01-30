@@ -69,6 +69,7 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
+    console.log();
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
