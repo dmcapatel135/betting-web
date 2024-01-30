@@ -69,17 +69,23 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
-    if (tab === 2) {
+    const today = new Date();
+    const upcoming = new Date(today);
+    upcoming.setDate(today.getDate() + 1);
+    if (tab === 2 && selectTournament) {
       getAllFixtures(`date=${new Date()}&tournamentId=${selectTournament}`);
-    } else if (tab === 3) {
-      const today = new Date();
-      const upcoming = new Date(today);
-      upcoming.setDate(today.getDate() + 1);
+    } else if (tab === 3 && selectTournament) {
       getAllFixtures(`fromDate=${upcoming}&tournamentId=${selectTournament}`);
-    } else if (tab === 4) {
+    } else if (tab === 4 && selectTournament) {
       getAllFixtures(`onlyLive=${true}&tournamentId=${selectTournament}`);
     } else if (selectTournament) {
       getAllFixtures(`tournamentId=${selectTournament}`);
+    } else if (tab === 2) {
+      getAllFixtures(`date=${new Date()}`);
+    } else if (tab === 3) {
+      getAllFixtures(`fromDate=${upcoming}`);
+    } else if (tab === 4) {
+      getAllFixtures(`onlyLive=${true}`);
     }
   }, [sportId, getAllFixtures, tab, selectTournament]);
 
