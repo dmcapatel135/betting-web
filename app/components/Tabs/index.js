@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Tabs({ sportId, setSportId, popularSports }) {
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const [nextIndex, setNextIndex] = useState(15);
   return (
     <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
       {popularSports?.map((item) => {
@@ -11,7 +9,7 @@ function Tabs({ sportId, setSportId, popularSports }) {
           <div
             key={item.id}
             className={`${
-              sportId === item.id
+              item.id === sportId
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black'
             } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}

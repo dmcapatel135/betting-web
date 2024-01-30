@@ -1,26 +1,20 @@
 import Tabs from '@components/Tabs';
 import { getReq } from '@utils/apiHandlers';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
 import { BetCard } from '@components';
+import { MyContext } from '@components/MyContext/MyContext';
 
 function SportsMenu() {
-  //   {
-  //   selectTournament,
-  //   setSelectTournament
-  // }
-  const [step, setStep] = useState('sr:sport:1');
-  const [sportId, setSportId] = useState(1);
   const [tab, setTab] = useState(2);
-  //   const [value, setValue] = useState(true);
   const [allSports, setAllSports] = useState();
   const [popularSports, setPopularSports] = useState();
-  // const [todayEvent, setTodayEvent] = useState();
   const [allTournaments, setAllTournaments] = useState();
-  const [liveEvents, setLiveEvents] = useState([]);
-  const [selectTournament, setSelectTournament] = useState();
   const [allFixtures, setAllFixtures] = useState();
+
+  const { sportId, setSportId, selectTournament, setSelectTournament } =
+    useContext(MyContext);
 
   // get all sports name
   const getAllSports = async () => {
@@ -41,28 +35,13 @@ function SportsMenu() {
   };
   useEffect(() => {
     if (popularSports) {
-      setStep(popularSports[0]?.id);
+      setSportId(popularSports[0]?.id);
     }
-  }, [popularSports]);
+  }, [popularSports, setSportId]);
 
   useEffect(() => {
     getAllSports();
   }, []);
-
-  // get all live events
-  const getLiveEvents = useCallback(async () => {
-    const response = await getReq('/sports/events/live');
-    response.data?.map((item) => {
-      if (item.tournament.id === selectTournament) {
-        setLiveEvents((prev) => [...prev, item]);
-      }
-    });
-  }, [selectTournament]);
-
-  useEffect(() => {
-    setLiveEvents([]);
-    getLiveEvents();
-  }, [selectTournament, getLiveEvents, step]);
 
   // get all events of sports
   // const getAllEvents = useCallback(async () => {
@@ -91,16 +70,18 @@ function SportsMenu() {
 
   useEffect(() => {
     if (tab === 2) {
-      getAllFixtures(`date=${new Date()}`);
+      getAllFixtures(`date=${new Date()}&tournamentId=${selectTournament}`);
     } else if (tab === 3) {
       const today = new Date();
       const upcoming = new Date(today);
       upcoming.setDate(today.getDate() + 1);
-      getAllFixtures(`fromDate=${upcoming}`);
+      getAllFixtures(`fromDate=${upcoming}&tournamentId=${selectTournament}`);
     } else if (tab === 4) {
-      getAllFixtures(`onlyLive=${true}`);
+      getAllFixtures(`onlyLive=${true}&tournamentId=${selectTournament}`);
+    } else if (selectTournament) {
+      getAllFixtures(`tournamentId=${selectTournament}`);
     }
-  }, [sportId, getAllFixtures, tab]);
+  }, [sportId, getAllFixtures, tab, selectTournament]);
 
   const getAllFixtures = useCallback(
     async (query) => {
@@ -130,9 +111,9 @@ function SportsMenu() {
                 key={item.id}
                 className={`${
                   tab === item.id
-                    ? 'text-white border-b-[3px] border-yellow w-36 text-center'
-                    : 'text-white'
-                } mx-3`}
+                    ? 'text-white border-b-[3px] border-yellow'
+                    : 'text-white  w-36'
+                } mx-3 flex-1 text-center`}
                 onClick={() => setTab(item.id)}
               >
                 <span
@@ -147,9 +128,9 @@ function SportsMenu() {
           })}
         </div>
         <div className="px-3">
-          <select
+          {/* <select
+            value={selectTournament}
             onChange={(e) => {
-              console.log('----select id ', e.target.value);
               setSelectTournament(e.target.value);
             }}
             className="w-full my-2 custom-select-drop font-[600] text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
@@ -162,10 +143,26 @@ function SportsMenu() {
                 </option>
               );
             })}
-          </select>
+          </select> */}
           <div className="flex">
             <div className="flex-1 pr-2">
-              <select className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
+              <select
+                value={selectTournament}
+                onChange={(e) => {
+                  setSelectTournament(e.target.value);
+                }}
+                className="w-full my-2 custom-select-drop font-[600] text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+              >
+                <option>Top Leagues & Countries</option>
+                {allTournaments?.map((item) => {
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item?.name} & {item?.category?.name}
+                    </option>
+                  );
+                })}
+              </select>
+              {/* <select className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
                 <option>Today&apos;s Events</option>
                 {liveEvents?.map((item) => {
                   return (
@@ -175,7 +172,7 @@ function SportsMenu() {
                     </option>
                   );
                 })}
-              </select>
+              </select> */}
             </div>
             <div className="flex-1 pr-2">
               <select className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
@@ -184,7 +181,10 @@ function SportsMenu() {
             </div>
             <div className="flex-1">
               <select
-                value={step}
+                value={sportId}
+                onChange={(e) => {
+                  setSportId(e.target.value);
+                }}
                 className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
               >
                 {popularSports?.map((item) => {
@@ -249,6 +249,11 @@ function SportsMenu() {
               </div>
             );
           })}
+        {allFixtures?.data?.length === 0 && (
+          <div className="text-center mt-12 text-black">
+            <span>No any matches available </span>
+          </div>
+        )}
       </div>
     </>
   );

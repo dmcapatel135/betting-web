@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MyContext } from '@components/MyContext/MyContext';
 
 import { reactIcons } from '@utils/icons';
 
-import { navigations, popularCountries, tournaments } from './constants';
+import { navigations, popularCountries } from './constants';
 
-function Sidebar({ isMobileSidebar, selectTournament, setSelectTournament }) {
+function Sidebar({ isMobileSidebar }) {
   const [isOpenTournament, setIsOpenTournament] = useState(false);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('HOME');
-
-  console.log('-----select tournament ', selectTournament);
+  const { allTournaments, setSelectTournament } = useContext(MyContext);
 
   return (
     <div
@@ -77,16 +77,16 @@ function Sidebar({ isMobileSidebar, selectTournament, setSelectTournament }) {
           {isOpenTournament && (
             <div className="pl-2">
               <ul>
-                {tournaments.map((item) => {
+                {allTournaments?.map((item) => {
                   return (
                     <li
                       key={item.id}
-                      className="flex items-center cursor-pointer text-black"
+                      className="flex items-center cursor-pointer text-black "
                       onClick={() => setSelectTournament(item.id)}
                     >
-                      <img src={item.icon} alt="i" className="w-3 h-3" />
-                      <span className="text-12 mx-2 text-black ">
-                        {item.league}
+                      {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
+                      <span className="text-12 mx-2 text-black hover:text-blue ">
+                        {item.name}
                       </span>
                     </li>
                   );
