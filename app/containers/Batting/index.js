@@ -1,147 +1,24 @@
 import {
-  BetCard,
+  // BetCard,
   BetWallet,
-  Betslip,
+  // Betslip,
   CompanyContact,
   CustomerCareContact,
   TalkToUs,
 } from '@components';
-import Tabs from '@components/Tabs';
-import { getReq } from '@utils/apiHandlers';
-import React, { useCallback, useEffect, useState } from 'react';
+import SportsMenu from '@components/SportsMenu';
 
-const sport = [
-  {
-    name: 'Soccer',
-    icon: '/images/bikoicon/other.png',
-    active_icon: '/images/bikoicon/sports_soccer.png',
-  },
-  {
-    name: 'Basketball',
-    icon: '/images/bikoicon/sports_and_outdoors.png',
-    active_icon: '/images/bikoicon/basketballwhite.png',
-  },
-  {
-    name: 'Boxing',
-    icon: '/images/bikoicon/boxing.png',
-    active_icon: '/images/bikoicon/boxingwhite.png',
-  },
-  {
-    name: 'Rugby',
-    icon: '/images/bikoicon/rugby.png',
-    active_icon: '/images/bikoicon/rugbywhite.png',
-  },
-  {
-    name: 'Cricket',
-    icon: '/images/bikoicon/cricket.png',
-    active_icon: '/images/bikoicon/cricketwhite.png',
-  },
-  {
-    name: 'Tennis',
-    icon: '/images/bikoicon/tennis-racket.png',
-    active_icon: '/images/bikoicon/tennis-racket.svg',
-  },
-];
-
-const tabsName = [
-  { id: 1, tabName: 'POPULAR MATCHES' },
-  { id: 2, tabName: 'TODAY MATCHES' },
-  { id: 3, tabName: 'UPCOMING MATCHES' },
-  { id: 4, tabName: 'LIVE GAMES' },
-];
+import React from 'react';
 
 function Batting() {
-  const [step, setStep] = useState('sr:sport:1');
-  const [tab, setTab] = useState(1);
-  const [value, setValue] = useState(true);
-  const [allSports, setAllSports] = useState();
-  const [popularSports, setPopularSports] = useState();
-  // const [todayEvent, setTodayEvent] = useState();
-  const [allTournaments, setAllTournaments] = useState();
-  const [liveEvents, setLiveEvents] = useState([]);
-  const [selectTournament, setSelectTournament] = useState();
-
-  // get all sports name
-  const getAllSports = async () => {
-    const response = await getReq('/sports');
-    setAllSports(response?.data);
-    const result = response?.data
-      ?.filter(
-        (obj) =>
-          obj.name === 'Basketball' ||
-          obj.name === 'Cricket' ||
-          obj.name === 'Soccer' ||
-          obj.name === 'Rugby' ||
-          obj.name === 'Boxing' ||
-          obj.name === 'Tennis',
-      )
-      .sort((a, b) => {
-        const idA = parseInt(a.id.split(':')[2]);
-        const idB = parseInt(b.id.split(':')[2]);
-        return idA - idB;
-      });
-
-    const mergedArray = sport?.map((obj2) => {
-      const matchingObj1 = result?.find((obj1) => obj1.name === obj2.name);
-      return { ...obj2, ...matchingObj1 };
-    });
-    setPopularSports(mergedArray);
-  };
-  useEffect(() => {
-    if (popularSports) {
-      setStep(popularSports[0]?.id);
-    }
-  }, [popularSports]);
-
-  useEffect(() => {
-    getAllSports();
-  }, []);
-
-  // get all live events
-  const getLiveEvents = useCallback(async () => {
-    const response = await getReq('/sports/events/live');
-    response.data?.map((item) => {
-      if (item.tournament.id === selectTournament) {
-        setLiveEvents((prev) => [...prev, item]);
-      }
-    });
-  }, [selectTournament]);
-
-  useEffect(() => {
-    setLiveEvents([]);
-    getLiveEvents();
-  }, [selectTournament, getLiveEvents, step]);
-
-  // get all events of sports
-  // const getAllEvents = useCallback(async () => {
-  //   const response = await getReq('/sports/events/pre');
-  //   if (step) {
-  //     const filteredMatches = response?.data?.filter(
-  //       (match) => match.tournament.sport.id === step,
-  //     );
-  //     setTodayEvent(filteredMatches);
-  //   }
-  // }, [step]);
-
-  // useEffect(() => {
-  //   getAllEvents();
-  // }, [step, getAllEvents]);
-
-  //get to tournaments according to sports
-  const getAllTournaments = useCallback(async () => {
-    const response = await getReq(`/sports/${step}/tournaments`);
-    setAllTournaments(response.data);
-  }, [step]);
-
-  useEffect(() => {
-    getAllTournaments();
-  }, [step, getAllTournaments]);
+  // const [value, setValue] = useState(true);
 
   return (
     <main className="md:pl-5  md:py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-12 md:col-span-8">
-          <div className="md:block hidden pr-2">
+          <SportsMenu />
+          {/* <div className="md:block hidden pr-2">
             <Tabs
               popularSports={popularSports}
               allSports={allSports}
@@ -226,8 +103,8 @@ function Batting() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="h-20 flex justify-around items-center text-black">
+          </div> */}
+          {/* <div className="h-20 flex justify-around items-center text-black">
             <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
               <p>MONDAY, DECEMBER 11TH 2023</p>
             </div>
@@ -270,10 +147,13 @@ function Batting() {
           </div>
           <div className="px-3 mb-3">
             <BetCard onClick={() => setValue(true)} />
-          </div>
+          </div> */}
         </div>
         <div className="col-span-4 mr-3 ml-1 md:block hidden">
-          {value ? <BetWallet /> : <Betslip />}
+          {/* { */}
+          <BetWallet />
+          {/* // : <Betslip />
+          } */}
           <CompanyContact />
           <CustomerCareContact />
           <TalkToUs />

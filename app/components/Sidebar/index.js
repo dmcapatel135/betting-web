@@ -6,11 +6,14 @@ import { reactIcons } from '@utils/icons';
 
 import { navigations, popularCountries, tournaments } from './constants';
 
-function Sidebar({ isMobileSidebar }) {
+function Sidebar({ isMobileSidebar, selectTournament, setSelectTournament }) {
   const [isOpenTournament, setIsOpenTournament] = useState(false);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('HOME');
+
+  console.log('-----select tournament ', selectTournament);
+
   return (
     <div
       className={`pt-3  min-h-screen h-full w-full   md:block bg-white ${
@@ -79,6 +82,7 @@ function Sidebar({ isMobileSidebar }) {
                     <li
                       key={item.id}
                       className="flex items-center cursor-pointer text-black"
+                      onClick={() => setSelectTournament(item.id)}
                     >
                       <img src={item.icon} alt="i" className="w-3 h-3" />
                       <span className="text-12 mx-2 text-black ">
@@ -156,6 +160,8 @@ function Sidebar({ isMobileSidebar }) {
 }
 Sidebar.propTypes = {
   isMobileSidebar: PropTypes.bool,
+  selectTournament: PropTypes.string,
+  setSelectTournament: PropTypes.string,
 };
 
 export default Sidebar;

@@ -1,35 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// const TabsName = [
-//   {
-//     name: 'Soccer',
-//     icon: '/images/bikoicon/other.png',
-//     active_icon: '/images/bikoicon/sports_soccer.png',
-//   },
-//   {
-//     name: 'BasketBall',
-//     icon: '/images/bikoicon/sports_and_outdoors.png',
-//     active_icon: '/images/bikoicon/basketballwhite.png',
-//   },
-//   {
-//     name: 'Boxing',
-//     icon: '/images/bikoicon/boxing.png',
-//     active_icon: '/images/bikoicon/boxingwhite.png',
-//   },
-//   {
-//     name: 'Rugby',
-//     icon: '/images/bikoicon/rugby.png',
-//     active_icon: '/images/bikoicon/rugbywhite.png',
-//   },
-//   {
-//     name: 'Cricket',
-//     icon: '/images/bikoicon/cricket.png',
-//     active_icon: '/images/bikoicon/cricketwhite.png',
-//   },
-// ];
-
-function Tabs({ step, setStep, popularSports }) {
+function Tabs({ sportId, setSportId, popularSports }) {
   // const [currentIndex, setCurrentIndex] = useState(0);
   // const [nextIndex, setNextIndex] = useState(15);
   return (
@@ -39,17 +11,17 @@ function Tabs({ step, setStep, popularSports }) {
           <div
             key={item.id}
             className={`${
-              step === item.id
+              sportId === item.id
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black'
             } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}
             onClick={() => {
-              setStep(item.id);
+              setSportId(item.id);
             }}
           >
             <div className="flex  h-12  md:justify-center items-center">
               <img
-                src={step === item.id ? item.active_icon : item.icon}
+                src={sportId === item.id ? item.active_icon : item.icon}
                 alt="profile_icon"
                 className="w-6 h-6"
               />
@@ -118,8 +90,8 @@ function Tabs({ step, setStep, popularSports }) {
 }
 
 Tabs.propTypes = {
-  step: PropTypes.number,
-  setStep: PropTypes.func,
+  sportId: PropTypes.number,
+  setSportId: PropTypes.func,
   allSports: PropTypes.array,
   popularSports: PropTypes.array,
 };

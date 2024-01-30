@@ -7,7 +7,7 @@ function AuthSideSection({ bgBtn, imgHeight }) {
   return (
     <div>
       <button
-        className={`flex mb-3 justify-left items-center text-12 font-[700]  font-roboto px-3 py-2 rounded-[8px] w-[140px] ${
+        className={`flex mb-3 justify-left items-center text-12 font-[700]  font-roboto px-3 py-2 rounded-[8px] w-[145px] ${
           !bgBtn
             ? 'bg-gradient-color-3 text-[#3D3D3D]'
             : 'bg-gradient-color-1 text-white'
@@ -26,7 +26,7 @@ function AuthSideSection({ bgBtn, imgHeight }) {
         LOG IN
       </button>
       <button
-        className={`flex mb-3 justify-left items-center text-12 font-[700] text-[#3D3D3D] font-roboto px-3 py-2 rounded-[8px] w-[140px] ${
+        className={`flex mb-3 justify-left items-center text-12 font-[700] text-[#3D3D3D] font-roboto px-3 py-2 rounded-[8px] w-[145px] ${
           bgBtn
             ? 'bg-gradient-color-3 text-[#3D3D3D]'
             : 'bg-gradient-color-1 text-white'

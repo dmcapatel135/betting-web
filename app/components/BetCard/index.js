@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-function BetCard() {
+function BetCard({ item }) {
   return (
-    <div className="md:h-24 h-fit flex justify-around items-center border-[1px] px-2 md:px-0 rounded-[8px] border-[#A3A3A3] text-black">
+    <div className="md:min-h-32 max-h-fit flex justify-around items-center border-[1px] px-2 md:px-0 rounded-[8px] border-[#A3A3A3] text-black">
       <div className="text-12 w-[140px] md:w-[160px] text-black rounded-[4px] text-left ">
         <div className="flex md:justify-left items-center">
           <img
@@ -10,7 +12,10 @@ function BetCard() {
             // className="w-[20px] h-[16px] md:w-[22px] md:h-[22px]"
           />
           <p className="text-10 ml-1 md:text-12">
-            11:15 pm <span className="font-[600]">Mon 06/12</span>
+            {moment(item?.startTime).format('hh:mm A')}{' '}
+            <span className="font-[600]">
+              {moment(item?.startTime).format('ddd MM/DD')}
+            </span>
           </p>
           <img
             src="/images/bikoicon/vector.png"
@@ -19,10 +24,10 @@ function BetCard() {
           />
         </div>
         <h2 className="text-12 md:text-14 leading-5 font-[700]">
-          Manchester United Chelsa FC
+          {item?.competitors[0]?.name} v/s {item?.competitors[0]?.name}{' '}
         </h2>
         <span className="text-[9px]  leading-5 md:text-10">
-          Football/England/Premier league
+          {item?.sport?.name}/{item?.category?.name}/{item?.tournament?.name}
         </span>
       </div>
       <div className="text-center flex-2">
@@ -73,5 +78,9 @@ function BetCard() {
     </div>
   );
 }
+
+BetCard.propTypes = {
+  item: PropTypes.object,
+};
 
 export default BetCard;

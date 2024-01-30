@@ -129,3 +129,7 @@ export const JackpotCard = loadable(() => import('./JackpotCard'), {
 export const JackpotDailyCard = loadable(() => import('./JackpotDailyCard'), {
   fallback: <Loading />,
 });
+
+export const SportsMenu = loadable(() => import('./SportsMenu'), {
+  fallback: <Loading />,
+});

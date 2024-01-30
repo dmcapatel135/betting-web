@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { BetCard, RightSideSection } from '@components';
-import Tabs from '@components/Tabs';
+import { RightSideSection } from '@components';
+// import Tabs from '@components/Tabs';
 import { isLoggedIn } from '@utils/apiHandlers';
 import { useNavigate } from 'react-router-dom';
+import SportsMenu from '@components/SportsMenu';
 
-const tabsName = [
-  { id: 1, tabName: 'STRONG MATCH' },
-  { id: 2, tabName: 'TODAYs MATCHES' },
-  { id: 3, tabName: 'UPCOMING MATCHES' },
-  { id: 4, tabName: 'LIVE NOW' },
-];
+// const tabsName = [
+//   { id: 1, tabName: 'STRONG MATCH' },
+//   { id: 2, tabName: 'TODAYs MATCHES' },
+//   { id: 3, tabName: 'UPCOMING MATCHES' },
+//   { id: 4, tabName: 'LIVE NOW' },
+// ];
 
 const Landing = () => {
-  const [step, setStep] = useState(1);
-  const [tab, setTab] = useState(1);
+  // const [sportId, setSportId] = useState(1);
+  // const [tab, setTab] = useState(2);
+  // const [allFixtures, setAllFixtures] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,11 +25,38 @@ const Landing = () => {
     }
   });
 
+  // useEffect(() => {
+  //   if (tab === 2) {
+  //     getAllFixtures(`date=${new Date()}`);
+  //   } else if (tab === 3) {
+  //     const today = new Date();
+  //     const upcoming = new Date(today);
+  //     upcoming.setDate(today.getDate() + 1);
+  //     getAllFixtures(`fromDate=${upcoming}`);
+  //   } else if (tab === 4) {
+  //     getAllFixtures(`onlyLive=${true}`);
+  //   }
+  // }, [sportId, getAllFixtures, tab]);
+
+  // const getAllFixtures = useCallback(
+  //   async (query) => {
+  //     const response = await getReq(`/sports/${sportId}/fixtures?${query}`);
+  //     setAllFixtures(response.data);
+  //   },
+  //   [sportId],
+  // );
+
   return (
     <main className="md:pl-5  md:py-2">
       <div className="grid grid-cols-12">
         <div className="col-span-12 md:col-span-8">
-          <div className="md:block hidden pr-2">
+          <SportsMenu
+          // sportId={sportId}
+          // setSportId={setSportId}
+          // tab={tab}
+          // setTab={setTab}
+          />
+          {/* <div className="md:block hidden pr-2">
             <Tabs step={step} setStep={setStep} />
           </div>
           <div className="my-0 md:my-2  md:mr-2 bg-gradient-color-1 rounded-b-[8px]">
@@ -74,8 +103,8 @@ const Landing = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="h-20 flex justify-around items-center text-black">
+          </div> */}
+          {/* <div className="h-20 flex justify-around items-center text-black">
             <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
               <p>MONDAY, DECEMBER 11TH 2023</p>
             </div>
@@ -117,8 +146,15 @@ const Landing = () => {
             </div>
           </div>
           <div className="px-3 mb-3">
-            <BetCard />
-          </div>
+            {allFixtures &&
+              allFixtures?.data?.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <BetCard item={item} />;
+                  </div>
+                );
+              })}
+          </div> */}
         </div>
         <div className="col-span-4 md:block hidden">
           <RightSideSection />

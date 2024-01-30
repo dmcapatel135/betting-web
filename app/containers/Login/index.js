@@ -59,7 +59,7 @@ function Login() {
             style={{ boxShadow: '0px 0px 22px -12px #87EBF7 inset' }}
           >
             <div className="grid grid-cols-12 md:p-3">
-              <div className="hidden lg:block md:col-span-3  px-0 md:px-4">
+              <div className="hidden lg:block md:col-span-3  px-0 md:pr-4">
                 <AuthSideSection bgBtn={true} />
               </div>
               <div className="lg:col-span-9 col-span-full bg-[#F4F4F4]  md:border-[1px] rounded-[8px] md:border-[#A3A3A3]">
