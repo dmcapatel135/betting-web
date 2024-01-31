@@ -25,7 +25,7 @@ function BetSlip({ wallet }) {
           <span className="text-12 text-black">Booking code</span>
           <input
             type="text"
-            className="w-[165px] mx-3 border-[1px] text-gray-900 px-2 text-12 outline-none rounded-sm  border-yellow"
+            className="w-[150px] mx-3 border-[1px] text-gray-900 px-2 text-12 outline-none rounded-sm  border-yellow"
           />
         </div>
         <button className="px-3 bg-gradient-color-2 text-12 rounded-sm">

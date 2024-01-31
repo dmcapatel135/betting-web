@@ -2,7 +2,12 @@ export const tabsName = [
   //   { id: 1, tabName: 'STRONG MATCH' },
   { id: 2, tabName: 'TODAYs MATCHES', filterName: new Date() },
   { id: 3, tabName: 'UPCOMING MATCHES', filterName: '' },
-  { id: 4, tabName: 'LIVE NOW', filterName: 'true' },
+  {
+    id: 4,
+    tabName: 'LIVE NOW',
+    filterName: 'true',
+    img: '/images/bikoicon/liveyellow.png',
+  },
 ];
 
 export const sport = [

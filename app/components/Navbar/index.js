@@ -150,7 +150,7 @@ const Navbar = () => {
               </button>
             )}
             {isLoggedIn() ? (
-              <Link to="/deposit">
+              <Link to="/dashboard/deposit">
                 <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
                   Deposit
                 </button>

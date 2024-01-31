@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 function Deposit() {
   const [paymentMethod, setPaymentMethod] = useState('Tigo');
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12 h-full">
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-0">
           <div className="">
@@ -209,7 +209,7 @@ function Deposit() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 mt-3 ml-1 mr-3 md:block hidden">
+      <div className="col-span-4 pt-5 pl-3 ml-1 mr-3 md:block hidden border-[#A3A3A3] border-l-[1px] h-full">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

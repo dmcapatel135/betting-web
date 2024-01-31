@@ -26,7 +26,7 @@ const TabsName = [
 function MyBets() {
   const [step, setStep] = useState(1);
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12 h-full">
       <ShareBetModal />
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-2">
@@ -62,7 +62,7 @@ function MyBets() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 mt-3 md:block hidden">
+      <div className="col-span-4  pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

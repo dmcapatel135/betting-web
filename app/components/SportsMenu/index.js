@@ -3,7 +3,7 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
-import { BetCard } from '@components';
+import { BetCard, Pagination } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 
 function SportsMenu() {
@@ -12,6 +12,9 @@ function SportsMenu() {
   const [popularSports, setPopularSports] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [allFixtures, setAllFixtures] = useState();
+  const [page, setPage] = useState(1);
+  const [dataCount, setDataCount] = useState();
+  const [pageSize, setPageSize] = useState(10);
 
   const { sportId, setSportId, selectTournament, setSelectTournament } =
     useContext(MyContext);
@@ -88,15 +91,21 @@ function SportsMenu() {
     } else if (tab === 4) {
       getAllFixtures(`onlyLive=${true}`);
     }
-  }, [sportId, getAllFixtures, tab, selectTournament]);
+  }, [sportId, getAllFixtures, tab, selectTournament, page, pageSize]);
 
   const getAllFixtures = useCallback(
     async (query) => {
-      const response = await getReq(`/sports/${sportId}/fixtures?${query}`);
+      const response = await getReq(
+        `/sports/${sportId}/fixtures?skip=${page}&take=${pageSize}&${query}`,
+      );
+      console.log('----respoen data fixture ', response.data);
+      setDataCount(response?.data?.count);
       setAllFixtures(response.data);
     },
-    [sportId],
+    [sportId, page, pageSize],
   );
+
+  console.log('-----page ', page);
 
   return (
     <>
@@ -120,9 +129,10 @@ function SportsMenu() {
                   tab === item.id
                     ? 'text-white border-b-[3px] border-yellow'
                     : 'text-white  w-36'
-                } mx-3 flex-1 text-center`}
+                } mx-3 flex-1 flex items-center justify-center text-center`}
                 onClick={() => setTab(item.id)}
               >
+                {/* {item.img && <img src={item.img} alt="icon" />} */}
                 <span
                   className={`text-12 sm:text-12 cursor-pointer lg:text-14 ${
                     item.tabName == 'LIVE NOW' ? 'text-yellow' : 'text-white'
@@ -262,6 +272,17 @@ function SportsMenu() {
           </div>
         )}
       </div>
+      {allFixtures?.data?.length > 0 && (
+        <div>
+          <Pagination
+            page={page}
+            setPage={setPage}
+            dataCount={dataCount}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
+        </div>
+      )}
     </>
   );
 }

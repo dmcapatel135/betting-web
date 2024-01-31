@@ -8,11 +8,12 @@ import { reactIcons } from '@utils/icons';
 import { navigations, popularCountries } from './constants';
 
 function Sidebar({ isMobileSidebar }) {
-  const [isOpenTournament, setIsOpenTournament] = useState(false);
+  const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('HOME');
-  const { allTournaments, setSelectTournament } = useContext(MyContext);
+  const { allTournaments, setSelectTournament, selectTournament } =
+    useContext(MyContext);
 
   return (
     <div
@@ -85,7 +86,11 @@ function Sidebar({ isMobileSidebar }) {
                       onClick={() => setSelectTournament(item.id)}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
-                      <span className="text-12 mx-2 text-black hover:text-blue ">
+                      <span
+                        className={`text-12 mx-2 ${
+                          selectTournament === item.id ? 'text-yellow' : ''
+                        } text-black hover:text-blue`}
+                      >
                         {item.name}
                       </span>
                     </li>

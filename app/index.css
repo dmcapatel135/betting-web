@@ -92,6 +92,10 @@
   }
 }
 
+.pagination-item-style {
+  @apply w-fit h-7 px-2 flex justify-center items-center text-14 rounded-[4px] text-black border-[1px] border-[];
+}
+
 @layer utilities {
 }
 
