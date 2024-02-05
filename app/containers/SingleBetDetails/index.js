@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import _ from 'lodash';
 import {
   Betslip,
   CompanyContact,
@@ -9,7 +10,7 @@ import {
 import { reactIcons } from '@utils/icons';
 import ReactSimplyCarousel from 'react-simply-carousel';
 import { getReq } from '@utils/apiHandlers';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const TabsName = [
   { id: 1, title: 'Head to head' },
@@ -18,8 +19,7 @@ const TabsName = [
 ];
 
 function SigleBetDetails() {
-  // const { eventId } = useParams();
-  const eventId = 41763285;
+  const { eventId } = useParams();
   const [step, setStep] = useState(1);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [allMarketData, setAllMarketData] = useState([]);
@@ -47,9 +47,9 @@ function SigleBetDetails() {
     eventSource.addEventListener('message', (event) => {
       // Handle the received message event
 
-      setMarketDataOdds(JSON.parse(event.data));
+      setMarketDataOdds(JSON.parse(event?.data));
 
-      console.log('-----event 0-----', JSON.parse(event.data));
+      //   console.log('-----event 0-----', JSON.parse(event?.data));
 
       // if (JSON.parse(event.data).length > 0) {
       //   setOrderBookData(JSON.parse(event.data));
@@ -75,22 +75,51 @@ function SigleBetDetails() {
   }, [eventId]);
 
   useEffect(() => {
-    let outcomes1 = allMarketData[0]?.outcomes;
-    let outcomes2 = marketDataOdds?.odds?.markets[0]?.outcomes;
+    if (allMarketData && marketDataOdds) {
+      const allMarkets = _.keyBy(allMarketData, 'id');
+      const markets = [];
 
-    outcomes2?.forEach((outcome2) => {
-      let correspondingOutcome = outcomes1.find(
-        (outcome1) => outcome1.id === outcome2.id,
-      );
-
-      if (correspondingOutcome) {
-        correspondingOutcome.odds = outcome2.odds;
-        correspondingOutcome.probabilities = outcome2.probabilities;
-        correspondingOutcome.active = outcome2.active;
+      for (const oddsMarket of marketDataOdds.odds.markets) {
+        const market = allMarkets[oddsMarket.id];
+        if (market) {
+          const allOutcomes = _.keyBy(market.outcomes, 'id');
+          markets.push({
+            ...market,
+            outcomes: _.compact(
+              oddsMarket.outcomes.map((outcome) => {
+                if (allOutcomes[outcome.id]) {
+                  return {
+                    ...allOutcomes[outcome.id],
+                    odds: outcome.odds,
+                    active: outcome.active,
+                  };
+                }
+              }),
+            ),
+          });
+        }
       }
-    });
+      setMergedData(markets);
 
-    setMergedData(allMarketData);
+      console.log('-------all market data ', markets);
+    }
+
+    // let outcomes1 = allMarketData[0]?.outcomes;
+    // let outcomes2 = marketDataOdds?.odds?.markets[0]?.outcomes;
+
+    // outcomes2?.forEach((outcome2) => {
+    //   let correspondingOutcome = outcomes1?.find(
+    //     (outcome1) => outcome1.id === outcome2.id,
+    //   );
+
+    //   if (correspondingOutcome) {
+    //     correspondingOutcome.odds = outcome2.odds;
+    //     correspondingOutcome.probabilities = outcome2.probabilities;
+    //     correspondingOutcome.active = outcome2.active;
+    //   }
+    // });
+
+    // setMergedData(allMarketData);
   }, [allMarketData, marketDataOdds]);
 
   return (
@@ -398,7 +427,7 @@ function SigleBetDetails() {
               </div>
             )}
             {mergedData?.length > 0 &&
-              allMarketData.map((item) => {
+              mergedData?.map((item) => {
                 return (
                   <div key={item.id}>
                     <div className="my-3">
@@ -407,6 +436,7 @@ function SigleBetDetails() {
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {
+                          console.log('------inner item ', innerItem);
                           return (
                             <div
                               key={innerIndex}
