@@ -31,6 +31,7 @@ const TabsName = [
 
 function Jackpot() {
   const [step, setStep] = useState(TabsName[0].id);
+  const [openCard, setOpenCard] = useState(false);
   return (
     <div className="grid grid-cols-12 h-full">
       <div className="col-span-8 pt-5">
@@ -67,20 +68,23 @@ function Jackpot() {
         {step === 1 && (
           <div className="px-5">
             <div className="my-3">
-              <JackpotCard />
+              <JackpotCard setOpenCard={setOpenCard} />
             </div>
             <div>
               <JackpotDailyCard />
             </div>
-
-            <div className="flex text-black justify-end mr-10 mt-5">
-              <p className="mr-4 text-14 font-[600]">Home</p>
-              <p className="ml-8 mr-12 text-14 font-[600]">Draw</p>
-              <p className="text-14  font-[600]">Away</p>
-            </div>
-            <div>
-              <JackpotDetailCard />
-            </div>
+            {openCard && (
+              <>
+                <div className="flex text-black justify-end mr-10 mt-5">
+                  <p className="mr-4 text-14 font-[600]">Home</p>
+                  <p className="ml-8 mr-12 text-14 font-[600]">Draw</p>
+                  <p className="text-14  font-[600]">Away</p>
+                </div>
+                <div>
+                  <JackpotDetailCard />
+                </div>
+              </>
+            )}
           </div>
         )}
         {step === 2 && (

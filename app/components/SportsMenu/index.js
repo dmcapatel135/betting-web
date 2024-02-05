@@ -3,7 +3,7 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
-import { BetCard, Pagination } from '@components';
+import { BetCard, Loading, Pagination } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 
 function SportsMenu() {
@@ -15,6 +15,7 @@ function SportsMenu() {
   const [page, setPage] = useState(1);
   const [dataCount, setDataCount] = useState();
   const [pageSize, setPageSize] = useState(10);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { sportId, setSportId, selectTournament, setSelectTournament } =
     useContext(MyContext);
@@ -24,11 +25,6 @@ function SportsMenu() {
     const response = await getReq('/sports');
     setAllSports(response?.data);
     const result = response?.data?.filter((obj) => obj.isEnabled === true);
-    // .sort((a, b) => {
-    //   const idA = parseInt(a.id.split(':')[2]);
-    //   const idB = parseInt(b.id.split(':')[2]);
-    //   return idA - idB;
-    // });
 
     const mergedArray = sport?.map((obj2) => {
       const matchingObj1 = result?.find((obj1) => obj1.name === obj2.name);
@@ -95,17 +91,16 @@ function SportsMenu() {
 
   const getAllFixtures = useCallback(
     async (query) => {
+      setIsLoading(true);
       const response = await getReq(
         `/sports/${sportId}/fixtures?skip=${page}&take=${pageSize}&${query}`,
       );
-      console.log('----respoen data fixture ', response.data);
+      setIsLoading(false);
       setDataCount(response?.data?.count);
       setAllFixtures(response.data);
     },
     [sportId, page, pageSize],
   );
-
-  console.log('-----page ', page);
 
   return (
     <>
@@ -113,8 +108,8 @@ function SportsMenu() {
         <Tabs
           popularSports={popularSports}
           allSports={allSports}
-          sportId={sportId}
-          setSportId={setSportId}
+          // sportId={sportId}
+          // setSportId={setSportId}
         />
       </div>
       <div className="my-0 md:my-2  md:mr-2 bg-gradient-color-1 rounded-b-[8px]">
@@ -168,7 +163,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSelectTournament(e.target.value);
                 }}
-                className="w-full my-2 custom-select-drop font-[600] text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2 custom-select-drop font-[600] text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
               >
                 <option>Top Leagues & Countries</option>
                 {allTournaments?.map((item) => {
@@ -202,7 +197,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSportId(e.target.value);
                 }}
-                className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
               >
                 {popularSports?.map((item) => {
                   return (
@@ -266,6 +261,7 @@ function SportsMenu() {
               </div>
             );
           })}
+        {isLoading && <Loading />}
         {allFixtures?.data?.length === 0 && (
           <div className="text-center mt-12 text-black">
             <span>No any matches available </span>

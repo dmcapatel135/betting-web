@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Betslip,
   CompanyContact,
   CustomerCareContact,
+  Loading,
   TalkToUs,
 } from '@components';
 import { reactIcons } from '@utils/icons';
 import ReactSimplyCarousel from 'react-simply-carousel';
+import { getReq } from '@utils/apiHandlers';
+// import { useParams } from 'react-router-dom';
 
 const TabsName = [
   { id: 1, title: 'Head to head' },
@@ -15,8 +18,81 @@ const TabsName = [
 ];
 
 function SigleBetDetails() {
+  // const { eventId } = useParams();
+  const eventId = 41763285;
   const [step, setStep] = useState(1);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [allMarketData, setAllMarketData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [marketDataOdds, setMarketDataOdds] = useState();
+  const [mergedData, setMergedData] = useState([]);
+
+  const getAllMarketData = useCallback(async () => {
+    setIsLoading(true);
+    const response = await getReq(`/events/${eventId}/markets`);
+    setIsLoading(false);
+    setAllMarketData(response.data);
+  }, [eventId]);
+
+  useEffect(() => {
+    getAllMarketData();
+  }, [getAllMarketData, eventId]);
+
+  useEffect(() => {
+    const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
+      withCredentials: true,
+    });
+
+    // Handle the received events
+    eventSource.addEventListener('message', (event) => {
+      // Handle the received message event
+
+      setMarketDataOdds(JSON.parse(event.data));
+
+      console.log('-----event 0-----', JSON.parse(event.data));
+
+      // if (JSON.parse(event.data).length > 0) {
+      //   setOrderBookData(JSON.parse(event.data));
+      //   handleOrderBookData(JSON.parse(event.data));
+      // } else if (event.data) {
+      //   const newObject = JSON.parse(event.data);
+      //   const temp = orderBookData;
+      //   temp.unshift(newObject);
+      //   temp.pop();
+      //   setOrderBookData(temp);
+      //   if (JSON.parse(event.data).taker_side === 'BUY') {
+      //     const buyer = buyerData;
+      //     if (buyer.length > 10) buyer.pop();
+      //     setBuyerData(buyer);
+      //   }
+      //   if (JSON.parse(event.data).taker_side === 'SELL') {
+      //     const seller = sellerData;
+      //     if (seller.length > 10) seller.pop();
+      //     setSellerData(seller);
+      //   }
+      // }
+    });
+  }, [eventId]);
+
+  useEffect(() => {
+    let outcomes1 = allMarketData[0]?.outcomes;
+    let outcomes2 = marketDataOdds?.odds?.markets[0]?.outcomes;
+
+    outcomes2?.forEach((outcome2) => {
+      let correspondingOutcome = outcomes1.find(
+        (outcome1) => outcome1.id === outcome2.id,
+      );
+
+      if (correspondingOutcome) {
+        correspondingOutcome.odds = outcome2.odds;
+        correspondingOutcome.probabilities = outcome2.probabilities;
+        correspondingOutcome.active = outcome2.active;
+      }
+    });
+
+    setMergedData(allMarketData);
+  }, [allMarketData, marketDataOdds]);
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
@@ -315,92 +391,123 @@ function SigleBetDetails() {
               </h1>
             </div>
           </div>
-          <div className="my-3">
-            <div className="text-black">
-              <h1 className="text-14 font-[500] py-2">1X2</h1>
-            </div>
-            <div className="flex">
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">
-                    Cape Varde
-                  </span>
-                  <span className="text-[700]">6.53</span>
-                </button>
+          <div>
+            {isLoading && (
+              <div>
+                <Loading />
               </div>
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">Draw</span>
-                  <span className="font-[700]">2.09</span>
-                </button>
+            )}
+            {mergedData?.length > 0 &&
+              allMarketData.map((item) => {
+                return (
+                  <div key={item.id}>
+                    <div className="my-3">
+                      <div className="text-black">
+                        <h1 className="text-14 font-[500] py-2">{item.name}</h1>
+                      </div>
+                      <div className="grid grid-cols-12">
+                        {item.outcomes.map((innerItem, innerIndex) => {
+                          return (
+                            <div
+                              key={innerIndex}
+                              className="flex col-span-4 mb-2"
+                            >
+                              <div className="flex-1 mr-2">
+                                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                                  <span className="text-center font-[700] flex-1">
+                                    {innerItem.name}
+                                  </span>
+                                  <span className="text-[700]">
+                                    {innerItem.odds}
+                                  </span>
+                                </button>
+                              </div>
+                              {/* <div className="flex-1 mr-2">
+                              <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                                <span className="text-center font-[700] flex-1">
+                                  Draw
+                                </span>
+                                <span className="font-[700]">2.09</span>
+                              </button>
+                            </div>
+                            <div className="flex-1 mr-2">
+                              <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                                <span className="text-center font-[700] flex-1">
+                                  Mozambique
+                                </span>
+                                <span className="font-[700]">2.09</span>
+                              </button>
+                            </div> */}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {/* <div className="my-3">
+                      <div className="text-black">
+                        <h1 className="text-14 font-[500] py-2">
+                          DOUBLE CHANCE
+                        </h1>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-1 mr-2">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                            <span className="text-center font-[700] flex-1">
+                              Cape Varde
+                            </span>
+                            <span className="font-[700]">6.53</span>
+                          </button>
+                        </div>
+                        <div className="flex-1 mr-2">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                            <span className="text-center font-[700] flex-1">
+                              Draw
+                            </span>
+                            <span className="font-[700]">2.09</span>
+                          </button>
+                        </div>
+                        <div className="flex-1 mr-2">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                            <span className="text-center font-[700] flex-1">
+                              Mozambique
+                            </span>
+                            <span className="font-[700]">2.09</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div> */}
+                    {/* <div className="my-3">
+                      <div className="text-black">
+                        <h1 className="text-14 font-[500] py-2">DRAW NO BET</h1>
+                      </div>
+                      <div className="flex">
+                        <div className="flex-1 mr-2">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                            <span className="text-center font-[700] font-roboto flex-1">
+                              Cape Varde
+                            </span>
+                            <span className="font-[700]">6.53</span>
+                          </button>
+                        </div>
+                
+                        <div className="flex-1 mr-2">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                            <span className="text-center font-roboto flex-1 font-[700]">
+                              Mozambique
+                            </span>
+                            <span className="font-[700] font-roboto">2.09</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div> */}
+                  </div>
+                );
+              })}
+            {allMarketData?.length === 0 && (
+              <div className="text-center mt-5 text-black">
+                <span>No markets found</span>
               </div>
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">
-                    Mozambique
-                  </span>
-                  <span className="font-[700]">2.09</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="my-3">
-            <div className="text-black">
-              <h1 className="text-14 font-[500] py-2">DOUBLE CHANCE</h1>
-            </div>
-            <div className="flex">
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">
-                    Cape Varde
-                  </span>
-                  <span className="font-[700]">6.53</span>
-                </button>
-              </div>
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">Draw</span>
-                  <span className="font-[700]">2.09</span>
-                </button>
-              </div>
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] flex-1">
-                    Mozambique
-                  </span>
-                  <span className="font-[700]">2.09</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="my-3">
-            <div className="text-black">
-              <h1 className="text-14 font-[500] py-2">DRAW NO BET</h1>
-            </div>
-            <div className="flex">
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-[700] font-roboto flex-1">
-                    Cape Varde
-                  </span>
-                  <span className="font-[700]">6.53</span>
-                </button>
-              </div>
-              {/* <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center flex-1">Draw</span>
-                  <span>2.09</span>
-                </button>
-              </div> */}
-              <div className="flex-1 mr-2">
-                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
-                  <span className="text-center font-roboto flex-1 font-[700]">
-                    Mozambique
-                  </span>
-                  <span className="font-[700] font-roboto">2.09</span>
-                </button>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

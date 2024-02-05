@@ -67,7 +67,7 @@ function BetCard({ item }) {
       </div>
       <div className="text-center">
         <div className="flex justify-between text-12 text-black">
-          <Link to="/dashboard/single-bets">
+          <Link to={`/dashboard/single-bets/${item.eventId}`}>
             <div className="border-[1px]  h-8 w-11 font-[600] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
               <img
                 src="/images/bikoicon/moving.png"

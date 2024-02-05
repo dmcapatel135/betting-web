@@ -21,27 +21,31 @@ const OuterLayout = () => {
 
   return (
     <>
-      <MyContext.Provider
-        value={{
-          sportId,
-          setSportId,
-          selectTournament,
-          setSelectTournament,
-          allTournaments,
-        }}
-      >
-        <Navbar />
-        <div className="grid grid-cols-12 ">
+      <Navbar />
+      <div className="grid grid-cols-12 ">
+        <MyContext.Provider
+          value={{
+            sportId,
+            setSportId,
+            selectTournament,
+            setSelectTournament,
+            allTournaments,
+          }}
+        >
           <div className="md:col-span-2 md:block hidden">
-            <Sidebar />{' '}
+            <Sidebar
+            // allTournaments={allTournaments}
+            // selectTournament={selectTournament}
+            // setSelectTournament={setSelectTournament}
+            />{' '}
           </div>
           <div className="md:col-span-10 col-span-full bg-white">
             {' '}
             <Outlet />{' '}
           </div>
-        </div>
-        <Footer />
-      </MyContext.Provider>
+        </MyContext.Provider>
+      </div>
+      <Footer />
     </>
   );
 };

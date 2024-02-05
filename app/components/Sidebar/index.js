@@ -1,19 +1,27 @@
 import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { MyContext } from '@components/MyContext/MyContext';
+// import { MyContext } from '@components/MyContext/MyContext';
 
 import { reactIcons } from '@utils/icons';
 
 import { navigations, popularCountries } from './constants';
+import { MyContext } from '@components/MyContext/MyContext';
 
-function Sidebar({ isMobileSidebar }) {
+function Sidebar({
+  isMobileSidebar,
+  // allTournaments,
+  // setSelectTournament,
+  // selectTournament,
+}) {
   const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('HOME');
   const { allTournaments, setSelectTournament, selectTournament } =
     useContext(MyContext);
+
+  // console.log('----select tournament ', selectTournament);
 
   return (
     <div
@@ -88,8 +96,10 @@ function Sidebar({ isMobileSidebar }) {
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
                       <span
                         className={`text-12 mx-2 ${
-                          selectTournament === item.id ? 'text-yellow' : ''
-                        } text-black hover:text-blue`}
+                          selectTournament && selectTournament === item.id
+                            ? ' bg-yellow w-full '
+                            : ''
+                        } text-black hover:text-blue rounded-sm pl-2`}
                       >
                         {item.name}
                       </span>
@@ -167,6 +177,7 @@ Sidebar.propTypes = {
   isMobileSidebar: PropTypes.bool,
   selectTournament: PropTypes.string,
   setSelectTournament: PropTypes.string,
+  allTournaments: PropTypes.array,
 };
 
 export default Sidebar;

@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function JackpotCard() {
+function JackpotCard({ setOpenCard }) {
   return (
     <div className="bg-gray-800 border-[1px] border-blue rounded-md py-3">
       <div className="flex text-black">
@@ -15,12 +16,19 @@ function JackpotCard() {
         </div>
       </div>
       <div className="px-4 my-2">
-        <button className="w-full text-14  bg-[#BD1842] text-white rounded-md h-8">
+        <button
+          onClick={() => setOpenCard(true)}
+          className="w-full text-14  bg-[#BD1842] text-white rounded-md h-8"
+        >
           Play for TSH. 1000
         </button>
       </div>
     </div>
   );
 }
+
+JackpotCard.propTypes = {
+  setOpenCard: PropTypes.bool,
+};
 
 export default JackpotCard;

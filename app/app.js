@@ -16,6 +16,7 @@ import {
   Batting,
   SingleBetDetails,
   Jackpot,
+  Bonus,
 } from '@containers/pageListAsync';
 import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
@@ -57,7 +58,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/single-bets"
+            path="/dashboard/single-bets/:eventId"
             element={
               <ProtectedRoutes>
                 <SingleBetDetails />
@@ -67,9 +68,17 @@ function App() {
           <Route
             path="/dashboard/jackpot"
             element={
-              <ProtectedRoutes>
-                <Jackpot />
-              </ProtectedRoutes>
+              // <ProtectedRoutes>
+              <Jackpot />
+              // </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/dashboard/bonus"
+            element={
+              // <ProtectedRoutes>
+              <Bonus />
+              // </ProtectedRoutes>
             }
           />
           <Route path="my-bets" element={<MyBets />} />

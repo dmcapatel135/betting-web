@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { MyContext } from '@components/MyContext/MyContext';
 
-function Tabs({ sportId, setSportId, popularSports }) {
+function Tabs({ popularSports }) {
+  const { sportId, setSportId } = useContext(MyContext);
+  console.log('-----sport id  siderbar', sportId);
+
   return (
     <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
       {popularSports?.map((item) => {
         return (
           <div
+            // style={{ background: `${sportId === item.id ? 'red' : 'white'}` }}
             key={item.id}
             className={`${
-              item.id === sportId
-                ? 'bg-gradient-color-1 text-white'
-                : 'bg-white text-black'
-            } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}
+              sportId === item.id ? 'bg-gradient-color-1 text-white' : ''
+            } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg bg-white text-black`}
             onClick={() => {
               setSportId(item.id);
             }}
@@ -89,7 +92,7 @@ function Tabs({ sportId, setSportId, popularSports }) {
 
 Tabs.propTypes = {
   sportId: PropTypes.number,
-  setSportId: PropTypes.func,
+  setSportId: PropTypes.number,
   allSports: PropTypes.array,
   popularSports: PropTypes.array,
 };

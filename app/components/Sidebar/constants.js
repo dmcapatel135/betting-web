@@ -33,6 +33,12 @@ export const navigations = [
     title: 'JACKPOT',
     path: '/dashboard/jackpot',
   },
+  // {
+  //   icon: images.jackpotIcon,
+  //   active_icon: images.jackpotIconActive,
+  //   title: 'BONUS',
+  //   path: '/dashboard/bonus',
+  // },
   {
     icon: images.popularIcon,
     active_icon: images.upcomingIconActive,
