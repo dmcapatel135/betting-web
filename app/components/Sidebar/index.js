@@ -18,10 +18,8 @@ function Sidebar({
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [selectMenuName, setSelectMenuName] = useState('HOME');
-  const { allTournaments, setSelectTournament, selectTournament } =
+  const { allTournaments, setSelectTournament, selectTournament, setTab } =
     useContext(MyContext);
-
-  // console.log('----select tournament ', selectTournament);
 
   return (
     <div
@@ -44,7 +42,16 @@ function Sidebar({
                 <NavLink
                   key={index}
                   end
-                  onClick={() => setSelectMenuName(item.title)}
+                  onClick={() => {
+                    setSelectMenuName(item.title);
+                    if (index === 1) {
+                      setTab(4);
+                    } else if (index === 0) {
+                      setTab(2);
+                    } else if (index === 2) {
+                      setTab(3);
+                    }
+                  }}
                   to={item.path}
                   className={({ isActive }) =>
                     `px-3 py-2 lg:py-2  md:text-12 xxl:text-14 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
@@ -84,7 +91,7 @@ function Sidebar({
             </span>
           </div>
           {isOpenTournament && (
-            <div className="pl-2">
+            <div className="pl-2 overflow-y-auto custom-scroll-sm h-64">
               <ul>
                 {allTournaments?.map((item) => {
                   return (
@@ -99,7 +106,7 @@ function Sidebar({
                           selectTournament && selectTournament === item.id
                             ? ' bg-yellow w-full '
                             : ''
-                        } text-black hover:text-blue rounded-sm pl-2`}
+                        } text-black hover:text-blue rounded-sm pl-2 font-[500]`}
                       >
                         {item.name}
                       </span>

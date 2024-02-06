@@ -5,9 +5,10 @@ import { sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
 import { BetCard, Loading, Pagination } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
+import moment from 'moment';
 
 function SportsMenu() {
-  const [tab, setTab] = useState(2);
+  // const [tab, setTab] = useState(2);
   const [allSports, setAllSports] = useState();
   const [popularSports, setPopularSports] = useState();
   const [allTournaments, setAllTournaments] = useState();
@@ -17,8 +18,14 @@ function SportsMenu() {
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { sportId, setSportId, selectTournament, setSelectTournament } =
-    useContext(MyContext);
+  const {
+    sportId,
+    setSportId,
+    selectTournament,
+    setSelectTournament,
+    tab,
+    setTab,
+  } = useContext(MyContext);
 
   // get all sports name
   const getAllSports = async () => {
@@ -32,11 +39,11 @@ function SportsMenu() {
     });
     setPopularSports(mergedArray);
   };
-  useEffect(() => {
-    if (popularSports) {
-      setSportId(popularSports[0]?.id);
-    }
-  }, [popularSports, setSportId]);
+  // useEffect(() => {
+  //   if (popularSports) {
+  //     setSportId(popularSports[0]?.id);
+  //   }
+  // }, [popularSports, setSportId]);
 
   useEffect(() => {
     getAllSports();
@@ -213,7 +220,7 @@ function SportsMenu() {
       </div>
       <div className="h-20 flex justify-around items-center text-black">
         <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
-          <p>MONDAY, DECEMBER 11TH 2023</p>
+          <p>{moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}</p>
         </div>
         <div className="text-center">
           <h1 className="text-12 font-[700] md:block hidden mb-2">3 WAY</h1>

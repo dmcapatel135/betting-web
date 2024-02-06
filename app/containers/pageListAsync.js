@@ -65,7 +65,3 @@ export const Deposit = loadable(() => import('./Deposit'), {
 export const Withdraw = loadable(() => import('./Withdraw'), {
   fallback: <Loading />,
 });
-
-export const Bonus = loadable(() => import('./Bonus'), {
-  fallback: <Loading />,
-});

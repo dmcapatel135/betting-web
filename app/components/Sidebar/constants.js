@@ -13,7 +13,7 @@ export const navigations = [
     icon: images.liveNowIcon,
     active_icon: images.liveNowIconActive,
     title: 'LIVE NOW',
-    path: '/live-now',
+    path: '/dashboard/live-now',
   },
   {
     icon: images.upcomingIcon,
@@ -33,12 +33,6 @@ export const navigations = [
     title: 'JACKPOT',
     path: '/dashboard/jackpot',
   },
-  // {
-  //   icon: images.jackpotIcon,
-  //   active_icon: images.jackpotIconActive,
-  //   title: 'BONUS',
-  //   path: '/dashboard/bonus',
-  // },
   {
     icon: images.popularIcon,
     active_icon: images.upcomingIconActive,

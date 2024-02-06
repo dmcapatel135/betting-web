@@ -9,6 +9,7 @@ const OuterLayout = () => {
   const [sportId, setSportId] = useState(1);
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
+  const [tab, setTab] = useState(2);
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(`/sports/${sportId}/tournaments`);
@@ -30,6 +31,8 @@ const OuterLayout = () => {
             selectTournament,
             setSelectTournament,
             allTournaments,
+            tab,
+            setTab,
           }}
         >
           <div className="md:col-span-2 md:block hidden">

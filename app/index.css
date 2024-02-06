@@ -259,3 +259,22 @@
 .carousel-item {
   flex: 0 0 100%;
 }
+
+.custom-scroll-sm::-webkit-scrollbar {
+  @apply bg-zinc-700 w-2 rounded-md;
+}
+.custom-scroll-sm::-webkit-scrollbar-track {
+  @apply bg-zinc-700 w-2 rounded-md;
+}
+.custom-scroll-sm::-webkit-scrollbar-thumb {
+  @apply bg-yellow w-2 rounded-md;
+}
+::-webkit-scrollbar {
+  @apply bg-zinc-700 w-3 rounded-md;
+}
+::-webkit-scrollbar-track {
+  @apply bg-zinc-700 w-3 rounded-md;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-yellow w-3 rounded-md;
+}

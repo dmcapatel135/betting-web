@@ -4,7 +4,6 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 function BetCard({ item }) {
-  console.log('-----itemn', item);
   return (
     <div className="md:min-h-32 max-h-fit flex justify-around items-center border-[1px] px-2 md:px-0 rounded-[8px] border-[#A3A3A3] text-black">
       <div className="text-12 w-[140px] md:w-[160px] text-black rounded-[4px] text-left ">

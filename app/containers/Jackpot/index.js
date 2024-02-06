@@ -7,6 +7,7 @@ import {
   JackpotDetailCard,
   TalkToUs,
 } from '@components';
+import JackpotResultCard from '@components/JackpotResultCard';
 import React, { useState } from 'react';
 const TabsName = [
   {
@@ -32,6 +33,7 @@ const TabsName = [
 function Jackpot() {
   const [step, setStep] = useState(TabsName[0].id);
   const [openCard, setOpenCard] = useState(false);
+  const [openResult, setOpenResult] = useState(false);
   return (
     <div className="grid grid-cols-12 h-full">
       <div className="col-span-8 pt-5">
@@ -89,34 +91,40 @@ function Jackpot() {
         )}
         {step === 2 && (
           <div className="px-5 my-5">
-            <div className="border-[1px] border-blue rounded-md bg-gray-800 text-center justify-center py-3">
+            {/* <div className="border-[1px] border-blue rounded-md bg-gray-800 text-center justify-center py-3">
               <h1 className="text-black text-20 font-[600]">
                 WEEKLY JACKPOT 21 JAN 2024
               </h1>
               <p className="text-12 text-black font-[500] py-2">17 GAMES</p>
               <h1 className="text-blue text-20 font-[600]">TSH 1,000</h1>
-            </div>
-            <div className="my-2">
-              <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-                <div className="flex justify-between py-2">
-                  <div className=" flex-1 text-black">
-                    <p className="text-12 mb-5">11:15 pm Wed 06/12</p>
-                    <span className="text-10 mt-20 text-gray-900">
-                      Football/England/Premier League
-                    </span>
-                  </div>
-                  <div className="flex-1 text-14 font-[500] text-center text-black">
-                    <p>Manchester United </p>
-                    <p>Chelsa FC</p>
-                  </div>
-                  <div className="flex-1  mr-5 flex justify-end items-center">
-                    <p className="text-black text-12 font-[600]">
-                      Frosinone Calcio- (3:1)
-                    </p>
+            </div> */}
+            <JackpotResultCard
+              setOpenResult={setOpenResult}
+              openResult={openResult}
+            />
+            {openResult && (
+              <div className="my-2">
+                <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
+                  <div className="flex justify-between py-2">
+                    <div className=" flex-1 text-black">
+                      <p className="text-12 mb-5">11:15 pm Wed 06/12</p>
+                      <span className="text-10 mt-20 text-gray-900">
+                        Football/England/Premier League
+                      </span>
+                    </div>
+                    <div className="flex-1 text-14 font-[500] text-center text-black">
+                      <p>Manchester United </p>
+                      <p>Chelsa FC</p>
+                    </div>
+                    <div className="flex-1  mr-5 flex justify-end items-center">
+                      <p className="text-black text-12 font-[600]">
+                        Frosinone Calcio- (3:1)
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
         {step === 3 && (

@@ -28,6 +28,7 @@ function SigleBetDetails() {
   const [mergedData, setMergedData] = useState([]);
 
   const getAllMarketData = useCallback(async () => {
+    console.log('-----function run ');
     setIsLoading(true);
     const response = await getReq(`/events/${eventId}/markets`);
     setIsLoading(false);
@@ -35,50 +36,28 @@ function SigleBetDetails() {
   }, [eventId]);
 
   useEffect(() => {
-    getAllMarketData();
+    if (eventId) {
+      getAllMarketData();
+    }
   }, [getAllMarketData, eventId]);
 
   useEffect(() => {
-    const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
-      withCredentials: true,
-    });
-
-    // Handle the received events
-    eventSource.addEventListener('message', (event) => {
-      // Handle the received message event
-
-      setMarketDataOdds(JSON.parse(event?.data));
-
-      //   console.log('-----event 0-----', JSON.parse(event?.data));
-
-      // if (JSON.parse(event.data).length > 0) {
-      //   setOrderBookData(JSON.parse(event.data));
-      //   handleOrderBookData(JSON.parse(event.data));
-      // } else if (event.data) {
-      //   const newObject = JSON.parse(event.data);
-      //   const temp = orderBookData;
-      //   temp.unshift(newObject);
-      //   temp.pop();
-      //   setOrderBookData(temp);
-      //   if (JSON.parse(event.data).taker_side === 'BUY') {
-      //     const buyer = buyerData;
-      //     if (buyer.length > 10) buyer.pop();
-      //     setBuyerData(buyer);
-      //   }
-      //   if (JSON.parse(event.data).taker_side === 'SELL') {
-      //     const seller = sellerData;
-      //     if (seller.length > 10) seller.pop();
-      //     setSellerData(seller);
-      //   }
-      // }
-    });
+    if (eventId) {
+      const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
+        withCredentials: true,
+      });
+      // Handle the received events
+      eventSource.addEventListener('message', (event) => {
+        // Handle the received message event
+        setMarketDataOdds(JSON.parse(event?.data));
+      });
+    }
   }, [eventId]);
 
   useEffect(() => {
-    if (allMarketData && marketDataOdds) {
+    if (allMarketData.length > 0 && marketDataOdds) {
       const allMarkets = _.keyBy(allMarketData, 'id');
       const markets = [];
-
       for (const oddsMarket of marketDataOdds.odds.markets) {
         const market = allMarkets[oddsMarket.id];
         if (market) {
@@ -100,26 +79,7 @@ function SigleBetDetails() {
         }
       }
       setMergedData(markets);
-
-      console.log('-------all market data ', markets);
     }
-
-    // let outcomes1 = allMarketData[0]?.outcomes;
-    // let outcomes2 = marketDataOdds?.odds?.markets[0]?.outcomes;
-
-    // outcomes2?.forEach((outcome2) => {
-    //   let correspondingOutcome = outcomes1?.find(
-    //     (outcome1) => outcome1.id === outcome2.id,
-    //   );
-
-    //   if (correspondingOutcome) {
-    //     correspondingOutcome.odds = outcome2.odds;
-    //     correspondingOutcome.probabilities = outcome2.probabilities;
-    //     correspondingOutcome.active = outcome2.active;
-    //   }
-    // });
-
-    // setMergedData(allMarketData);
   }, [allMarketData, marketDataOdds]);
 
   return (
@@ -180,7 +140,7 @@ function SigleBetDetails() {
                       width: '100%',
                       justifyContent: 'space-between',
                       userSelect: 'none',
-                      marginLeft: '17px',
+                      // marginLeft: '17px',
                     },
                   }}
                   // forwardBtnProps={{
@@ -436,11 +396,14 @@ function SigleBetDetails() {
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {
-                          console.log('------inner item ', innerItem);
                           return (
                             <div
                               key={innerIndex}
-                              className="flex col-span-4 mb-2"
+                              className={`flex mb-2 ${
+                                item.outcomes.length % 2 === 0
+                                  ? 'col-span-6'
+                                  : 'col-span-4'
+                              }`}
                             >
                               <div className="flex-1 mr-2">
                                 <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
