@@ -42,3 +42,39 @@ export const sport = [
     active_icon: '/images/bikoicon/tennis-racket.svg',
   },
 ];
+
+export const marketsName = [
+  {
+    sportId: 1,
+    marketName: [
+      { name: '1x2', option: ['Home', 'Draw', 'Away'] },
+      // { name: 'Over/Under(2.5)', option: ['Over', 'Under'] },
+      { name: 'Total', option: ['Over', 'Under'] },
+      { name: 'Both teams to score', option: ['Yes', 'No'] },
+    ],
+  },
+  {
+    sportId: 2,
+    marketName: [{ name: '1x2', option: ['Home', 'Draw', 'Away'] }],
+  },
+  {
+    sportId: 10,
+    marketName: [{ name: '1x2', option: ['Home', 'Draw', 'Away'] }],
+  },
+  {
+    sportId: 12,
+    marketName: [{ name: 'Winner', option: [1, 2] }],
+  },
+  {
+    sportId: 21,
+    marketName: [{ name: 'Winner (incl. super over)', option: [1, 2] }],
+  },
+  {
+    sportId: 5,
+    marketName: [
+      { name: 'Winner', option: [1, 2] },
+      { name: '1st set - winner', option: [1, 2] },
+      { name: '2nd set - winner', option: [1, 2] },
+    ],
+  },
+];

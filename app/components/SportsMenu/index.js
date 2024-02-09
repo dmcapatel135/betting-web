@@ -1,7 +1,7 @@
 import Tabs from '@components/Tabs';
 import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { sport, tabsName } from './constants';
+import { marketsName, sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
 import { BetCard, Loading, Pagination } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
@@ -217,25 +217,48 @@ function SportsMenu() {
           </div>
         </div>
       </div>
-      <div className="h-20 flex justify-around items-center text-black">
+      <div className="h-20 flex justify-start items-center text-black">
         <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
           <p>{moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}</p>
         </div>
-        <div className="text-center">
-          <h1 className="text-12 font-[700] md:block hidden mb-2">3 WAY</h1>
-          <div className="flex justify-between  w-32 text-12 text-[#3D3D3D]">
-            <div className="border-[1px] flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              <strong className="text-gray-900">1</strong>
-            </div>
-            <div className="border-[1px] flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer">
+        <div className=" flex justify-evenly flex-1">
+          {marketsName
+            .filter((item) => item.sportId === sportId)[0]
+            ?.marketName.map((items, index) => {
+              return (
+                <div key={index} className="text-center">
+                  <h1 className="text-12 font-[700] md:block hidden mb-2">
+                    {items.name === 'Total' ? 'Over/Under(2.5)' : items.name}
+                  </h1>
+                  <div
+                    // key={innerIndex}
+                    className="flex justify-between  w-fit text-12 text-[#3D3D3D]"
+                  >
+                    {items.option?.map((itemss, innerIndex) => {
+                      return (
+                        <div
+                          key={innerIndex}
+                          className="border-[1px] mr-2 flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                        >
+                          <strong className="text-gray-900">
+                            {itemss || 1}
+                          </strong>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+
+        {/* <div className="border-[1px] flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer">
               <strong className="text-gray-900">X</strong>
             </div>
             <div className="border-[1px] flex justify-center items-center h-[32px]  md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
               <strong className="text-gray-900">2</strong>
-            </div>
-          </div>
-        </div>
-        <div className="text-center hidden md:block">
+            </div> */}
+        {/* <div className="text-center hidden md:block">
           <h1 className="text-12 font-[700] mb-2">OVER/UNDER 2.5</h1>
           <div className="flex justify-between w-28 text-12 ">
             <button className="border-[1px] h-6 w-12 text-12  text-gray-900 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
@@ -256,14 +279,14 @@ function SportsMenu() {
               NO
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="mr-3 mb-3">
         {allFixtures &&
           allFixtures?.data?.map((item, index) => {
             return (
               <div key={index}>
-                <BetCard item={item} />;
+                <BetCard item={item} sportId={sportId} />;
               </div>
             );
           })}

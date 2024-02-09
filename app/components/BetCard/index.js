@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-function BetCard({ item }) {
+function BetCard({ item, sportId }) {
   return (
     <div className="md:min-h-32 max-h-fit flex justify-around items-center border-[1px] px-2 md:px-0 rounded-[8px] border-[#A3A3A3] text-black">
       <div className="text-12 w-[140px] md:w-[160px] text-black rounded-[4px] text-left ">
@@ -32,39 +32,305 @@ function BetCard({ item }) {
           {item?.sport?.name}/{item?.category?.name}/{item?.tournament?.name}
         </span>
       </div>
-      <div className="text-center flex-2">
-        <div className="flex justify-between items-center w-36 text-12 text-[#3D3D3D]">
-          <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-            2.55
+      {sportId === 1 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === '1x2')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === '1x2')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-            2.55
+          <div className="text-center mx-5 md:block hidden">
+            <div className="flex  w-24 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === 'Total')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-fit flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === 'Total')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="border-[1px]  h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-            2.55
+          <div className="text-center hidden md:block">
+            <div className="flex justify-between  w-24 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === 'Both teams to score')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter(
+                (item) => item.name === 'Both teams to score',
+              ).length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="text-center md:block hidden">
-        <div className="flex justify-between w-24 text-12 text-[#3D3D3D]">
-          <div className="border-[1px] h-8 w-11 text-12 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-            2.55
-          </div>
-          <div className="border-[1px] h-8 w-11 text-12 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-            2.55
+      )}
+      {sportId === 2 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === '1x2')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === '1x2')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="text-center hidden md:block">
-        <div className="flex justify-between  w-24 text-12 text-[#3D3D3D]">
-          <div className="border-[1px] h-8 w-11 flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-            2.55
-          </div>
-          <div className="border-[1px] h-8 flex justify-center items-center w-11 text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-            2.55
+      )}
+      {sportId === 12 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === '1x2')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === '1x2')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {sportId === 10 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === 'Winner')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === 'Winner')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {sportId === 21 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === 'Winner (incl. super over)')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter(
+                (item) => item.name === 'Winner (incl. super over)',
+              ).length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      {sportId === 5 && (
+        <div className="flex justify-between">
+          <div className="text-center flex-2 ">
+            <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === 'Winner')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter((item) => item.name === 'Winner')
+                .length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="text-center mx-5 md:block hidden">
+            <div className="flex  w-24 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === '1st set - winner')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter(
+                (item) => item.name === '1st set - winner',
+              ).length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="text-center hidden md:block">
+            <div className="flex   w-24 text-12 text-[#3D3D3D]">
+              {item.previewMarkets
+                .filter((item) => item.name === '2nd set - winner')[0]
+                ?.outcomes?.map((items) => {
+                  return (
+                    <div
+                      key={items.id}
+                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    >
+                      {items.odds}
+                    </div>
+                  );
+                })}
+              {item.previewMarkets.filter(
+                (item) => item.name === '2nd set - winner',
+              ).length === 0 && (
+                <div className="flex justify-between">
+                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
+                    {/* {items.odds} */}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="text-center">
         <div className="flex justify-between text-12 text-black">
           <Link
@@ -89,6 +355,7 @@ function BetCard({ item }) {
 
 BetCard.propTypes = {
   item: PropTypes.object,
+  sportId: PropTypes.number,
 };
 
 export default BetCard;
