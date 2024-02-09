@@ -307,13 +307,13 @@ function BetWallet({
         <div className="flex justify-between text-black">
           <span className="text-12">Tax 10% (TZS)</span>
           <span className="text-12">
-            {((totalOdd * stake * 10) / 100).toFixed(2)}
+            {(((calculation - stake) * 10) / 100).toFixed(2)}
           </span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Net Amount (TZS)</span>
           <span className="text-12">
-            {((totalOdd * stake * (100 - 10)) / 100).toFixed(2)}
+            {calculation - (((calculation - stake) * 10) / 100).toFixed(2)}
           </span>
         </div>
         <div className="flex justify-between text-black">
