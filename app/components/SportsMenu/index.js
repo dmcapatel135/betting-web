@@ -75,7 +75,6 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
-    console.log();
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
@@ -259,7 +258,7 @@ function SportsMenu() {
           </div>
         </div>
       </div>
-      <div className="px-3 mb-3">
+      <div className="mr-3 mb-3">
         {allFixtures &&
           allFixtures?.data?.map((item, index) => {
             return (

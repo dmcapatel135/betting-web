@@ -4,6 +4,7 @@ import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
+// import BetWallet from '@components/BetWallet';
 
 const OuterLayout = () => {
   const [sportId, setSportId] = useState(1);
@@ -46,6 +47,9 @@ const OuterLayout = () => {
             {' '}
             <Outlet />{' '}
           </div>
+          {/* <div className="col-span-3 bg-white px-2 py-2">
+            <BetWallet />
+          </div> */}
         </MyContext.Provider>
       </div>
       <Footer />

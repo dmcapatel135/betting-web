@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 import {
+  //   BetDetailsContext,
+  BetWallet,
   Betslip,
   CompanyContact,
   CustomerCareContact,
@@ -11,6 +13,8 @@ import { reactIcons } from '@utils/icons';
 import ReactSimplyCarousel from 'react-simply-carousel';
 import { getReq } from '@utils/apiHandlers';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBetDetailsAction } from '@actions';
 
 const TabsName = [
   { id: 1, title: 'Head to head' },
@@ -19,39 +23,57 @@ const TabsName = [
 ];
 
 function SigleBetDetails() {
-  const { eventId } = useParams();
+  const { eventId, eventNames } = useParams();
   const [step, setStep] = useState(1);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [allMarketData, setAllMarketData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [marketDataOdds, setMarketDataOdds] = useState();
   const [mergedData, setMergedData] = useState([]);
+  const [eventName, setEventName] = useState();
+  const [selectedBet, setSelectedBet] = useState([]);
+  const bets = useSelector((state) => state.bet.selectedBet);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setSelectedBet(bets);
+  }, [bets]);
 
   const getAllMarketData = useCallback(async () => {
-    console.log('-----function run ');
     setIsLoading(true);
     const response = await getReq(`/events/${eventId}/markets`);
     setIsLoading(false);
     setAllMarketData(response.data);
   }, [eventId]);
 
-  useEffect(() => {
-    if (eventId) {
-      getAllMarketData();
-    }
-  }, [getAllMarketData, eventId]);
+  const getEventName = useCallback(async () => {
+    const response = await getReq(`/events/${eventId}`);
+    setEventName(
+      response?.data?.season?.name || response?.data?.tournament?.name,
+    );
+  }, [eventId]);
 
   useEffect(() => {
-    if (eventId) {
-      const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
-        withCredentials: true,
-      });
-      // Handle the received events
-      eventSource.addEventListener('message', (event) => {
-        // Handle the received message event
-        setMarketDataOdds(JSON.parse(event?.data));
-      });
-    }
+    getAllMarketData();
+    getEventName();
+  }, [getAllMarketData, eventId, getEventName]);
+
+  useEffect(() => {
+    const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
+      withCredentials: true,
+    });
+
+    const handleEventSourceMessage = (event) => {
+      updateState(JSON.parse(event?.data));
+    };
+
+    eventSource.addEventListener('message', handleEventSourceMessage);
+
+    return () => {
+      eventSource.removeEventListener('message', handleEventSourceMessage);
+      eventSource.close();
+    };
   }, [eventId]);
 
   useEffect(() => {
@@ -71,6 +93,7 @@ function SigleBetDetails() {
                     ...allOutcomes[outcome.id],
                     odds: outcome.odds,
                     active: outcome.active,
+                    selected: false,
                   };
                 }
               }),
@@ -82,7 +105,113 @@ function SigleBetDetails() {
     }
   }, [allMarketData, marketDataOdds]);
 
+  const updateState = (newObject) => {
+    setMarketDataOdds((prevState) => {
+      return { ...prevState, ...newObject };
+    });
+  };
+
+  const handleSelectBet = (innerIndex, index) => {
+    const existingIndex = selectedBet.findIndex(
+      (item) => item.eventId === eventId,
+    );
+    const updatedData = mergedData.map((item, i) => {
+      if (i === index) {
+        const updatedOutcomes = item.outcomes.map((outcome, j) => {
+          if (j === innerIndex) {
+            return {
+              ...outcome,
+              selected: true,
+            };
+          } else {
+            return {
+              ...outcome,
+              selected: false,
+            };
+          }
+        });
+        return {
+          ...item,
+          outcomes: updatedOutcomes,
+        };
+      } else {
+        return {
+          ...item,
+          outcomes: item.outcomes.map((outcome) => ({
+            ...outcome,
+            selected: false,
+          })),
+        };
+      }
+    });
+
+    const updatedSelectedBet = [...selectedBet];
+    if (existingIndex !== -1) {
+      updatedSelectedBet[existingIndex] = {
+        betDetails: updatedData[index],
+        bet: updatedData[index]?.outcomes[innerIndex],
+        eventId: eventId,
+        eventName: eventNames,
+      };
+    } else {
+      updatedSelectedBet.push({
+        betDetails: updatedData[index],
+        bet: updatedData[index].outcomes[innerIndex],
+        eventId: eventId,
+        eventName: eventNames,
+      });
+    }
+
+    setSelectedBet(updatedSelectedBet);
+    setMergedData(updatedData);
+  };
+
+  const handleRemoveBet = (index) => {
+    const updatedBets = selectedBet.filter((_, i) => i !== index);
+    setSelectedBet(updatedBets);
+
+    const updatedData = mergedData.map((item, i) => {
+      if (i === index) {
+        const updatedOutcomes = item.outcomes.map((outcome) => ({
+          ...outcome,
+          selected: false,
+        }));
+        return {
+          ...item,
+          outcomes: updatedOutcomes,
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setMergedData(updatedData);
+    dispatch(fetchBetDetailsAction(updatedBets)); // Dispatch the action
+  };
+
+  const handleClearAllBet = () => {
+    setSelectedBet([]);
+    dispatch(fetchBetDetailsAction([]));
+
+    const updatedData = mergedData.map((item) => ({
+      ...item,
+      outcomes: item.outcomes.map((outcome) => ({
+        ...outcome,
+        selected: false,
+      })),
+    }));
+
+    setMergedData(updatedData);
+  };
+
+  useEffect(() => {
+    if (selectedBet.length > 0) {
+      dispatch(fetchBetDetailsAction(selectedBet)); // Dispatch the action
+    }
+  }, [selectedBet, dispatch]);
+
   return (
+    // <BetDetailsContext.Provider value={{ selectedBet }}>
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-2">
@@ -375,8 +504,8 @@ function SigleBetDetails() {
           </div>
           <div>
             <div className="bg-yellow py-1 rounded-md mt-5 px-3">
-              <h1 className="text-white text-12 font-[600]">
-                INTERNATIONAL AFRICA CUP OF NATIONS - ALL MARKETS
+              <h1 className="text-white text-14 font-[600]">
+                {eventName} - ALL MARKETS
               </h1>
             </div>
           </div>
@@ -387,9 +516,9 @@ function SigleBetDetails() {
               </div>
             )}
             {mergedData?.length > 0 &&
-              mergedData?.map((item) => {
+              mergedData?.map((item, index) => {
                 return (
-                  <div key={item.id}>
+                  <div key={index}>
                     <div className="my-3">
                       <div className="text-black">
                         <h1 className="text-14 font-[500] py-2">{item.name}</h1>
@@ -406,12 +535,26 @@ function SigleBetDetails() {
                               }`}
                             >
                               <div className="flex-1 mr-2">
-                                <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
+                                <button
+                                  disabled={innerItem.active ? false : true}
+                                  onClick={() =>
+                                    handleSelectBet(innerIndex, index)
+                                  }
+                                  className={`${
+                                    innerItem.selected
+                                      ? 'bg-green text-white'
+                                      : ''
+                                  } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
+                                >
                                   <span className="text-center font-[700] flex-1">
                                     {innerItem.name}
                                   </span>
                                   <span className="text-[700]">
-                                    {innerItem.odds}
+                                    {innerItem.active ? (
+                                      innerItem.odds
+                                    ) : (
+                                      <span>{reactIcons.lock}</span>
+                                    )}
                                   </span>
                                 </button>
                               </div>
@@ -504,15 +647,28 @@ function SigleBetDetails() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 mt-3 md:block hidden">
+      <div className="col-span-4 pt-3 md:block hidden border-l-[1px] px-3 border-gray-700">
         {/* <RightSideSection /> */}
-        {/* <BetWallet /> */}
-        <Betslip wallet="true" />
+        {bets?.length > 0 ? (
+          <BetWallet
+            selectedBet={selectedBet}
+            handleRemoveBet={handleRemoveBet}
+            setSelectedBet={setSelectedBet}
+            handleClearAllBet={handleClearAllBet}
+          />
+        ) : (
+          <Betslip
+            selectedBet={selectedBet}
+            handleRemoveBet={handleRemoveBet}
+            handleClearAllBet={handleClearAllBet}
+          />
+        )}
         <CompanyContact />
         <CustomerCareContact />
         <TalkToUs />
       </div>
     </div>
+    // </BetDetailsContext.Provider>
   );
 }
 

@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Balance } from '@components';
 import { Link } from 'react-router-dom';
+import { isLoggedIn } from '@utils/apiHandlers';
 
-function BetSlip({ wallet }) {
+function BetSlip() {
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px]">
-      {wallet ? (
+      {!isLoggedIn ? (
         <Balance />
       ) : (
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
@@ -55,6 +56,6 @@ function BetSlip({ wallet }) {
 }
 
 BetSlip.propTypes = {
-  wallet: PropTypes.string,
+  seletedBet: PropTypes.array,
 };
 export default BetSlip;

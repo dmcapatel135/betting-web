@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
-function BetDetailCard() {
+function BetDetailCard({ item }) {
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -16,10 +18,10 @@ function BetDetailCard() {
             </div>
             <div>
               <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
-                2023-12-08 14:36
+                {moment(item.createdAt).format('DD-MM-YYYY  hh:mm')}
               </p>
               <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
-                137946
+                {item.id}
               </p>
             </div>
             <hr className=" w-[1px] h-10 mx-4 border-[1px]"></hr>
@@ -36,9 +38,20 @@ function BetDetailCard() {
               </p>
             </div>
             <div>
-              <p className="text-gray-900 text-14 xxl:text-16 font-[600]">1</p>
               <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
-                1.3
+                {item.bets.length}
+              </p>
+              <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
+                {item.bets
+                  .map((b) => b.odds)
+                  .reduce((a, b) => a * b, 1)
+                  .toFixed(2) *
+                  item?.stake *
+                  parseInt(
+                    item.appliedWinBonusRule
+                      ? item.appliedWinBonusRule?.percentage
+                      : 1,
+                  )}
               </p>
             </div>
             <hr className=" w-[1px] h-10 ml-4 border-[1px]"></hr>
@@ -56,9 +69,14 @@ function BetDetailCard() {
             </div>
             <div>
               <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
-                1.33
+                {item.bets
+                  .map((b) => b.odds)
+                  .reduce((a, b) => a * b, 1)
+                  .toFixed(2)}
               </p>
-              <p className="text-gray-900 text-14 xxl:text-16 font-[600]">1</p>
+              <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
+                {item.stake}
+              </p>
             </div>
           </div>
         </div>
@@ -93,5 +111,8 @@ function BetDetailCard() {
     </div>
   );
 }
+BetDetailCard.propTypes = {
+  item: PropTypes.object,
+};
 
 export default BetDetailCard;

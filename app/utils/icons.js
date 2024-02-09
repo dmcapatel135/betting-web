@@ -90,6 +90,7 @@ import {
   MdDateRange,
   MdAttachMoney,
   MdFavoriteBorder,
+  MdLock,
 } from 'react-icons/md';
 
 import { ImQuotesLeft } from 'react-icons/im';
@@ -104,6 +105,7 @@ import { RiSecurePaymentLine, RiFlashlightLine } from 'react-icons/ri';
 import LiveIcon from '@components/SvgCompass/LiveIcon';
 
 export const reactIcons = {
+  lock: <MdLock />,
   arrowup: <BsChevronUp />,
   livenow: <LiveIcon />,
   bot: <BsRobot />,

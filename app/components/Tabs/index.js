@@ -4,7 +4,6 @@ import { MyContext } from '@components/MyContext/MyContext';
 
 function Tabs({ popularSports }) {
   const { sportId, setSportId } = useContext(MyContext);
-  console.log('-----sport id  siderbar', sportId);
 
   return (
     <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
@@ -14,8 +13,10 @@ function Tabs({ popularSports }) {
             // style={{ background: `${sportId === item.id ? 'red' : 'white'}` }}
             key={item.id}
             className={`${
-              sportId === item.id ? 'bg-gradient-color-1 text-white' : ''
-            } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg bg-white text-black`}
+              sportId === item.id
+                ? ' bg-gradient-color-1 text-white'
+                : 'bg-white text-black '
+            } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}
             onClick={() => {
               setSportId(item.id);
             }}

@@ -29,11 +29,11 @@ const MOUNT_NODE = document.getElementById('app');
 const root = ReactDOM.createRoot(MOUNT_NODE);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  // </React.StrictMode>,
 );

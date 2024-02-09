@@ -61,7 +61,6 @@ function JoinNow() {
       type: 'register',
     };
     setError({});
-    console.log(data);
     const [response, error] = await sendRegisterCode(data);
     setIsLoading(false);
     if (error) {

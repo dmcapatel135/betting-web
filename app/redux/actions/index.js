@@ -16,3 +16,8 @@ export const setUser = (payload) => ({
 export const refreshUserDetails = () => ({
   type: types.REFRESH_USER_DETAILS,
 });
+
+export const fetchBetDetailsAction = (payload) => ({
+  type: types.FETCH_BET_DETAILS,
+  payload: payload,
+});

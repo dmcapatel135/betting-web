@@ -75,7 +75,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/single-bets/:eventId"
+            path="/dashboard/single-bets/:eventId/:eventNames"
             element={
               // <ProtectedRoutes>
               <SingleBetDetails />
