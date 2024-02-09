@@ -86,8 +86,8 @@ function MyBets() {
                           item={item}
                           index={index}
                         />
-                        <div className="mt-2 ">
-                          <table className="text-black w-full text-14">
+                        <div className="mt-2 overflow-auto">
+                          <table className="text-black w-full overflow-auto text-14">
                             <thead className="bg-yellow h-12 rounded-t-md">
                               <th className="rounded-tl-md">START</th>
                               <th>GAME</th>
@@ -97,7 +97,7 @@ function MyBets() {
                               <th>FT</th>
                               <th className="rounded-tr-md">STATUS</th>
                             </thead>
-                            <tbody className="text-center">
+                            <tbody className="text-center text-12">
                               {item?.bets.map((innerItem, innerIndex) => {
                                 return (
                                   <tr key={innerIndex}>
@@ -106,7 +106,11 @@ function MyBets() {
                                         'DD-MM-yy hh:mm',
                                       )}
                                     </td>
-                                    <td>{}</td>
+                                    <td>
+                                      {innerItem.event.competitors[0].name +
+                                        'v/s' +
+                                        innerItem.event.competitors[1].name}
+                                    </td>
                                     <td>{innerItem.market}</td>
                                     <td>{innerItem.odds}</td>
                                     <td>{innerItem.outcome}</td>
