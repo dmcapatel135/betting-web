@@ -22,7 +22,7 @@ function BetWallet({
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
   const [stake, setStake] = useState(1000);
-  const [oddChange, setOddChange] = useState(true);
+  const [oddChange, setOddChange] = useState(false);
 
   const getGamesRules = async () => {
     const response = await getReq('/win-bonus-policies/active');
@@ -251,12 +251,11 @@ function BetWallet({
         </div> */}
       </div>
       <div className="flex container_main items-center px-3">
-        <input
-          type="checkbox"
-          onChange={(e) => setOddChange(e.target.checked)}
-          checked={oddChange}
-        />
-        <span className="checkmark top-[5px] !left-[5px]"></span>
+        <input type="checkbox" checked={oddChange} />
+        <span
+          onClick={() => setOddChange(!oddChange)}
+          className="checkmark top-[5px] !left-[5px]"
+        ></span>
         <span className="text-black text-12 ml-4">
           Accept odds change.{' '}
           <Link className="underline hover:text-yellow">Learn More</Link>

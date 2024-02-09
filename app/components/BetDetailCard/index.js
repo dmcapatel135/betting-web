@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-function BetDetailCard({ item }) {
+function BetDetailCard({ item, setShowBets }) {
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -20,7 +20,10 @@ function BetDetailCard({ item }) {
               <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
                 {moment(item.createdAt).format('DD-MM-YYYY  hh:mm')}
               </p>
-              <p className="text-gray-900 text-14 xxl:text-16 font-[600]">
+              <p
+                onClick={() => setShowBets(item.id)}
+                className="text-gray-900 text-14 xxl:text-16 font-[600] cursor-pointer underline"
+              >
                 {item.id}
               </p>
             </div>
@@ -113,6 +116,8 @@ function BetDetailCard({ item }) {
 }
 BetDetailCard.propTypes = {
   item: PropTypes.object,
+  setShowBets: PropTypes.string,
+  // index: PropTypes.number,
 };
 
 export default BetDetailCard;
