@@ -17,6 +17,7 @@ function SportsMenu() {
   const [dataCount, setDataCount] = useState();
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
+  //const bets = useSelector((state) => state.bet.selectedBet);
 
   const {
     sportId,
@@ -39,30 +40,10 @@ function SportsMenu() {
     });
     setPopularSports(mergedArray);
   };
-  // useEffect(() => {
-  //   if (popularSports) {
-  //     setSportId(popularSports[0]?.id);
-  //   }
-  // }, [popularSports, setSportId]);
 
   useEffect(() => {
     getAllSports();
   }, []);
-
-  // get all events of sports
-  // const getAllEvents = useCallback(async () => {
-  //   const response = await getReq('/sports/events/pre');
-  //   if (step) {
-  //     const filteredMatches = response?.data?.filter(
-  //       (match) => match.tournament.sport.id === step,
-  //     );
-  //     setTodayEvent(filteredMatches);
-  //   }
-  // }, [step]);
-
-  // useEffect(() => {
-  //   getAllEvents();
-  // }, [step, getAllEvents]);
 
   //get to tournaments according to sports
   const getAllTournaments = useCallback(async () => {
@@ -103,7 +84,7 @@ function SportsMenu() {
       );
       setIsLoading(false);
       setDataCount(response?.data?.count);
-      setAllFixtures(response.data);
+      setAllFixtures(response.data.data);
     },
     [sportId, page, pageSize],
   );
@@ -111,12 +92,7 @@ function SportsMenu() {
   return (
     <>
       <div className="md:block hidden pr-2">
-        <Tabs
-          popularSports={popularSports}
-          allSports={allSports}
-          // sportId={sportId}
-          // setSportId={setSportId}
-        />
+        <Tabs popularSports={popularSports} allSports={allSports} />
       </div>
       <div className="my-0 md:my-2  md:mr-2 bg-gradient-color-1 rounded-b-[8px]">
         <img src="/images/bikoicon/main.png" />
@@ -221,12 +197,12 @@ function SportsMenu() {
         <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
           <p>{moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}</p>
         </div>
-        <div className=" flex justify-evenly flex-1">
+        <div className=" flex justify-evenly flex-1 px-16">
           {marketsName
             .filter((item) => item.sportId === sportId)[0]
             ?.marketName.map((items, index) => {
               return (
-                <div key={index} className="text-center">
+                <div key={index} className="text-left flex-1 ">
                   <h1 className="text-12 font-[700] md:block hidden mb-2">
                     {items.name === 'Total' ? 'Over/Under(2.5)' : items.name}
                   </h1>
@@ -283,10 +259,16 @@ function SportsMenu() {
       </div>
       <div className="mr-3 mb-3">
         {allFixtures &&
-          allFixtures?.data?.map((item, index) => {
+          allFixtures?.map((item, index) => {
             return (
               <div key={index}>
-                <BetCard item={item} sportId={sportId} />;
+                <BetCard
+                  index={index}
+                  item={item}
+                  sportId={sportId}
+                  // handleSelectBet={handleSelectBet}
+                />
+                ;
               </div>
             );
           })}

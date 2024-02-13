@@ -1,9 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { reactIcons } from '@utils/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBetDetailsAction } from '@actions';
 
 function BetCard({ item, sportId }) {
+  const [bets, setBets] = useState([]);
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setBets(selectedBet);
+  }, [selectedBet]);
+
+  const addToBetSlip = (eventId, bet, betDetails, competitors) => {
+    setBets((prev) => {
+      const index = prev.findIndex((item) => item.eventId === eventId);
+      if (index !== -1) {
+        // If eventId already exists, update bet and betDetails
+        const updatedBets = [...prev];
+        updatedBets[index] = {
+          ...updatedBets[index],
+          bet: bet,
+          betDetails: betDetails,
+          competitors: competitors,
+        };
+        return updatedBets;
+      } else {
+        // If eventId doesn't exist, push a new object
+        return [
+          ...prev,
+          {
+            eventId: eventId,
+            bet: bet,
+            betDetails: betDetails,
+            eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+          },
+        ];
+      }
+    });
+  };
+
+  useEffect(() => {
+    setBets(selectedBet);
+  }, [selectedBet]);
+
+  useEffect(() => {
+    if (bets.length > 0) dispatch(fetchBetDetailsAction(bets));
+  }, [bets, dispatch]);
+
+  const selectBet = (eventId, marketId, outcomeId) => {
+    const bet = selectedBet.find(
+      (bet) =>
+        bet.eventId === eventId &&
+        bet.betDetails.id === marketId &&
+        bet.bet.id === outcomeId,
+    );
+
+    if (bet) return true;
+    else return false;
+  };
+
   return (
     <div className="md:min-h-32 max-h-fit flex justify-around items-center border-[1px] px-2 md:px-0 rounded-[8px] border-[#A3A3A3] text-black">
       <div className="text-12 w-[140px] md:w-[160px] text-black rounded-[4px] text-left ">
@@ -38,25 +97,48 @@ function BetCard({ item, sportId }) {
             <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === '1x2')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-12 h-11 py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === '1x2')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -65,25 +147,51 @@ function BetCard({ item, sportId }) {
             <div className="flex  w-24 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === 'Total')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-fit flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Total',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Total',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between h-10 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === 'Total')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -92,26 +200,52 @@ function BetCard({ item, sportId }) {
             <div className="flex justify-between  w-24 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === 'Both teams to score')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Both teams to score',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Both teams to score',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter(
                 (item) => item.name === 'Both teams to score',
               ).length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -124,25 +258,51 @@ function BetCard({ item, sportId }) {
             <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === '1x2')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === '1x2')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -155,25 +315,51 @@ function BetCard({ item, sportId }) {
             <div className="flex items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === '1x2')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1x2',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === '1x2')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -186,25 +372,51 @@ function BetCard({ item, sportId }) {
             <div className="flex items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === 'Winner')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === 'Winner')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -217,26 +429,52 @@ function BetCard({ item, sportId }) {
             <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === 'Winner (incl. super over)')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner (incl. super over)',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner (incl. super over)',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter(
                 (item) => item.name === 'Winner (incl. super over)',
               ).length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -249,25 +487,51 @@ function BetCard({ item, sportId }) {
             <div className="flex  items-center w-36 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === 'Winner')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === 'Winner',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter((item) => item.name === 'Winner')
                 .length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -276,26 +540,52 @@ function BetCard({ item, sportId }) {
             <div className="flex  w-24 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === '1st set - winner')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1st set - winner',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '1st set - winner',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter(
                 (item) => item.name === '1st set - winner',
               ).length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -304,26 +594,52 @@ function BetCard({ item, sportId }) {
             <div className="flex   w-24 text-12 text-[#3D3D3D]">
               {item.previewMarkets
                 .filter((item) => item.name === '2nd set - winner')[0]
-                ?.outcomes?.map((items) => {
+                ?.outcomes?.map((innerItem, innerIndex) => {
                   return (
-                    <div
-                      key={items.id}
-                      className="border-[1px] mr-1 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] "
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() =>
+                        addToBetSlip(
+                          item.eventId,
+                          innerItem,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '2nd set - winner',
+                          )[0],
+                          item.competitors,
+                        )
+                      }
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          item.previewMarkets.filter(
+                            (item) => item.name === '2nd set - winner',
+                          )[0].id,
+                          innerItem.id,
+                        )
+                          ? 'bg-green text-white'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
                     >
-                      {items.odds}
-                    </div>
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="text-[700]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
                   );
                 })}
               {item.previewMarkets.filter(
                 (item) => item.name === '2nd set - winner',
               ).length === 0 && (
                 <div className="flex justify-between">
-                  <div className="border-[1px] h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
-                  <div className="border-[1px] ml-2 h-8 w-11 flex justify-center items-center bg-[#EAEAEA] border-[#A3A3A3] cursor-pointer rounded-[4px] ">
-                    {/* {items.odds} */}
-                  </div>
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 h-11  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 h-11 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3"></button>
                 </div>
               )}
             </div>
@@ -338,13 +654,13 @@ function BetCard({ item, sportId }) {
               item?.competitors[0]?.name + ' vs ' + item?.competitors[1]?.name
             }`}
           >
-            <div className="border-[1px]  h-8 w-11 font-[600] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
+            <div className="border-[1px]  h-10 w-12 font-[600] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
               <img
                 src="/images/bikoicon/moving.png"
                 alt="icon"
                 className="mx-1"
               />
-              <span>{item.totalMarkets}</span>
+              <span>{item.openMarkets}</span>
             </div>
           </Link>
         </div>
@@ -356,6 +672,8 @@ function BetCard({ item, sportId }) {
 BetCard.propTypes = {
   item: PropTypes.object,
   sportId: PropTypes.number,
+  handleSelectBet: PropTypes.func,
+  index: PropTypes.number,
 };
 
 export default BetCard;

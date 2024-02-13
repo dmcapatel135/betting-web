@@ -5,15 +5,11 @@ import PropTypes from 'prop-types';
 import Balance from '@components/Balance';
 import { reactIcons } from '@utils/icons';
 import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { fetchBetDetailsAction } from '@actions';
 
-function BetWallet({
-  // selectedBet,
-  handleRemoveBet,
-  // setSelectedBet,
-  handleClearAllBet,
-}) {
+function BetWallet() {
   const [openDialog, setOpenDailog] = useState();
   const [tab, setTab] = useState('sport');
   const [gameRules, setGameRules] = useState();
@@ -24,10 +20,13 @@ function BetWallet({
   const [stake, setStake] = useState(1000);
   const [oddChange, setOddChange] = useState(false);
 
+  const dispatch = useDispatch();
+
+  console.log('-----bet wallet page ', bets);
+
   const getGamesRules = async () => {
     const response = await getReq('/win-bonus-policies/active');
     setGameRules(response.data);
-    console.log('----r-espon ', response.data);
   };
 
   useEffect(() => {
@@ -75,11 +74,41 @@ function BetWallet({
     };
     const response = await postReq('/users/me/bet-slips', data);
     if (response.status) {
+      dispatch(fetchBetDetailsAction([]));
       toast.success('Congrats ! Bet place successfully');
     } else if (response.error) {
       toast.error(response.error.message);
     }
   };
+
+  const handleRemoveBet = (eventId) => {
+    console.log('------index ');
+    const updatedBets = bets.filter((item) => item.eventId != eventId);
+    dispatch(fetchBetDetailsAction(updatedBets));
+  };
+
+  const handleClearAllBet = () => {
+    dispatch(fetchBetDetailsAction([]));
+
+    // const updatedData = mergedData.map((item) => ({
+    //   ...item,
+    //   outcomes: item.outcomes.map((outcome) => ({
+    //     ...outcome,
+    //     selected: false,
+    //   })),
+    // }));
+
+    // setMergedData(updatedData);
+  };
+
+  const bongeBonus = (
+    (totalOdd * stake * gameRules?.rules[bonus?.length - 1]?.percentage) /
+    100
+  ).toFixed(2);
+  const tax = (((calculation - stake) * 10) / 100).toFixed(2);
+  const netAmount = (calculation - ((calculation - stake) * 10) / 100).toFixed(
+    2,
+  );
 
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px] relative">
@@ -193,19 +222,18 @@ function BetWallet({
       </div>
       <div className="border-t-[1px] border-b-[1px] my-5 border-blue">
         {bets?.map((item, index) => {
+          console.log('-----item ', item);
           return (
             <div key={index} className="flex">
               <div
                 className="w-10 border-r-[1px] flex justify-center cursor-pointer items-center border-blue"
-                onClick={() => handleRemoveBet(index)}
+                onClick={() => handleRemoveBet(item.eventId)}
               >
                 <img src="/images/bikoicon/close_small.png" alt="icon" />
               </div>
               <div className="flex justify-between w-full px-3 items-center ">
                 <div className="text-gray-900">
-                  <p className="text-14 font-[500]">
-                    {item.eventName || 'Manchester United - Chelsa FC'}
-                  </p>
+                  <p className="text-14 font-[500]">{`${item.eventNames}`}</p>
                   <span className="text-12 text-black">
                     {item.betDetails.name + ' - ' + item.bet.name}
                   </span>
@@ -296,29 +324,28 @@ function BetWallet({
             Bonge Bonus {gameRules?.rules[bonus?.length - 1]?.percentage}% (TZS)
           </span>
           <span className="text-12">
-            {(
+            {/* {(
               (totalOdd *
                 stake *
                 gameRules?.rules[bonus?.length - 1]?.percentage) /
               100
-            ).toFixed(2)}
+            ).toFixed(2)} */}
+            {bongeBonus === 'NaN' ? 0 : bongeBonus}
           </span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Tax 10% (TZS)</span>
-          <span className="text-12">
-            {(((calculation - stake) * 10) / 100).toFixed(2)}
-          </span>
+          <span className="text-12">{tax === 'NaN' ? 0 : tax}</span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Net Amount (TZS)</span>
-          <span className="text-12">
-            {(calculation - ((calculation - stake) * 10) / 100).toFixed(2)}
-          </span>
+          <span className="text-12">{netAmount === 'NaN' ? 0 : netAmount}</span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Possible winnings (TZS)</span>
-          <span className="text-12">{calculation}</span>
+          <span className="text-12">
+            {calculation == 'NaN' ? 0 : calculation}
+          </span>
         </div>
       </div>
       <div className="flex my-3 px-3 ">
