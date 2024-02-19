@@ -54,7 +54,7 @@ function Sidebar({
                   }}
                   to={item.path}
                   className={({ isActive }) =>
-                    `px-3 py-2 lg:py-2  md:text-12 xxl:text-14 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
+                    `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
                       isActive || selectMenuName === item.title
                         ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
                         : ' hover:bg-primary-yellow  flex items-center gap-3'
@@ -67,9 +67,9 @@ function Sidebar({
                         ? item.active_icon
                         : item.icon
                     }
-                    className="w-[18px] h-[18px]"
+                    className="w-[22px] h-[22px]"
                   />
-                  <span className="text-12 "> {item.title}</span>
+                  <span className="text-14 "> {item.title}</span>
                 </NavLink>
               </div>
             ))}
@@ -83,7 +83,7 @@ function Sidebar({
               setIsOpenpopularCountry(false);
             }}
           >
-            <h className="text-white text-12 leading-3 lg:leading-none lg:text-14 xxl:text-18">
+            <h className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               TOURNAMENTS
             </h>
             <span className="text-white">
@@ -125,7 +125,7 @@ function Sidebar({
               setIsOpenpopularCountry(!isOpenpopularCountry);
             }}
           >
-            <h className="text-white text-12 leading-3 lg:leading-none lg:text-14 xxl:text-18">
+            <h className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               POPULAR COUNTRIES
             </h>
             <span className="text-white">
@@ -144,7 +144,7 @@ function Sidebar({
                       >
                         <div className="flex items-center">
                           <img src={item.icon} alt="i" className="w-3 h-3" />
-                          <span className="text-12 mx-2 text-black">
+                          <span className="text-14 mx-2 text-black">
                             {item.country}
                           </span>
                         </div>
@@ -155,8 +155,12 @@ function Sidebar({
                           return (
                             <div key={items.id} className="px-5">
                               <li className="flex justify-between">
-                                <span className="text-10">{items.league}</span>
-                                <span className="text-10">{items.total}</span>
+                                <span className="text-12 font-[500]">
+                                  {items.league}
+                                </span>
+                                <span className="text-12 font-[500]">
+                                  {items.total}
+                                </span>
                               </li>
                             </div>
                           );

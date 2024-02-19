@@ -23,7 +23,7 @@ const TabsName = [
 ];
 
 function SigleBetDetails() {
-  const { eventId, eventNames } = useParams();
+  const { eventId, eventNames, sportId } = useParams();
   const [step, setStep] = useState(1);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [allMarketData, setAllMarketData] = useState([]);
@@ -132,15 +132,15 @@ function SigleBetDetails() {
   // }, [selectedBet, dispatch]);
 
   const addToBetSlip = (eventId, bet, betDetails) => {
+    console.log('------------eventId ');
     setBets((prev) => {
-      const index = prev.findIndex(
-        (item) => item.eventId === parseInt(eventId),
-      );
+      const index = prev.findIndex((item) => item.eventId == parseInt(eventId));
       if (index !== -1) {
         // If eventId already exists, update bet and betDetails
         const updatedBets = [...prev];
         updatedBets[index] = {
           ...updatedBets[index],
+          sportId: sportId,
           bet: bet,
           betDetails: betDetails,
           eventNames: eventNames,
@@ -151,6 +151,7 @@ function SigleBetDetails() {
           ...prev,
           {
             eventId: eventId,
+            sportId: sportId,
             bet: bet,
             betDetails: betDetails,
             eventNames: eventNames,
@@ -165,6 +166,7 @@ function SigleBetDetails() {
   }, [selectedBet]);
 
   useEffect(() => {
+    console.log('------bets', bets);
     if (bets.length > 0) {
       dispatch(fetchBetDetailsAction(bets));
     }
@@ -173,7 +175,7 @@ function SigleBetDetails() {
   const selectBet = (eventId, marketId, outcomeId) => {
     const bet = selectedBet.find(
       (bet) =>
-        bet.eventId === parseInt(eventId) &&
+        bet.eventId == parseInt(eventId) &&
         bet.betDetails.id === marketId &&
         bet.bet.id === outcomeId,
     );

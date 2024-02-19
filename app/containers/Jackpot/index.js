@@ -7,8 +7,10 @@ import {
   JackpotDetailCard,
   TalkToUs,
 } from '@components';
+import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 const TabsName = [
   {
     id: 1,
@@ -34,6 +36,7 @@ function Jackpot() {
   const [step, setStep] = useState(TabsName[0].id);
   const [openCard, setOpenCard] = useState(false);
   const [openResult, setOpenResult] = useState(false);
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
   return (
     <div className="grid grid-cols-12 h-full">
       <div className="col-span-8 pt-5">
@@ -137,8 +140,8 @@ function Jackpot() {
           </div>
         )}
       </div>
-      <div className="col-span-4 pt-5 border-l-[1px] pl-3 border-[#A3A3A3]">
-        <Betslip />
+      <div className="col-span-4 pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
+        {selectedBet.length > 0 ? <BetWallet /> : <Betslip />}
         <CompanyContact />
         <CustomerCareContact />
         <TalkToUs />

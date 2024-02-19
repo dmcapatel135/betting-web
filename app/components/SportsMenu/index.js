@@ -3,20 +3,22 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { marketsName, sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
-import { BetCard, Loading, Pagination } from '@components';
+import { BetCard, Loading } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function SportsMenu() {
   // const [tab, setTab] = useState(2);
   const [allSports, setAllSports] = useState();
   const [popularSports, setPopularSports] = useState();
   const [allTournaments, setAllTournaments] = useState();
-  const [allFixtures, setAllFixtures] = useState();
+  const [allFixtures, setAllFixtures] = useState([]);
   const [page, setPage] = useState(1);
   const [dataCount, setDataCount] = useState();
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   //const bets = useSelector((state) => state.bet.selectedBet);
 
   const {
@@ -42,6 +44,11 @@ function SportsMenu() {
   };
 
   useEffect(() => {
+    setAllFixtures([]);
+    setPage(1);
+  }, [sportId]);
+
+  useEffect(() => {
     getAllSports();
   }, []);
 
@@ -56,6 +63,7 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
+    console.log('------this useffect is also run ');
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
@@ -74,20 +82,38 @@ function SportsMenu() {
     } else if (tab === 4) {
       getAllFixtures(`onlyLive=${true}`);
     }
-  }, [sportId, getAllFixtures, tab, selectTournament, page, pageSize]);
+  }, [sportId, getAllFixtures, tab, selectTournament]);
 
+  console.log('---------page ', page, allFixtures, dataCount);
   const getAllFixtures = useCallback(
     async (query) => {
+      setPageSize(10);
       setIsLoading(true);
       const response = await getReq(
         `/sports/${sportId}/fixtures?skip=${page}&take=${pageSize}&${query}`,
       );
+
       setIsLoading(false);
       setDataCount(response?.data?.count);
-      setAllFixtures(response.data.data);
+      if (response.data.data.length > 0) {
+        setAllFixtures((prevState) => [...prevState, ...response.data.data]);
+      } else {
+        setAllFixtures([...response.data.data]);
+        setHasMore(false);
+      }
     },
     [sportId, page, pageSize],
   );
+  // setInterval(() => {
+  //   const today = new Date();
+  //   getAllFixtures(today);
+  // }, 3000);
+
+  const fetchMoreData = () => {
+    setPage(page + 1);
+    const today = new Date();
+    getAllFixtures(today);
+  };
 
   return (
     <>
@@ -141,6 +167,23 @@ function SportsMenu() {
           <div className="flex">
             <div className="flex-1 pr-2">
               <select
+                value={sportId}
+                onChange={(e) => {
+                  setSportId(e.target.value);
+                }}
+                className="w-full pl-2 my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+              >
+                {popularSports?.map((item) => {
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="flex-1 pr-2">
+              <select
                 value={selectTournament}
                 onChange={(e) => {
                   setSelectTournament(e.target.value);
@@ -151,7 +194,7 @@ function SportsMenu() {
                 {allTournaments?.map((item) => {
                   return (
                     <option key={item.id} value={item.id}>
-                      {item?.name} & {item?.category?.name}
+                      {item?.name} {item?.category?.name}
                     </option>
                   );
                 })}
@@ -168,53 +211,46 @@ function SportsMenu() {
                 })}
               </select> */}
             </div>
-            <div className="flex-1 pr-2">
+            <div className="flex-1">
               <select className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
                 <option>Market</option>
-              </select>
-            </div>
-            <div className="flex-1">
-              <select
-                value={sportId}
-                onChange={(e) => {
-                  setSportId(e.target.value);
-                }}
-                className="w-full pl-2 my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
-              >
-                {popularSports?.map((item) => {
-                  return (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
-                    </option>
-                  );
-                })}
               </select>
             </div>
           </div>
         </div>
       </div>
       <div className="h-20 flex justify-start items-center text-black">
-        <div className="h-8 flex items-center text-12 bg-yellow text-white px-3 rounded-[4px] text-center">
-          <p>{moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}</p>
+        <div
+          className={`h-8 flex items-center text-12 w-[220px] ${
+            !(tab === 3) ? 'bg-yellow' : 'bg-white'
+          } text-white px-3 rounded-[4px] text-center`}
+        >
+          {!(tab === 3) && (
+            <p>
+              {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
+            </p>
+          )}
         </div>
-        <div className=" flex justify-evenly flex-1 px-16">
+        <div className=" flex justify-between flex-1 pl-3 pr-16">
           {marketsName
             .filter((item) => item.sportId === sportId)[0]
             ?.marketName.map((items, index) => {
               return (
-                <div key={index} className="text-left flex-1 ">
-                  <h1 className="text-12 font-[700] md:block hidden mb-2">
+                <div key={index} className="text-center ">
+                  <h1 className="text-16 font-[700] md:block hidden mb-2">
                     {items.name === 'Total' ? 'Over/Under(2.5)' : items.name}
                   </h1>
                   <div
                     // key={innerIndex}
-                    className="flex justify-between  w-fit text-12 text-[#3D3D3D]"
+                    className={`flex justify-between  text-12 text-[#3D3D3D] ${
+                      items.name === '1x2' ? 'w-fit' : 'w-32 mx-3'
+                    }`}
                   >
                     {items.option?.map((itemss, innerIndex) => {
                       return (
                         <div
                           key={innerIndex}
-                          className="border-[1px] mr-2 flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                          className="border-[1px] mr-2 flex justify-center items-center h-[40px] md:h-8 w-[52PX] border-[#A3A3A3] rounded-[4px] cursor-pointer "
                         >
                           <strong className="text-gray-900">
                             {itemss || 1}
@@ -227,59 +263,41 @@ function SportsMenu() {
               );
             })}
         </div>
-
-        {/* <div className="border-[1px] flex justify-center items-center h-[32px] md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer">
-              <strong className="text-gray-900">X</strong>
-            </div>
-            <div className="border-[1px] flex justify-center items-center h-[32px]  md:h-6 w-10 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              <strong className="text-gray-900">2</strong>
-            </div> */}
-        {/* <div className="text-center hidden md:block">
-          <h1 className="text-12 font-[700] mb-2">OVER/UNDER 2.5</h1>
-          <div className="flex justify-between w-28 text-12 ">
-            <button className="border-[1px] h-6 w-12 text-12  text-gray-900 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              OVER
-            </button>
-            <button className="border-[1px] h-6 w-12 text-12 text-gray-900 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              UNDER
-            </button>
-          </div>
+      </div>
+      {allFixtures.length > 0 && (
+        <div className="mr-3 mb-3">
+          <InfiniteScroll
+            dataLength={allFixtures.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            endMessage={<p>No more items to load.</p>}
+          >
+            {allFixtures &&
+              allFixtures?.map((item, index) => {
+                return (
+                  <div key={index} className="my-3">
+                    <BetCard index={index} item={item} sportId={sportId} />
+                    {(index + 1) % 13 === 0 && (
+                      <div className="text-black my-3">
+                        <img src="/images/bikoicon/main.png" alt="main" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+          </InfiniteScroll>
         </div>
-        <div className="text-center md:block hidden">
-          <h1 className="text-12 font-[700] mb-2">BOTH TEAMS TO SCORE</h1>
-          <div className="flex justify-between w-28 text-12 ">
-            <button className="border-[1px] h-6 w-12 text-10 text-gray-900 border-[#A3A3A3] rounded-[4px] cursor-pointer">
-              YES
-            </button>
-            <button className="border-[1px] h-6 w-12 text-10 text-gray-900 border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              NO
-            </button>
-          </div>
-        </div> */}
-      </div>
-      <div className="mr-3 mb-3">
-        {allFixtures &&
-          allFixtures?.map((item, index) => {
-            return (
-              <div key={index}>
-                <BetCard
-                  index={index}
-                  item={item}
-                  sportId={sportId}
-                  // handleSelectBet={handleSelectBet}
-                />
-                ;
-              </div>
-            );
-          })}
-        {isLoading && <Loading />}
-        {allFixtures?.data?.length === 0 && (
-          <div className="text-center mt-12 text-black">
-            <span>No any matches available </span>
-          </div>
-        )}
-      </div>
-      {allFixtures?.data?.length > 0 && (
+      )}
+      {isLoading && <Loading />}
+      {allFixtures?.length == 0 && (
+        <div className="text-center mt-12 text-black">
+          <span className="text-black">
+            There is no Odds in many markets in this events
+          </span>
+        </div>
+      )}
+      {/* {allFixtures?.data?.length > 0 && (
         <div>
           <Pagination
             page={page}
@@ -289,7 +307,7 @@ function SportsMenu() {
             setPageSize={setPageSize}
           />
         </div>
-      )}
+      )} */}
     </>
   );
 }

@@ -7,7 +7,7 @@ import { isLoggedIn } from '@utils/apiHandlers';
 function BetSlip() {
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px]">
-      {!isLoggedIn ? (
+      {isLoggedIn() ? (
         <Balance />
       ) : (
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
@@ -31,10 +31,10 @@ function BetSlip() {
           <span className="text-12 text-black">Booking code</span>
           <input
             type="text"
-            className="w-[150px] mx-3 border-[1px] text-gray-900 px-2 text-12 outline-none rounded-sm  border-yellow"
+            className="w-[150px] mx-3 h-8  border-[1px] text-gray-900 px-2 text-14 outline-none rounded-sm  border-yellow"
           />
         </div>
-        <button className="px-3 bg-gradient-color-2 text-12 rounded-sm">
+        <button className="px-3 h-8 bg-gradient-color-2 text-12 rounded-sm">
           Load
         </button>
       </div>

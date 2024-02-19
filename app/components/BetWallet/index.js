@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Balance from '@components/Balance';
@@ -14,15 +14,27 @@ function BetWallet() {
   const [tab, setTab] = useState('sport');
   const [gameRules, setGameRules] = useState();
   const [bonus, setBonus] = useState([]);
-  const [totalOdd, setTotalOdd] = useState(1);
+  const [totalOdd, setTotalOdd] = useState(0);
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
-  const [stake, setStake] = useState(1000);
+  const [stake, setStake] = useState();
   const [oddChange, setOddChange] = useState(false);
+  const [totalSport, setTotalSport] = useState([]);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  console.log('-----bet wallet page ', bets);
+  useEffect(() => {
+    const uniqueSports = {};
+    const filteredData = bets.filter((item) => {
+      if (!uniqueSports[item.sportId]) {
+        uniqueSports[item.sportId] = true;
+        return true;
+      }
+      return false;
+    });
+    setTotalSport(filteredData);
+  }, [bets]);
 
   const getGamesRules = async () => {
     const response = await getReq('/win-bonus-policies/active');
@@ -60,6 +72,10 @@ function BetWallet() {
         ]);
       });
     }
+
+    if (bets.length === 0) {
+      setOddChange(0);
+    }
   }, [bets]);
 
   const percentageValue =
@@ -67,38 +83,44 @@ function BetWallet() {
   const calculation = (totalOdd * stake + percentageValue).toFixed(2);
 
   const handlePlaceBet = async () => {
-    const data = {
-      stake: stake,
-      acceptOddsChange: oddChange,
-      bets: betData,
-    };
-    const response = await postReq('/users/me/bet-slips', data);
-    if (response.status) {
-      dispatch(fetchBetDetailsAction([]));
-      toast.success('Congrats ! Bet place successfully');
-    } else if (response.error) {
-      toast.error(response.error.message);
+    if (isLoggedIn()) {
+      const data = {
+        stake: stake,
+        acceptOddsChange: oddChange,
+        bets: betData,
+      };
+      const response = await postReq('/users/me/bet-slips', data);
+      if (response.status) {
+        dispatch(fetchBetDetailsAction([]));
+        toast.success('Congrats ! Bet place successfully');
+      } else if (response.error) {
+        toast.error(response.error.message);
+      }
+    } else {
+      navigate('/login');
     }
   };
 
-  const handleRemoveBet = (eventId) => {
-    console.log('------index ');
+  const handleRemoveBet = (eventId, sportId) => {
     const updatedBets = bets.filter((item) => item.eventId != eventId);
     dispatch(fetchBetDetailsAction(updatedBets));
+    if (!updatedBets.find((item) => item.sportId == sportId)) {
+      const updatedSport = totalSport.filter((item) => item != sportId);
+      setTotalSport(updatedSport);
+    }
   };
+
+  // useEffect(() => {
+  //   const filteredData = bets.filter((item, index, array) => {
+  //     return array.findIndex((obj) => obj.sportId === item.sportId) === index;
+  //   });
+  //   setTotalSport(filteredData);
+  // }, [bets]);
 
   const handleClearAllBet = () => {
     dispatch(fetchBetDetailsAction([]));
-
-    // const updatedData = mergedData.map((item) => ({
-    //   ...item,
-    //   outcomes: item.outcomes.map((outcome) => ({
-    //     ...outcome,
-    //     selected: false,
-    //   })),
-    // }));
-
-    // setMergedData(updatedData);
+    setTotalSport([]);
+    setTotalOdd(1);
   };
 
   const bongeBonus = (
@@ -112,7 +134,7 @@ function BetWallet() {
 
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px] relative">
-      {!isLoggedIn ? (
+      {!isLoggedIn() ? (
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
           <p className="text-12 text-black">Not logged in -</p>
           <div className="flex my-2">
@@ -134,11 +156,11 @@ function BetWallet() {
       <div className="px-3 my-3">
         <div className="flex text-black border-[1px] h-10 w-full rounded-[8px]">
           <div
-            className={`w-1/2 flex justify-center cursor-pointer ${
+            className={`w-1/2 flex flex-1 justify-center cursor-pointer ${
               tab == 'sport'
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black'
-            } rounded-l-lg items-center`}
+            } rounded-lg items-center`}
             onClick={() => setTab('sport')}
           >
             <span className="text-12 ">Sport</span>
@@ -151,9 +173,9 @@ function BetWallet() {
               alt="icon"
               className="mx-2"
             />
-            <span className="text-12 ">0</span>
+            <span className="text-12 ">{totalSport.length}</span>
           </div>
-          <div
+          {/* <div
             className={`w-1/2 flex justify-center cursor-pointer ${
               tab == 'virtual' ? 'bg-gradient-color-1 text-white' : 'bg-white'
             } rounded-r-lg items-center`}
@@ -170,7 +192,7 @@ function BetWallet() {
               className="mx-2"
             />
             <span className="text-12">0</span>
-          </div>
+          </div> */}
         </div>
         {/* <div className="flex items-center my-3">
           <div className="flex items-center">
@@ -200,7 +222,7 @@ function BetWallet() {
         {bonus?.length > 0 && (
           <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
             <div className="w-5 h-12 bg-gradient-color-4"></div>
-            <span className="text-white text-12 leading-4 px-2">
+            <span className="text-black text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
               {gameRules?.minimumOdds} minimum odds.
               {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
@@ -222,12 +244,11 @@ function BetWallet() {
       </div>
       <div className="border-t-[1px] border-b-[1px] my-5 border-blue">
         {bets?.map((item, index) => {
-          console.log('-----item ', item);
           return (
             <div key={index} className="flex">
               <div
                 className="w-10 border-r-[1px] flex justify-center cursor-pointer items-center border-blue"
-                onClick={() => handleRemoveBet(item.eventId)}
+                onClick={() => handleRemoveBet(item.eventId, item.sportId)}
               >
                 <img src="/images/bikoicon/close_small.png" alt="icon" />
               </div>
@@ -290,8 +311,8 @@ function BetWallet() {
         </span>
       </div>
       <div className="px-3">
-        <span>Your stake</span>
-        <div className="h-10 border-[1px] border-yellow rounded-xl flex justify-between my-2">
+        <span className="text-black text-16">Your stake</span>
+        <div className="h-[40px] border-[1px] border-yellow rounded-xl flex justify-between my-2">
           <div
             onClick={() => setStake(stake - 1)}
             className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-16 text-center rounded-l-xl"
@@ -300,7 +321,8 @@ function BetWallet() {
           </div>
           <div className="h-10 w-24 flex justify-center items-center">
             <input
-              className="text-black text-center text-14 outline-none border-none h-9"
+              className="text-black text-center text-14 outline-none border-none h-8"
+              placeholder="Your Stake"
               value={stake}
               onChange={(e) => setStake(e.target.value)}
             />
@@ -312,7 +334,7 @@ function BetWallet() {
             <span className="text-24">+</span>
           </div>
         </div>
-        {/* <span className="text-12 text-gray-900">Min stake is 1000</span> */}
+        {!stake && <span className="text-12 text-black">Min stake is 1</span>}
       </div>
       <div className="px-3">
         <div className="flex justify-between text-black">
@@ -351,13 +373,13 @@ function BetWallet() {
       <div className="flex my-3 px-3 ">
         <button
           onClick={handleClearAllBet}
-          className="border-[1px] border-yellow w-28 hover:bg-yellow hover:text-white text-gray-900 text-14 font-[700] rounded-md"
+          className="border-[1px] border-yellow w-32 hover:bg-yellow hover:text-white text-gray-900 text-14 font-[700] rounded-md"
         >
           CLEAR ALL
         </button>
         <button
           onClick={handlePlaceBet}
-          className="border-[1px] h-10 ml-3 text-gray-900 border-yellow w-40 hover:text-white hover:bg-yellow text-14 font-[700] rounded-md"
+          className="border-[1px] h-10 ml-3 text-gray-900 border-yellow w-52 hover:text-white hover:bg-yellow text-14 font-[700] rounded-md"
         >
           PLACE BET
         </button>

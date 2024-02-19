@@ -20,7 +20,7 @@ const initialState = {
   dialCode: '+91',
   country: 'India',
   emailOrMobile: '',
-  mobileVerificationCode: '000000',
+  mobileVerificationCode: '',
   termsAndCondition: '',
 };
 let resendCodeInterval;
@@ -34,6 +34,7 @@ function JoinNow() {
   const [verificationResponse, setVerificationResponse] = useState(null);
   const { register, sendRegisterCode } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [terms, setTerms] = useState(false);
 
   function findCountryNameByDialCode(dialCode) {
     const country = countryList.find((c) => c.dial_code === dialCode);
@@ -233,7 +234,7 @@ function JoinNow() {
                         <input
                           type="checkbox"
                           name="termsAndCondition"
-                          checked
+                          checked={terms}
                           onClick={(e) => {
                             setFormData({
                               ...form,
@@ -243,7 +244,10 @@ function JoinNow() {
                             });
                           }}
                         />
-                        <span className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-12px]"></span>
+                        <span
+                          onClick={() => setTerms(!terms)}
+                          className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-12px]"
+                        ></span>
                         <span className="text-gray-900 text-10 md:text-12 md:ml-4 lg:ml-2 ">
                           By creating an account you accept the{' '}
                           <Link className="underline hover:text-yellow">
@@ -331,7 +335,11 @@ function JoinNow() {
                           <button
                             type="submit"
                             onClick={handleRegister}
-                            className="w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 bg-[#FEAE04] border-[#FEAE04] font-[700] rounded-[8px]"
+                            className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                              form.mobileVerificationCode.length !== 6
+                                ? 'bg-lightgray border-lightgray'
+                                : 'bg-[#FEAE04] border-[#FEAE04]'
+                            } border-[#FEAE04] font-[700] rounded-[8px]`}
                             disabled={
                               form.mobileVerificationCode.length !== 6 ||
                               form.mobileVerificationCode.length !== 6

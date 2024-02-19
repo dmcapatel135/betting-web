@@ -27,7 +27,7 @@ function Tabs({ popularSports }) {
                 alt="profile_icon"
                 className="w-6 h-6"
               />
-              <span className="px-2 text-14 xxl:text-16">
+              <span className="px-2 text-16 xxl:text-16">
                 {item.name == 'Basketball' ? 'BasketBall' : item.name}
               </span>
             </div>

@@ -19,14 +19,14 @@ export const navigations = [
     icon: images.upcomingIcon,
     active_icon: images.upcomingIconActive,
     title: 'UPCOMING',
-    path: 'upcoming',
+    path: '/dashboard/upcoming',
   },
-  {
-    icon: images.virtualsportIcon,
-    active_icon: images.virtualsportIconActive,
-    title: 'VIRTUAL SPORTS',
-    path: 'virtual-sport',
-  },
+  // {
+  //   icon: images.virtualsportIcon,
+  //   active_icon: images.virtualsportIconActive,
+  //   title: 'VIRTUAL SPORTS',
+  //   path: 'virtual-sport',
+  // },
   {
     icon: images.jackpotIcon,
     active_icon: images.jackpotIconActive,
