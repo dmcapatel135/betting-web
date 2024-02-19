@@ -144,7 +144,7 @@ const Navbar = () => {
             ) : (
               <button
                 className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
-                onClick={() => navigate('/login')}
+                onClick={() => (window.location.href = '/login')}
               >
                 Login
               </button>
@@ -158,7 +158,8 @@ const Navbar = () => {
             ) : (
               <button
                 className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-1 md:order-2"
-                onClick={() => navigate('/join-now')}
+                // onClick={() => navigate('/join-now')}
+                onClick={() => (window.location.href = '/join-now')}
               >
                 Join Now
               </button>

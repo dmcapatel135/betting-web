@@ -17,7 +17,7 @@ import {
   SingleBetDetails,
   Jackpot,
 } from '@containers/pageListAsync';
-import ProtectedRoutes from './ProtctedRoutes';
+// import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
 import Withdraw from '@containers/Withdraw';
 
@@ -51,14 +51,32 @@ function App() {
           <Route
             index
             element={
-              <ProtectedRoutes>
-                <Batting />
-              </ProtectedRoutes>
+              // <ProtectedRoutes>
+              <Batting />
+              // </ProtectedRoutes>
+            }
+          />
+          {/* <Route
+            index
+            path="/dashboard/live-now/:sId/:eId/"
+            element={
+              // <ProtectedRoutes>
+              <Batting />
+              // </ProtectedRoutes>
+            }
+          /> */}
+          <Route
+            index
+            path="/dashboard/:sId/:statusId"
+            element={
+              // <ProtectedRoutes>
+              <Batting />
+              // </ProtectedRoutes>
             }
           />
           <Route
             index
-            path="/dashboard/live-now"
+            path="/dashboard/:sId/:statusId/:eId"
             element={
               // <ProtectedRoutes>
               <Batting />
@@ -75,7 +93,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/single-bets/:sportId/:eventId/:eventNames"
+            path="/dashboard/single-bets/:sId/:eventId/:eventNames"
             element={
               // <ProtectedRoutes>
               <SingleBetDetails />

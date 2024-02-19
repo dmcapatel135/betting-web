@@ -17,8 +17,9 @@ function Sidebar({
   const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
-  const [selectMenuName, setSelectMenuName] = useState('HOME');
-  const { allTournaments, setSelectTournament, selectTournament, setTab } =
+  // const { statusId } = useParams();
+
+  const { allTournaments, setSelectTournament, selectTournament, setTab, tab } =
     useContext(MyContext);
 
   return (
@@ -43,30 +44,25 @@ function Sidebar({
                   key={index}
                   end
                   onClick={() => {
-                    setSelectMenuName(item.title);
                     if (index === 1) {
                       setTab(4);
                     } else if (index === 0) {
                       setTab(2);
                     } else if (index === 2) {
                       setTab(3);
+                    } else if (index === 3) {
+                      setTab(5);
                     }
                   }}
-                  to={item.path}
-                  className={({ isActive }) =>
-                    `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
-                      isActive || selectMenuName === item.title
-                        ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
-                        : ' hover:bg-primary-yellow  flex items-center gap-3'
-                    }`
-                  }
+                  // to={selectRoute(item.name)}
+                  className={`px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
+                    tab == item.id
+                      ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
+                      : ' hover:bg-primary-yellow  flex items-center gap-3'
+                  }`}
                 >
                   <img
-                    src={
-                      selectMenuName === item.title
-                        ? item.active_icon
-                        : item.icon
-                    }
+                    src={tab == item.id ? item.active_icon : item.icon}
                     className="w-[22px] h-[22px]"
                   />
                   <span className="text-14 "> {item.title}</span>
@@ -103,7 +99,7 @@ function Sidebar({
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
                       <span
                         className={`text-12 mx-2 ${
-                          selectTournament && selectTournament === item.id
+                          selectTournament && selectTournament == item.id
                             ? ' bg-yellow w-full '
                             : ''
                         } text-black hover:text-blue rounded-sm pl-2 font-[500]`}

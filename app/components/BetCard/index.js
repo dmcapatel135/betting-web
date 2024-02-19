@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { reactIcons } from '@utils/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
@@ -111,7 +111,7 @@ function BetCard({ item, sportId }) {
           {item?.sport?.name}/{item?.category?.name}/{item?.tournament?.name}
         </span>
       </div>
-      {sportId === 1 && (
+      {sportId == 1 && (
         <div className=" flex flex-1  justify-between">
           <div className="text-center">
             <div className="flex  items-center justify-between w-44 text-12 text-[#3D3D3D]">
@@ -278,7 +278,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
       )}
-      {sportId === 2 && (
+      {sportId == 2 && (
         <div className="flex  w-[470px]">
           <div className="text-center  flex-2 ">
             <div className="flex justify-between  items-center w-44 text-12 text-[#3D3D3D]">
@@ -335,7 +335,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
       )}
-      {sportId === 12 && (
+      {sportId == 12 && (
         <div className="flex w-[470px]">
           <div className="text-center flex-2 ">
             <div className="flex items-center justify-between w-44 text-12 text-[#3D3D3D]">
@@ -395,7 +395,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
       )}
-      {sportId === 10 && (
+      {sportId == 10 && (
         <div className="flex w-[470px]">
           <div className="text-center flex-2 ">
             <div className="flex items-center w-44 text-12 text-[#3D3D3D]">
@@ -452,7 +452,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
       )}
-      {sportId === 21 && (
+      {sportId == 21 && (
         <div className="flex w-[470px]">
           <div className="text-center flex-2 ">
             <div className="flex  items-center justify-between w-32 pl-3  text-12 text-[#3D3D3D]">
@@ -519,7 +519,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
       )}
-      {sportId === 5 && (
+      {sportId == 5 && (
         <div className="flex w-[470px]">
           <div className="text-center flex-2 ">
             <div className="flex justify-between items-center w-32 pl-3 text-12 text-[#3D3D3D]">
@@ -705,20 +705,30 @@ function BetCard({ item, sportId }) {
 
       <div className="text-center">
         <div className="flex justify-end text-12 w-16 text-black">
-          <Link
+          {/* <Link
             to={`/dashboard/single-bets/${item.sport.id}/${item.eventId}/${
               item?.competitors[0]?.name + ' vs ' + item?.competitors[1]?.name
             }`}
+          > */}
+          {/* <Link to="/dashboard/single"> */}
+          <div
+            onClick={() =>
+              (window.location.href = `/dashboard/single-bets/${
+                item.sport.id
+              }/${item.eventId}/${
+                item?.competitors[0]?.name + ' vs ' + item?.competitors[1]?.name
+              }`)
+            }
+            className="border-[1px]  h-10 min-w-12 max-w-fit px-2 font-[600] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
           >
-            <div className="border-[1px]  h-10 min-w-12 max-w-fit px-2 font-[600] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer ">
-              <img
-                src="/images/bikoicon/moving.png"
-                alt="icon"
-                className="mx-1"
-              />
-              <span>{item.openMarkets}</span>
-            </div>
-          </Link>
+            <img
+              src="/images/bikoicon/moving.png"
+              alt="icon"
+              className="mx-1"
+            />
+            <span>{item.openMarkets}</span>
+          </div>
+          {/* </Link> */}
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
@@ -7,10 +7,42 @@ import { getReq } from '@utils/apiHandlers';
 // import BetWallet from '@components/BetWallet';
 
 const OuterLayout = () => {
-  const [sportId, setSportId] = useState(1);
+  const { sId, eId, statusId } = useParams();
+  const [sportId, setSportId] = useState(sId || 1);
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
-  const [tab, setTab] = useState(2);
+  const [selectMenuName, setSelectMenuName] = useState();
+  const [tab, setTab] = useState();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   setSportId(1);
+  //   setTab(2);
+  // }, []);
+
+  useEffect(() => {
+    if (sId) setSportId(sId);
+    setSelectTournament(null);
+  }, [sId]);
+
+  useEffect(() => {
+    if (statusId) setTab(statusId);
+  }, [statusId]);
+
+  useEffect(() => {
+    if (eId) setSelectTournament(eId);
+  }, [eId]);
+
+  useEffect(() => {
+    if (tab == 5) {
+      navigate('/dashboard/jackpot');
+    } else if (sportId && tab) navigate(`/dashboard/${sportId}/${tab}`);
+  }, [sportId, navigate, tab]);
+
+  useEffect(() => {
+    if (sportId && selectTournament)
+      navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
+  }, [sportId, tab, selectTournament, navigate]);
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(`/sports/${sportId}/tournaments`);
@@ -20,6 +52,10 @@ const OuterLayout = () => {
   useEffect(() => {
     getAllTournaments();
   }, [sportId, getAllTournaments]);
+
+  // useEffect(() => {
+  //   if (statusId) setSelectMenuName(statusId);
+  // }, [selectMenuName, statusId]);
 
   return (
     <>
@@ -34,6 +70,8 @@ const OuterLayout = () => {
             allTournaments,
             tab,
             setTab,
+            selectMenuName,
+            setSelectMenuName,
           }}
         >
           <div className="md:col-span-2 md:block hidden">

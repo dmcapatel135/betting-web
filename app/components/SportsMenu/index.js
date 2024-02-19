@@ -7,19 +7,19 @@ import { BetCard, Loading } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
+// import { useParams } from 'react-router-dom';
 
 function SportsMenu() {
-  // const [tab, setTab] = useState(2);
   const [allSports, setAllSports] = useState();
   const [popularSports, setPopularSports] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [allFixtures, setAllFixtures] = useState([]);
   const [page, setPage] = useState(1);
-  const [dataCount, setDataCount] = useState();
+  // const [dataCount, setDataCount] = useState();
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  //const bets = useSelector((state) => state.bet.selectedBet);
+  // const { statusId } = useParams();
 
   const {
     sportId,
@@ -63,7 +63,11 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
-    console.log('------this useffect is also run ');
+    const today = new Date();
+    getAllFixtures(today);
+  }, [getAllFixtures]);
+
+  useEffect(() => {
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
@@ -84,7 +88,6 @@ function SportsMenu() {
     }
   }, [sportId, getAllFixtures, tab, selectTournament]);
 
-  console.log('---------page ', page, allFixtures, dataCount);
   const getAllFixtures = useCallback(
     async (query) => {
       setPageSize(10);
@@ -94,7 +97,7 @@ function SportsMenu() {
       );
 
       setIsLoading(false);
-      setDataCount(response?.data?.count);
+      // setDataCount(response?.data?.count);
       if (response.data.data.length > 0) {
         setAllFixtures((prevState) => [...prevState, ...response.data.data]);
       } else {
@@ -129,7 +132,7 @@ function SportsMenu() {
               <div
                 key={item.id}
                 className={`${
-                  tab === item.id
+                  tab == item.id
                     ? 'text-white border-b-[3px] border-yellow'
                     : 'text-white  w-36'
                 } mx-3 flex-1 flex items-center justify-center text-center`}
@@ -233,7 +236,7 @@ function SportsMenu() {
         </div>
         <div className=" flex justify-between flex-1 pl-3 pr-16">
           {marketsName
-            .filter((item) => item.sportId === sportId)[0]
+            .filter((item) => item.sportId == sportId)[0]
             ?.marketName.map((items, index) => {
               return (
                 <div key={index} className="text-center ">

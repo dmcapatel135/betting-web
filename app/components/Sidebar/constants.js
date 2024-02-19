@@ -5,7 +5,8 @@ export const navigations = [
     icon: images.homeIcon,
     active_icon: images.homeIconActive,
     title: 'HOME',
-    path: '/dashboard',
+    path: '/dashboard/:sId/:statusId',
+    id: 2,
   },
   //   { icon: '/images/portfolio.png', title: 'Portfolio', path: 'portfolio' },
   //   { icon: '/images/wallet6.png', title: 'Wallet', path: 'wallet' },
@@ -13,13 +14,15 @@ export const navigations = [
     icon: images.liveNowIcon,
     active_icon: images.liveNowIconActive,
     title: 'LIVE NOW',
-    path: '/dashboard/live-now',
+    path: '/dashboard/live-now/:sId/:statusId',
+    id: 4,
   },
   {
     icon: images.upcomingIcon,
     active_icon: images.upcomingIconActive,
     title: 'UPCOMING',
-    path: '/dashboard/upcoming',
+    path: '/dashboard/upcoming/:sId/:statusId',
+    id: 3,
   },
   // {
   //   icon: images.virtualsportIcon,
@@ -32,13 +35,15 @@ export const navigations = [
     active_icon: images.jackpotIconActive,
     title: 'JACKPOT',
     path: '/dashboard/jackpot',
+    id: 5,
   },
-  {
-    icon: images.popularIcon,
-    active_icon: images.upcomingIconActive,
-    title: 'POPULAR',
-    path: 'popular',
-  },
+  // {
+  //   icon: images.popularIcon,
+  //   active_icon: images.upcomingIconActive,
+  //   title: 'POPULAR',
+  //   path: 'popular',
+  //   id: 1,
+  // },
 ];
 
 export const tournaments = [
