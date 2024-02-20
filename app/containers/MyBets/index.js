@@ -35,17 +35,18 @@ function MyBets() {
     const response = await getReq(
       `/users/me/bet-slips/${status ? status : ''}`,
     );
-    console.log('-----respon ', response);
     setMyBets(response.data.data);
   };
 
   useEffect(() => {
-    getMyBetDetails('');
-    if (step.id === 1) getMyBetDetails('');
-    else if (step.id === 2) {
-      getMyBetDetails('Pending');
-    } else if (step.id === 3) {
+    if (step === 1) {
+      getMyBetDetails('');
+    } else if (step === 2) {
+      getMyBetDetails('pending');
+    } else if (step === 3) {
       getMyBetDetails('Settled');
+    } else {
+      getMyBetDetails('');
     }
   }, [step]);
 
@@ -164,6 +165,7 @@ function MyBets() {
                           setShowBets={setShowBets}
                           item={item}
                           index={index}
+                          getMyBetDetails={getMyBetDetails}
                         />
                       </div>
                     );

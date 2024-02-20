@@ -12,6 +12,7 @@ const OuterLayout = () => {
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [selectMenuName, setSelectMenuName] = useState();
+  const [categories, setCategories] = useState();
   const [tab, setTab] = useState();
   const navigate = useNavigate();
 
@@ -53,9 +54,14 @@ const OuterLayout = () => {
     getAllTournaments();
   }, [sportId, getAllTournaments]);
 
-  // useEffect(() => {
-  //   if (statusId) setSelectMenuName(statusId);
-  // }, [selectMenuName, statusId]);
+  const getAllCategories = useCallback(async () => {
+    const response = await getReq(`/sports/${sportId}/categories`);
+    setCategories(response.data);
+  }, [sportId]);
+
+  useEffect(() => {
+    getAllCategories();
+  }, [sportId, getAllCategories]);
 
   return (
     <>
@@ -72,6 +78,7 @@ const OuterLayout = () => {
             setTab,
             selectMenuName,
             setSelectMenuName,
+            categories,
           }}
         >
           <div className="md:col-span-2 md:block hidden">

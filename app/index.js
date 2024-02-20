@@ -28,6 +28,33 @@ const MOUNT_NODE = document.getElementById('app');
 
 const root = ReactDOM.createRoot(MOUNT_NODE);
 
+const saveStateToLocalStorage = (state) => {
+  try {
+    const serializedState = JSON.stringify(state.bet);
+    localStorage.setItem('reduxState', serializedState);
+  } catch (error) {
+    // Handle any errors
+  }
+};
+
+// Call this function whenever the Redux state changes
+store.subscribe(() => {
+  const state = store.getState();
+  saveStateToLocalStorage(state);
+});
+
+export const loadStateFromLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('reduxState');
+    if (serializedState === null) {
+      return undefined; // Return undefined to use the initial state defined in your reducers
+    }
+    return JSON.parse(serializedState === {} ? [] : serializedState);
+  } catch (error) {
+    return undefined; // Return undefined to use the initial state defined in your reducers
+  }
+};
+
 root.render(
   // <React.StrictMode>
   <Provider store={store}>

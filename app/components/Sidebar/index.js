@@ -5,22 +5,23 @@ import PropTypes from 'prop-types';
 
 import { reactIcons } from '@utils/icons';
 
-import { navigations, popularCountries } from './constants';
+import { navigations } from './constants';
 import { MyContext } from '@components/MyContext/MyContext';
 
-function Sidebar({
-  isMobileSidebar,
-  // allTournaments,
-  // setSelectTournament,
-  // selectTournament,
-}) {
+function Sidebar({ isMobileSidebar }) {
   const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   // const { statusId } = useParams();
 
-  const { allTournaments, setSelectTournament, selectTournament, setTab, tab } =
-    useContext(MyContext);
+  const {
+    allTournaments,
+    setSelectTournament,
+    selectTournament,
+    setTab,
+    tab,
+    categories,
+  } = useContext(MyContext);
 
   return (
     <div
@@ -129,9 +130,9 @@ function Sidebar({
             </span>
           </div>
           {isOpenpopularCountry && (
-            <div>
+            <div className="pl-2 overflow-y-auto custom-scroll-sm h-64">
               <ul>
-                {popularCountries.map((item) => {
+                {categories.map((item) => {
                   return (
                     <div key={item.id} className="px-3">
                       <li
@@ -139,12 +140,12 @@ function Sidebar({
                         onClick={() => setIsOpenLeague(item.id)}
                       >
                         <div className="flex items-center">
-                          <img src={item.icon} alt="i" className="w-3 h-3" />
-                          <span className="text-14 mx-2 text-black">
-                            {item.country}
+                          {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
+                          <span className="text-12 mx-2 font-[500] text-black">
+                            {item.name}
                           </span>
                         </div>
-                        <span>{reactIcons.arrowdown}</span>
+                        {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>
                       {isOpenLeague == item.id &&
                         item?.league_list.map((items) => {

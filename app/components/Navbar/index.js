@@ -143,7 +143,7 @@ const Navbar = () => {
               </div>
             ) : (
               <button
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
+                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
                 onClick={() => (window.location.href = '/login')}
               >
                 Login
@@ -151,7 +151,7 @@ const Navbar = () => {
             )}
             {isLoggedIn() ? (
               <Link to="/dashboard/deposit">
-                <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
+                <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
                   Deposit
                 </button>
               </Link>
@@ -184,26 +184,35 @@ const Navbar = () => {
                   <div className="text-gray-900  py-3 text-14 font-[400] font-roboto cursor-pointer">
                     <ul className="">
                       <li
+                        onClick={() =>
+                          (window.location.href = '/dashboard/my-bets')
+                        }
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        onClick={() => navigate('/dashboard/my-bets')}
                       >
                         My Bets
                       </li>
                       <li
-                        onClick={() => navigate('/dashboard/deposit')}
+                        onClick={() =>
+                          (window.location.href = '/dashboard/deposit')
+                        }
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                       >
                         Deposit
                       </li>
                       <li
-                        onClick={() => navigate('/dashboard/withdraw')}
+                        onClick={() =>
+                          (window.location.href = '/dashboard/withdraw')
+                        }
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                       >
                         Withdraw
                       </li>
                       <li
                         className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        onClick={() => navigate('/dashboard/my-transactions')}
+                        // onClick={() => navigate('/dashboard/my-transactions')}
+                        onClick={() =>
+                          (window.location.href = '/dashboard/my-transactions')
+                        }
                       >
                         Transactions
                       </li>
@@ -252,7 +261,7 @@ const Navbar = () => {
                         ? item.active_icon
                         : item.icon
                     }
-                    className="w-6 h-6"
+                    className="w-5 h-5"
                   />
                   {item.title === 'SLIP' && (
                     <div className="w-[14px] h-[14px]  bg-white flex justify-center items-center rounded-full left-4 -top-1 text-black absolute">
@@ -263,7 +272,7 @@ const Navbar = () => {
                 <span
                   className={`${
                     selectMenuName === item.title ? 'text-yellow' : 'text-white'
-                  }`}
+                  } text-10 `}
                 >
                   {' '}
                   {item.title}

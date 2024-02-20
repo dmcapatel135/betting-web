@@ -59,7 +59,7 @@ export const marketsName = [
   },
   {
     sportId: 10,
-    marketName: [{ name: '1x2', option: ['Home', 'Draw', 'Away'] }],
+    marketName: [{ name: 'Winner', option: ['1', '2'] }],
   },
   {
     sportId: 12,

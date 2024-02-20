@@ -20,9 +20,13 @@ import {
 // import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
 import Withdraw from '@containers/Withdraw';
+import { useDispatch } from 'react-redux';
+import { fetchBetDetailsAction } from '@actions';
+import { loadStateFromLocalStorage } from '.';
 
 function App() {
   const { pathname, hash } = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Scroll to top on url change
@@ -36,6 +40,12 @@ function App() {
       element.scrollIntoView(true);
     }
   }, [hash]);
+
+  useEffect(() => {
+    if (loadStateFromLocalStorage()) {
+      dispatch(fetchBetDetailsAction(loadStateFromLocalStorage().selectedBet));
+    }
+  }, [dispatch]);
 
   return (
     <Fragment>

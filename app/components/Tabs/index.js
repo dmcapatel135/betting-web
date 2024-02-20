@@ -8,7 +8,7 @@ function Tabs({ popularSports }) {
   const { setSportId } = useContext(MyContext);
 
   return (
-    <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
+    <div className="border-[1px] border-bluewhale mt-3 px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
       {popularSports?.map((item) => {
         return (
           <div

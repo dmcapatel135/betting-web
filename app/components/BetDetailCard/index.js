@@ -1,8 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { postReq } from '@utils/apiHandlers';
+import { toast } from 'react-toastify';
 
-function BetDetailCard({ item, setShowBets }) {
+function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
+  const handleCancelBet = async (id) => {
+    const response = await postReq(`/users/me/bet-slips/${id}/cancel`);
+    if (response.status) {
+      toast.success('Bet cancelled successfully');
+      getMyBetDetails();
+    } else {
+      toast.error(response.error.message);
+    }
+  };
+
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -86,7 +98,10 @@ function BetDetailCard({ item, setShowBets }) {
       </div>
       <hr className="border-[1px] my-1 mx-3"></hr>
       <div className="flex justify-end my-2 px-3">
-        <button className="flex bg-lightestgray px-3 mx-1 py-1 text-14 font-[600]  rounded-[8px]">
+        <button
+          onClick={() => handleCancelBet(item.id)}
+          className="flex bg-lightestgray px-3 mx-1 py-1 text-14 font-[600]  rounded-[8px]"
+        >
           <img src="/images/bikoicon/cancel.png" alt="icon" className="mx-2" />
           Cancelled
         </button>
@@ -118,6 +133,7 @@ BetDetailCard.propTypes = {
   item: PropTypes.object,
   setShowBets: PropTypes.string,
   // index: PropTypes.number,
+  getMyBetDetails: PropTypes.func,
 };
 
 export default BetDetailCard;

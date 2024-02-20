@@ -4,9 +4,35 @@ import {
   CustomerCareContact,
   TalkToUs,
 } from '@components';
-import React from 'react';
+import { getReq } from '@utils/apiHandlers';
+import React, { useCallback, useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function MyTransactions() {
+  const [myTransactions, setMyTransactions] = useState([]);
+  const [page, setPage] = useState();
+  const [hasMore, setHasMore] = useState();
+
+  const handleGetTransactions = useCallback(async () => {
+    const response = await getReq('/users/me/transactions');
+
+    if (response.data.data.length > 0) {
+      setMyTransactions((prevState) => [...prevState, ...response.data.data]);
+    } else {
+      setMyTransactions([...response.data.data]);
+      setHasMore(false);
+    }
+  }, [setMyTransactions]);
+
+  useEffect(() => {
+    handleGetTransactions();
+  }, [handleGetTransactions]);
+
+  const fetchMoreData = () => {
+    setPage(page + 1);
+    handleGetTransactions();
+  };
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
@@ -45,13 +71,25 @@ function MyTransactions() {
                   <th className="rounded-r-[8px]">BALANCE</th>
                 </thead>
                 <tbody className="text-gray-900 text-center text-10 md:text-12 font-[500]">
-                  <tr>
-                    <td>2023-12-09 10:48</td>
-                    <td>Narration</td>
-                    <td></td>
-                    <td>50000</td>
-                    <td>16250</td>
-                  </tr>
+                  <InfiniteScroll
+                    dataLength={myTransactions.length}
+                    next={fetchMoreData}
+                    hasMore={hasMore}
+                    loader={<h4>Loading...</h4>}
+                    endMessage={<p>No more data to load.</p>}
+                  >
+                    {myTransactions.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>2023-12-09 10:48</td>
+                          <td>Narration</td>
+                          <td></td>
+                          <td>50000</td>
+                          <td>16250</td>
+                        </tr>
+                      );
+                    })}
+                  </InfiniteScroll>
                 </tbody>
               </table>
             </div>

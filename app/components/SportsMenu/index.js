@@ -68,22 +68,23 @@ function SportsMenu() {
   }, [getAllFixtures]);
 
   useEffect(() => {
+    console.log('----si working ', tab);
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
-    if (tab === 2 && selectTournament) {
+    if (tab == 2 && selectTournament) {
       getAllFixtures(`date=${new Date()}&tournamentId=${selectTournament}`);
-    } else if (tab === 3 && selectTournament) {
+    } else if (tab == 3 && selectTournament) {
       getAllFixtures(`fromDate=${upcoming}&tournamentId=${selectTournament}`);
-    } else if (tab === 4 && selectTournament) {
+    } else if (tab == 4 && selectTournament) {
       getAllFixtures(`onlyLive=${true}&tournamentId=${selectTournament}`);
     } else if (selectTournament) {
       getAllFixtures(`tournamentId=${selectTournament}`);
-    } else if (tab === 2) {
+    } else if (tab == 2) {
       getAllFixtures(`date=${new Date()}`);
-    } else if (tab === 3) {
+    } else if (tab == 3) {
       getAllFixtures(`fromDate=${upcoming}`);
-    } else if (tab === 4) {
+    } else if (tab == 4) {
       getAllFixtures(`onlyLive=${true}`);
     }
   }, [sportId, getAllFixtures, tab, selectTournament]);
@@ -174,7 +175,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSportId(e.target.value);
                 }}
-                className="w-full pl-2 my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2 custom-select-drop text-12 md:text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
               >
                 {popularSports?.map((item) => {
                   return (
@@ -191,7 +192,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSelectTournament(e.target.value);
                 }}
-                className="w-full pl-2 my-2 custom-select-drop font-[600] text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2 custom-select-drop font-[600] text-12 md:text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
               >
                 <option>Top Leagues & Countries</option>
                 {allTournaments?.map((item) => {
@@ -215,14 +216,14 @@ function SportsMenu() {
               </select> */}
             </div>
             <div className="flex-1">
-              <select className="w-full my-2 custom-select-drop text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
+              <select className="w-full my-2 custom-select-drop text-12 md:text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
                 <option>Market</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-      <div className="h-20 flex justify-start items-center text-black">
+      {/* <div className="h-20 flex justify-start items-center text-black">
         <div
           className={`h-8 flex items-center text-12 w-[220px] ${
             !(tab === 3) ? 'bg-yellow' : 'bg-white'
@@ -266,9 +267,62 @@ function SportsMenu() {
               );
             })}
         </div>
+      </div> */}
+      <div className="flex mt-5  w-full">
+        <div
+          className={`h-6 md:h-8  w-[40%] mx-3 md:w-[30%] flex items-center text-[8px] md:text-12  ${
+            !(tab === 3) ? 'bg-yellow' : 'bg-black'
+          } text-black px-3 rounded-[4px] text-center font-[600]`}
+        >
+          {!(tab === 3) && (
+            <p>
+              {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
+            </p>
+          )}
+        </div>
+        <div className="flex w-[50%] md:w-[70%]  md:justify-end ">
+          {marketsName
+            .filter((item) => item.sportId == sportId)[0]
+            ?.marketName.map((items, index) => {
+              return (
+                <div
+                  key={index}
+                  className={`${
+                    index > 0
+                      ? 'hidden md:block text-center'
+                      : 'md-block text-center'
+                  }`}
+                >
+                  <h1 className="text-12 md:text-14 lg:text-[15px] font-[500] md:block text-black  mb-2">
+                    {items.name === 'Total' ? 'Over/Under(2.5)' : items.name}
+                  </h1>
+                  <div
+                    // key={innerIndex}
+                    className={`flex justify-between  text-12 text-[#3D3D3D] ${
+                      items.name === '1x2' ? 'w-fit' : 'mx-3'
+                    }`}
+                  >
+                    {items.option?.map((itemss, innerIndex) => {
+                      return (
+                        <div
+                          key={innerIndex}
+                          className="border-[1px] mr-2 flex justify-center items-center  md:h-8 h-6 w-[40px] md:w-[52px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                        >
+                          <span className="text-gray-900 md:text-12 lg:text-14 font-[500] text-10">
+                            {itemss || 1}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          <div className="w-[15%]"></div>
+        </div>
       </div>
       {allFixtures.length > 0 && (
-        <div className="mr-3 mb-3">
+        <div className="mx-2 md:mr-3 mb-3">
           <InfiniteScroll
             dataLength={allFixtures.length}
             next={fetchMoreData}

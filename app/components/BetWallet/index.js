@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Balance from '@components/Balance';
@@ -20,7 +20,7 @@ function BetWallet() {
   const [stake, setStake] = useState();
   const [oddChange, setOddChange] = useState(false);
   const [totalSport, setTotalSport] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -97,7 +97,8 @@ function BetWallet() {
         toast.error(response.error.message);
       }
     } else {
-      navigate('/login');
+      // navigate('/login');
+      window.location.href = '/login';
     }
   };
 
