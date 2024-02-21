@@ -182,6 +182,11 @@ function SigleBetDetails() {
     else return false;
   };
 
+  const handleRemoveBet = (eventId) => {
+    const updatedBets = selectedBet.filter((item) => item.eventId != eventId);
+    dispatch(fetchBetDetailsAction(updatedBets));
+  };
+
   return (
     // <BetDetailsContext.Provider value={{ selectedBet }}>
     <div className="grid grid-cols-12">
@@ -509,9 +514,20 @@ function SigleBetDetails() {
                               <div className="flex-1 mr-2">
                                 <button
                                   disabled={innerItem.active ? false : true}
-                                  onClick={() =>
-                                    addToBetSlip(eventId, innerItem, item)
-                                  }
+                                  onClick={() => {
+                                    if (
+                                      selectBet(
+                                        eventId,
+                                        item.id,
+                                        innerItem.id,
+                                        eventNames,
+                                      )
+                                    ) {
+                                      handleRemoveBet(eventId, sId);
+                                    } else {
+                                      addToBetSlip(eventId, innerItem, item);
+                                    }
+                                  }}
                                   className={`${
                                     selectBet(
                                       eventId,

@@ -11,15 +11,15 @@ const OuterLayout = () => {
   const [sportId, setSportId] = useState(sId || 1);
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
-  const [selectMenuName, setSelectMenuName] = useState();
+  const [selectMenuName, setSelectMenuName] = useState('HOME');
   const [categories, setCategories] = useState();
   const [tab, setTab] = useState();
   const navigate = useNavigate();
+  const [menuName, setMenuName] = useState();
 
-  // useEffect(() => {
-  //   setSportId(1);
-  //   setTab(2);
-  // }, []);
+  useEffect(() => {
+    setMenuName(selectMenuName);
+  }, [selectMenuName]);
 
   useEffect(() => {
     if (sId) setSportId(sId);
@@ -65,7 +65,10 @@ const OuterLayout = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        selectMenuName={selectMenuName}
+        setSelectMenuName={setSelectMenuName}
+      />
       <div className="grid grid-cols-12 ">
         <MyContext.Provider
           value={{
@@ -76,9 +79,8 @@ const OuterLayout = () => {
             allTournaments,
             tab,
             setTab,
-            selectMenuName,
-            setSelectMenuName,
             categories,
+            menuName,
           }}
         >
           <div className="md:col-span-2 md:block hidden">

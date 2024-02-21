@@ -66,7 +66,10 @@ function Sidebar({ isMobileSidebar }) {
                     src={tab == item.id ? item.active_icon : item.icon}
                     className="w-[22px] h-[22px]"
                   />
-                  <span className="text-14 "> {item.title}</span>
+                  <span className="text-12 lg:text-[13px] xxl:text-[16px]">
+                    {' '}
+                    {item.title}
+                  </span>
                 </NavLink>
               </div>
             ))}

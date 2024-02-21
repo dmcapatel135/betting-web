@@ -139,16 +139,22 @@ function BetWallet() {
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
           <p className="text-12 text-black">Not logged in -</p>
           <div className="flex my-2">
-            <Link to="/login">
-              <button className="lg:h-[32px] xxl:h-[48px] lg:w-[60px] xxl:w-[110px] border-[1px] lg:text-12 xxl:text-18 text-white bg-gradient-color-2   rounded-[6px]">
-                Login
-              </button>
-            </Link>
-            <Link to="/join-now">
-              <button className="lg:h-[32px] xxl:h-[48px] lg:w-[70px] xxl:w-[110px] lg:text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] border-[#E7A024] rounded-[6px]">
-                Join Now
-              </button>
-            </Link>
+            {/* <Link to="/login"> */}
+            <button
+              onClick={() => (window.location.href = '/login')}
+              className=" lg:h-[32px] xxl:h-[48px] w-[60px] xxl:w-[110px] border-[1px]  text-12 xxl:text-18 hover:text-white hover:bg-gradient-color-2 text-black border-[#E7A024] rounded-[6px]"
+            >
+              Login
+            </button>
+            {/* </Link> */}
+            {/* <Link to="/join-now"> */}
+            <button
+              onClick={() => (window.location.href = '/login')}
+              className="lg:h-[32px] xxl:h-[48px] w-[70px] xxl:w-[110px] text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] hover:bg-gradient-color-2 hover:text-white border-[#E7A024] rounded-[6px]"
+            >
+              Join Now
+            </button>
+            {/* </Link> */}
           </div>
         </div>
       ) : (
@@ -223,7 +229,7 @@ function BetWallet() {
         {bonus?.length > 0 && (
           <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
             <div className="w-5 h-12 bg-gradient-color-4"></div>
-            <span className="text-black text-14  leading-4 px-2">
+            <span className="text-black text-[13px] xxl:text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
               {gameRules?.minimumOdds} minimum odds.
               {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
@@ -316,7 +322,7 @@ function BetWallet() {
         <div className="h-[40px] border-[1px] border-yellow rounded-xl flex justify-between my-2">
           <div
             onClick={() => setStake(stake - 1)}
-            className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-16 text-center rounded-l-xl"
+            className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-12 text-center rounded-l-xl"
           >
             <span className="text-24">-</span>
           </div>
@@ -330,7 +336,7 @@ function BetWallet() {
           </div>
           <div
             onClick={() => setStake(stake + 1)}
-            className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-16 rounded-r-xl"
+            className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-12 rounded-r-xl"
           >
             <span className="text-24">+</span>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Sidebar from '@components/Sidebar';
 import { reactIcons } from '@utils/icons';
@@ -9,6 +10,7 @@ import { Drawer } from '@mui/material';
 import { images } from '@utils/images';
 import { useAuth } from '@hooks';
 import { isLoggedIn } from '@utils/apiHandlers';
+import { useSelector } from 'react-redux';
 
 const mobileMenuList = [
   {
@@ -94,13 +96,17 @@ const menuList = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = ({ selectMenuName, setSelectMenuName }) => {
   const [option, setOption] = useState(false);
   const [isOpenMenuList, setIsOpenMenuList] = useState(false);
-  const [selectMenuName, setSelectMenuName] = useState('MENU');
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const bets = useSelector((state) => state.bet.selectedBet);
+
+  // const { selectMenuName, setSelectMenuName } = useContext(MyContext);
+
+  // console.log('------select Menu', selectMenuName);
 
   return (
     <nav>
@@ -265,13 +271,13 @@ const Navbar = () => {
                   />
                   {item.title === 'SLIP' && (
                     <div className="w-[14px] h-[14px]  bg-white flex justify-center items-center rounded-full left-4 -top-1 text-black absolute">
-                      <span className="text-8">1</span>
+                      <span className="text-10">{bets.length}</span>
                     </div>
                   )}
                 </div>
                 <span
                   className={`${
-                    selectMenuName === item.title ? 'text-yellow' : 'text-white'
+                    selectMenuName == item.title ? 'text-yellow' : 'text-white'
                   } text-10 `}
                 >
                   {' '}
@@ -337,6 +343,11 @@ const Navbar = () => {
       </div>
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  selectMenuName: PropTypes.string,
+  setSelectMenuName: PropTypes.string,
 };
 
 export default Navbar;
