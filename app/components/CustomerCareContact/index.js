@@ -7,7 +7,7 @@ function CustomerCareContact() {
         <img src="/images/bikoicon/call.png" className="mx-1" />
         <span className="text-14 font-[700]">NEED HELP? CUSTOMER CARE</span>
       </div>
-      <h1>101010</h1>
+      <h1>022 222 0100</h1>
     </div>
   );
 }

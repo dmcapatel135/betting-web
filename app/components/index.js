@@ -137,3 +137,7 @@ export const SportsMenu = loadable(() => import('./SportsMenu'), {
 export const BetDetailsContext = loadable(() => import('./BetDetailsContext'), {
   fallback: <Loading />,
 });
+
+export const SkeletonLoader = loadable(() => import('./SkeletonLoader'), {
+  fallback: <Loading />,
+});

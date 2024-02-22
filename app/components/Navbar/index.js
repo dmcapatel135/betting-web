@@ -14,42 +14,42 @@ import { useSelector } from 'react-redux';
 
 const mobileMenuList = [
   {
-    id: 1,
+    id: 2,
     title: 'HOME',
     icon: '/images/bikoicon/home.png',
     active_icon: '/images/bikoicon/home-active.png',
     path: '/',
   },
   {
-    id: 2,
+    id: 1,
     title: 'MENU',
     icon: '/images/bikoicon/menu_mobile.png',
     active_icon: '/images/bikoicon/menu-icon.png',
     path: '',
   },
   {
-    id: 3,
+    id: 4,
     title: 'LIVE',
     icon: '/images/bikoicon/livenowwhite.png',
     active_icon: '/images/bikoicon/live-now-active.png',
     path: '/',
   },
   {
-    id: 4,
+    id: 5,
     title: 'JACKPOT',
     icon: '/images/bikoicon/jackpotwhite.png',
     active_icon: '/images/bikoicon/jackpot-active.png',
     path: '/',
   },
   {
-    id: 5,
+    id: 6,
     title: 'SEARCH',
     icon: '/images/bikoicon/search.png',
     active_icon: '/images/bikoicon/search-active.png',
     path: '/',
   },
   {
-    id: 6,
+    id: 7,
     title: 'SLIP',
     icon: '/images/bikoicon/slip.png',
     active_icon: '/images/bikoicon/slip-active.png',
@@ -96,7 +96,7 @@ const menuList = [
   },
 ];
 
-const Navbar = ({ selectMenuName, setSelectMenuName }) => {
+const Navbar = ({ tab, setTab }) => {
   const [option, setOption] = useState(false);
   const [isOpenMenuList, setIsOpenMenuList] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -104,20 +104,20 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
   const { logout } = useAuth();
   const bets = useSelector((state) => state.bet.selectedBet);
 
-  // const { selectMenuName, setSelectMenuName } = useContext(MyContext);
+  // const { tab, setTab } = useContext(MyContext);
 
-  // console.log('------select Menu', selectMenuName);
+  // console.log('------select Menu', tab);
 
   return (
     <nav>
       <div className="h-[50px] sm:h-[65px] lg:h-[85px] xxl:h-[110px] bg-gradient-color-1 relative">
         <div className="grid grid-cols-12">
-          <div className="lg:col-span-3 md:col-span-3 col-span-6 ">
+          <div className="lg:col-span-2 md:col-span-3 col-span-6 ">
             <div className="flex items-center h-[48px] md:h-full">
               <img
                 src={images.football}
                 alt="football"
-                className=" sm:w-[100px]  lg:w-[150px] xxl:w-full  sm:h-[65px] lg:h-[85px] xxl:h-full hidden sm:block"
+                className=" sm:w-[100px]  lg:w-[105px] xxl:w-full  sm:h-[65px] lg:h-[85px] xxl:h-full hidden sm:block"
               />
               <img
                 src={images.bikoSport}
@@ -127,17 +127,19 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
               />
             </div>
           </div>
-          <div className="lg:col-span-6 md:col-span-5 hidden sm:flex items-center md:px-[50px] lg:px-[130px]">
+          <div className="lg:col-span-7 md:col-span-5 hidden sm:flex items-center md:px-[50px] lg:pr-[30px] lg:pl-[140px]">
             {/* <div className="flex items-center mx-[150px]"> */}
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search for events and tournaments"
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-full pl-10 bg-[#351B5B] border-[1px] text-14 border-[#E7A024] rounded-[8px] outline-none"
+                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-full pl-10 bg-green border-[1px] text-14 border-lightgray rounded-[8px] outline-none"
               />
-              <span className="absolute text-white  ay-center left-1 top-4 lg:top-5 text-18 lg:text-[24px]">
-                {reactIcons.search}
-              </span>
+              <div className="bg-blue">
+                <span className="absolute text-white  ay-center left-1 top-3 lg:top-4 text-16 lg:text-[20px]">
+                  {reactIcons.search}
+                </span>
+              </div>
             </div>
             {/* </div> */}
           </div>
@@ -149,7 +151,7 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
               </div>
             ) : (
               <button
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1"
+                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[700] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
                 onClick={() => (window.location.href = '/login')}
               >
                 Login
@@ -157,85 +159,88 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
             )}
             {isLoggedIn() ? (
               <Link to="/dashboard/deposit">
-                <button className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-2 md:order-1">
+                <button className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[700] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1">
                   Deposit
                 </button>
               </Link>
             ) : (
               <button
-                className="h-[32px] lg:h-[40px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-[#E7A024] rounded-[8px] order-1 md:order-2"
+                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 // onClick={() => navigate('/join-now')}
                 onClick={() => (window.location.href = '/join-now')}
               >
                 Join Now
               </button>
             )}
-            <select className="h-[32px] lg:h-[40px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-[#E7A024] rounded-[8px] md:order-2">
+            <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
             </select>
             {/* </div> */}
-            <div className="pr-2 sm:block hidden md:order-4">
-              <div onClick={() => setOption(!option)} className="relative">
-                <img
-                  src={images.user}
-                  alt="menu"
-                  className="cursor-pointer w-8 h-8 lg:w-10 lg:h-10 "
-                />
-              </div>
-              {isLoggedIn() && option && (
-                <div
-                  className="absolute rounded-md bg-white mt-4 w-40 right-5 z-30 shadow-lg"
-                  onMouseLeave={() => setOption(!option)}
-                >
-                  <div className="text-gray-900  py-3 text-14 font-[400] font-roboto cursor-pointer">
-                    <ul className="">
-                      <li
-                        onClick={() =>
-                          (window.location.href = '/dashboard/my-bets')
-                        }
-                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                      >
-                        My Bets
-                      </li>
-                      <li
-                        onClick={() =>
-                          (window.location.href = '/dashboard/deposit')
-                        }
-                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                      >
-                        Deposit
-                      </li>
-                      <li
-                        onClick={() =>
-                          (window.location.href = '/dashboard/withdraw')
-                        }
-                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                      >
-                        Withdraw
-                      </li>
-                      <li
-                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        // onClick={() => navigate('/dashboard/my-transactions')}
-                        onClick={() =>
-                          (window.location.href = '/dashboard/my-transactions')
-                        }
-                      >
-                        Transactions
-                      </li>
-                      <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
-                        Help
-                      </li>
-                      <li
-                        className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        onClick={() => logout()}
-                      >
-                        Logout
-                      </li>
-                    </ul>
-                  </div>
+            {isLoggedIn() && (
+              <div className="pr-2 sm:block hidden md:order-4">
+                <div onClick={() => setOption(!option)} className="relative">
+                  <img
+                    src={images.user}
+                    alt="menu"
+                    className="cursor-pointer w-8 h-8 lg:w-10 lg:h-10 "
+                  />
                 </div>
-              )}
-            </div>
+                {option && (
+                  <div
+                    className="absolute rounded-md bg-white mt-4 w-40 right-5 z-30 shadow-lg"
+                    onMouseLeave={() => setOption(!option)}
+                  >
+                    <div className="text-gray-900  py-3 text-14 font-[400] font-roboto cursor-pointer">
+                      <ul className="">
+                        <li
+                          onClick={() =>
+                            (window.location.href = '/dashboard/my-bets')
+                          }
+                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                        >
+                          My Bets
+                        </li>
+                        <li
+                          onClick={() =>
+                            (window.location.href = '/dashboard/deposit')
+                          }
+                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                        >
+                          Deposit
+                        </li>
+                        <li
+                          onClick={() =>
+                            (window.location.href = '/dashboard/withdraw')
+                          }
+                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                        >
+                          Withdraw
+                        </li>
+                        <li
+                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                          // onClick={() => navigate('/dashboard/my-transactions')}
+                          onClick={() =>
+                            (window.location.href =
+                              '/dashboard/my-transactions')
+                          }
+                        >
+                          Transactions
+                        </li>
+                        <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
+                          Help
+                        </li>
+                        <li
+                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
+                          onClick={() => logout()}
+                        >
+                          Logout
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -247,7 +252,7 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
               key={index}
               end
               onClick={() => {
-                setSelectMenuName(item.title);
+                setTab(item.id);
                 if (item.title == 'MENU') setIsOpenMenuList(!isOpenMenuList);
               }}
               to={item.path}
@@ -262,11 +267,7 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
               <div className="my-2 text-center">
                 <div className="flex justify-center relative">
                   <img
-                    src={
-                      selectMenuName === item.title
-                        ? item.active_icon
-                        : item.icon
-                    }
+                    src={tab == item.id ? item.active_icon : item.icon}
                     className="w-5 h-5"
                   />
                   {item.title === 'SLIP' && (
@@ -277,7 +278,7 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
                 </div>
                 <span
                   className={`${
-                    selectMenuName == item.title ? 'text-yellow' : 'text-white'
+                    tab == item.id ? 'text-yellow' : 'text-white'
                   } text-10 `}
                 >
                   {' '}
@@ -288,7 +289,13 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
           ))}
           {isOpenMenuList && (
             <div className="absolute top-[115px] w-[300px] z-50">
-              <Sidebar isMobileSidebar={true} />
+              <Sidebar
+                tab={tab}
+                setTab={setTab}
+                isMobileSidebar={true}
+                setIsOpenMenuList={setIsOpenMenuList}
+                isOpenMenuList={isOpenMenuList}
+              />
             </div>
           )}
         </div>
@@ -346,8 +353,8 @@ const Navbar = ({ selectMenuName, setSelectMenuName }) => {
 };
 
 Navbar.propTypes = {
-  selectMenuName: PropTypes.string,
-  setSelectMenuName: PropTypes.string,
+  tab: PropTypes.string,
+  setTab: PropTypes.func,
 };
 
 export default Navbar;

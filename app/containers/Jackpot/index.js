@@ -39,9 +39,9 @@ function Jackpot() {
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   return (
     <div className="grid grid-cols-12 h-full">
-      <div className="col-span-8 pt-5">
+      <div className="col-span-12 md:col-span-8 pt-5 mb-5">
         <div className="px-5">
-          <div className="border-[1px] border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
+          <div className="border-[1px] border-bluewhale px-5 md:px-0 flex  bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
             {TabsName?.map((item) => {
               return (
                 <div
@@ -50,18 +50,18 @@ function Jackpot() {
                     step === item.id
                       ? 'bg-gradient-color-1 text-white'
                       : 'bg-white text-black'
-                  } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-full flex-1 rounded-lg`}
+                  } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-full flex-1 flext justify-center rounded-md md:rounded-lg`}
                   onClick={() => {
                     setStep(item.id);
                   }}
                 >
-                  <div className="flex  h-12  md:justify-center items-center">
+                  <div className="flex h-8 md:h-12  md:justify-center items-center">
                     {/* <img
                       src={step === item.id ? item.active_icon : item.icon}
                       alt="profile_icon"
                       className="w-6 h-6"
                     /> */}
-                    <span className="px-2 text-14  xxl:text-16">
+                    <span className="px-2 text-12 md:text-14  xxl:text-16">
                       {item.name}
                     </span>
                   </div>
@@ -110,17 +110,19 @@ function Jackpot() {
                 <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
                   <div className="flex justify-between py-2">
                     <div className=" flex-1 text-black">
-                      <p className="text-12 mb-5">11:15 pm Wed 06/12</p>
+                      <p className="text-10 md:text-12 mb-5">
+                        11:15 pm Wed 06/12
+                      </p>
                       <span className="text-10 mt-20 text-gray-900">
                         Football/England/Premier League
                       </span>
                     </div>
-                    <div className="flex-1 text-14 font-[500] text-center text-black">
+                    <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
                       <p>Manchester United </p>
                       <p>Chelsa FC</p>
                     </div>
                     <div className="flex-1  mr-5 flex justify-end items-center">
-                      <p className="text-black text-12 font-[600]">
+                      <p className="text-black text-10 md:text-12 font-[600]">
                         Frosinone Calcio- (3:1)
                       </p>
                     </div>
@@ -132,15 +134,15 @@ function Jackpot() {
         )}
         {step === 3 && (
           <div className="px-5 my-5">
-            <div className="border-[1px] border-blue rounded-md h-28 bg-gray-800 text-center justify-center py-3">
-              <h1 className="text-black text-20 font-[600]">
+            <div className="border-[1px] border-blue rounded-md h-16 md:h-28 bg-gray-800 text-center justify-center py-3">
+              <h1 className="text-black text-12 md:text-20 font-[600]">
                 You&apos;ll be notified of any changes in the rules
               </h1>
             </div>
           </div>
         )}
       </div>
-      <div className="col-span-4 pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
+      <div className="col-span-4 md:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
         {selectedBet.length > 0 ? <BetWallet /> : <Betslip />}
         <CompanyContact />
         <CustomerCareContact />

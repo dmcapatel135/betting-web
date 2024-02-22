@@ -16,7 +16,7 @@ function BetSlip() {
             {/* <Link to="/login"> */}
             <button
               onClick={() => (window.location.href = '/login')}
-              className="lg:h-[32px] xxl:h-[48px] lg:w-[60px] xxl:w-[110px] border-[1px] border-[#E7A024] lg:text-12 xxl:text-18 hover:text-white bg-white text-black  hover:bg-gradient-color-2   rounded-[6px]"
+              className="h-[32px] xxl:h-[48px] w-[60px] xxl:w-[110px] border-[1px] border-[#E7A024] text-12 xxl:text-18 hover:text-white bg-white text-black  hover:bg-gradient-color-2   rounded-[6px]"
             >
               Login
             </button>
@@ -24,7 +24,7 @@ function BetSlip() {
             {/* <Link to="/join-now"> */}
             <button
               onClick={() => (window.location.href = '/join-now')}
-              className="lg:h-[32px] xxl:h-[48px] lg:w-[70px] xxl:w-[110px] lg:text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] border-[#E7A024] hover:bg-gradient-color-2 hover:text-white rounded-[6px]"
+              className="h-[32px] xxl:h-[48px] w-[70px] xxl:w-[110px] text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] border-[#E7A024] hover:bg-gradient-color-2 hover:text-white rounded-[6px]"
             >
               Join Now
             </button>

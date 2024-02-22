@@ -4,6 +4,7 @@ import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
+import { countryList } from '@api/country';
 // import BetWallet from '@components/BetWallet';
 
 const OuterLayout = () => {
@@ -11,15 +12,10 @@ const OuterLayout = () => {
   const [sportId, setSportId] = useState(sId || 1);
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
-  const [selectMenuName, setSelectMenuName] = useState('HOME');
   const [categories, setCategories] = useState();
-  const [tab, setTab] = useState();
-  const navigate = useNavigate();
-  const [menuName, setMenuName] = useState();
+  const [tab, setTab] = useState('');
 
-  useEffect(() => {
-    setMenuName(selectMenuName);
-  }, [selectMenuName]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (sId) setSportId(sId);
@@ -56,7 +52,13 @@ const OuterLayout = () => {
 
   const getAllCategories = useCallback(async () => {
     const response = await getReq(`/sports/${sportId}/categories`);
-    setCategories(response.data);
+    const mergedCategories = response?.data?.map((category) => {
+      const country = countryList.find(
+        (country) => country.name === category.name,
+      );
+      return { ...category, flag: country?.flag };
+    });
+    setCategories(mergedCategories);
   }, [sportId]);
 
   useEffect(() => {
@@ -65,41 +67,30 @@ const OuterLayout = () => {
 
   return (
     <>
-      <Navbar
-        selectMenuName={selectMenuName}
-        setSelectMenuName={setSelectMenuName}
-      />
-      <div className="grid grid-cols-12 ">
-        <MyContext.Provider
-          value={{
-            sportId,
-            setSportId,
-            selectTournament,
-            setSelectTournament,
-            allTournaments,
-            tab,
-            setTab,
-            categories,
-            menuName,
-          }}
-        >
+      <MyContext.Provider
+        value={{
+          sportId,
+          setSportId,
+          selectTournament,
+          setSelectTournament,
+          allTournaments,
+          tab,
+          setTab,
+          categories,
+        }}
+      >
+        <Navbar tab={tab} setTab={setTab} />
+        <div className="grid grid-cols-12 ">
           <div className="md:col-span-2 md:block hidden">
-            <Sidebar
-            // allTournaments={allTournaments}
-            // selectTournament={selectTournament}
-            // setSelectTournament={setSelectTournament}
-            />{' '}
+            <Sidebar tab={tab} setTab={setTab} />{' '}
           </div>
           <div className="md:col-span-10 col-span-full bg-white">
             {' '}
             <Outlet />{' '}
           </div>
-          {/* <div className="col-span-3 bg-white px-2 py-2">
-            <BetWallet />
-          </div> */}
-        </MyContext.Provider>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </MyContext.Provider>
     </>
   );
 };

@@ -103,7 +103,10 @@ function BetCard({ item, sportId }) {
               />
             </div>
             <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-              {item?.competitors[0]?.name || 'N.A'} v/s{' '}
+              {item?.competitors[0]?.name || 'N.A'}
+              {/* v/s{' '} */}
+            </h2>
+            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
               {item?.competitors[1]?.name || 'N.A'}{' '}
             </h2>
             <span className="text-[9px]  leading-none md:text-10">
@@ -692,7 +695,7 @@ function BetCard({ item, sportId }) {
           </>
         )}
         <div className="flex-shrink p-2 ">
-          <div className="w-[35px]">
+          <div className="w-[50px] md:w-[40px]">
             <div
               onClick={() =>
                 (window.location.href = `/dashboard/single-bets/${
@@ -703,7 +706,7 @@ function BetCard({ item, sportId }) {
                   item?.competitors[1]?.name
                 }`)
               }
-              className="border-[1px]  md:h-8 h-6 w-[36px] mr-2   md:mr-2  md:min-w-[45px] md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+              className="border-[1px]  md:h-8 h-6 mr-2   md:mr-2  md:min-w-[48px] md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
             >
               <img
                 src="/images/bikoicon/moving.png"
@@ -723,7 +726,7 @@ function BetCard({ item, sportId }) {
 
 BetCard.propTypes = {
   item: PropTypes.object,
-  sportId: PropTypes.number,
+  sportId: PropTypes.string,
   handleSelectBet: PropTypes.func,
   index: PropTypes.number,
 };

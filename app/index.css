@@ -177,7 +177,7 @@
   appearance: none; /* Remove default appearance */
   -webkit-appearance: none; /* Remove default appearance for WebKit browsers */
   -moz-appearance: none; /* Remove default appearance for Firefox */
-  background-image: url('/public/images/bikoicon/arrow_drop_down.png'); /* Set custom icon */
+  background-image: url('/public/images/bikoicon/arrow_drop_down.png');
   background-repeat: no-repeat;
   background-position: center right 8px;
   padding-right: 20px; /* Adjust padding to make space for the icon */
@@ -187,7 +187,7 @@
   appearance: none; /* Remove default appearance */
   -webkit-appearance: none; /* Remove default appearance for WebKit browsers */
   -moz-appearance: none; /* Remove default appearance for Firefox */
-  background-image: url('/public/images/bikoicon/arrow_drop_down _blue.png'); /* Set custom icon */
+  background-image: url('/public/images/bikoicon/arrow_drop_down-_blue.svg'); /* Set custom icon */
   background-repeat: no-repeat;
   background-position: center right 8px;
   padding-right: 20px; /* Adjust padding to make space for the icon */

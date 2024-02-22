@@ -13,9 +13,9 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-color-1':
-          'var(--new-gradient-color-1, linear-gradient(90deg, #7620F3 0%, #270655 100%))',
+          'var(--new-gradient-color-1, linear-gradient(90deg, #6D2299 0%, #3F1F63 100%))',
         'gradient-color-2':
-          'var(--new-gradient-color-2, linear-gradient(90deg, #E7A024 0.11%, #F0CC2E 99.85%))',
+          'var(--new-gradient-color-2, linear-gradient(90deg, #E79B24 0.11%, #F1CC30 99.85%))',
         'gradient-color-3':
           'var(--new-gradient-color-3, linear-gradient(90deg, rgba(0, 104, 139, 0.15) 0%, rgba(2, 203, 219, 0.15) 100%))',
         'gradient-color-4':
@@ -58,8 +58,9 @@ module.exports = {
           700: '#A3A3A3',
         },
         maroon: '#C6224E',
-        blue: '#7620F3',
-        green: '#098224',
+        blue: '#3F1F63',
+        // green: '#098224',
+        green: '#6D2299',
         bluewhalelight: '#006E8F',
         lightgray: '#999999',
         yellow: '#FEAE04',

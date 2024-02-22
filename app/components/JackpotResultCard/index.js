@@ -6,17 +6,17 @@ function JackpotResultCard({ setOpenResult, openResult }) {
     <div className="bg-gray-800 border-[1px] border-blue rounded-md py-3">
       <div className="flex px-5 justify-between text-black">
         <div className="">
-          <h1 className="font-[700] text-16">TSH, 10,000,000</h1>
-          <p className="text-14 font-[700]">03/02 Pick17 - 1X2</p>
+          <h1 className="font-[700] text-14 md:text-16">TSH, 10,000,000</h1>
+          <p className="text-12 md:text-14 font-[700]">03/02 Pick17 - 1X2</p>
         </div>
         <div>
-          <span>3:30 PM Sat 03/02</span>
+          <span className="text-12  md:text-16">3:30 PM Sat 03/02</span>
         </div>
       </div>
       <div className="text-black px-5">
         <strong className="text-12">Ticket price : Tsh 100.00 </strong>
         <div>
-          <ol className="text-14">
+          <ol className="text-12 md:text-14">
             <li>
               <span>17 correct :</span>
               <strong>None</strong>
@@ -43,7 +43,7 @@ function JackpotResultCard({ setOpenResult, openResult }) {
       <div className="px-4 my-2">
         <button
           onClick={() => setOpenResult(!openResult)}
-          className="w-full text-14  bg-[#006E8F] text-white rounded-md h-8"
+          className="w-full text-12 md:text-14  bg-[#006E8F] text-white rounded-md h-8"
         >
           {openResult ? 'LESS RESULT' : 'SEE RESULT'}
         </button>

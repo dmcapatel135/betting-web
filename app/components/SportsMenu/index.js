@@ -3,10 +3,11 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { marketsName, sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
-import { BetCard, Loading } from '@components';
+import { BetCard, SkeletonLoader } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { images } from '@utils/images';
 
 function SportsMenu() {
   const [allSports, setAllSports] = useState();
@@ -115,8 +116,8 @@ function SportsMenu() {
       <div className="md:block hidden pr-2">
         <Tabs popularSports={popularSports} allSports={allSports} />
       </div>
-      <div className="my-0 md:my-2  md:mr-2 bg-gradient-color-1 rounded-b-[8px]">
-        <img src="/images/bikoicon/main.png" />
+      <div className="my-0 md:my-2  md:mr-2 bg-white rounded-b-[8px]">
+        <img src={images.bannerImg} />
 
         <div className="mt-5  hidden md:flex justify-between px-5">
           {tabsName?.map((item) => {
@@ -131,11 +132,7 @@ function SportsMenu() {
                 onClick={() => setTab(item.id)}
               >
                 {/* {item.img && <img src={item.img} alt="icon" />} */}
-                <span
-                  className={`text-12 sm:text-12 cursor-pointer lg:text-14 ${
-                    item.tabName == 'LIVE NOW' ? 'text-yellow' : 'text-white'
-                  }`}
-                >
+                <span className="text-12 sm:text-12 cursor-pointer lg:text-14 text-blue font-[700]">
                   {item.tabName}
                 </span>
               </div>
@@ -166,7 +163,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSportId(e.target.value);
                 }}
-                className="w-full pl-2 my-2 custom-select-drop text-12 md:text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2  custom-select-drop text-12 md:text-14 font-[600] text-center text-white h-[32px] bg-[#E79B24] outline-none  rounded-[4px]"
               >
                 {popularSports?.map((item) => {
                   return (
@@ -183,7 +180,7 @@ function SportsMenu() {
                 onChange={(e) => {
                   setSelectTournament(e.target.value);
                 }}
-                className="w-full pl-2 my-2 custom-select-drop font-[600] text-12 md:text-14 text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]"
+                className="w-full pl-2 my-2 bg-blue custom-select-drop font-[600] text-12 md:text-14 text-center text-white h-[32px]  outline-none  rounded-[4px]"
               >
                 <option>Top Leagues & Countries</option>
                 {allTournaments?.map((item) => {
@@ -207,7 +204,7 @@ function SportsMenu() {
               </select> */}
             </div>
             <div className="flex-1">
-              <select className="w-full my-2 custom-select-drop text-12 md:text-14 font-[600] text-center text-gray-900 h-[32px] bg-white outline-none  rounded-[4px]">
+              <select className="w-full my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]">
                 <option>Market</option>
               </select>
             </div>
@@ -218,10 +215,10 @@ function SportsMenu() {
         <div className="flex-grow-0 xxl:flex-1 pl-2">
           <div
             className={`h-6 md:h-8   mx-1  flex items-center w-40 md:w-52 xxl:w-full xxl:text-center text-[8px] md:text-12  ${
-              !(tab === 3) ? 'bg-yellow' : 'bg-black'
-            } text-black px-1 rounded-[4px] text-center font-[600]`}
+              !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
+            } text-white px-1 rounded-[4px] text-center font-[600]`}
           >
-            {!(tab === 3) && (
+            {!(tab == 3) && (
               <p>
                 {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
               </p>
@@ -277,7 +274,7 @@ function SportsMenu() {
           })}
 
         <div className="flex-shrink p-2 ">
-          <div className="w-[40px]"></div>
+          <div className="w-[50px]"></div>
         </div>
       </div>
       {allFixtures.length > 0 && (
@@ -286,7 +283,7 @@ function SportsMenu() {
             dataLength={allFixtures.length}
             next={fetchMoreData}
             hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={<SkeletonLoader />}
             endMessage={<p>No more items to load.</p>}
           >
             {allFixtures &&
@@ -296,7 +293,7 @@ function SportsMenu() {
                     <BetCard index={index} item={item} sportId={sportId} />
                     {(index + 1) % 13 === 0 && (
                       <div className="text-black my-3">
-                        <img src="/images/bikoicon/main.png" alt="main" />
+                        <img src={images.bannerImg1} alt="main" />
                       </div>
                     )}
                   </div>
@@ -305,7 +302,7 @@ function SportsMenu() {
           </InfiniteScroll>
         </div>
       )}
-      {isLoading && <Loading />}
+      {isLoading && <SkeletonLoader />}
       {allFixtures?.length == 0 && (
         <div className="text-center mt-12 mb-3 text-black">
           <span className="text-black md:text-14 text-10">
