@@ -37,13 +37,14 @@ export const navigations = [
     path: '/dashboard/jackpot',
     id: 5,
   },
-  // {
-  //   icon: images.popularIcon,
-  //   active_icon: images.upcomingIconActive,
-  //   title: 'POPULAR',
-  //   path: 'popular',
-  //   id: 1,
-  // },
+  {
+    icon: images.popularIcon,
+    active_icon: images.upcomingIconActive,
+    title: 'POPULAR',
+    path: 'popular',
+    id: 1,
+  },
+  // { icon: '/images/portfolio.png', title: 'HOW TO PLAY', path: '/help' },
 ];
 
 export const tournaments = [

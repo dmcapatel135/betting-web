@@ -17,8 +17,8 @@ function BetWallet() {
   const [totalOdd, setTotalOdd] = useState(0);
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
-  const [stake, setStake] = useState();
-  const [oddChange, setOddChange] = useState(false);
+  const [stake, setStake] = useState(1000);
+  const [oddChange, setOddChange] = useState(true);
   const [totalSport, setTotalSport] = useState([]);
   // const navigate = useNavigate();
 
@@ -229,7 +229,7 @@ function BetWallet() {
         {bonus?.length > 0 && (
           <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
             <div className="w-5 h-12 bg-gradient-color-4"></div>
-            <span className="text-black text-[13px] xxl:text-14  leading-4 px-2">
+            <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
               {gameRules?.minimumOdds} minimum odds.
               {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
@@ -261,7 +261,7 @@ function BetWallet() {
               </div>
               <div className="flex justify-between w-full px-3 items-center ">
                 <div className="text-gray-900">
-                  <p className="text-14 font-[500]">{`${item.eventNames}`}</p>
+                  <p className="text-12 xxl:text-14  font-[600]">{`${item.eventNames}`}</p>
                   <span className="text-12 text-black">
                     {item.betDetails.name + ' - ' + item.bet.name}
                   </span>

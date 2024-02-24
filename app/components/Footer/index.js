@@ -2,12 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer
-      style={{
-        background:
-          'var(--new-gradient-color-1, linear-gradient(90deg, #7620F3 0%, #270655 100%))',
-      }}
-    >
+    <footer className="bg-gradient-color-1">
       <div className="container py-12">
         <div className="grid grid-cols-12">
           <div className="col-span-full md:col-span-6 lg:col-span-3 order-1">

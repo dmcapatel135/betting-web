@@ -35,7 +35,7 @@ function MyBets() {
     const response = await getReq(
       `/users/me/bet-slips/${status ? status : ''}`,
     );
-    setMyBets(response.data.data);
+    setMyBets(response?.data?.data);
   };
 
   useEffect(() => {
@@ -156,7 +156,7 @@ function MyBets() {
                 })}
               </div>
               <div className="my-5 text-black">
-                {myBets.length > 0 &&
+                {myBets?.length > 0 &&
                   myBets.map((item, index) => {
                     return (
                       <div key={index} className="my-2">

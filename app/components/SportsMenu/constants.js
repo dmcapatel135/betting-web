@@ -1,5 +1,5 @@
 export const tabsName = [
-  //   { id: 1, tabName: 'STRONG MATCH' },
+  { id: 1, tabName: 'POPULAR MATCH' },
   { id: 2, tabName: 'TODAYs MATCHES', filterName: new Date() },
   { id: 3, tabName: 'UPCOMING MATCHES', filterName: '' },
   {
@@ -47,15 +47,15 @@ export const marketsName = [
   {
     sportId: 1,
     marketName: [
-      { name: '1x2', option: ['Home', 'Draw', 'Away'] },
+      { name: '3 WAY', option: ['1', 'X', '2'] },
       // { name: 'Over/Under(2.5)', option: ['Over', 'Under'] },
       { name: 'Total', option: ['Over', 'Under'] },
-      { name: 'Both teams to score', option: ['Yes', 'No'] },
+      { name: 'BOTH TEAMS TO SCORE', option: ['Yes', 'No'] },
     ],
   },
   {
     sportId: 2,
-    marketName: [{ name: '1x2', option: ['Home', 'Draw', 'Away'] }],
+    marketName: [{ name: '3 WAY', option: ['1', 'X', '2'] }],
   },
   {
     sportId: 10,
@@ -63,7 +63,7 @@ export const marketsName = [
   },
   {
     sportId: 12,
-    marketName: [{ name: '1x2', option: ['Home', 'Draw', 'Away'] }],
+    marketName: [{ name: '3 WAY', option: ['1', 'x', '2'] }],
   },
   {
     sportId: 21,

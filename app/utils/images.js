@@ -28,4 +28,8 @@ export const images = {
   rugbyIconActive: '/images/bikoicon/',
   cricketIcon: '/images/bikoicon/',
   cricketIconActive: '/images/bikoicon/',
+  board: '/images/bikoicon/board.png',
+  lineups: '/images/bikoicon/lineups.png',
+  headtohead: '/images/bikoicon/headtohead.png',
+  standing: '/images/bikoicon/standing.png',
 };

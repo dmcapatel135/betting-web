@@ -132,7 +132,7 @@ function SportsMenu() {
                 onClick={() => setTab(item.id)}
               >
                 {/* {item.img && <img src={item.img} alt="icon" />} */}
-                <span className="text-12 sm:text-12 cursor-pointer lg:text-14 text-blue font-[700]">
+                <span className="text-12 sm:text-12 cursor-pointer lg:text-12 xxl:text-14 text-blue font-[700]">
                   {item.tabName}
                 </span>
               </div>
@@ -244,8 +244,8 @@ function SportsMenu() {
                   }`}
                 >
                   <div className="mx-auto md:mx-0">
-                    <h1 className="text-12 md:text-12 lg:text-[12px] font-[500] md:block text-black  mb-2">
-                      {items.name === 'Total' ? 'Over/Under(2.5)' : items.name}
+                    <h1 className="text-12 md:text-12 lg:text-[10px] xxl:text-14 font-[800] md:block text-black  mb-2">
+                      {items.name === 'Total' ? 'OVER/UNDER(2.5)' : items.name}
                     </h1>
                     <div
                       className={`${

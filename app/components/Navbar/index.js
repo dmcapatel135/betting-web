@@ -147,11 +147,13 @@ const Navbar = ({ tab, setTab }) => {
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
               <div className="text-white">
-                <span className="text-16 font-[700]">TSH 102.00</span>
+                <span className="text-12 md:text-16 font-[700]">
+                  TSH 102.00
+                </span>
               </div>
             ) : (
               <button
-                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[700] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
+                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
                 onClick={() => (window.location.href = '/login')}
               >
                 Login
@@ -159,13 +161,13 @@ const Navbar = ({ tab, setTab }) => {
             )}
             {isLoggedIn() ? (
               <Link to="/dashboard/deposit">
-                <button className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[700] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1">
+                <button className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1">
                   Deposit
                 </button>
               </Link>
             ) : (
               <button
-                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-12 lg:text-14 font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
+                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 // onClick={() => navigate('/join-now')}
                 onClick={() => (window.location.href = '/join-now')}
               >
@@ -177,20 +179,20 @@ const Navbar = ({ tab, setTab }) => {
             </select>
             {/* </div> */}
             {isLoggedIn() && (
-              <div className="pr-2 sm:block hidden md:order-4">
+              <div className="md:pr-2 sm:block  md:order-4">
                 <div onClick={() => setOption(!option)} className="relative">
                   <img
                     src={images.user}
                     alt="menu"
-                    className="cursor-pointer w-8 h-8 lg:w-10 lg:h-10 "
+                    className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 "
                   />
                 </div>
                 {option && (
                   <div
-                    className="absolute rounded-md bg-white mt-4 w-40 right-5 z-30 shadow-lg"
+                    className="absolute rounded-md bg-white mt-4 w-32 md:w-40 right-5 z-30 shadow-lg"
                     onMouseLeave={() => setOption(!option)}
                   >
-                    <div className="text-gray-900  py-3 text-14 font-[400] font-roboto cursor-pointer">
+                    <div className="text-gray-900 py-1 md:py-3 text-12 md:text-14 font-[400] font-roboto cursor-pointer">
                       <ul className="">
                         <li
                           onClick={() =>

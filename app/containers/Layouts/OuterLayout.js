@@ -4,7 +4,7 @@ import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
-import { countryList } from '@api/country';
+import { countryNameList } from '@api/country';
 // import BetWallet from '@components/BetWallet';
 
 const OuterLayout = () => {
@@ -53,7 +53,7 @@ const OuterLayout = () => {
   const getAllCategories = useCallback(async () => {
     const response = await getReq(`/sports/${sportId}/categories`);
     const mergedCategories = response?.data?.map((category) => {
-      const country = countryList.find(
+      const country = countryNameList.find(
         (country) => country.name === category.name,
       );
       return { ...category, flag: country?.flag };

@@ -24,7 +24,7 @@ function Deposit() {
               }}
             >
               <div className="bg-blue text-center rounded-t-lg">
-                <h1 className="text-16 py-2 font-[700]">
+                <h1 className="text-14 md:text-16 py-2 font-[700]">
                   DEPOSIT FUNDS (MOBILE MONEY)
                 </h1>
               </div>
@@ -53,7 +53,9 @@ function Deposit() {
               </div>
               <hr></hr>
               <div className="px-5 my-5 text-black">
-                <h1 className="text-20 font-[500]">DEPOSIT INSTRUCTIONS</h1>
+                <h1 className="text-16 md:text-20 font-[500]">
+                  DEPOSIT INSTRUCTIONS
+                </h1>
                 <ol className="text-12">
                   <li>1. Enter the amount you want to deposit.</li>
                   <li>2. Click on the deposit button.</li>
@@ -64,7 +66,9 @@ function Deposit() {
                   </li>
                 </ol>
                 <div className="my-2">
-                  <p className="font-[500] text-16">HOW TO DEPOSIT ON PHONE</p>
+                  <p className="font-[500] text-14 md:text-16">
+                    HOW TO DEPOSIT ON PHONE
+                  </p>
                   <div className="flex my-2">
                     <div
                       className={`mr-2 ${
@@ -122,7 +126,7 @@ function Deposit() {
                 </div>
                 {paymentMethod === 'Tigo' && (
                   <div>
-                    <p className="font-[500] text-16">
+                    <p className="font-[500] text-14 md:text-16">
                       KUWEKA PESA KUPITIA TIGOPESA
                     </p>
                     <ol className="text-12">
@@ -143,7 +147,7 @@ function Deposit() {
                 )}
                 {paymentMethod === 'Mpesa' && (
                   <div>
-                    <p className="font-[500] text-16">
+                    <p className="font-[500] text-14 md:text-16">
                       KUWEKA PESA KUPITIA MPESA
                     </p>
                     <ol className="text-12">

@@ -55,7 +55,7 @@ function Jackpot() {
                     setStep(item.id);
                   }}
                 >
-                  <div className="flex h-8 md:h-12  md:justify-center items-center">
+                  <div className="flex h-8 md:h-12 justify-center items-center">
                     {/* <img
                       src={step === item.id ? item.active_icon : item.icon}
                       alt="profile_icon"

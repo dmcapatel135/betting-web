@@ -247,7 +247,7 @@
   transform: rotate(45deg);
 }
 
-.carousel {
+/* .carousel {
   overflow: hidden;
 }
 
@@ -258,7 +258,7 @@
 
 .carousel-item {
   flex: 0 0 100%;
-}
+} */
 
 .custom-scroll-sm::-webkit-scrollbar {
   @apply bg-zinc-700 w-2 rounded-md;
@@ -277,4 +277,9 @@
 }
 ::-webkit-scrollbar-thumb {
   @apply bg-yellow w-3 rounded-md;
+}
+
+.custom-pagination-bullet {
+  /* margin-top: 5px; */
+  background-color: #e7a024;
 }

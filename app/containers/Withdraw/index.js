@@ -23,7 +23,7 @@ function Withdraw() {
               }}
             >
               <div className="bg-blue text-center rounded-t-lg">
-                <h1 className="text-16 py-2 font-[700]">
+                <h1 className="text-14 md:text-16 py-2 font-[700]">
                   DEPOSIT FUNDS (MOBILE MONEY)
                 </h1>
               </div>
@@ -52,7 +52,9 @@ function Withdraw() {
               </div>
               <hr></hr>
               <div className="px-5 my-5 text-black">
-                <h1 className="text-20 font-[500]">WITHDRAWAL INSTRUCTIONS</h1>
+                <h1 className="text-16 md:text-20 font-[500]">
+                  WITHDRAWAL INSTRUCTIONS
+                </h1>
                 <ol className="text-12">
                   <li>1. Enter the amount you want to withdraw</li>
                   <li>2. Click on the Withdraw button.</li>

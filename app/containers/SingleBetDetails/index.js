@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import {
   //   BetDetailsContext,
@@ -10,31 +10,50 @@ import {
   TalkToUs,
 } from '@components';
 import { reactIcons } from '@utils/icons';
-import ReactSimplyCarousel from 'react-simply-carousel';
+// import ReactSimplyCarousel from 'react-simply-carousel';
 import { getReq } from '@utils/apiHandlers';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
+import { images } from '@utils/images';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import { Pagination, Navigation } from 'swiper/modules';
 
 const TabsName = [
-  { id: 1, title: 'Head to head' },
-  { id: 2, title: 'Standing' },
-  { id: 3, title: 'Linups' },
+  { id: 1, title: 'Board', icon: images.board },
+  { id: 2, title: 'Head to head', icon: images.headtohead },
+  { id: 3, title: 'Standing', icon: images.standing },
+  { id: 4, title: 'Linups', icon: images.lineups },
 ];
+// const marketTab = [
+//   { id: 1, title: 'OVERALL', icon: images.board },
+//   { id: 2, title: 'HOME', icon: images.headtohead },
+//   { id: 3, title: 'AWAY', icon: images.standing },
+// ];
 
 function SigleBetDetails() {
   const { eventId, eventNames, sId } = useParams();
-  const [step, setStep] = useState(1);
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [step, setStep] = useState(isMobile ? 'Board' : 'Head to head');
+  // const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [allMarketData, setAllMarketData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [marketDataOdds, setMarketDataOdds] = useState();
   const [mergedData, setMergedData] = useState([]);
-  const [eventName, setEventName] = useState();
+  // const [eventName, setEventName] = useState();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [bets, setBets] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+  // const [tab, setTab] = useState(1);
 
   const dispatch = useDispatch();
+  const swiperRef = useRef(null);
 
   const getAllMarketData = useCallback(async () => {
     setIsLoading(true);
@@ -43,17 +62,18 @@ function SigleBetDetails() {
     setAllMarketData(response.data);
   }, [eventId]);
 
-  const getEventName = useCallback(async () => {
-    const response = await getReq(`/events/${eventId}`);
-    setEventName(
-      response?.data?.season?.name || response?.data?.tournament?.name,
-    );
-  }, [eventId]);
+  // const getEventName = useCallback(async () => {
+  //   const response = await getReq(`/events/${eventId}`);
+  //   console.log(response);
+  //   setEventName(
+  //     response?.data?.season?.name || response?.data?.tournament?.name,
+  //   );
+  // }, [eventId]);
 
   useEffect(() => {
     getAllMarketData();
-    getEventName();
-  }, [getAllMarketData, eventId, getEventName]);
+    // getEventName();
+  }, [getAllMarketData, eventId]);
 
   useEffect(() => {
     const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
@@ -187,6 +207,26 @@ function SigleBetDetails() {
     dispatch(fetchBetDetailsAction(updatedBets));
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Check on initial render
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleSlideChange = (index) => {
+    console.log('-----index ', index);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(2);
+    }
+  };
+
   return (
     // <BetDetailsContext.Provider value={{ selectedBet }}>
     <div className="grid grid-cols-12">
@@ -213,19 +253,44 @@ function SigleBetDetails() {
               </div>
             </div>
             <div className="flex border-t-[1px] border-b-[1px] border-lightgray">
-              {TabsName.map((item) => {
+              {/* {TabsName.map((item) => {
                 return (
                   <div
                     key={item.id}
                     className={`${
                       step === item.id
-                        ? 'border-b-[2px] border-[#0c3c5a] text-gray-900'
+                        ? 'border-b-[2px] border-blue   text-gray-900'
                         : ''
                     } px-1 md:px-0 xl:px-3 mx-3  w-fit md:w-56`}
                     onClick={() => setStep(item.id)}
                   >
                     <div className="flex  h-8  md:justify-center items-center">
-                      <span className="px-2 text-12 font-[400]  xxl:text-12">
+                      <img src={item.icon} alt="icon" className="w-6 h-4" />
+                      <span className="px-2 leading-3 text-12 font-[400]  xxl:text-12">
+                        {item.title}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })} */}
+              {TabsName.map((item) => {
+                if (item.title === 'Board' && !isMobile) {
+                  return null; // Skip rendering the "Board" tab on non-mobile devices
+                }
+
+                return (
+                  <div
+                    key={item.id}
+                    className={`${
+                      step == item.title
+                        ? 'border-b-[2px] border-blue   text-gray-900'
+                        : ''
+                    } px-1 md:px-0 xl:px-3 mx-3  w-56`}
+                    onClick={() => setStep(item.title)}
+                  >
+                    <div className="flex flex-1 cursor-pointer h-8 justify-center items-center">
+                      <img src={item.icon} alt="icon" className="w-6 h-4" />
+                      <span className="px-2 leading-3 md:block hidden text-12 font-[400]  xxl:text-12">
                         {item.title}
                       </span>
                     </div>
@@ -234,83 +299,274 @@ function SigleBetDetails() {
               })}
             </div>
             <div className="flex">
-              <div className="flex-1 bg-[#5c8301]">
-                <ReactSimplyCarousel
-                  activeSlideIndex={activeSlideIndex}
-                  onRequestChange={setActiveSlideIndex}
-                  itemsToShow={1}
-                  itemsToScroll={1}
-                  autoplay={true}
-                  containerProps={{
-                    style: {
-                      width: '100%',
-                      justifyContent: 'space-between',
-                      userSelect: 'none',
-                      // marginLeft: '17px',
+              <div
+                className={`w-full  md:w-[50%] bg-[#5c8301] ${
+                  isMobile && step == 'Board' ? 'block' : 'md:block hidden'
+                } `}
+              >
+                <Swiper
+                  pagination={{
+                    type: 'bullets',
+                    clickable: true,
+                    renderBullet: function (index, className) {
+                      return (
+                        '<span class="' +
+                        className +
+                        '" style="background-color: #3F1F63; width:30px; border-radius:2px;margin-top:20px"></span>'
+                      );
                     },
                   }}
-                  // forwardBtnProps={{
-                  //   //here you can also pass className, or any other button element attributes
-                  //   style: {
-                  //     alignSelf: 'center',
-                  //     background: 'black',
-                  //     border: 'none',
-                  //     borderRadius: '50%',
-                  //     color: 'white',
-                  //     cursor: 'pointer',
-                  //     fontSize: '20px',
-                  //     height: 30,
-                  //     lineHeight: 1,
-                  //     textAlign: 'center',
-                  //     width: 30,
-                  //     marginLeft: 30,
-                  //   },
-                  //   children: <span>{'>'}</span>,
-                  // }}
-                  // backwardBtnProps={{
-                  //   //here you can also pass className, or any other button element attributes
-                  //   style: {
-                  //     alignSelf: 'center',
-                  //     background: 'black',
-                  //     border: 'none',
-                  //     borderRadius: '50%',
-                  //     color: 'white',
-                  //     cursor: 'pointer',
-                  //     fontSize: '20px',
-                  //     height: 30,
-                  //     lineHeight: 1,
-                  //     textAlign: 'center',
-                  //     width: 30,
-                  //     marginRight: 30,
-                  //   },
-                  //   children: <span>{'<'}</span>,
-                  // }}
-                  speed={400}
-                  easing="linear"
+                  navigation={false}
+                  modules={[Pagination, Navigation]}
+                  className="mySwiper"
                 >
-                  <div className="mx-10 w-[300px] h-48  bg-[#b9e6ea] px-2">
+                  <SwiperSlide className="pb-3">
+                    <div className="mx-5 w-[330px] md:w-[300px] h-44 mb-5  bg-[#b9e6ea] px-2">
+                      <div className="">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-12">
+                            WIN PROBABILITY
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-4 border-[#00003c]">
+                            <h1 className="text-16 text-[#00003c]">44 %</h1>
+                            <span className="text-12 text-[#00003c]">CPV</span>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-4 border-lightgray">
+                            <h1 className="text-16 text-lightgray">32 %</h1>
+                            <span className="text-12 text-lightgray">DRAW</span>
+                          </div>
+                          <div className="w-[24%] border-b-4 border-red-600">
+                            <h1 className="text-16 text-red-600">24 %</h1>
+                            <span className="text-12 text-red-600">MOZ</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-12">
+                            PREVIOUS MEETINGS
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-2 border-[#00003c]">
+                            <h1>2</h1>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-2 border-lightgray">
+                            <h1>1</h1>
+                          </div>
+                          <div className="w-[24%] border-b-2 border-red-600">
+                            <h1>1</h1>
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <div className="flex items-center">
+                            <img
+                              src="/images/bikoicon/cape.png"
+                              className="w-4 h-4 mr-1"
+                            />
+                            <span className="text-gray-900 text-12">WINS</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-900 text-12">DRAW</span>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="text-gray-900 text-12">WINS</span>
+                            <img
+                              src="/images/bikoicon/mozambique.png"
+                              className="w-4 h-4 ml-1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="mx-5 w-[330px] md:w-[300px] h-44 mb-5  bg-[#b9e6ea] px-2">
+                      <div className="">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-12">
+                            WIN PROBABILITY
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-4 border-[#00003c]">
+                            <h1 className="text-16 text-[#00003c]">44 %</h1>
+                            <span className="text-12 text-[#00003c]">CPV</span>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-4 border-lightgray">
+                            <h1 className="text-16 text-lightgray">32 %</h1>
+                            <span className="text-12 text-lightgray">DRAW</span>
+                          </div>
+                          <div className="w-[24%] border-b-4 border-red-600">
+                            <h1 className="text-16 text-red-600">24 %</h1>
+                            <span className="text-12 text-red-600">MOZ</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-12">
+                            PREVIOUS MEETINGS
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-2 border-[#00003c]">
+                            <h1>2</h1>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-2 border-lightgray">
+                            <h1>1</h1>
+                          </div>
+                          <div className="w-[24%] border-b-2 border-red-600">
+                            <h1>1</h1>
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <div className="flex items-center">
+                            <img
+                              src="/images/bikoicon/cape.png"
+                              className="w-4 h-4 mr-1"
+                            />
+                            <span className="text-gray-900 text-12">WINS</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-900 text-12">DRAW</span>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="text-gray-900 text-12">WINS</span>
+                            <img
+                              src="/images/bikoicon/mozambique.png"
+                              className="w-4 h-4 ml-1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+              {step == 'Head to head' && (
+                <div className="flex-1 md:block">
+                  <div className="px-3">
+                    <div className="flex items-center justify-end border-b-[1px] border-lightgray">
+                      <span className="text-14 cursor-pointer text-lightgray">
+                        {reactIcons.arrowleft}
+                      </span>
+                      <span className="text-12">1/3</span>
+                      <span
+                        onClick={() => handleSlideChange(1)}
+                        className="text-14 text-lightgray cursor-pointer"
+                      >
+                        {reactIcons.arrowright}
+                      </span>
+                    </div>
+                  </div>
+                  <Swiper
+                    ref={swiperRef}
+                    pagination={{
+                      type: 'bullets',
+                      clickable: true,
+                    }}
+                    navigation={false}
+                    modules={[Pagination, Navigation]}
+                    className="mySwiper"
+                  >
+                    <SwiperSlide>
+                      <div className="m-5 ">
+                        <div className="">
+                          <div className="text-center">
+                            <p className="text-gray-900 text-14">
+                              WIN PROBABILITY
+                            </p>
+                          </div>
+                          <div className="flex">
+                            <div className="w-[44%] border-b-4 border-[#00003c]">
+                              <h1>44 %</h1>
+                              <span className="text-12">CPV</span>
+                            </div>
+                            <div className="w-[32%] mx-3 border-b-4 border-lightgray">
+                              <h1>32 %</h1>
+                              <span className="text-12">DRAW</span>
+                            </div>
+                            <div className="w-[24%] border-b-4 border-red-600">
+                              <h1>24 %</h1>
+                              <span className="text-12">MOZ</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-4">
+                          <div className="text-center">
+                            <p className="text-gray-900 text-14">
+                              PREVIOUS MEETINGS
+                            </p>
+                          </div>
+                          <div className="flex">
+                            <div className="w-[44%] border-b-2 border-[#00003c]">
+                              <h1>2</h1>
+                            </div>
+                            <div className="w-[32%] mx-3 border-b-2 border-lightgray">
+                              <h1>1</h1>
+                            </div>
+                            <div className="w-[24%] border-b-2 border-red-600">
+                              <h1>1</h1>
+                            </div>
+                          </div>
+                          <div className="flex justify-between">
+                            <div className="flex items-center">
+                              <img
+                                src="/images/bikoicon/cape.png"
+                                className="w-4 h-4 mr-1"
+                              />
+                              <span className="text-gray-900 text-12">
+                                WINS
+                              </span>
+                            </div>
+                            <div>
+                              <span className="text-gray-900 text-12">
+                                DRAW
+                              </span>
+                            </div>
+                            <div className="flex items-center">
+                              <span className="text-gray-900 text-12">
+                                WINS
+                              </span>
+                              <img
+                                src="/images/bikoicon/mozambique.png"
+                                className="w-4 h-4 ml-1"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    {/* <SwiperSlide>
+                      <div className="text-black">2 point</div>
+                    </SwiperSlide> */}
+                  </Swiper>
+                  {/* <div className="m-5">
                     <div className="">
                       <div className="text-center">
-                        <p className="text-gray-900 text-12">WIN PROBABILITY</p>
+                        <p className="text-gray-900 text-14">WIN PROBABILITY</p>
                       </div>
                       <div className="flex">
                         <div className="w-[44%] border-b-4 border-[#00003c]">
-                          <h1 className="text-16 text-[#00003c]">44 %</h1>
-                          <span className="text-12 text-[#00003c]">CPV</span>
+                          <h1>44 %</h1>
+                          <span className="text-12">CPV</span>
                         </div>
                         <div className="w-[32%] mx-3 border-b-4 border-lightgray">
-                          <h1 className="text-16 text-lightgray">32 %</h1>
-                          <span className="text-12 text-lightgray">DRAW</span>
+                          <h1>32 %</h1>
+                          <span className="text-12">DRAW</span>
                         </div>
                         <div className="w-[24%] border-b-4 border-red-600">
-                          <h1 className="text-16 text-red-600">24 %</h1>
-                          <span className="text-12 text-red-600">MOZ</span>
+                          <h1>24 %</h1>
+                          <span className="text-12">MOZ</span>
                         </div>
                       </div>
                     </div>
                     <div className="mt-4">
                       <div className="text-center">
-                        <p className="text-gray-900 text-12">
+                        <p className="text-gray-900 text-14">
                           PREVIOUS MEETINGS
                         </p>
                       </div>
@@ -345,67 +601,134 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </ReactSimplyCarousel>
-                {/* <div className="mx-10 h-48  bg-[#b9e6ea] px-2">
-                  <div className="">
-                    <div className="text-center">
-                      <p className="text-gray-900 text-12">WIN PROBABILITY</p>
-                    </div>
-                    <div className="flex">
-                      <div className="w-[44%] border-b-4 border-[#00003c]">
-                        <h1 className="text-16 text-[#00003c]">44 %</h1>
-                        <span className="text-12 text-[#00003c]">CPV</span>
-                      </div>
-                      <div className="w-[32%] mx-3 border-b-4 border-lightgray">
-                        <h1 className="text-16 text-lightgray">32 %</h1>
-                        <span className="text-12 text-lightgray">DRAW</span>
-                      </div>
-                      <div className="w-[24%] border-b-4 border-red-600">
-                        <h1 className="text-16 text-red-600">24 %</h1>
-                        <span className="text-12 text-red-600">MOZ</span>
-                      </div>
+                  </div> */}
+                </div>
+              )}
+              {step == 'Standing' && (
+                <div className="flex-1 md:block">
+                  <div className="px-3">
+                    <div className="flex items-center justify-end border-b-[1px] border-lightgray">
+                      <span className="text-14 cursor-pointer text-lightgray">
+                        {reactIcons.arrowleft}
+                      </span>
+                      <span className="text-12">1/3</span>
+                      <span className="text-14 text-lightgray cursor-pointer">
+                        {reactIcons.arrowright}
+                      </span>
                     </div>
                   </div>
-                  <div className="mt-4">
-                    <div className="text-center">
-                      <p className="text-gray-900 text-12">PREVIOUS MEETINGS</p>
-                    </div>
-                    <div className="flex">
-                      <div className="w-[44%] border-b-2 border-[#00003c]">
-                        <h1>2</h1>
-                      </div>
-                      <div className="w-[32%] mx-3 border-b-2 border-lightgray">
-                        <h1>1</h1>
-                      </div>
-                      <div className="w-[24%] border-b-2 border-red-600">
-                        <h1>1</h1>
-                      </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="flex items-center">
-                        <img
-                          src="/images/bikoicon/cape.png"
-                          className="w-4 h-4 mr-1"
-                        />
-                        <span className="text-gray-900 text-12">WINS</span>
-                      </div>
-                      <div>
-                        <span className="text-gray-900 text-12">DRAW</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="text-gray-900 text-12">WINS</span>
-                        <img
-                          src="/images/bikoicon/mozambique.png"
-                          className="w-4 h-4 ml-1"
-                        />
-                      </div>
-                    </div>
+                  {/* <div>
+                    <span className="text-12">STANDINGS</span>
                   </div>
-                </div> */}
-              </div>
-              {step === 1 && (
-                <div className="flex-1">
+                  <hr></hr> */}
+                  <div>
+                    <p className="text-12">SERIE A</p>
+                    {/* <div className="flex border-[1px] mx-2 border-gray-500 w-48">
+                      {marketTab.map((item) => {
+                        return (
+                          <div
+                            key={item.id}
+                            className={`${
+                              tab == item.title
+                                ? 'bg-gray-600  text-gray-900'
+                                : ''
+                            } px-1 md:px-0 xl:px-3   w-16`}
+                            onClick={() => setTab(item.title)}
+                          >
+                            <div className="flex flex-1 cursor-pointer h-8 justify-center items-center">
+                              <span className="px-2 leading-3 text-black   md:block hidden text-12 font-[400]  xxl:text-12">
+                                {item.title}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div> */}
+                    <div className="m-5">
+                      <div className="">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-14">
+                            WIN PROBABILITY
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-4 border-[#00003c]">
+                            <h1>44 %</h1>
+                            <span className="text-12">CPV</span>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-4 border-lightgray">
+                            <h1>32 %</h1>
+                            <span className="text-12">DRAW</span>
+                          </div>
+                          <div className="w-[24%] border-b-4 border-red-600">
+                            <h1>24 %</h1>
+                            <span className="text-12">MOZ</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <div className="text-center">
+                          <p className="text-gray-900 text-14">
+                            PREVIOUS MEETINGS
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-[44%] border-b-2 border-[#00003c]">
+                            <h1>2</h1>
+                          </div>
+                          <div className="w-[32%] mx-3 border-b-2 border-lightgray">
+                            <h1>1</h1>
+                          </div>
+                          <div className="w-[24%] border-b-2 border-red-600">
+                            <h1>1</h1>
+                          </div>
+                        </div>
+                        <div className="flex justify-between">
+                          <div className="flex items-center">
+                            <img
+                              src="/images/bikoicon/cape.png"
+                              className="w-4 h-4 mr-1"
+                            />
+                            <span className="text-gray-900 text-12">WINS</span>
+                          </div>
+                          <div>
+                            <span className="text-gray-900 text-12">DRAW</span>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="text-gray-900 text-12">WINS</span>
+                            <img
+                              src="/images/bikoicon/mozambique.png"
+                              className="w-4 h-4 ml-1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* {tab == 'OVERALL' && (
+                      <div className="w-full">
+                        <table className="text-12 border-[1px] w-full border-black">
+                          <thead>
+                            <th className="w-8 text-10">POS</th>
+                            <th className="w-28 flex justify-between">
+                              <sapn className="text-10">TEAM</sapn>
+                              <span className="text-10">P</span>
+                            </th>
+                            <th className="flex justify-between">
+                              <sapn className="text-10">W</sapn>
+                              <span className="text-10">P</span>
+                              <span className="text-10">L</span>
+                            </th>
+                            <th>POS</th>
+                            <th>POS</th>
+                          </thead>
+                        </table>
+                      </div>
+                    )} */}
+                  </div>
+                </div>
+              )}
+              {step == 'Linups' && (
+                <div className="flex-1 md:block">
                   <div className="px-3">
                     <div className="flex items-center justify-end border-b-[1px] border-lightgray">
                       <span className="text-14 cursor-pointer text-lightgray">
@@ -482,7 +805,7 @@ function SigleBetDetails() {
           <div>
             <div className="bg-yellow py-1 rounded-md mt-5 px-3">
               <h1 className="text-white text-14 font-[600]">
-                {eventName} - ALL MARKETS
+                {eventNames} - ALL MARKETS
               </h1>
             </div>
           </div>
@@ -496,9 +819,11 @@ function SigleBetDetails() {
               mergedData?.map((item, index) => {
                 return (
                   <div key={index}>
-                    <div className="my-3">
+                    <div className="md:my-3 my-1">
                       <div className="text-black">
-                        <h1 className="text-14 font-[500] py-2">{item.name}</h1>
+                        <h1 className="text-12 md:text-14 font-[500] py-2">
+                          {item.name}
+                        </h1>
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {
@@ -537,9 +862,9 @@ function SigleBetDetails() {
                                     )
                                       ? 'bg-green text-white'
                                       : ''
-                                  } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3`}
+                                  } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-3`}
                                 >
-                                  <span className="text-center font-[700] flex-1">
+                                  <span className="text-center font-[700] leading-3 flex-1">
                                     {innerItem.name}
                                   </span>
                                   <span className="text-[700]">
