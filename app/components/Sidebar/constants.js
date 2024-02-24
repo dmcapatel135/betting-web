@@ -44,7 +44,13 @@ export const navigations = [
     path: 'popular',
     id: 1,
   },
-  // { icon: '/images/portfolio.png', title: 'HOW TO PLAY', path: '/help' },
+  {
+    icon: '/images/bikoicon/how-to-play.svg',
+    active_icon: '/images/bikoicon/how-to-play.svg',
+    title: 'HOW TO PLAY',
+    path: '/dashboard/how-to-play',
+    id: 8,
+  },
 ];
 
 export const tournaments = [

@@ -16,6 +16,7 @@ import {
   Batting,
   SingleBetDetails,
   Jackpot,
+  HowToPlay,
 } from '@containers/pageListAsync';
 // import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
@@ -122,6 +123,7 @@ function App() {
           <Route path="my-transactions" element={<MyTransactions />} />
           <Route path="deposit" element={<Deposit />} />
           <Route path="withdraw" element={<Withdraw />} />
+          <Route path="how-to-play" element={<HowToPlay />} />
         </Route>
 
         <Route path="/*" element={<NotFound />} />

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { fetchBetDetailsAction } from '@actions';
 
-function BetWallet() {
+function BetWallet({ stakeValue }) {
   const [openDialog, setOpenDailog] = useState();
   const [tab, setTab] = useState('sport');
   const [gameRules, setGameRules] = useState();
@@ -17,7 +17,7 @@ function BetWallet() {
   const [totalOdd, setTotalOdd] = useState(0);
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
-  const [stake, setStake] = useState(1000);
+  const [stake, setStake] = useState(stakeValue || 1000);
   const [oddChange, setOddChange] = useState(true);
   const [totalSport, setTotalSport] = useState([]);
   // const navigate = useNavigate();
@@ -249,10 +249,10 @@ function BetWallet() {
           </span>
         </div>
       </div>
-      <div className="border-t-[1px] border-b-[1px] my-5 border-blue">
+      <div className="border-t-[1px]  my-5 border-blue  overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
         {bets?.map((item, index) => {
           return (
-            <div key={index} className="flex">
+            <div key={index} className="flex border-b-[1px] border-blue ">
               <div
                 className="w-10 border-r-[1px] flex justify-center cursor-pointer items-center border-blue"
                 onClick={() => handleRemoveBet(item.eventId, item.sportId)}
@@ -276,35 +276,6 @@ function BetWallet() {
           );
         })}
         <hr className="border-[1px]"></hr>
-        {/* <div className="flex">
-          <div className="w-10 border-r-[1px] flex justify-center items-center border-blue">
-            <img src="/images/bikoicon/close_small.png" alt="icon" />
-          </div>
-          <div className="flex justify-between w-full px-3 items-center ">
-            <div className="text-gray-900">
-              <p className="text-12">Manchester United - Chelsa FC</p>
-              <span className="text-12 text-black">1X2 - FT (1)</span>
-            </div>
-            <div className="flex justify-center items-center rounded-md bg-yellow h-7 w-10">
-              <span className="text-14 font-[600]">2.95</span>
-            </div>
-          </div>
-        </div> */}
-        {/* <hr className="border-[1px]"></hr> */}
-        {/* <div className="flex">
-          <div className="w-10 border-r-[1px] flex justify-center items-center border-blue">
-            <img src="/images/bikoicon/close_small.png" alt="icon" />
-          </div>
-          <div className="flex justify-between w-full px-3 items-center ">
-            <div className="text-gray-900">
-              <p className="text-12">Manchester United - Chelsa FC</p>
-              <span className="text-12 text-black">1X2 - FT (1)</span>
-            </div>
-            <div className="flex justify-center items-center rounded-md bg-yellow h-7 w-10">
-              <span className="text-14 font-[600]">2.95</span>
-            </div>
-          </div>
-        </div> */}
       </div>
       <div className="flex container_main items-center px-3">
         <input type="checkbox" checked={oddChange} />
@@ -440,5 +411,6 @@ BetWallet.propTypes = {
   handleRemoveBet: PropTypes.func,
   // setSelectedBet: PropTypes.array,
   handleClearAllBet: PropTypes.func,
+  stakeValue: PropTypes.number,
 };
 export default BetWallet;

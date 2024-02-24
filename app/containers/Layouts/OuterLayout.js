@@ -33,6 +33,8 @@ const OuterLayout = () => {
   useEffect(() => {
     if (tab == 5) {
       navigate('/dashboard/jackpot');
+    } else if (tab == 8) {
+      navigate('/dashboard/how-to-play');
     } else if (sportId && tab) navigate(`/dashboard/${sportId}/${tab}`);
   }, [sportId, navigate, tab]);
 
