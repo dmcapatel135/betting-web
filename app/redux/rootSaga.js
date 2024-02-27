@@ -1,7 +1,7 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 import * as types from './actions/actionConstants';
 import { getUser } from './modules/user';
-import { fetchBetDetailsAction } from '@actions';
+import { fetchBetDetailsAction, fetchJackpotDetailsAction } from '@actions';
 
 function* init() {
   const user = yield getUser();
@@ -37,6 +37,22 @@ function* betWatcher() {
   yield takeLatest(types.FETCH_BET_DETAILS, fetchBet);
 }
 
+function* fetchJackpot(action) {
+  try {
+    const jackpotDetails = yield fetchJackpotDetailsAction(action.payload); // Implement this function
+    yield put({
+      type: types.SET_SELECTED_JACKPOT,
+      payload: jackpotDetails,
+    });
+  } catch (error) {
+    // Handle errors
+  }
+}
+
+function* jackpotWatcher() {
+  yield takeLatest(types.FETCH_JACKPOT_DETAILS, fetchJackpot);
+}
+
 function* actionWatcher() {
   yield takeLatest(types.INIT, init);
   yield takeLatest(types.REFRESH_USER_DETAILS, refreshUserDetails);
@@ -44,5 +60,5 @@ function* actionWatcher() {
 }
 
 export default function* rootSaga() {
-  yield all([actionWatcher(), betWatcher()]);
+  yield all([actionWatcher(), betWatcher(), jackpotWatcher()]);
 }

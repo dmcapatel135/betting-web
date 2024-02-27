@@ -39,14 +39,14 @@ export const navigations = [
   },
   {
     icon: images.popularIcon,
-    active_icon: images.upcomingIconActive,
+    active_icon: images.popularIconActive,
     title: 'POPULAR',
     path: 'popular',
     id: 1,
   },
   {
     icon: '/images/bikoicon/how-to-play.svg',
-    active_icon: '/images/bikoicon/how-to-play.svg',
+    active_icon: '/images/bikoicon/how-to-play-active.svg',
     title: 'HOW TO PLAY',
     path: '/dashboard/how-to-play',
     id: 8,

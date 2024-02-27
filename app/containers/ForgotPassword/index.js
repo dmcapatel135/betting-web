@@ -326,7 +326,9 @@ function ForgotPassword() {
               </div>
             </div>
           </div>
-          <HeroSection />
+          <div className="px-5">
+            <HeroSection />
+          </div>
         </div>
       </div>
       <div className="col-span-4 md:block hidden">

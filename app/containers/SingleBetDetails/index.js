@@ -93,6 +93,8 @@ function SigleBetDetails() {
   }, [eventId]);
 
   useEffect(() => {
+    console.log('------alll market data ', allMarketData);
+    console.log('---------markeda odds ', marketDataOdds);
     if (allMarketData.length > 0 && marketDataOdds) {
       const allMarkets = _.keyBy(allMarketData, 'id');
       const markets = [];
@@ -151,7 +153,7 @@ function SigleBetDetails() {
   //   }
   // }, [selectedBet, dispatch]);
 
-  const addToBetSlip = (eventId, bet, betDetails) => {
+  const addToBetSlip = (eventId, bet, betDetails, specifiers) => {
     setBets((prev) => {
       const index = prev.findIndex((item) => item.eventId == parseInt(eventId));
       if (index !== -1) {
@@ -163,6 +165,7 @@ function SigleBetDetails() {
           bet: bet,
           betDetails: betDetails,
           eventNames: eventNames,
+          specifiers: specifiers ? specifiers.join('|') : null,
         };
         return updatedBets;
       } else {
@@ -174,6 +177,7 @@ function SigleBetDetails() {
             bet: bet,
             betDetails: betDetails,
             eventNames: eventNames,
+            specifiers: specifiers ? specifiers.join('|') : null,
           },
         ];
       }
@@ -190,12 +194,13 @@ function SigleBetDetails() {
     }
   }, [bets, dispatch]);
 
-  const selectBet = (eventId, marketId, outcomeventId) => {
+  const selectBet = (eventId, marketId, outcomeventId, specifiers) => {
     const bet = selectedBet.find(
       (bet) =>
         bet.eventId == parseInt(eventId) &&
         bet.betDetails.id === marketId &&
-        bet.bet.id === outcomeventId,
+        bet.bet.id === outcomeventId &&
+        bet.specifiers == specifiers,
     );
 
     if (bet) return true;
@@ -226,6 +231,8 @@ function SigleBetDetails() {
       swiperRef.current.swiper.slideTo(2);
     }
   };
+
+  console.log('-----merged data ', selectedBet);
 
   return (
     // <BetDetailsContext.Provider value={{ selectedBet }}>
@@ -845,12 +852,19 @@ function SigleBetDetails() {
                                         eventId,
                                         item.id,
                                         innerItem.id,
-                                        eventNames,
+                                        item.specifiers
+                                          ? item.specifiers.join('|')
+                                          : null,
                                       )
                                     ) {
                                       handleRemoveBet(eventId, sId);
                                     } else {
-                                      addToBetSlip(eventId, innerItem, item);
+                                      addToBetSlip(
+                                        eventId,
+                                        innerItem,
+                                        item,
+                                        item.specifiers,
+                                      );
                                     }
                                   }}
                                   className={`${
@@ -858,7 +872,9 @@ function SigleBetDetails() {
                                       eventId,
                                       item.id,
                                       innerItem.id,
-                                      eventNames,
+                                      item.specifiers
+                                        ? item.specifiers.join('|')
+                                        : null,
                                     )
                                       ? 'bg-green text-white'
                                       : ''

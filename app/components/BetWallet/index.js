@@ -8,6 +8,7 @@ import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { fetchBetDetailsAction } from '@actions';
+import { formatNumber } from '@utils/constants';
 
 function BetWallet({ stakeValue }) {
   const [openDialog, setOpenDailog] = useState();
@@ -330,21 +331,25 @@ function BetWallet({ stakeValue }) {
                 gameRules?.rules[bonus?.length - 1]?.percentage) /
               100
             ).toFixed(2)} */}
-            {bongeBonus === 'NaN' ? 0 : bongeBonus}
+            {bongeBonus === 'NaN' ? 0 : formatNumber(bongeBonus)}
           </span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Tax 10% (TZS)</span>
-          <span className="text-12">{tax === 'NaN' ? 0 : tax}</span>
+          <span className="text-12">
+            {tax === 'NaN' ? 0 : formatNumber(tax)}
+          </span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Net Amount (TZS)</span>
-          <span className="text-12">{netAmount === 'NaN' ? 0 : netAmount}</span>
+          <span className="text-12">
+            {netAmount === 'NaN' ? 0 : formatNumber(netAmount)}
+          </span>
         </div>
         <div className="flex justify-between text-black">
           <span className="text-12">Possible winnings (TZS)</span>
           <span className="text-12">
-            {calculation == 'NaN' ? 0 : calculation}
+            {calculation == 'NaN' ? 0 : formatNumber(calculation)}
           </span>
         </div>
       </div>

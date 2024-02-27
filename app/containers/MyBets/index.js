@@ -6,6 +6,7 @@ import {
   Betslip,
   CompanyContact,
   CustomerCareContact,
+  HeroSection,
   TalkToUs,
 } from '@components';
 import ShareBetModal from '@components/ShareBetModal.js';
@@ -62,9 +63,7 @@ function MyBets() {
       <ShareBetModal />
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-2">
-          <div className="md:block hidden">
-            <img src="/images/bikoicon/main.png" alt="main" />
-          </div>
+          <HeroSection />
           {showBets ? (
             <div className="mt-5">
               <div className="flex justify-between px-5 items-center h-10 rounded-md bg-yellow text-black">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Sidebar from '@components/Sidebar';
@@ -11,6 +11,7 @@ import { images } from '@utils/images';
 import { useAuth } from '@hooks';
 import { isLoggedIn } from '@utils/apiHandlers';
 import { useSelector } from 'react-redux';
+import { SelectImage } from '@components';
 
 const mobileMenuList = [
   {
@@ -96,6 +97,8 @@ const menuList = [
   },
 ];
 
+const optionList = [{ name: 'English', icon: '/images/bikoicon/france.png' }];
+
 const Navbar = ({ tab, setTab }) => {
   const [option, setOption] = useState(false);
   const [isOpenMenuList, setIsOpenMenuList] = useState(false);
@@ -103,6 +106,7 @@ const Navbar = ({ tab, setTab }) => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const bets = useSelector((state) => state.bet.selectedBet);
+  const [selectValue, setSelectValue] = useState();
 
   // const { tab, setTab } = useContext(MyContext);
 
@@ -146,10 +150,8 @@ const Navbar = ({ tab, setTab }) => {
           <div className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-evenly mx-2 md:mx-0">
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
-              <div className="text-white">
-                <span className="text-12 md:text-16 font-[700]">
-                  TSH 102.00
-                </span>
+              <div className="text-white pr-1">
+                <span className="text-12 md:text-16 font-[700]">TSH 0</span>
               </div>
             ) : (
               <button
@@ -160,12 +162,15 @@ const Navbar = ({ tab, setTab }) => {
               </button>
             )}
             {isLoggedIn() ? (
-              <Link to="/dashboard/deposit">
-                <button className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1">
-                  Deposit
-                </button>
-              </Link>
+              // <Link to="/dashboard/deposit">
+              <button
+                onClick={() => (window.location.href = '/dashboard/deposit')}
+                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
+              >
+                Deposit
+              </button>
             ) : (
+              // </Link>
               <button
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 // onClick={() => navigate('/join-now')}
@@ -174,9 +179,17 @@ const Navbar = ({ tab, setTab }) => {
                 Join Now
               </button>
             )}
-            <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
+            {/* <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
-            </select>
+            </select> */}
+            <div className="md:order-2">
+              <SelectImage
+                optionList={optionList}
+                selectValue={selectValue}
+                setSelectValue={setSelectValue}
+              />
+            </div>
+
             {/* </div> */}
             {isLoggedIn() && (
               <div className="md:pr-2 sm:block  md:order-4">

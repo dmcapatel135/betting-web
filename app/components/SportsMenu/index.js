@@ -61,26 +61,32 @@ function SportsMenu() {
   }, [sportId, getAllTournaments]);
 
   useEffect(() => {
+    console.log('------useEffect calling for getallfixutres ----');
     const today = new Date();
-    getAllFixtures(today);
+    getAllFixtures(today.toISOString);
   }, [getAllFixtures]);
 
   useEffect(() => {
+    console.log('------next---- useEffect -----calling ');
     const today = new Date();
     const upcoming = new Date(today);
     upcoming.setDate(today.getDate() + 1);
     if (tab == 2 && selectTournament) {
-      getAllFixtures(`date=${new Date()}&tournamentId=${selectTournament}`);
+      getAllFixtures(
+        `date=${new Date().toISOString()}&tournamentId=${selectTournament}`,
+      );
     } else if (tab == 3 && selectTournament) {
-      getAllFixtures(`fromDate=${upcoming}&tournamentId=${selectTournament}`);
+      getAllFixtures(
+        `fromDate=${upcoming.toISOString()}&tournamentId=${selectTournament}`,
+      );
     } else if (tab == 4 && selectTournament) {
       getAllFixtures(`onlyLive=${true}&tournamentId=${selectTournament}`);
     } else if (selectTournament) {
       getAllFixtures(`tournamentId=${selectTournament}`);
     } else if (tab == 2) {
-      getAllFixtures(`date=${new Date()}`);
+      getAllFixtures(`date=${new Date().toISOString()}`);
     } else if (tab == 3) {
-      getAllFixtures(`fromDate=${upcoming}`);
+      getAllFixtures(`fromDate=${upcoming.toISOString()}`);
     } else if (tab == 4) {
       getAllFixtures(`onlyLive=${true}`);
     }
@@ -90,6 +96,7 @@ function SportsMenu() {
     async (query) => {
       setPageSize(10);
       setIsLoading(true);
+      // setInterval(() => {})
       const response = await getReq(
         `/sports/${sportId}/fixtures?skip=${page}&take=${pageSize}&${query}`,
       );
@@ -106,9 +113,10 @@ function SportsMenu() {
   );
 
   const fetchMoreData = () => {
+    console.log('---------fetch more data calling for get all fixtures ');
     setPage(page + 1);
     const today = new Date();
-    getAllFixtures(today);
+    getAllFixtures(today.toISOString());
   };
 
   return (

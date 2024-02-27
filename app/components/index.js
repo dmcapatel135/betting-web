@@ -141,3 +141,7 @@ export const BetDetailsContext = loadable(() => import('./BetDetailsContext'), {
 export const SkeletonLoader = loadable(() => import('./SkeletonLoader'), {
   fallback: <Loading />,
 });
+
+export const SelectImage = loadable(() => import('./SelectImage'), {
+  fallback: <Loading />,
+});

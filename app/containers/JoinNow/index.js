@@ -361,7 +361,7 @@ function JoinNow() {
               </div>
             </div>
           </div>
-          <div className="md:block hidden">
+          <div className="md:block hidden mx-5">
             <HeroSection />
           </div>
         </div>

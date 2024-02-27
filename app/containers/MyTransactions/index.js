@@ -4,6 +4,7 @@ import {
   CustomerCareContact,
   TalkToUs,
 } from '@components';
+import HeroSection from '@components/HeroSection';
 import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -37,9 +38,7 @@ function MyTransactions() {
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-0">
-          <div className="">
-            <img src="/images/bikoicon/main.png" alt="main" />
-          </div>
+          <HeroSection />
           <div className="my-3 px-3 md:px-0">
             <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
               <div className="flex justify-between p-3">

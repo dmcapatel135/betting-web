@@ -31,7 +31,9 @@ const root = ReactDOM.createRoot(MOUNT_NODE);
 const saveStateToLocalStorage = (state) => {
   try {
     const serializedState = JSON.stringify(state.bet);
+    const serializedJackpotState = JSON.stringify(state.jackpot);
     localStorage.setItem('reduxState', serializedState);
+    localStorage.setItem('jackpotState', serializedJackpotState);
   } catch (error) {
     // Handle any errors
   }
@@ -46,6 +48,17 @@ store.subscribe(() => {
 export const loadStateFromLocalStorage = () => {
   try {
     const serializedState = localStorage.getItem('reduxState');
+    if (serializedState === null) {
+      return undefined; // Return undefined to use the initial state defined in your reducers
+    }
+    return JSON.parse(serializedState === {} ? [] : serializedState);
+  } catch (error) {
+    return undefined; // Return undefined to use the initial state defined in your reducers
+  }
+};
+export const loadStateFromJackpotLocalStorage = () => {
+  try {
+    const serializedState = localStorage.getItem('jackpotState');
     if (serializedState === null) {
       return undefined; // Return undefined to use the initial state defined in your reducers
     }

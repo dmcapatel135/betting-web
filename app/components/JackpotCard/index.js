@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { formatNumber } from '@utils/constants';
 
 function JackpotCard({
   setOpenCard,
@@ -13,7 +14,7 @@ function JackpotCard({
       <div className="flex text-black">
         <div className="ml-5">
           <h1 className="font-[700] text-14 md:text-16">
-            TSH, {item.prizePool}
+            TSH, {formatNumber(item?.prizePool)}
           </h1>
         </div>
         <div className="flex-1 mx-10">

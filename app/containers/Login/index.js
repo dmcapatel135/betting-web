@@ -157,7 +157,7 @@ function Login() {
               </div>
             </div>
           </div>
-          <div className="md:block hidden">
+          <div className="md:block hidden px-5">
             <HeroSection />
           </div>
         </div>

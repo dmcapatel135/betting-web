@@ -13,9 +13,14 @@ const OuterLayout = () => {
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [categories, setCategories] = useState();
-  const [tab, setTab] = useState('');
+  const [tab, setTab] = useState();
 
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   console.log('-------tab value ', tab);
+  //   if (!tab) setTab(2);
+  // }, [tab]);
 
   useEffect(() => {
     if (sId) setSportId(sId);

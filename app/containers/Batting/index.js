@@ -20,11 +20,9 @@ function Batting() {
   return (
     <main className="md:pl-5">
       <div className="grid grid-cols-12">
-        {tab < 6 && (
-          <div className="col-span-12 md:col-span-8">
-            <SportsMenu />
-          </div>
-        )}
+        <div className="col-span-12 md:col-span-8">
+          <SportsMenu />
+        </div>
         <div
           className={`${
             tab == 7 ? 'col-span-12  mb-5' : 'hidden md:block md:col-span-4'

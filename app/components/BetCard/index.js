@@ -16,7 +16,14 @@ function BetCard({ item, sportId }) {
     setBets(selectedBet);
   }, [selectedBet]);
 
-  const addToBetSlip = (eventId, bet, betDetails, competitors, sportId) => {
+  const addToBetSlip = (
+    eventId,
+    bet,
+    betDetails,
+    competitors,
+    sportId,
+    specifiers,
+  ) => {
     setBets((prev) => {
       const index = prev.findIndex((item) => item.eventId === eventId);
       if (index !== -1) {
@@ -28,6 +35,7 @@ function BetCard({ item, sportId }) {
           bet: bet,
           betDetails: betDetails,
           competitors: competitors,
+          specifiers: specifiers ? specifiers.join('|') : null,
         };
         return updatedBets;
       } else {
@@ -40,6 +48,7 @@ function BetCard({ item, sportId }) {
             bet: bet,
             betDetails: betDetails,
             eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+            specifiers: specifiers ? specifiers.join('|') : null,
           },
         ];
       }
@@ -54,12 +63,13 @@ function BetCard({ item, sportId }) {
     if (bets.length > 0) dispatch(fetchBetDetailsAction(bets));
   }, [bets, dispatch]);
 
-  const selectBet = (eventId, marketId, outcomeId) => {
+  const selectBet = (eventId, marketId, outcomeId, specifiers) => {
     const bet = selectedBet.find(
       (bet) =>
         bet.eventId == eventId &&
         bet.betDetails.id == marketId &&
-        bet.bet.id == outcomeId,
+        bet.bet.id == outcomeId &&
+        bet.specifiers == specifiers,
     );
 
     if (bet) return true;
@@ -126,7 +136,12 @@ function BetCard({ item, sportId }) {
                       disabled={innerItem.active ? false : true}
                       onClick={() => {
                         if (
-                          selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                          selectBet(
+                            item.eventId,
+                            data['1x2'].id,
+                            innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
+                          )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
                         } else {
@@ -136,11 +151,17 @@ function BetCard({ item, sportId }) {
                             data['1x2'],
                             item.competitors,
                             item.sport.id,
+                            item.specifiers,
                           );
                         }
                       }}
                       className={`${
-                        selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['1x2'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                           ? 'bg-green text-white border-green'
                           : ''
                       } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
@@ -183,6 +204,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Total'].id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -193,14 +215,20 @@ function BetCard({ item, sportId }) {
                             data['Total'],
                             item.competitors,
                             item.sport.id,
+                            item.specifiers,
                           );
                         }
                       }}
                       className={`${
-                        selectBet(item.eventId, data['Total'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['Total'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                           ? 'bg-green text-white border-green'
                           : ''
-                      } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-[52px] py-2 px-3`}
+                      } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[52px] py-2 px-3`}
                     >
                       <span className="font-[500]">
                         {innerItem.active ? (
@@ -238,6 +266,9 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['Both teams to score'].id,
                               innerItem.id,
+                              item.specifiers
+                                ? item.specifiers.join('|')
+                                : null,
                             )
                           ) {
                             handleRemoveBet(item.eventId, item.sport.id);
@@ -248,6 +279,7 @@ function BetCard({ item, sportId }) {
                               data['Both teams to score'],
                               item.competitors,
                               item.sport.id,
+                              item.specifiers,
                             );
                           }
                         }}
@@ -256,6 +288,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Both teams to score'].id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''
@@ -296,7 +329,12 @@ function BetCard({ item, sportId }) {
                     disabled={innerItem.active ? false : true}
                     onClick={() => {
                       if (
-                        selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['1x2'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
                       } else {
@@ -306,6 +344,7 @@ function BetCard({ item, sportId }) {
                           data['1x2'],
                           item.competitors,
                           item.sport.id,
+                          item.specifiers,
                         );
                       }
                     }}
@@ -351,7 +390,12 @@ function BetCard({ item, sportId }) {
                     disabled={innerItem.active ? false : true}
                     onClick={() => {
                       if (
-                        selectBet(item.eventId, data['Winner'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['Winner'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
                       } else {
@@ -361,11 +405,17 @@ function BetCard({ item, sportId }) {
                           data['Winner'],
                           item.competitors,
                           item.sport.id,
+                          item.specifiers,
                         );
                       }
                     }}
                     className={`${
-                      selectBet(item.eventId, data['Winner'].id, innerItem.id)
+                      selectBet(
+                        item.eventId,
+                        data['Winner'].id,
+                        innerItem.id,
+                        item.specifiers ? item.specifiers.join('|') : null,
+                      )
                         ? 'bg-green text-white border-green'
                         : ''
                     } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
@@ -406,7 +456,12 @@ function BetCard({ item, sportId }) {
                     disabled={innerItem.active ? false : true}
                     onClick={() => {
                       if (
-                        selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['1x2'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
                       } else {
@@ -416,11 +471,17 @@ function BetCard({ item, sportId }) {
                           data['1x2'],
                           item.competitors,
                           item.sport.id,
+                          item.specifiers,
                         );
                       }
                     }}
                     className={`${
-                      selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                      selectBet(
+                        item.eventId,
+                        data['1x2'].id,
+                        innerItem.id,
+                        item.specifiers ? item.specifiers.join('|') : null,
+                      )
                         ? 'bg-green text-white border-green'
                         : ''
                     } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
@@ -466,6 +527,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Winner (incl. super over)'].id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -476,6 +538,7 @@ function BetCard({ item, sportId }) {
                             data['Winner (incl. super over)'],
                             item.competitors,
                             item.sport.id,
+                            item.specifiers,
                           );
                         }
                       }}
@@ -484,6 +547,7 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Winner (incl. super over)'].id,
                           innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
@@ -531,6 +595,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Winner'].id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -541,11 +606,17 @@ function BetCard({ item, sportId }) {
                             data['Winner'],
                             item.competitors,
                             item.sport.id,
+                            item.specifiers,
                           );
                         }
                       }}
                       className={`${
-                        selectBet(item.eventId, data['Winner'].id, innerItem.id)
+                        selectBet(
+                          item.eventId,
+                          data['Winner'].id,
+                          innerItem.id,
+                          item.specifiers ? item.specifiers.join('|') : null,
+                        )
                           ? 'bg-green text-white border-green'
                           : ''
                       } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
@@ -586,6 +657,9 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['1st set - winner'].id,
                               innerItem.id,
+                              item.specifiers
+                                ? item.specifiers.join('|')
+                                : null,
                             )
                           ) {
                             handleRemoveBet(item.eventId, item.sport.id);
@@ -596,6 +670,7 @@ function BetCard({ item, sportId }) {
                               data['1st set - winner'],
                               item.competitors,
                               item.sport.id,
+                              item.specifiers,
                             );
                           }
                         }}
@@ -604,6 +679,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['1st set - winner'].id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''
@@ -646,6 +722,9 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['2nd set - winner']?.id,
                               innerItem.id,
+                              item.specifiers
+                                ? item.specifiers.join('|')
+                                : null,
                             )
                           ) {
                             handleRemoveBet(item.eventId, item.sport.id);
@@ -656,6 +735,7 @@ function BetCard({ item, sportId }) {
                               data['2nd set - winner'],
                               item.competitors,
                               item.sport.id,
+                              item.specifiers,
                             );
                           }
                         }}
@@ -664,6 +744,7 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['2nd set - winner']?.id,
                             innerItem.id,
+                            item.specifiers ? item.specifiers.join('|') : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''

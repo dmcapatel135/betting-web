@@ -2,6 +2,7 @@ import {
   Betslip,
   CompanyContact,
   CustomerCareContact,
+  HeroSection,
   MobileInputField,
   TalkToUs,
 } from '@components';
@@ -12,9 +13,7 @@ function Withdraw() {
     <div className="grid grid-cols-12 h-full">
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-0">
-          <div className="">
-            <img src="/images/bikoicon/main.png" alt="main" />
-          </div>
+          <HeroSection />
           <div className="my-3 px-3 md:px-0 ">
             <div
               className="rounded-lg border  border-purple-300 bg-purple-100 shadow-lg"

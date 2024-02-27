@@ -1,4 +1,5 @@
 // import { fetchBetDetailsAction } from '@actions';
+import { fetchJackpotDetailsAction } from '@actions';
 import {
   Betslip,
   CompanyContact,
@@ -13,9 +14,10 @@ import {
 import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
 import { getReq } from '@utils/apiHandlers';
+import { formatNumber } from '@utils/constants';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 const TabsName = [
   {
     id: 1,
@@ -44,15 +46,20 @@ function Jackpot() {
   const [jackpots, setJackpots] = useState([]);
   const [jackpotFixtures, setJackpotFixtures] = useState([]);
   const selectedBet = useSelector((state) => state.bet.selectedBet);
+  const selectedJackpot = useSelector((state) => state.jackpot.selectedJackpot);
+
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [stakeValue, setStakeValue] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [jackpotEvent, setJackpotEvent] = useState();
+  const [ticket, setTicket] = useState(0);
+  const [finishedJackpot, setFinishedJackpot] = useState([]);
+  const [jackpotLoading, setJackpotLoading] = useState(false);
   // const [bets, setBets] = useState([]);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleGetJackpotFixtures = async (jackpotEventId) => {
     setIsLoading(true);
@@ -60,13 +67,14 @@ function Jackpot() {
     const response = await getReq(
       `/jackpot-events/${jackpotEventId}/fixtures?skip=${page}&take=${pageSize}`,
     );
-    console.log('-------jack fixtures ', jackpotEvent);
     setIsLoading(false);
     setJackpotFixtures(response.data);
   };
 
   const handleGetJackpots = async () => {
+    setJackpotLoading(true);
     const response = await getReq('/jackpot-events/active');
+    setJackpotLoading(false);
     setHasMore(true);
     setJackpots(response.data.data);
   };
@@ -79,6 +87,15 @@ function Jackpot() {
     setPage(page + 1);
     handleGetJackpots();
   };
+
+  const getFinishedJackpot = async () => {
+    const response = await getReq('/jackpot-events/finished');
+    setFinishedJackpot(response.data.data);
+  };
+
+  useEffect(() => {
+    getFinishedJackpot();
+  }, []);
 
   // const autoPick = () => {
   //   jackpotFixtures.forEach((fixtures) => {
@@ -138,11 +155,42 @@ function Jackpot() {
   //   }
   // }, [bets, dispatch]);
 
-  // const handleClearAllBet = () => {
-  //   dispatch(fetchBetDetailsAction([]));
-  //   // setTotalSport([]);
-  //   // setTotalOdd(1);
-  // };
+  console.log('------jackpot ', jackpotEvent);
+
+  const handleClearAllBet = () => {
+    dispatch(fetchJackpotDetailsAction([]));
+  };
+
+  function checkData(jackpot, selectJackpot) {
+    return jackpot.every((obj1) =>
+      selectJackpot.some((obj2) => obj1.mappedEventId == obj2.eventId),
+    );
+  }
+
+  useEffect(() => {
+    if (checkData(jackpotFixtures, selectedJackpot)) {
+      const counts = {};
+      // Count the occurrences of each eventId
+      selectedJackpot.forEach((item) => {
+        const eventId = item.eventId;
+        counts[eventId] = (counts[eventId] || 0) + 1;
+      });
+
+      // Store the counts in a new array
+      const result = Object.entries(counts).map(([eventId, count]) => ({
+        eventId,
+        count,
+      }));
+
+      const tickets = result.reduce((accumulator, currentValue) => {
+        return accumulator * currentValue.count;
+      }, 1);
+
+      setTicket(tickets);
+    } else {
+      setTicket(0);
+    }
+  }, [selectedJackpot, jackpotFixtures]);
 
   return (
     <div className="grid grid-cols-12 h-full">
@@ -201,13 +249,15 @@ function Jackpot() {
                       <div>
                         {openCard == index && (
                           <>
-                            <div className="flex text-black justify-end mr-10 mt-5">
-                              <p className="mr-4 text-14 font-[600]">Home</p>
-                              <p className="ml-8 mr-12 text-14 font-[600]">
-                                Draw
-                              </p>
-                              <p className="text-14  font-[600]">Away</p>
-                            </div>
+                            {jackpotFixtures.length > 0 && (
+                              <div className="flex text-black justify-end mr-10 mt-5">
+                                <p className="mr-4 text-14 font-[600]">Home</p>
+                                <p className="ml-8 mr-12 text-14 font-[600]">
+                                  Draw
+                                </p>
+                                <p className="text-14  font-[600]">Away</p>
+                              </div>
+                            )}
                             {jackpotFixtures.map((fixtures) => {
                               // setJackpotEvent(fixtures);
                               return (
@@ -220,13 +270,47 @@ function Jackpot() {
                             })}
                             {isLoading && <Loader />}
                             {jackpotFixtures.length == 0 && !isLoading && (
-                              <div className="flex justify-center">
+                              <div className="flex justify-center my-5">
                                 <span className="text-black font-12">
                                   There are no active Weekly jackpots at the
                                   moment.
                                 </span>
                               </div>
                             )}
+                            <div>
+                              <div className="flex text-black justify-between">
+                                <div>
+                                  <p>Price :</p>
+                                  <p>Total Tickets :</p>
+                                  <p>Total Price :</p>
+                                </div>
+                                <div className="font-[500] text-right">
+                                  <p>Tsh {stakeValue}</p>
+                                  <p>{ticket}</p>
+                                  <p>Tsh {formatNumber(ticket * stakeValue)}</p>
+                                </div>
+                              </div>
+                              <div>
+                                <button
+                                  disabled={!ticket}
+                                  className={`w-full py-2 my-2 ${
+                                    ticket
+                                      ? 'bg-yellow text-white'
+                                      : 'bg-lightestgray text-black'
+                                  }`}
+                                >
+                                  BUY TICKET
+                                </button>
+                              </div>
+                              <div className="flex justify-end">
+                                <p
+                                  onClick={handleClearAllBet}
+                                  className="text-black underline cursor-pointer hover:text-yellow"
+                                >
+                                  Clear All
+                                </p>
+                              </div>
+                            </div>
                             {/* <div className="flex h-16 rounded-sm bg-lightestgray px-5 justify-between items-center">
                               <div className="flex">
                                 <button
@@ -259,6 +343,11 @@ function Jackpot() {
                   );
                 })}
             </InfiniteScroll>
+            {jackpotLoading && (
+              <div>
+                <Loader />
+              </div>
+            )}
           </div>
         )}
         {step === 2 && (
@@ -270,33 +359,48 @@ function Jackpot() {
               <p className="text-12 text-black font-[500] py-2">17 GAMES</p>
               <h1 className="text-blue text-20 font-[600]">TSH 1,000</h1>
             </div> */}
-            <JackpotResultCard
-              setOpenResult={setOpenResult}
-              openResult={openResult}
-            />
-            {openResult && (
-              <div className="my-2">
-                <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-                  <div className="flex justify-between py-2">
-                    <div className=" flex-1 text-black">
-                      <p className="text-10 md:text-12 mb-5">
-                        11:15 pm Wed 06/12
-                      </p>
-                      <span className="text-10 mt-20 text-gray-900">
-                        Football/England/Premier League
-                      </span>
+            {finishedJackpot.map((item, index) => {
+              return (
+                <div key={item.id}>
+                  <JackpotResultCard
+                    index={index}
+                    item={item}
+                    setOpenResult={setOpenResult}
+                    openResult={openResult}
+                  />
+                  {openResult == index && (
+                    <div className="my-2">
+                      <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
+                        <div className="flex justify-between py-2">
+                          <div className=" flex-1 text-black">
+                            <p className="text-10 md:text-12 mb-5">
+                              11:15 pm Wed 06/12
+                            </p>
+                            <span className="text-10 mt-20 text-gray-900">
+                              Football/England/Premier League
+                            </span>
+                          </div>
+                          <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
+                            <p>Manchester United </p>
+                            <p>Chelsa FC</p>
+                          </div>
+                          <div className="flex-1  mr-5 flex justify-end items-center">
+                            <p className="text-black text-10 md:text-12 font-[600]">
+                              Frosinone Calcio- (3:1)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
-                      <p>Manchester United </p>
-                      <p>Chelsa FC</p>
-                    </div>
-                    <div className="flex-1  mr-5 flex justify-end items-center">
-                      <p className="text-black text-10 md:text-12 font-[600]">
-                        Frosinone Calcio- (3:1)
-                      </p>
-                    </div>
-                  </div>
+                  )}
                 </div>
+              );
+            })}
+            {finishedJackpot.length == 0 && (
+              <div className="text-center mt-5">
+                <p className="text-black text-14">
+                  There is no jackpot results is available
+                </p>
               </div>
             )}
           </div>
