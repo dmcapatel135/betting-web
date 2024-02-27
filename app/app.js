@@ -43,9 +43,10 @@ function App() {
   }, [hash]);
 
   useEffect(() => {
-    // if (loadStateFromJackpotLocalStorage().Jackpot) {
-    const data = loadStateFromJackpotLocalStorage()?.selectedJackpot;
-    // }
+    let data = [];
+    if (loadStateFromJackpotLocalStorage()?.selectedJackpot) {
+      data = loadStateFromJackpotLocalStorage()?.selectedJackpot;
+    }
     if (loadStateFromLocalStorage()) {
       dispatch(fetchBetDetailsAction(loadStateFromLocalStorage().selectedBet));
       dispatch(fetchJackpotDetailsAction(data));
