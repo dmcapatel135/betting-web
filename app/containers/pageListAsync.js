@@ -69,3 +69,7 @@ export const Withdraw = loadable(() => import('./Withdraw'), {
 export const HowToPlay = loadable(() => import('./HowToPlay'), {
   fallback: <Loading />,
 });
+
+export const MobileBetSlip = loadable(() => import('./MobileBetSlip'), {
+  fallback: <Loading />,
+});

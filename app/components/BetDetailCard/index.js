@@ -15,6 +15,8 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
+  console.log('------item ', item);
+
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -105,7 +107,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           <img src="/images/bikoicon/cancel.png" alt="icon" className="mx-2" />
           {item.status == 'Cancelled' ? 'Cancelled' : 'Cancel'}
         </button>
-        {!item.status == 'Cancelled' && (
+        {!(item.status == 'Cancelled') && (
           <>
             <button className="flex bg-bluewhalelight text-14 font-[600]  text-white px-3 mx-1 py-1 rounded-[8px]">
               <img

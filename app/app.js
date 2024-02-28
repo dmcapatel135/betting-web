@@ -17,6 +17,7 @@ import {
   SingleBetDetails,
   Jackpot,
   HowToPlay,
+  MobileBetSlip,
 } from '@containers/pageListAsync';
 // import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
@@ -109,7 +110,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/single-bets/:sId/:eventId/:eventNames"
+            path="/dashboard/single-bets/:sId/:statusId/:eventId/:eventNames"
             element={
               // <ProtectedRoutes>
               <SingleBetDetails />
@@ -117,7 +118,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/jackpot"
+            path="/dashboard/jackpot/:statusId"
             element={
               // <ProtectedRoutes>
               <Jackpot />
@@ -125,10 +126,17 @@ function App() {
             }
           />
           <Route path="my-bets" element={<MyBets />} />
+          <Route
+            path="/dashboard/bet-slip/:statusId"
+            element={<MobileBetSlip />}
+          />
           <Route path="my-transactions" element={<MyTransactions />} />
           <Route path="deposit" element={<Deposit />} />
           <Route path="withdraw" element={<Withdraw />} />
-          <Route path="how-to-play" element={<HowToPlay />} />
+          <Route
+            path="/dashboard/how-to-play/:statusId"
+            element={<HowToPlay />}
+          />
         </Route>
 
         <Route path="/*" element={<NotFound />} />

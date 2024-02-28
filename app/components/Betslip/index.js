@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Balance } from '@components';
 // import { Link } from 'react-router-dom';
 import { isLoggedIn } from '@utils/apiHandlers';
+import { MyContext } from '@components/MyContext/MyContext';
+import { useNavigate } from 'react-router-dom';
 
 function BetSlip() {
+  const { setTab } = useContext(MyContext);
+  const navigate = useNavigate();
+
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px]">
       {isLoggedIn() ? (
@@ -13,22 +18,25 @@ function BetSlip() {
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
           <p className="text-12 text-black">Not logged in -</p>
           <div className="flex my-2">
-            {/* <Link to="/login"> */}
             <button
-              onClick={() => (window.location.href = '/login')}
+              onClick={() => {
+                setTab(null);
+                navigate('/login');
+              }}
               className="h-[32px] xxl:h-[48px] w-[60px] xxl:w-[110px] border-[1px] border-[#E7A024] text-12 xxl:text-18 hover:text-white bg-white text-black  hover:bg-gradient-color-2   rounded-[6px]"
             >
               Login
             </button>
-            {/* </Link> */}
-            {/* <Link to="/join-now"> */}
+
             <button
-              onClick={() => (window.location.href = '/join-now')}
+              onClick={() => {
+                setTab(null);
+                navigate('/join-now');
+              }}
               className="h-[32px] xxl:h-[48px] w-[70px] xxl:w-[110px] text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] border-[#E7A024] hover:bg-gradient-color-2 hover:text-white rounded-[6px]"
             >
               Join Now
             </button>
-            {/* </Link> */}
           </div>
         </div>
       )}

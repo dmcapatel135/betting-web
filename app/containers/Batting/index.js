@@ -9,6 +9,8 @@ import {
 } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import SportsMenu from '@components/SportsMenu';
+import { isLoggedIn } from '@utils/apiHandlers';
+import { images } from '@utils/images';
 
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
@@ -26,9 +28,19 @@ function Batting() {
         <div
           className={`${
             tab == 7 ? 'col-span-12  mb-5' : 'hidden md:block md:col-span-4'
-          } mr-3 ml-1 border-l-[1px] border-[#A3A3A3] pt-5 h-full pl-3`}
+          } mr-3 ml-1 border-l-[1px] border-[#A3A3A3] pt-5 mb-3 h-full pl-3`}
         >
-          {selectedBet.length > 0 ? <BetWallet /> : <Betslip />}
+          {selectedBet.length > 0 ? (
+            <BetWallet />
+          ) : isLoggedIn() ? (
+            <Betslip />
+          ) : (
+            <div>
+              <img src={images.AppImg} alt="app" className="" />
+              <img src={images.contactImg} alt="app" className="py-2" />
+            </div>
+          )}
+
           <CompanyContact />
           <CustomerCareContact />
           <TalkToUs />

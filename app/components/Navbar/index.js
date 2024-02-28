@@ -156,25 +156,31 @@ const Navbar = ({ tab, setTab }) => {
             ) : (
               <button
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
-                onClick={() => (window.location.href = '/login')}
+                onClick={() => {
+                  setTab(null);
+                  navigate('/login');
+                }}
               >
                 Login
               </button>
             )}
             {isLoggedIn() ? (
-              // <Link to="/dashboard/deposit">
               <button
-                onClick={() => (window.location.href = '/dashboard/deposit')}
+                onClick={() => {
+                  setTab(null);
+                  navigate('/dashboard/deposit');
+                }}
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
               >
                 Deposit
               </button>
             ) : (
-              // </Link>
               <button
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
-                // onClick={() => navigate('/join-now')}
-                onClick={() => (window.location.href = '/join-now')}
+                onClick={() => {
+                  setTab(null);
+                  navigate('/join-now');
+                }}
               >
                 Join Now
               </button>
@@ -182,7 +188,7 @@ const Navbar = ({ tab, setTab }) => {
             {/* <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
             </select> */}
-            <div className="md:order-2">
+            <div className=" hidden md:block md:order-2">
               <SelectImage
                 optionList={optionList}
                 selectValue={selectValue}
@@ -208,36 +214,38 @@ const Navbar = ({ tab, setTab }) => {
                     <div className="text-gray-900 py-1 md:py-3 text-12 md:text-14 font-[400] font-roboto cursor-pointer">
                       <ul className="">
                         <li
-                          onClick={() =>
-                            (window.location.href = '/dashboard/my-bets')
-                          }
+                          onClick={() => {
+                            setTab(null);
+                            navigate('/dashboard/my-bets');
+                          }}
                           className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                         >
                           My Bets
                         </li>
                         <li
-                          onClick={() =>
-                            (window.location.href = '/dashboard/deposit')
-                          }
+                          onClick={() => {
+                            setTab(null);
+                            navigate('/dashboard/deposit');
+                          }}
                           className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                         >
                           Deposit
                         </li>
                         <li
-                          onClick={() =>
-                            (window.location.href = '/dashboard/withdraw')
-                          }
+                          onClick={() => {
+                            setTab(null);
+                            navigate('/dashboard/withdraw');
+                          }}
                           className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
                         >
                           Withdraw
                         </li>
                         <li
                           className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                          // onClick={() => navigate('/dashboard/my-transactions')}
-                          onClick={() =>
-                            (window.location.href =
-                              '/dashboard/my-transactions')
-                          }
+                          onClick={() => {
+                            setTab(null);
+                            navigate('/dashboard/my-transactions');
+                          }}
                         >
                           Transactions
                         </li>

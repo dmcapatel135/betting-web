@@ -1,9 +1,14 @@
+import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 
 function Balance() {
   const [wallet, setWallet] = useState();
+  const { setTab } = useContext(MyContext);
+  const navigate = useNavigate();
+
   const getWalletBalance = useCallback(async () => {
     const response = await getReq('/users/me/wallet');
     if (response.status) {
@@ -18,7 +23,10 @@ function Balance() {
   return (
     <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
       <div
-        onClick={() => (window.location.href = '/dashboard/my-bets')}
+        onClick={() => {
+          setTab(null);
+          navigate('/dashboard/my-bets');
+        }}
         className="px-3 h-8 flex justify-center items-center rounded-[8px] bg-yellow"
       >
         {/* <Link to="/dashboard/my-bets"> */}

@@ -93,8 +93,6 @@ function SigleBetDetails() {
   }, [eventId]);
 
   useEffect(() => {
-    console.log('------alll market data ', allMarketData);
-    console.log('---------markeda odds ', marketDataOdds);
     if (allMarketData.length > 0 && marketDataOdds) {
       const allMarkets = _.keyBy(allMarketData, 'id');
       const markets = [];
@@ -111,7 +109,9 @@ function SigleBetDetails() {
                     ...allOutcomes[outcome.id],
                     odds: outcome.odds,
                     active: outcome.active,
-                    selected: false,
+                    selected: oddsMarket?.specifiers
+                      ? oddsMarket.specifiers?.join('|')
+                      : null,
                   };
                 }
               }),
@@ -165,7 +165,7 @@ function SigleBetDetails() {
           bet: bet,
           betDetails: betDetails,
           eventNames: eventNames,
-          specifiers: specifiers ? specifiers.join('|') : null,
+          specifiers: specifiers,
         };
         return updatedBets;
       } else {
@@ -177,7 +177,7 @@ function SigleBetDetails() {
             bet: bet,
             betDetails: betDetails,
             eventNames: eventNames,
-            specifiers: specifiers ? specifiers.join('|') : null,
+            specifiers: specifiers,
           },
         ];
       }
@@ -232,7 +232,7 @@ function SigleBetDetails() {
     }
   };
 
-  console.log('-----merged data ', selectedBet);
+  console.log('----merged   data ', mergedData);
 
   return (
     // <BetDetailsContext.Provider value={{ selectedBet }}>
@@ -834,6 +834,7 @@ function SigleBetDetails() {
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {
+                          console.log('------innner item ', innerItem.selected);
                           return (
                             <div
                               key={innerIndex}
@@ -852,9 +853,7 @@ function SigleBetDetails() {
                                         eventId,
                                         item.id,
                                         innerItem.id,
-                                        item.specifiers
-                                          ? item.specifiers.join('|')
-                                          : null,
+                                        innerItem.selected,
                                       )
                                     ) {
                                       handleRemoveBet(eventId, sId);
@@ -863,7 +862,7 @@ function SigleBetDetails() {
                                         eventId,
                                         innerItem,
                                         item,
-                                        item.specifiers,
+                                        innerItem.selected,
                                       );
                                     }
                                   }}
@@ -872,9 +871,7 @@ function SigleBetDetails() {
                                       eventId,
                                       item.id,
                                       innerItem.id,
-                                      item.specifiers
-                                        ? item.specifiers.join('|')
-                                        : null,
+                                      innerItem.selected,
                                     )
                                       ? 'bg-green text-white'
                                       : ''

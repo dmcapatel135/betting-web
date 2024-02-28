@@ -14,10 +14,11 @@ function SportsMenu() {
   const [popularSports, setPopularSports] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [allFixtures, setAllFixtures] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [queries, setQueries] = useState();
 
   const {
     sportId,
@@ -43,7 +44,7 @@ function SportsMenu() {
 
   useEffect(() => {
     setAllFixtures([]);
-    setPage(1);
+    setPage(0);
   }, [sportId]);
 
   useEffect(() => {
@@ -60,63 +61,73 @@ function SportsMenu() {
     getAllTournaments();
   }, [sportId, getAllTournaments]);
 
-  useEffect(() => {
-    console.log('------useEffect calling for getallfixutres ----');
-    const today = new Date();
-    getAllFixtures(today.toISOString);
-  }, [getAllFixtures]);
+  // useEffect(() => {
+  //   const today = new Date();
+  //   getAllFixtures(today.toISOString);
+  // }, [getAllFixtures]);
 
   useEffect(() => {
-    console.log('------next---- useEffect -----calling ');
-    const today = new Date();
-    const upcoming = new Date(today);
-    upcoming.setDate(today.getDate() + 1);
-    if (tab == 2 && selectTournament) {
-      getAllFixtures(
-        `date=${new Date().toISOString()}&tournamentId=${selectTournament}`,
-      );
-    } else if (tab == 3 && selectTournament) {
-      getAllFixtures(
-        `fromDate=${upcoming.toISOString()}&tournamentId=${selectTournament}`,
-      );
-    } else if (tab == 4 && selectTournament) {
-      getAllFixtures(`onlyLive=${true}&tournamentId=${selectTournament}`);
-    } else if (selectTournament) {
-      getAllFixtures(`tournamentId=${selectTournament}`);
-    } else if (tab == 2) {
-      getAllFixtures(`date=${new Date().toISOString()}`);
-    } else if (tab == 3) {
-      getAllFixtures(`fromDate=${upcoming.toISOString()}`);
-    } else if (tab == 4) {
-      getAllFixtures(`onlyLive=${true}`);
+    console.log('-------change tab then calling and sport');
+    setAllFixtures([]);
+    setPage(0);
+    const date = new Date();
+    const upcoming = new Date(date);
+    upcoming.setDate(date.getDate() + 1);
+    let today = date.toISOString();
+    let query = `date=${today}`;
+    if (tab == 1 && sportId) {
+      query = selectTournament
+        ? `date=${today}&tournamentId=${selectTournament}&popular=${true}`
+        : `date=${today}&popular=${true}`;
+    } else if (tab == 2 && sportId) {
+      query = selectTournament
+        ? `date=${today}&tournamentId=${selectTournament}`
+        : `date=${today}`;
+    } else if (tab == 3 && sportId) {
+      query = selectTournament
+        ? `date=${upcoming.toISOString()}&tournamentId=${selectTournament}`
+        : `date=${upcoming.toISOString()}`;
+    } else if (tab == 4 && sportId) {
+      query = selectTournament
+        ? `onlyLive=${true}&tournamentId=${selectTournament}`
+        : `onlyLive=${true}`;
     }
+    setQueries(query);
+    getAllFixtures(query);
   }, [sportId, getAllFixtures, tab, selectTournament]);
 
   const getAllFixtures = useCallback(
-    async (query) => {
+    async (query, newPage) => {
       setPageSize(10);
       setIsLoading(true);
-      // setInterval(() => {})
+
       const response = await getReq(
-        `/sports/${sportId}/fixtures?skip=${page}&take=${pageSize}&${query}`,
+        `/sports/${sportId}/fixtures?skip=${
+          newPage ? newPage : page
+        }&take=${pageSize}&${query}`,
       );
 
       setIsLoading(false);
       if (response.data.data.length > 0) {
         setAllFixtures((prevState) => [...prevState, ...response.data.data]);
       } else {
-        setAllFixtures([...response.data.data]);
+        // setAllFixtures([...response.data.data]);
         setHasMore(false);
+        setTimeout(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        }, 3000);
       }
     },
     [sportId, page, pageSize],
   );
 
   const fetchMoreData = () => {
-    console.log('---------fetch more data calling for get all fixtures ');
-    setPage(page + 1);
-    const today = new Date();
-    getAllFixtures(today.toISOString());
+    const newPage = page + 10;
+    setPage(newPage);
+    getAllFixtures(queries, newPage);
   };
 
   return (

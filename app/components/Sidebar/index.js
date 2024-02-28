@@ -108,9 +108,9 @@ function Sidebar({
                       <span
                         className={`text-12 mx-2 ${
                           selectTournament && selectTournament == item.id
-                            ? ' bg-yellow w-full '
-                            : ''
-                        } text-black hover:text-blue rounded-sm pl-2 font-[500]`}
+                            ? ' bg-yellow font-[600] text-white w-full '
+                            : 'text-black'
+                        }  hover:text-blue rounded-sm pl-2 font-[500]`}
                       >
                         {item.name}
                       </span>

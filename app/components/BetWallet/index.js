@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Balance from '@components/Balance';
@@ -9,10 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { fetchBetDetailsAction } from '@actions';
 import { formatNumber } from '@utils/constants';
+import { MyContext } from '@components/MyContext/MyContext';
 
 function BetWallet({ stakeValue }) {
   const [openDialog, setOpenDailog] = useState();
-  const [tab, setTab] = useState('sport');
+  const [game, setGame] = useState('sport');
   const [gameRules, setGameRules] = useState();
   const [bonus, setBonus] = useState([]);
   const [totalOdd, setTotalOdd] = useState(0);
@@ -24,6 +25,8 @@ function BetWallet({ stakeValue }) {
   // const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { setTab } = useContext(MyContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const uniqueSports = {};
@@ -69,6 +72,9 @@ function BetWallet({ stakeValue }) {
             marketId: item.betDetails.id,
             outcomeId: item.bet.id,
             odds: item.bet.odds,
+            specifiers: item.specifiers
+              ? item.specifiers?.split()
+              : item.specifiers,
           },
         ]);
       });
@@ -98,8 +104,8 @@ function BetWallet({ stakeValue }) {
         toast.error(response.error.message);
       }
     } else {
-      // navigate('/login');
-      window.location.href = '/login';
+      setTab(null);
+      navigate('/login');
     }
   };
 
@@ -140,22 +146,24 @@ function BetWallet({ stakeValue }) {
         <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
           <p className="text-12 text-black">Not logged in -</p>
           <div className="flex my-2">
-            {/* <Link to="/login"> */}
             <button
-              onClick={() => (window.location.href = '/login')}
+              onClick={() => {
+                setTab(null);
+                navigate('/login');
+              }}
               className=" lg:h-[32px] xxl:h-[48px] w-[60px] xxl:w-[110px] border-[1px]  text-12 xxl:text-18 hover:text-white hover:bg-gradient-color-2 text-black border-[#E7A024] rounded-[6px]"
             >
               Login
             </button>
-            {/* </Link> */}
-            {/* <Link to="/join-now"> */}
             <button
-              onClick={() => (window.location.href = '/login')}
+              onClick={() => {
+                setTab(null);
+                navigate('/join-now');
+              }}
               className="lg:h-[32px] xxl:h-[48px] w-[70px] xxl:w-[110px] text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] hover:bg-gradient-color-2 hover:text-white border-[#E7A024] rounded-[6px]"
             >
               Join Now
             </button>
-            {/* </Link> */}
           </div>
         </div>
       ) : (
@@ -165,16 +173,16 @@ function BetWallet({ stakeValue }) {
         <div className="flex text-black border-[1px] h-10 w-full rounded-[8px]">
           <div
             className={`w-1/2 flex flex-1 justify-center cursor-pointer ${
-              tab == 'sport'
+              game == 'sport'
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black'
             } rounded-lg items-center`}
-            onClick={() => setTab('sport')}
+            onClick={() => setGame('sport')}
           >
             <span className="text-12 ">Sport</span>
             <img
               src={
-                tab === 'sport'
+                game === 'sport'
                   ? '/images/bikoicon/icon-football.png'
                   : '/images/bikoicon/football.svg'
               }
@@ -185,14 +193,14 @@ function BetWallet({ stakeValue }) {
           </div>
           {/* <div
             className={`w-1/2 flex justify-center cursor-pointer ${
-              tab == 'virtual' ? 'bg-gradient-color-1 text-white' : 'bg-white'
+              game == 'virtual' ? 'bg-gradient-color-1 text-white' : 'bg-white'
             } rounded-r-lg items-center`}
-            onClick={() => setTab('virtual')}
+            onClick={() => setGame('virtual')}
           >
             <span className="text-12">Virtual</span>
             <img
               src={
-                tab === 'virtual'
+                game === 'virtual'
                   ? '/images/bikoicon/icon-virtual-sport.svg'
                   : '/images/bikoicon/icon-virtual-sport.png'
               }

@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import {
+  // Navigate,
+  Outlet,
+  // useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
@@ -13,14 +19,16 @@ const OuterLayout = () => {
   const [selectTournament, setSelectTournament] = useState();
   const [allTournaments, setAllTournaments] = useState();
   const [categories, setCategories] = useState();
-  const [tab, setTab] = useState();
+  const [tab, setTab] = useState(statusId || 2);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log('-------tab value ', tab);
-  //   if (!tab) setTab(2);
-  // }, [tab]);
+  // const { pathname } = useLocation();
+
+  // if (!isLoggedIn()) {
+  //   localStorage.setItem('lastUrl', pathname);
+  //   return <Navigate to="/login" />;
+  // }
 
   useEffect(() => {
     if (sId) setSportId(sId);
@@ -36,12 +44,18 @@ const OuterLayout = () => {
   }, [eId]);
 
   useEffect(() => {
-    if (tab == 5) {
-      navigate('/dashboard/jackpot');
+    if (tab == 7) {
+      navigate(`/dashboard/bet-slip/${tab}`);
+    } else if (tab == 5) {
+      navigate(`/dashboard/jackpot/${tab}`);
     } else if (tab == 8) {
-      navigate('/dashboard/how-to-play');
-    } else if (sportId && tab) navigate(`/dashboard/${sportId}/${tab}`);
-  }, [sportId, navigate, tab]);
+      navigate(`/dashboard/how-to-play/${tab}`);
+    } else if (sportId && tab && selectTournament) {
+      navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
+    } else if (sportId && tab) {
+      navigate(`/dashboard/${sportId}/${tab}`);
+    }
+  }, [sportId, navigate, tab, selectTournament]);
 
   useEffect(() => {
     if (sportId && selectTournament)

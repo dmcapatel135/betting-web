@@ -1,16 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 // import { Link } from 'react-router-dom';
 import { reactIcons } from '@utils/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
+import { useNavigate, useParams } from 'react-router-dom';
+import { MyContext } from '@components/MyContext/MyContext';
 
 function BetCard({ item, sportId }) {
   const [bets, setBets] = useState([]);
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const { statusId } = useParams();
+  const { setTab } = useContext(MyContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setBets(selectedBet);
@@ -25,7 +30,7 @@ function BetCard({ item, sportId }) {
     specifiers,
   ) => {
     setBets((prev) => {
-      const index = prev.findIndex((item) => item.eventId === eventId);
+      const index = prev.findIndex((item) => item.eventId == eventId);
       if (index !== -1) {
         // If eventId already exists, update bet and betDetails
         const updatedBets = [...prev];
@@ -514,7 +519,7 @@ function BetCard({ item, sportId }) {
         )}
         {sportId == 21 && (
           <div className="flex-1  md:flex  justify-end md:mx-4">
-            <div className="w-24 mx-4 flex justify-between border-[1px] ">
+            <div className="w-24 mx-2 flex justify-between">
               {data['Winner (incl. super over)']?.outcomes?.map(
                 (innerItem, innerIndex) => {
                   return (
@@ -551,7 +556,7 @@ function BetCard({ item, sportId }) {
                         )
                           ? 'bg-green text-white border-green'
                           : ''
-                      } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[52px] py-2 px-3`}
+                      } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
                     >
                       {/* <span className="text-center font-[700] flex-1">
                         {innerItem.name}
@@ -569,10 +574,10 @@ function BetCard({ item, sportId }) {
               )}
               {data['Winner (incl. super over)'] === undefined && (
                 <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[52PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[52PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
                     -
                   </button>
                 </>
@@ -778,15 +783,18 @@ function BetCard({ item, sportId }) {
         <div className="flex-shrink p-2 ">
           <div className="w-[50px] md:w-[40px]">
             <div
-              onClick={() =>
-                (window.location.href = `/dashboard/single-bets/${
-                  item.sport.id
-                }/${item.eventId}/${
-                  item?.competitors[0]?.name +
-                  ' vs ' +
-                  item?.competitors[1]?.name
-                }`)
-              }
+              onClick={() => {
+                setTab(null);
+                navigate(
+                  `/dashboard/single-bets/${item.sport.id}/${statusId}/${
+                    item.eventId
+                  }/${
+                    item?.competitors[0]?.name +
+                    ' vs ' +
+                    item?.competitors[1]?.name
+                  }`,
+                );
+              }}
               className="border-[1px]  md:h-8 h-6 mr-2   md:mr-2  md:min-w-[48px] md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
             >
               <img
