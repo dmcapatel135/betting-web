@@ -134,7 +134,221 @@ function BetCard({ item, sportId }) {
           <>
             <div className="flex-1  mx-auto flex  md:justify-end  ">
               <div className="w-[136px] md:w-36  flex justify-between ">
-                {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
+                {data['1x2']?.outcomes?.length > 0 &&
+                  data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
+                    return (
+                      <button
+                        key={innerIndex}
+                        disabled={innerItem.active ? false : true}
+                        onClick={() => {
+                          if (
+                            selectBet(
+                              item.eventId,
+                              data['1x2'].id,
+                              innerItem.id,
+                              data['1x2'].specifiers
+                                ? data['1x2'].specifiers.join('|')
+                                : null,
+                            )
+                          ) {
+                            handleRemoveBet(item.eventId, item.sport.id);
+                          } else {
+                            addToBetSlip(
+                              item.eventId,
+                              innerItem,
+                              data['1x2'],
+                              item.competitors,
+                              item.sport.id,
+                              data['1x2'].specifiers,
+                            );
+                          }
+                        }}
+                        className={`${
+                          selectBet(
+                            item.eventId,
+                            data['1x2'].id,
+                            innerItem.id,
+                            data['1x2'].specifiers
+                              ? data['1x2'].specifiers.join('|')
+                              : null,
+                          )
+                            ? 'bg-green text-white border-green'
+                            : ''
+                        } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
+                      >
+                        <span className="font-[500]">
+                          {innerItem.active ? (
+                            innerItem.odds
+                          ) : (
+                            <span>{reactIcons.lock}</span>
+                          )}
+                        </span>
+                      </button>
+                    );
+                  })}
+                {data['1x2']?.outcomes?.length == 0 ||
+                  (data['1x2'] == undefined && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  ))}
+              </div>
+            </div>
+            <div className="flex-1  hidden md:block  border-solid ">
+              <div className="w-24 mx-auto flex justify-between">
+                {data['Total']?.outcomes?.length > 0 &&
+                  data['Total']?.outcomes?.map((innerItem, innerIndex) => {
+                    return (
+                      <button
+                        key={innerIndex}
+                        disabled={innerItem.active ? false : true}
+                        onClick={() => {
+                          if (
+                            selectBet(
+                              item.eventId,
+                              data['Total'].id,
+                              innerItem.id,
+                              data['Total'].specifiers
+                                ? data['Total'].specifiers.join('|')
+                                : null,
+                            )
+                          ) {
+                            handleRemoveBet(item.eventId, item.sport.id);
+                          } else {
+                            addToBetSlip(
+                              item.eventId,
+                              innerItem,
+                              data['Total'],
+                              item.competitors,
+                              item.sport.id,
+                              data['Total'].specifiers,
+                            );
+                          }
+                        }}
+                        className={`${
+                          selectBet(
+                            item.eventId,
+                            data['Total'].id,
+                            innerItem.id,
+                            data['Total'].specifiers
+                              ? data['Total'].specifiers.join('|')
+                              : null,
+                          )
+                            ? 'bg-green text-white border-green'
+                            : ''
+                        } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[52px] py-2 px-3`}
+                      >
+                        <span className="font-[500]">
+                          {innerItem.active ? (
+                            innerItem.odds
+                          ) : (
+                            <span>{reactIcons.lock}</span>
+                          )}
+                        </span>
+                      </button>
+                    );
+                  })}
+                {data['Total']?.outcomes?.length == 0 ||
+                  (data['Total'] == undefined && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  ))}
+              </div>
+            </div>
+            <div className="flex-1   hidden md:block  text-center border-solid">
+              <div className="w-24 flex justify-between  ">
+                {data['Both teams to score']?.outcomes?.length > 0 &&
+                  data['Both teams to score']?.outcomes?.map(
+                    (innerItem, innerIndex) => {
+                      return (
+                        <button
+                          key={innerIndex}
+                          disabled={innerItem.active ? false : true}
+                          onClick={() => {
+                            if (
+                              selectBet(
+                                item.eventId,
+                                data['Both teams to score'].id,
+                                innerItem.id,
+                                data['Both teams to score'].specifiers
+                                  ? data['Both teams to score'].specifiers.join(
+                                      '|',
+                                    )
+                                  : null,
+                              )
+                            ) {
+                              handleRemoveBet(item.eventId, item.sport.id);
+                            } else {
+                              addToBetSlip(
+                                item.eventId,
+                                innerItem,
+                                data['Both teams to score'],
+                                item.competitors,
+                                item.sport.id,
+                                data['Both teams to score'].specifiers,
+                              );
+                            }
+                          }}
+                          className={`${
+                            selectBet(
+                              item.eventId,
+                              data['Both teams to score'].id,
+                              innerItem.id,
+                              data['Both teams to score'].specifiers
+                                ? data['Both teams to score'].specifiers.join(
+                                    '|',
+                                  )
+                                : null,
+                            )
+                              ? 'bg-green text-white border-green'
+                              : ''
+                          } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-full py-2 px-3`}
+                        >
+                          <span className="font-[500]">
+                            {innerItem.active ? (
+                              innerItem.odds
+                            ) : (
+                              <span>{reactIcons.lock}</span>
+                            )}
+                          </span>
+                        </button>
+                      );
+                    },
+                  )}
+                {data['Both teams to score']?.outcomes?.length == 0 &&
+                  data['Both teams to score'] === undefined && (
+                    <div className="flex justify-between">
+                      <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                    </div>
+                  )}
+              </div>
+            </div>
+          </>
+        )}
+        {sportId == 2 && (
+          <div className="flex-1 justify-start flex md:justify-end md:mx-4">
+            <div className="w-[136px] md:w-36   flex justify-between ">
+              {data['1x2']?.outcomes?.length > 0 &&
+                data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
                   return (
                     <button
                       key={innerIndex}
@@ -173,7 +387,7 @@ function BetCard({ item, sportId }) {
                         )
                           ? 'bg-green text-white border-green'
                           : ''
-                      } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
+                      } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
                     >
                       <span className="font-[500]">
                         {innerItem.active ? (
@@ -185,448 +399,28 @@ function BetCard({ item, sportId }) {
                     </button>
                   );
                 })}
-                {data['1x2'] == undefined && (
+              {data['1x2']?.outcomes?.length == 0 ||
+                (data['1x2'] === undefined && (
                   <>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
                   </>
-                )}
-              </div>
-            </div>
-            <div className="flex-1  hidden md:block  border-solid ">
-              <div className="w-24 mx-auto flex justify-between">
-                {data['Total']?.outcomes?.map((innerItem, innerIndex) => {
-                  return (
-                    <button
-                      key={innerIndex}
-                      disabled={innerItem.active ? false : true}
-                      onClick={() => {
-                        if (
-                          selectBet(
-                            item.eventId,
-                            data['Total'].id,
-                            innerItem.id,
-                            data['Total'].specifiers
-                              ? data['Total'].specifiers.join('|')
-                              : null,
-                          )
-                        ) {
-                          handleRemoveBet(item.eventId, item.sport.id);
-                        } else {
-                          addToBetSlip(
-                            item.eventId,
-                            innerItem,
-                            data['Total'],
-                            item.competitors,
-                            item.sport.id,
-                            data['Total'].specifiers,
-                          );
-                        }
-                      }}
-                      className={`${
-                        selectBet(
-                          item.eventId,
-                          data['Total'].id,
-                          innerItem.id,
-                          data['Total'].specifiers
-                            ? data['Total'].specifiers.join('|')
-                            : null,
-                        )
-                          ? 'bg-green text-white border-green'
-                          : ''
-                      } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[52px] py-2 px-3`}
-                    >
-                      <span className="font-[500]">
-                        {innerItem.active ? (
-                          innerItem.odds
-                        ) : (
-                          <span>{reactIcons.lock}</span>
-                        )}
-                      </span>
-                    </button>
-                  );
-                })}
-                {data['Total'] === undefined && (
-                  <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
-                      -
-                    </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
-                      -
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-            <div className="flex-1   hidden md:block  text-center border-solid">
-              <div className="w-24 flex justify-between  ">
-                {data['Both teams to score']?.outcomes?.map(
-                  (innerItem, innerIndex) => {
-                    return (
-                      <button
-                        key={innerIndex}
-                        disabled={innerItem.active ? false : true}
-                        onClick={() => {
-                          if (
-                            selectBet(
-                              item.eventId,
-                              data['Both teams to score'].id,
-                              innerItem.id,
-                              data['Both teams to score'].specifiers
-                                ? data['Both teams to score'].specifiers.join(
-                                    '|',
-                                  )
-                                : null,
-                            )
-                          ) {
-                            handleRemoveBet(item.eventId, item.sport.id);
-                          } else {
-                            addToBetSlip(
-                              item.eventId,
-                              innerItem,
-                              data['Both teams to score'],
-                              item.competitors,
-                              item.sport.id,
-                              data['Both teams to score'].specifiers,
-                            );
-                          }
-                        }}
-                        className={`${
-                          selectBet(
-                            item.eventId,
-                            data['Both teams to score'].id,
-                            innerItem.id,
-                            data['Both teams to score'].specifiers
-                              ? data['Both teams to score'].specifiers.join('|')
-                              : null,
-                          )
-                            ? 'bg-green text-white border-green'
-                            : ''
-                        } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-full py-2 px-3`}
-                      >
-                        <span className="font-[500]">
-                          {innerItem.active ? (
-                            innerItem.odds
-                          ) : (
-                            <span>{reactIcons.lock}</span>
-                          )}
-                        </span>
-                      </button>
-                    );
-                  },
-                )}
-                {data['Both teams to score'] === undefined && (
-                  <div className="flex justify-between">
-                    <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          </>
-        )}
-        {sportId == 2 && (
-          <div className="flex-1 justify-start flex md:justify-end md:mx-4">
-            <div className="w-[136px] md:w-36   flex justify-between ">
-              {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
-                return (
-                  <button
-                    key={innerIndex}
-                    disabled={innerItem.active ? false : true}
-                    onClick={() => {
-                      if (
-                        selectBet(
-                          item.eventId,
-                          data['1x2'].id,
-                          innerItem.id,
-                          data['1x2'].specifiers
-                            ? data['1x2'].specifiers.join('|')
-                            : null,
-                        )
-                      ) {
-                        handleRemoveBet(item.eventId, item.sport.id);
-                      } else {
-                        addToBetSlip(
-                          item.eventId,
-                          innerItem,
-                          data['1x2'],
-                          item.competitors,
-                          item.sport.id,
-                          data['1x2'].specifiers,
-                        );
-                      }
-                    }}
-                    className={`${
-                      selectBet(
-                        item.eventId,
-                        data['1x2'].id,
-                        innerItem.id,
-                        data['1x2'].specifiers
-                          ? data['1x2'].specifiers.join('|')
-                          : null,
-                      )
-                        ? 'bg-green text-white border-green'
-                        : ''
-                    } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
-                  >
-                    <span className="font-[500]">
-                      {innerItem.active ? (
-                        innerItem.odds
-                      ) : (
-                        <span>{reactIcons.lock}</span>
-                      )}
-                    </span>
-                  </button>
-                );
-              })}
-              {data['1x2'] === undefined && (
-                <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                </>
-              )}
+                ))}
             </div>
           </div>
         )}
         {sportId == 10 && (
           <div className="flex-1 justify-between flex md:justify-end mx-4">
             <div className="w-24 mx-auto md:mx-0 flex justify-between ">
-              {data['Winner']?.outcomes?.map((innerItem, innerIndex) => {
-                return (
-                  <button
-                    key={innerIndex}
-                    disabled={innerItem.active ? false : true}
-                    onClick={() => {
-                      if (
-                        selectBet(
-                          item.eventId,
-                          data['Winner'].id,
-                          innerItem.id,
-                          data['Winner'].specifiers
-                            ? data['Winner'].specifiers.join('|')
-                            : null,
-                        )
-                      ) {
-                        handleRemoveBet(item.eventId, item.sport.id);
-                      } else {
-                        addToBetSlip(
-                          item.eventId,
-                          innerItem,
-                          data['Winner'],
-                          item.competitors,
-                          item.sport.id,
-                          data['Winner'].specifiers,
-                        );
-                      }
-                    }}
-                    className={`${
-                      selectBet(
-                        item.eventId,
-                        data['Winner'].id,
-                        innerItem.id,
-                        innerItem.specifiers
-                          ? data['Winner'].specifiers.join('|')
-                          : null,
-                      )
-                        ? 'bg-green text-white border-green'
-                        : ''
-                    } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
-                  >
-                    {/* <span className="text-center font-[700] flex-1">
-                        {innerItem.name}
-                      </span> */}
-                    <span className="font-[500]">
-                      {innerItem.active ? (
-                        innerItem.odds
-                      ) : (
-                        <span>{reactIcons.lock}</span>
-                      )}
-                    </span>
-                  </button>
-                );
-              })}
-              {data['Winner'] === undefined && (
-                <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-        {sportId == 12 && (
-          <div className="flex-1 justify-start flex md:justify-end md:mx-4">
-            <div className="w-[136px] md:w-36   flex justify-between ">
-              {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
-                return (
-                  <button
-                    key={innerIndex}
-                    disabled={innerItem.active ? false : true}
-                    onClick={() => {
-                      if (
-                        selectBet(
-                          item.eventId,
-                          data['1x2'].id,
-                          innerItem.id,
-                          data['1x2'].specifiers
-                            ? data['1x2'].specifiers.join('|')
-                            : null,
-                        )
-                      ) {
-                        handleRemoveBet(item.eventId, item.sport.id);
-                      } else {
-                        addToBetSlip(
-                          item.eventId,
-                          innerItem,
-                          data['1x2'],
-                          item.competitors,
-                          item.sport.id,
-                          data['1x2'].specifiers,
-                        );
-                      }
-                    }}
-                    className={`${
-                      selectBet(
-                        item.eventId,
-                        data['1x2'].id,
-                        innerItem.id,
-                        data['1x2'].specifiers
-                          ? data['1x2'].specifiers.join('|')
-                          : null,
-                      )
-                        ? 'bg-green text-white border-green'
-                        : ''
-                    } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
-                  >
-                    <span className="font-[500]">
-                      {innerItem.active ? (
-                        innerItem.odds
-                      ) : (
-                        <span>{reactIcons.lock}</span>
-                      )}
-                    </span>
-                  </button>
-                );
-              })}
-              {data['1x2'] === undefined && (
-                <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-        {sportId == 21 && (
-          <div className="flex-1  md:flex  justify-end md:mx-4">
-            <div className="w-24 mx-4 md:mx-2 flex justify-between">
-              {data['Winner (incl. super over)']?.outcomes?.map(
-                (innerItem, innerIndex) => {
-                  return (
-                    <button
-                      key={innerIndex}
-                      disabled={innerItem.active ? false : true}
-                      onClick={() => {
-                        if (
-                          selectBet(
-                            item.eventId,
-                            data['Winner (incl. super over)'].id,
-                            innerItem.id,
-                            data['Winner (incl. super over)'].specifiers
-                              ? data[
-                                  'Winner (incl. super over)'
-                                ].specifiers.join('|')
-                              : null,
-                          )
-                        ) {
-                          handleRemoveBet(item.eventId, item.sport.id);
-                        } else {
-                          addToBetSlip(
-                            item.eventId,
-                            innerItem,
-                            data['Winner (incl. super over)'],
-                            item.competitors,
-                            item.sport.id,
-                            data['Winner (incl. super over)'].specifiers,
-                          );
-                        }
-                      }}
-                      className={`${
-                        selectBet(
-                          item.eventId,
-                          data['Winner (incl. super over)'].id,
-                          innerItem.id,
-                          data['Winner (incl. super over)'].specifiers
-                            ? data['Winner (incl. super over)'].specifiers.join(
-                                '|',
-                              )
-                            : null,
-                        )
-                          ? 'bg-green text-white border-green'
-                          : ''
-                      } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
-                    >
-                      {/* <span className="text-center font-[700] flex-1">
-                        {innerItem.name}
-                      </span> */}
-                      <span className="font-[500]">
-                        {innerItem.active ? (
-                          innerItem.odds
-                        ) : (
-                          <span>{reactIcons.lock}</span>
-                        )}
-                      </span>
-                    </button>
-                  );
-                },
-              )}
-              {data['Winner (incl. super over)'] === undefined && (
-                <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                    -
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-        {sportId == 5 && (
-          <>
-            <div className="flex-1  md:block  border-solid ">
-              <div className="w-24 mx-auto flex justify-between">
-                {data['Winner']?.outcomes?.map((innerItem, innerIndex) => {
+              {data['Winner']?.outcomes?.length > 0 &&
+                data['Winner']?.outcomes?.map((innerItem, innerIndex) => {
                   return (
                     <button
                       key={innerIndex}
@@ -659,13 +453,85 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Winner'].id,
                           innerItem.id,
-                          data['Winner'].specifiers
+                          innerItem.specifiers
                             ? data['Winner'].specifiers.join('|')
                             : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
-                      } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
+                      } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
+                    >
+                      {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                      <span className="font-[500]">
+                        {innerItem.active ? (
+                          innerItem.odds
+                        ) : (
+                          <span>{reactIcons.lock}</span>
+                        )}
+                      </span>
+                    </button>
+                  );
+                })}
+              {data['Winner']?.outcomes?.length == 0 &&
+                data['Winner'] === undefined && (
+                  <>
+                    <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                      -
+                    </button>
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                      -
+                    </button>
+                  </>
+                )}
+            </div>
+          </div>
+        )}
+        {sportId == 12 && (
+          <div className="flex-1 justify-start flex md:justify-end md:mx-4">
+            <div className="w-[136px] md:w-36   flex justify-between ">
+              {data['1x2']?.outcomes?.length > 0 &&
+                data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
+                  return (
+                    <button
+                      key={innerIndex}
+                      disabled={innerItem.active ? false : true}
+                      onClick={() => {
+                        if (
+                          selectBet(
+                            item.eventId,
+                            data['1x2'].id,
+                            innerItem.id,
+                            data['1x2'].specifiers
+                              ? data['1x2'].specifiers.join('|')
+                              : null,
+                          )
+                        ) {
+                          handleRemoveBet(item.eventId, item.sport.id);
+                        } else {
+                          addToBetSlip(
+                            item.eventId,
+                            innerItem,
+                            data['1x2'],
+                            item.competitors,
+                            item.sport.id,
+                            data['1x2'].specifiers,
+                          );
+                        }
+                      }}
+                      className={`${
+                        selectBet(
+                          item.eventId,
+                          data['1x2'].id,
+                          innerItem.id,
+                          data['1x2'].specifiers
+                            ? data['1x2'].specifiers.join('|')
+                            : null,
+                        )
+                          ? 'bg-green text-white border-green'
+                          : ''
+                      } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
                     >
                       <span className="font-[500]">
                         {innerItem.active ? (
@@ -677,21 +543,28 @@ function BetCard({ item, sportId }) {
                     </button>
                   );
                 })}
-                {data['Winner'] === undefined && (
-                  <div className="flex justify-between">
-                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+              {data['1x2']?.outcomes?.length == 0 ||
+                (data['1x2'] === undefined && (
+                  <>
+                    <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                  </div>
-                )}
-              </div>
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                      -
+                    </button>
+                  </>
+                ))}
             </div>
-            <div className="flex-1 hidden md:block  border-solid ">
-              <div className="w-24 mx-auto flex justify-between">
-                {data['1st set - winner']?.outcomes?.map(
+          </div>
+        )}
+        {sportId == 21 && (
+          <div className="flex-1  md:flex  justify-end md:mx-4">
+            <div className="w-24 mx-4 md:mx-2 flex justify-between">
+              {data['Winner (incl. super over)']?.outcomes?.length > 0 &&
+                data['Winner (incl. super over)']?.outcomes?.map(
                   (innerItem, innerIndex) => {
                     return (
                       <button
@@ -699,6 +572,176 @@ function BetCard({ item, sportId }) {
                         disabled={innerItem.active ? false : true}
                         onClick={() => {
                           if (
+                            selectBet(
+                              item.eventId,
+                              data['Winner (incl. super over)'].id,
+                              innerItem.id,
+                              data['Winner (incl. super over)'].specifiers
+                                ? data[
+                                    'Winner (incl. super over)'
+                                  ].specifiers.join('|')
+                                : null,
+                            )
+                          ) {
+                            handleRemoveBet(item.eventId, item.sport.id);
+                          } else {
+                            addToBetSlip(
+                              item.eventId,
+                              innerItem,
+                              data['Winner (incl. super over)'],
+                              item.competitors,
+                              item.sport.id,
+                              data['Winner (incl. super over)'].specifiers,
+                            );
+                          }
+                        }}
+                        className={`${
+                          selectBet(
+                            item.eventId,
+                            data['Winner (incl. super over)'].id,
+                            innerItem.id,
+                            data['Winner (incl. super over)'].specifiers
+                              ? data[
+                                  'Winner (incl. super over)'
+                                ].specifiers.join('|')
+                              : null,
+                          )
+                            ? 'bg-green text-white border-green'
+                            : ''
+                        } bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
+                      >
+                        {/* <span className="text-center font-[700] flex-1">
+                        {innerItem.name}
+                      </span> */}
+                        <span className="font-[500]">
+                          {innerItem.active ? (
+                            innerItem.odds
+                          ) : (
+                            <span>{reactIcons.lock}</span>
+                          )}
+                        </span>
+                      </button>
+                    );
+                  },
+                )}
+              {data['Winner (incl. super over)']?.outcomes?.length == 0 ||
+                (data['Winner (incl. super over)'] === undefined && (
+                  <>
+                    <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                      -
+                    </button>
+                    <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                      -
+                    </button>
+                  </>
+                ))}
+            </div>
+          </div>
+        )}
+        {sportId == 5 && (
+          <>
+            <div className="flex-1  md:block  border-solid ">
+              <div className="w-24 mx-auto flex justify-between">
+                {data['Winner']?.outcomes?.length > 0 &&
+                  data['Winner']?.outcomes?.map((innerItem, innerIndex) => {
+                    return (
+                      <button
+                        key={innerIndex}
+                        disabled={innerItem.active ? false : true}
+                        onClick={() => {
+                          if (
+                            selectBet(
+                              item.eventId,
+                              data['Winner'].id,
+                              innerItem.id,
+                              data['Winner'].specifiers
+                                ? data['Winner'].specifiers.join('|')
+                                : null,
+                            )
+                          ) {
+                            handleRemoveBet(item.eventId, item.sport.id);
+                          } else {
+                            addToBetSlip(
+                              item.eventId,
+                              innerItem,
+                              data['Winner'],
+                              item.competitors,
+                              item.sport.id,
+                              data['Winner'].specifiers,
+                            );
+                          }
+                        }}
+                        className={`${
+                          selectBet(
+                            item.eventId,
+                            data['Winner'].id,
+                            innerItem.id,
+                            data['Winner'].specifiers
+                              ? data['Winner'].specifiers.join('|')
+                              : null,
+                          )
+                            ? 'bg-green text-white border-green'
+                            : ''
+                        } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-md w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
+                      >
+                        <span className="font-[500]">
+                          {innerItem.active ? (
+                            innerItem.odds
+                          ) : (
+                            <span>{reactIcons.lock}</span>
+                          )}
+                        </span>
+                      </button>
+                    );
+                  })}
+                {data['Winner']?.outcomes?.length == 0 ||
+                  (data['Winner'] === undefined && (
+                    <div className="flex justify-between">
+                      <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="flex-1 hidden md:block  border-solid ">
+              <div className="w-24 mx-auto flex justify-between">
+                {data['1st set - winner']?.outcomes?.length > 0 &&
+                  data['1st set - winner']?.outcomes?.map(
+                    (innerItem, innerIndex) => {
+                      return (
+                        <button
+                          key={innerIndex}
+                          disabled={innerItem.active ? false : true}
+                          onClick={() => {
+                            if (
+                              selectBet(
+                                item.eventId,
+                                data['1st set - winner'].id,
+                                innerItem.id,
+                                data['1st set - winner'].specifiers
+                                  ? data['1st set - winner'].specifiers.join(
+                                      '|',
+                                    )
+                                  : null,
+                              )
+                            ) {
+                              handleRemoveBet(item.eventId, item.sport.id);
+                            } else {
+                              addToBetSlip(
+                                item.eventId,
+                                innerItem,
+                                data['1st set - winner'],
+                                item.competitors,
+                                item.sport.id,
+                                data['1st set - winner'].specifiers,
+                              );
+                            }
+                          }}
+                          className={`${
                             selectBet(
                               item.eventId,
                               data['1st set - winner'].id,
@@ -707,65 +750,69 @@ function BetCard({ item, sportId }) {
                                 ? data['1st set - winner'].specifiers.join('|')
                                 : null,
                             )
-                          ) {
-                            handleRemoveBet(item.eventId, item.sport.id);
-                          } else {
-                            addToBetSlip(
-                              item.eventId,
-                              innerItem,
-                              data['1st set - winner'],
-                              item.competitors,
-                              item.sport.id,
-                              data['1st set - winner'].specifiers,
-                            );
-                          }
-                        }}
-                        className={`${
-                          selectBet(
-                            item.eventId,
-                            data['1st set - winner'].id,
-                            innerItem.id,
-                            data['1st set - winner'].specifiers
-                              ? data['1st set - winner'].specifiers.join('|')
-                              : null,
-                          )
-                            ? 'bg-green text-white border-green'
-                            : ''
-                        } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
-                      >
-                        <span className="font-[500]">
-                          {innerItem.active ? (
-                            innerItem.odds
-                          ) : (
-                            <span>{reactIcons.lock}</span>
-                          )}
-                        </span>
+                              ? 'bg-green text-white border-green'
+                              : ''
+                          } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
+                        >
+                          <span className="font-[500]">
+                            {innerItem.active ? (
+                              innerItem.odds
+                            ) : (
+                              <span>{reactIcons.lock}</span>
+                            )}
+                          </span>
+                        </button>
+                      );
+                    },
+                  )}
+                {data['1st set - winner']?.outcomes?.length == 0 ||
+                  (data['1st set - winner'] === undefined && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
                       </button>
-                    );
-                  },
-                )}
-                {data['1st set - winner'] === undefined && (
-                  <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                  </>
-                )}
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  ))}
               </div>
             </div>
             <div className="flex-1  hidden md:block  border-solid ">
               <div className="w-24 mx-auto flex justify-between">
-                {data['2nd set - winner']?.outcomes?.map(
-                  (innerItem, innerIndex) => {
-                    return (
-                      <button
-                        key={innerIndex}
-                        disabled={innerItem.active ? false : true}
-                        onClick={() => {
-                          if (
+                {data['2nd set - winner']?.outcomes?.length > 0 &&
+                  data['2nd set - winner']?.outcomes?.map(
+                    (innerItem, innerIndex) => {
+                      return (
+                        <button
+                          key={innerIndex}
+                          disabled={innerItem.active ? false : true}
+                          onClick={() => {
+                            if (
+                              selectBet(
+                                item.eventId,
+                                data['2nd set - winner']?.id,
+                                innerItem.id,
+                                data['2nd set - winner'].specifiers
+                                  ? data['2nd set - winner'].specifiers.join(
+                                      '|',
+                                    )
+                                  : null,
+                              )
+                            ) {
+                              handleRemoveBet(item.eventId, item.sport.id);
+                            } else {
+                              addToBetSlip(
+                                item.eventId,
+                                innerItem,
+                                data['2nd set - winner'],
+                                item.competitors,
+                                item.sport.id,
+                                data['2nd set - winner'].specifiers,
+                              );
+                            }
+                          }}
+                          className={`${
                             selectBet(
                               item.eventId,
                               data['2nd set - winner']?.id,
@@ -774,53 +821,32 @@ function BetCard({ item, sportId }) {
                                 ? data['2nd set - winner'].specifiers.join('|')
                                 : null,
                             )
-                          ) {
-                            handleRemoveBet(item.eventId, item.sport.id);
-                          } else {
-                            addToBetSlip(
-                              item.eventId,
-                              innerItem,
-                              data['2nd set - winner'],
-                              item.competitors,
-                              item.sport.id,
-                              data['2nd set - winner'].specifiers,
-                            );
-                          }
-                        }}
-                        className={`${
-                          selectBet(
-                            item.eventId,
-                            data['2nd set - winner']?.id,
-                            innerItem.id,
-                            data['2nd set - winner'].specifiers
-                              ? data['2nd set - winner'].specifiers.join('|')
-                              : null,
-                          )
-                            ? 'bg-green text-white border-green'
-                            : ''
-                        } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md h-6 md:h-8 md:w-[45px] py-2 px-3`}
-                      >
-                        <span className="font-[500]">
-                          {innerItem.active ? (
-                            innerItem.odds
-                          ) : (
-                            <span>{reactIcons.lock}</span>
-                          )}
-                        </span>
+                              ? 'bg-green text-white border-green'
+                              : ''
+                          } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md h-6 md:h-8 md:w-[45px] py-2 px-3`}
+                        >
+                          <span className="font-[500]">
+                            {innerItem.active ? (
+                              innerItem.odds
+                            ) : (
+                              <span>{reactIcons.lock}</span>
+                            )}
+                          </span>
+                        </button>
+                      );
+                    },
+                  )}
+                {data['2nd set - winner']?.outcomes?.length == 0 &&
+                  data['2nd set - winner'] === undefined && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
                       </button>
-                    );
-                  },
-                )}
-                {data['2nd set - winner'] === undefined && (
-                  <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
-                      -
-                    </button>
-                  </>
-                )}
+                      <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  )}
               </div>
             </div>
           </>

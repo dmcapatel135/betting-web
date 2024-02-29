@@ -13,11 +13,12 @@ import {
 } from '@components';
 import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
-import { getReq } from '@utils/apiHandlers';
+import { getReq, postReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 const TabsName = [
   {
     id: 1,
@@ -53,10 +54,12 @@ function Jackpot() {
   const [pageSize, setPageSize] = useState(10);
   const [stakeValue, setStakeValue] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [jackpotEvent, setJackpotEvent] = useState();
+  // const [jackpotEvent, setJackpotEvent] = useState();
   const [ticket, setTicket] = useState(0);
   const [finishedJackpot, setFinishedJackpot] = useState([]);
   const [jackpotLoading, setJackpotLoading] = useState(false);
+  const [jackpotData, setJackpotData] = useState([]);
+  const [placeJackpotLoading, setPlaceJackpotLoading] = useState(false);
   // const [bets, setBets] = useState([]);
 
   const dispatch = useDispatch();
@@ -155,7 +158,13 @@ function Jackpot() {
   //   }
   // }, [bets, dispatch]);
 
-  console.log('------jackpot ', jackpotEvent);
+  useEffect(() => {
+    if (openCard != null) {
+      dispatch(fetchJackpotDetailsAction([]));
+    }
+  }, [openCard, dispatch]);
+
+  // console.log('------jackpot ', jackpotEvent);
 
   const handleClearAllBet = () => {
     dispatch(fetchJackpotDetailsAction([]));
@@ -168,6 +177,7 @@ function Jackpot() {
   }
 
   useEffect(() => {
+    setJackpotData([]);
     if (checkData(jackpotFixtures, selectedJackpot)) {
       const counts = {};
       // Count the occurrences of each eventId
@@ -187,10 +197,39 @@ function Jackpot() {
       }, 1);
 
       setTicket(tickets);
+      selectedJackpot.forEach((item) => {
+        setJackpotData((prev) => [
+          ...prev,
+          {
+            eventId: item.eventId,
+            outcomeId: item.bet.id,
+            odds: item.bet.odds,
+          },
+        ]);
+      });
     } else {
       setTicket(0);
     }
   }, [selectedJackpot, jackpotFixtures]);
+
+  const handleBuyTicket = async (jackpotEventId) => {
+    setPlaceJackpotLoading(true);
+    const data = {
+      jackpotEventId: jackpotEventId,
+      acceptOddsChange: true,
+      bets: jackpotData,
+    };
+
+    const response = await postReq('/users/me/bet-slips/jackpot', data);
+    setPlaceJackpotLoading(false);
+    if (response.status) {
+      dispatch(fetchJackpotDetailsAction([]));
+      setOpenCard(null);
+      toast.success('Congrats ! Jackpot bet place successfully');
+    } else if (response.error) {
+      toast.error(response.error.message);
+    }
+  };
 
   return (
     <div className="grid grid-cols-12 h-full">
@@ -234,6 +273,11 @@ function Jackpot() {
               // loader={<SkeletonLoader />}
               endMessage={<p className="text-black">No more items to load.</p>}
             >
+              {jackpots.length == 0 && !isLoading && (
+                <div>
+                  <span>There is no jackpots available</span>
+                </div>
+              )}
               {jackpots.length > 0 &&
                 jackpots.map((item, index) => {
                   return (
@@ -244,7 +288,7 @@ function Jackpot() {
                         handleGetJackpotFixtures={handleGetJackpotFixtures}
                         setOpenCard={setOpenCard}
                         setStakeValue={setStakeValue}
-                        setJackpotEvent={setJackpotEvent}
+                        // setJackpotEvent={setJackpotEvent}
                       />
                       <div>
                         {openCard == index && (
@@ -277,40 +321,45 @@ function Jackpot() {
                                 </span>
                               </div>
                             )}
-                            <div>
-                              <div className="flex text-black justify-between">
-                                <div>
-                                  <p>Price :</p>
-                                  <p>Total Tickets :</p>
-                                  <p>Total Price :</p>
-                                </div>
-                                <div className="font-[500] text-right">
-                                  <p>Tsh {stakeValue}</p>
-                                  <p>{ticket}</p>
-                                  <p>Tsh {formatNumber(ticket * stakeValue)}</p>
-                                </div>
-                              </div>
+                            {jackpotFixtures.length > 0 && (
                               <div>
-                                <button
-                                  disabled={!ticket}
-                                  className={`w-full py-2 my-2 ${
-                                    ticket
-                                      ? 'bg-yellow text-white'
-                                      : 'bg-lightestgray text-black'
-                                  }`}
-                                >
-                                  BUY TICKET
-                                </button>
+                                <div className="flex text-black justify-between">
+                                  <div>
+                                    <p>Price :</p>
+                                    <p>Total Tickets :</p>
+                                    <p>Total Price :</p>
+                                  </div>
+                                  <div className="font-[500] text-right">
+                                    <p>Tsh {stakeValue}</p>
+                                    <p>{ticket}</p>
+                                    <p>
+                                      Tsh {formatNumber(ticket * stakeValue)}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <button
+                                    disabled={!ticket || placeJackpotLoading}
+                                    className={`w-full py-2 my-2 ${
+                                      ticket || placeJackpotLoading
+                                        ? 'bg-yellow text-white'
+                                        : 'bg-lightestgray text-black'
+                                    }`}
+                                    onClick={() => handleBuyTicket(item.id)}
+                                  >
+                                    BUY TICKET
+                                  </button>
+                                </div>
+                                <div className="flex justify-end">
+                                  <p
+                                    onClick={handleClearAllBet}
+                                    className="text-black underline cursor-pointer hover:text-yellow"
+                                  >
+                                    Clear All
+                                  </p>
+                                </div>
                               </div>
-                              <div className="flex justify-end">
-                                <p
-                                  onClick={handleClearAllBet}
-                                  className="text-black underline cursor-pointer hover:text-yellow"
-                                >
-                                  Clear All
-                                </p>
-                              </div>
-                            </div>
+                            )}
                             {/* <div className="flex h-16 rounded-sm bg-lightestgray px-5 justify-between items-center">
                               <div className="flex">
                                 <button

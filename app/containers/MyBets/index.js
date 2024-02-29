@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
   BetDetailCard,
@@ -7,11 +7,13 @@ import {
   CompanyContact,
   CustomerCareContact,
   HeroSection,
+  SkeletonLoader,
   TalkToUs,
 } from '@components';
 import ShareBetModal from '@components/ShareBetModal.js';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -21,41 +23,73 @@ const TabsName = [
     icon: '/images/bikoicon/sports_and_outdoors.png',
   },
   { tabName: 'Settled', id: 3, icon: '/images/bikoicon/boxing.png' },
-  // { tabName: 'Jackpot', id: 4, icon: '/images/bikoicon/rugby.png' },
-  //   { tabName: 'Cricket', id: 5, icon: '/images/bikoicon/cricket.png' },
-  //   { tabName: 'Other', id: 6, icon: '/images/bikoicon/other.png' },
+  { tabName: 'Jackpot', id: 4, icon: '/images/bikoicon/rugby.png' },
 ];
 
 function MyBets() {
   const [step, setStep] = useState(1);
   const [myBets, setMyBets] = useState([]);
   const [showBets, setShowBets] = useState('');
+  const [status, setStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [queries, setQueries] = useState('');
+  const [hasMore, setHasMore] = useState(true);
+  const [pageSize, setPageSize] = useState(10);
 
-  const getMyBetDetails = async (status) => {
-    const response = await getReq(
-      `/users/me/bet-slips/${status ? status : ''}`,
-    );
-    setMyBets(response?.data?.data);
-  };
+  const getMyBetDetails = useCallback(
+    async (query, newPage) => {
+      setIsLoading(true);
+      setPageSize(10);
+      const response = await getReq(
+        `/users/me/bet-slips?skip=${
+          newPage ? newPage : 0
+        }&take=${pageSize}${query}`,
+      );
+      if (response.status) {
+        setIsLoading(false);
+      }
+      if (response.data.data.length > 0) {
+        setMyBets((prev) => [...prev, ...response.data.data]);
+      } else {
+        setHasMore(false);
+      }
+    },
+    [pageSize],
+  );
+  console.log('-----page ', page, queries, hasMore);
 
   useEffect(() => {
-    if (step === 1) {
-      getMyBetDetails('');
-    } else if (step === 2) {
-      getMyBetDetails('pending');
-    } else if (step === 3) {
-      getMyBetDetails('Settled');
-    } else {
-      getMyBetDetails('');
-    }
+    setMyBets([]);
+    setPage(0);
+    let query;
+    if (status == 'Jackpot') query = '&type=Jackpot';
+    else if (status) query = `&status=${status}`;
+    else query = '';
+    setQueries(query);
+    getMyBetDetails(query);
+  }, [status, getMyBetDetails]);
+
+  // useEffect(() => {
+  //   if (showBets) {
+  //     const bets = myBets.filter((item) => item.id === showBets);
+  //     setMyBets(bets);
+  //   }
+  // }, [myBets, showBets]);
+
+  useEffect(() => {
+    if (step == 1) {
+      setStatus('');
+    } else if (step == 2) setStatus('Pending');
+    else if (step == 3) setStatus('Settled');
+    else if (step == 4) setStatus('Jackpot');
   }, [step]);
 
-  useEffect(() => {
-    if (showBets) {
-      const bets = myBets.filter((item) => item.id === showBets);
-      setMyBets(bets);
-    }
-  }, [myBets, showBets]);
+  // const fetchMoreData = () => {
+  //   const newPage = page + 10;
+  //   // setPage(newPage);
+  //   getMyBetDetails(queries, newPage);
+  // };
 
   return (
     <div className="grid grid-cols-12 h-full">
@@ -140,7 +174,7 @@ function MyBets() {
                       } px-1 md:px-0 xl:px-3 mx-3 my-1 w-fit md:w-28  rounded-lg`}
                       onClick={() => {
                         setStep(item.id);
-                        // setStatus(item.tabName);
+                        // setStatus(item.tabName == 'All' ? '' : item.tabName);
                       }}
                     >
                       <div className="flex  h-10  md:justify-center items-center">
@@ -158,6 +192,17 @@ function MyBets() {
                   myBets.map((item, index) => {
                     return (
                       <div key={index} className="my-2">
+                        {/* <InfiniteScroll
+                          dataLength={myBets.length}
+                          next={fetchMoreData}
+                          hasMore={hasMore}
+                          // loader={<SkeletonLoader />}
+                          // endMessage={
+                          //   <div className="text-center my-2">
+                          //     <p>No more items to load.</p>
+                          //   </div>
+                          // }
+                        > */}
                         <BetDetailCard
                           showBets={showBets}
                           setShowBets={setShowBets}
@@ -165,9 +210,16 @@ function MyBets() {
                           index={index}
                           getMyBetDetails={getMyBetDetails}
                         />
+                        {/* </InfiniteScroll> */}
                       </div>
                     );
                   })}
+                {myBets.length == 0 && !isLoading && (
+                  <div className="text-center text-black">
+                    <span>There is no bets available</span>
+                  </div>
+                )}
+                {isLoading && <SkeletonLoader />}
               </div>
             </div>
           )}
