@@ -5,6 +5,7 @@ import { Balance } from '@components';
 import { isLoggedIn } from '@utils/apiHandlers';
 import { MyContext } from '@components/MyContext/MyContext';
 import { useNavigate } from 'react-router-dom';
+import { images } from '@utils/images';
 
 function BetSlip() {
   const { setTab } = useContext(MyContext);
@@ -53,12 +54,12 @@ function BetSlip() {
         </button>
       </div>
       <div className="text-center">
-        <div className="my-5 flex justify-center">
-          <img src="/images/bikoicon/betIcon.png" alt="beticon" />
+        <div className="my-5 flex justify-center px-3 ">
+          <img src={images.emptybetslip} alt="beticon" className="rounded-md" />
         </div>
-        <span className="text-14 font-[600] text-[#BD1842]">
+        {/* <span className="text-14 font-[600] text-[#BD1842]">
           Betslip is empty
-        </span>
+        </span> */}
       </div>
       <div className="my-5 px-3">
         <button className="py-2 bg-gradient-color-2 w-full rounded-[8px]">

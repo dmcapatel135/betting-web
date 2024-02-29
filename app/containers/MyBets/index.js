@@ -32,7 +32,6 @@ function MyBets() {
   const [showBets, setShowBets] = useState('');
 
   const getMyBetDetails = async (status) => {
-    console.log('-----status ', status);
     const response = await getReq(
       `/users/me/bet-slips/${status ? status : ''}`,
     );

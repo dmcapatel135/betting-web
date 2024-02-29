@@ -237,7 +237,7 @@ function BetWallet({ stakeValue }) {
         </div> */}
         {bonus?.length > 0 && (
           <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
-            <div className="w-5 h-12 bg-gradient-color-4"></div>
+            <div className="w-5 h-12 bg-yellow"></div>
             <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
               {gameRules?.minimumOdds} minimum odds.

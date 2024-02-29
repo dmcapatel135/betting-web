@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { images } from '@utils/images';
 
 function AuthSideSection({ bgBtn, imgHeight }) {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function AuthSideSection({ bgBtn, imgHeight }) {
         JOIN NOW
       </button>
       <img
-        src="/images/bikoicon/jackpots.png"
+        src={images.authside}
         alt="img"
         className={`rounded-[8px] ${imgHeight ? 'h-[345px]' : ''}`}
       />

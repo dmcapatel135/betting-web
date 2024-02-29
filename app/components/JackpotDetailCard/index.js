@@ -99,15 +99,12 @@ function JackpotDetailCard({ fixtures }) {
                       item?.id,
                     )
                   ) {
-                    console.log('----if condi');
                     handleRemoveBet(
                       fixtures?.mappedEventId,
                       fixtures?.market?.id,
                       item?.id,
                     );
                   } else {
-                    console.log('----ekse condi');
-
                     addToBetSlip(
                       fixtures?.mappedEventId,
                       item,

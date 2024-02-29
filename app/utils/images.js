@@ -32,4 +32,6 @@ export const images = {
   lineups: '/images/bikoicon/lineups.png',
   headtohead: '/images/bikoicon/headtohead.png',
   standing: '/images/bikoicon/standing.png',
+  authside: '/images/bikoicon/authside.png',
+  emptybetslip: '/images/bikoicon/emptybetslip.png',
 };

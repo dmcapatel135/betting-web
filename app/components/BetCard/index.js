@@ -101,11 +101,11 @@ function BetCard({ item, sportId }) {
   return (
     <div className=" items-center border-[1px]  rounded-[8px] border-[#A3A3A3] text-black">
       <div className="flex items-center w-full pr-2">
-        <div className="flex-grow-0 xxl:flex-1 p-2">
-          <div className="items-center w-40 md:w-52 xxl:w-full xxl:text-center text-[8px] md:text-12 ">
+        <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
+          <div className="items-center w-40 md:w-60 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
             <div className="flex items-center">
               <img src="/images/bikoicon/acute.png" />
-              <p className="text-10 ml-1 md:text-12">
+              <p className="text-10 ml-1 md:text-10">
                 {moment(item?.startTime).format('hh:mm A')}{' '}
                 <span className="font-[600]">
                   {moment(item?.startTime).format('ddd MM/DD')}
@@ -133,7 +133,7 @@ function BetCard({ item, sportId }) {
         {sportId == 1 && (
           <>
             <div className="flex-1  mx-auto flex  md:justify-end  ">
-              <div className="w-[136px] md:w-40  flex justify-between ">
+              <div className="w-[136px] md:w-36  flex justify-between ">
                 {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
                   return (
                     <button
@@ -145,7 +145,9 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['1x2'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['1x2'].specifiers
+                              ? data['1x2'].specifiers.join('|')
+                              : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -156,7 +158,7 @@ function BetCard({ item, sportId }) {
                             data['1x2'],
                             item.competitors,
                             item.sport.id,
-                            item.specifiers,
+                            data['1x2'].specifiers,
                           );
                         }
                       }}
@@ -165,7 +167,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['1x2'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['1x2'].specifiers
+                            ? data['1x2'].specifiers.join('|')
+                            : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
@@ -183,13 +187,13 @@ function BetCard({ item, sportId }) {
                 })}
                 {data['1x2'] == undefined && (
                   <>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
                       -
                     </button>
                   </>
@@ -209,7 +213,9 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Total'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['Total'].specifiers
+                              ? data['Total'].specifiers.join('|')
+                              : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -220,7 +226,7 @@ function BetCard({ item, sportId }) {
                             data['Total'],
                             item.competitors,
                             item.sport.id,
-                            item.specifiers,
+                            data['Total'].specifiers,
                           );
                         }
                       }}
@@ -229,7 +235,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Total'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['Total'].specifiers
+                            ? data['Total'].specifiers.join('|')
+                            : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
@@ -247,10 +255,10 @@ function BetCard({ item, sportId }) {
                 })}
                 {data['Total'] === undefined && (
                   <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-12 rounded-md text-center py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-12 rounded-md text-center py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-md text-center py-2 px-3">
                       -
                     </button>
                   </>
@@ -258,7 +266,7 @@ function BetCard({ item, sportId }) {
               </div>
             </div>
             <div className="flex-1   hidden md:block  text-center border-solid">
-              <div className="w-24 flex justify-between mx-auto ">
+              <div className="w-24 flex justify-between  ">
                 {data['Both teams to score']?.outcomes?.map(
                   (innerItem, innerIndex) => {
                     return (
@@ -271,8 +279,10 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['Both teams to score'].id,
                               innerItem.id,
-                              item.specifiers
-                                ? item.specifiers.join('|')
+                              data['Both teams to score'].specifiers
+                                ? data['Both teams to score'].specifiers.join(
+                                    '|',
+                                  )
                                 : null,
                             )
                           ) {
@@ -284,7 +294,7 @@ function BetCard({ item, sportId }) {
                               data['Both teams to score'],
                               item.competitors,
                               item.sport.id,
-                              item.specifiers,
+                              data['Both teams to score'].specifiers,
                             );
                           }
                         }}
@@ -293,7 +303,9 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Both teams to score'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['Both teams to score'].specifiers
+                              ? data['Both teams to score'].specifiers.join('|')
+                              : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''
@@ -312,10 +324,10 @@ function BetCard({ item, sportId }) {
                 )}
                 {data['Both teams to score'] === undefined && (
                   <div className="flex justify-between">
-                    <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
                   </div>
@@ -326,7 +338,7 @@ function BetCard({ item, sportId }) {
         )}
         {sportId == 2 && (
           <div className="flex-1 justify-start flex md:justify-end md:mx-4">
-            <div className="w-[136px] md:w-40   flex justify-between ">
+            <div className="w-[136px] md:w-36   flex justify-between ">
               {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
                 return (
                   <button
@@ -338,7 +350,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['1x2'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['1x2'].specifiers
+                            ? data['1x2'].specifiers.join('|')
+                            : null,
                         )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
@@ -349,12 +363,19 @@ function BetCard({ item, sportId }) {
                           data['1x2'],
                           item.competitors,
                           item.sport.id,
-                          item.specifiers,
+                          data['1x2'].specifiers,
                         );
                       }
                     }}
                     className={`${
-                      selectBet(item.eventId, data['1x2'].id, innerItem.id)
+                      selectBet(
+                        item.eventId,
+                        data['1x2'].id,
+                        innerItem.id,
+                        data['1x2'].specifiers
+                          ? data['1x2'].specifiers.join('|')
+                          : null,
+                      )
                         ? 'bg-green text-white border-green'
                         : ''
                     } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
@@ -371,13 +392,13 @@ function BetCard({ item, sportId }) {
               })}
               {data['1x2'] === undefined && (
                 <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[52px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[52px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[52px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
                 </>
@@ -399,7 +420,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Winner'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['Winner'].specifiers
+                            ? data['Winner'].specifiers.join('|')
+                            : null,
                         )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
@@ -410,7 +433,7 @@ function BetCard({ item, sportId }) {
                           data['Winner'],
                           item.competitors,
                           item.sport.id,
-                          item.specifiers,
+                          data['Winner'].specifiers,
                         );
                       }
                     }}
@@ -419,7 +442,9 @@ function BetCard({ item, sportId }) {
                         item.eventId,
                         data['Winner'].id,
                         innerItem.id,
-                        item.specifiers ? item.specifiers.join('|') : null,
+                        innerItem.specifiers
+                          ? data['Winner'].specifiers.join('|')
+                          : null,
                       )
                         ? 'bg-green text-white border-green'
                         : ''
@@ -440,10 +465,10 @@ function BetCard({ item, sportId }) {
               })}
               {data['Winner'] === undefined && (
                 <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[52PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[52PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
                 </>
@@ -453,7 +478,7 @@ function BetCard({ item, sportId }) {
         )}
         {sportId == 12 && (
           <div className="flex-1 justify-start flex md:justify-end md:mx-4">
-            <div className="w-[136px] md:w-40   flex justify-between ">
+            <div className="w-[136px] md:w-36   flex justify-between ">
               {data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
                 return (
                   <button
@@ -465,7 +490,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['1x2'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['1x2'].specifiers
+                            ? data['1x2'].specifiers.join('|')
+                            : null,
                         )
                       ) {
                         handleRemoveBet(item.eventId, item.sport.id);
@@ -476,7 +503,7 @@ function BetCard({ item, sportId }) {
                           data['1x2'],
                           item.competitors,
                           item.sport.id,
-                          item.specifiers,
+                          data['1x2'].specifiers,
                         );
                       }
                     }}
@@ -485,7 +512,9 @@ function BetCard({ item, sportId }) {
                         item.eventId,
                         data['1x2'].id,
                         innerItem.id,
-                        item.specifiers ? item.specifiers.join('|') : null,
+                        data['1x2'].specifiers
+                          ? data['1x2'].specifiers.join('|')
+                          : null,
                       )
                         ? 'bg-green text-white border-green'
                         : ''
@@ -503,13 +532,13 @@ function BetCard({ item, sportId }) {
               })}
               {data['1x2'] === undefined && (
                 <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[52px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[52px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[52px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
                 </>
@@ -519,7 +548,7 @@ function BetCard({ item, sportId }) {
         )}
         {sportId == 21 && (
           <div className="flex-1  md:flex  justify-end md:mx-4">
-            <div className="w-24 mx-2 flex justify-between">
+            <div className="w-24 mx-4 md:mx-2 flex justify-between">
               {data['Winner (incl. super over)']?.outcomes?.map(
                 (innerItem, innerIndex) => {
                   return (
@@ -532,7 +561,11 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Winner (incl. super over)'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['Winner (incl. super over)'].specifiers
+                              ? data[
+                                  'Winner (incl. super over)'
+                                ].specifiers.join('|')
+                              : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -543,7 +576,7 @@ function BetCard({ item, sportId }) {
                             data['Winner (incl. super over)'],
                             item.competitors,
                             item.sport.id,
-                            item.specifiers,
+                            data['Winner (incl. super over)'].specifiers,
                           );
                         }
                       }}
@@ -552,7 +585,11 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Winner (incl. super over)'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['Winner (incl. super over)'].specifiers
+                            ? data['Winner (incl. super over)'].specifiers.join(
+                                '|',
+                              )
+                            : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
@@ -574,10 +611,10 @@ function BetCard({ item, sportId }) {
               )}
               {data['Winner (incl. super over)'] === undefined && (
                 <>
-                  <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
-                  <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                  <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                     -
                   </button>
                 </>
@@ -600,7 +637,9 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['Winner'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['Winner'].specifiers
+                              ? data['Winner'].specifiers.join('|')
+                              : null,
                           )
                         ) {
                           handleRemoveBet(item.eventId, item.sport.id);
@@ -611,7 +650,7 @@ function BetCard({ item, sportId }) {
                             data['Winner'],
                             item.competitors,
                             item.sport.id,
-                            item.specifiers,
+                            data['Winner'].specifiers,
                           );
                         }
                       }}
@@ -620,7 +659,9 @@ function BetCard({ item, sportId }) {
                           item.eventId,
                           data['Winner'].id,
                           innerItem.id,
-                          item.specifiers ? item.specifiers.join('|') : null,
+                          data['Winner'].specifiers
+                            ? data['Winner'].specifiers.join('|')
+                            : null,
                         )
                           ? 'bg-green text-white border-green'
                           : ''
@@ -638,10 +679,10 @@ function BetCard({ item, sportId }) {
                 })}
                 {data['Winner'] === undefined && (
                   <div className="flex justify-between">
-                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[52PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[52PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
                   </div>
@@ -662,8 +703,8 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['1st set - winner'].id,
                               innerItem.id,
-                              item.specifiers
-                                ? item.specifiers.join('|')
+                              data['1st set - winner'].specifiers
+                                ? data['1st set - winner'].specifiers.join('|')
                                 : null,
                             )
                           ) {
@@ -675,7 +716,7 @@ function BetCard({ item, sportId }) {
                               data['1st set - winner'],
                               item.competitors,
                               item.sport.id,
-                              item.specifiers,
+                              data['1st set - winner'].specifiers,
                             );
                           }
                         }}
@@ -684,11 +725,13 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['1st set - winner'].id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['1st set - winner'].specifiers
+                              ? data['1st set - winner'].specifiers.join('|')
+                              : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''
-                        } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  w-[40px] h-6 md:h-8  md:w-[52px] py-2 px-3`}
+                        } bg-[#EAEAEA] flex justify-between  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
                       >
                         <span className="font-[500]">
                           {innerItem.active ? (
@@ -703,10 +746,10 @@ function BetCard({ item, sportId }) {
                 )}
                 {data['1st set - winner'] === undefined && (
                   <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[52PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[52PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
                   </>
@@ -727,8 +770,8 @@ function BetCard({ item, sportId }) {
                               item.eventId,
                               data['2nd set - winner']?.id,
                               innerItem.id,
-                              item.specifiers
-                                ? item.specifiers.join('|')
+                              data['2nd set - winner'].specifiers
+                                ? data['2nd set - winner'].specifiers.join('|')
                                 : null,
                             )
                           ) {
@@ -740,7 +783,7 @@ function BetCard({ item, sportId }) {
                               data['2nd set - winner'],
                               item.competitors,
                               item.sport.id,
-                              item.specifiers,
+                              data['2nd set - winner'].specifiers,
                             );
                           }
                         }}
@@ -749,7 +792,9 @@ function BetCard({ item, sportId }) {
                             item.eventId,
                             data['2nd set - winner']?.id,
                             innerItem.id,
-                            item.specifiers ? item.specifiers.join('|') : null,
+                            data['2nd set - winner'].specifiers
+                              ? data['2nd set - winner'].specifiers.join('|')
+                              : null,
                           )
                             ? 'bg-green text-white border-green'
                             : ''
@@ -768,10 +813,10 @@ function BetCard({ item, sportId }) {
                 )}
                 {data['2nd set - winner'] === undefined && (
                   <>
-                    <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[52PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
-                    <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[52PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-12 rounded-md  py-2 px-3">
+                    <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-md  py-2 px-3">
                       -
                     </button>
                   </>
@@ -802,7 +847,7 @@ function BetCard({ item, sportId }) {
                 alt="icon"
                 className="mx-1"
               />
-              <span className="text-10 md:text-12 pr-2">
+              <span className="text-10 md:text-10 pr-2">
                 {item.openMarkets}
               </span>
             </div>

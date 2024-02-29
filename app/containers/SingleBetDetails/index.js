@@ -26,6 +26,16 @@ import 'swiper/css/navigation';
 
 import { Pagination, Navigation } from 'swiper/modules';
 
+const buildMarketKey = (market) => {
+  if (!market.specifiers) {
+    return market.id.toString();
+  } else {
+    return market.id
+      .toString()
+      .concat('-', market.specifiers?.sort().join('|'));
+  }
+};
+
 const TabsName = [
   { id: 1, title: 'Board', icon: images.board },
   { id: 2, title: 'Head to head', icon: images.headtohead },
@@ -94,10 +104,10 @@ function SigleBetDetails() {
 
   useEffect(() => {
     if (allMarketData.length > 0 && marketDataOdds) {
-      const allMarkets = _.keyBy(allMarketData, 'id');
+      const allMarkets = _.keyBy(allMarketData, buildMarketKey);
       const markets = [];
       for (const oddsMarket of marketDataOdds.odds.markets) {
-        const market = allMarkets[oddsMarket.id];
+        const market = allMarkets[buildMarketKey(oddsMarket)];
         if (market) {
           const allOutcomes = _.keyBy(market.outcomes, 'id');
           markets.push({
@@ -128,30 +138,6 @@ function SigleBetDetails() {
       return { ...prevState, ...newObject };
     });
   };
-
-  //   setMergedData(updatedData);
-  //   // dispatch(fetchBetDetailsAction(updatedBets)); // Dispatch the action
-  // };
-
-  // const handleClearAllBet = () => {
-  //   dispatch(fetchBetDetailsAction([]));
-
-  //   const updatedData = mergedData.map((item) => ({
-  //     ...item,
-  //     outcomes: item.outcomes.map((outcome) => ({
-  //       ...outcome,
-  //       selected: false,
-  //     })),
-  //   }));
-
-  //   setMergedData(updatedData);
-  // };
-
-  // useEffect(() => {
-  //   if (selectedBet.length > 0) {
-  //     dispatch(fetchBetDetailsAction(selectedBet)); // Dispatch the action
-  //   }
-  // }, [selectedBet, dispatch]);
 
   const addToBetSlip = (eventId, bet, betDetails, specifiers) => {
     setBets((prev) => {
@@ -232,10 +218,7 @@ function SigleBetDetails() {
     }
   };
 
-  console.log('----merged   data ', mergedData);
-
   return (
-    // <BetDetailsContext.Provider value={{ selectedBet }}>
     <div className="grid grid-cols-12">
       <div className="col-span-12 md:col-span-8">
         <div className="md:p-5 p-2">
@@ -834,7 +817,6 @@ function SigleBetDetails() {
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {
-                          console.log('------innner item ', innerItem.selected);
                           return (
                             <div
                               key={innerIndex}
@@ -981,25 +963,15 @@ function SigleBetDetails() {
       <div className="col-span-4 pt-3 md:block hidden border-l-[1px] px-3 border-gray-700">
         {/* <RightSideSection /> */}
         {bets?.length > 0 ? (
-          <BetWallet
-            selectedBet={selectedBet}
-            // handleRemoveBet={handleRemoveBet}
-            // setSelectedBet={setSelectedBet}
-            // handleClearAllBet={handleClearAllBet}
-          />
+          <BetWallet selectedBet={selectedBet} />
         ) : (
-          <Betslip
-            selectedBet={selectedBet}
-            // handleRemoveBet={handleRemoveBet}
-            // handleClearAllBet={handleClearAllBet}
-          />
+          <Betslip selectedBet={selectedBet} />
         )}
         <CompanyContact />
         <CustomerCareContact />
         <TalkToUs />
       </div>
     </div>
-    // </BetDetailsContext.Provider>
   );
 }
 

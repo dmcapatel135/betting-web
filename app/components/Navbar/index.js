@@ -108,10 +108,6 @@ const Navbar = ({ tab, setTab }) => {
   const bets = useSelector((state) => state.bet.selectedBet);
   const [selectValue, setSelectValue] = useState();
 
-  // const { tab, setTab } = useContext(MyContext);
-
-  // console.log('------select Menu', tab);
-
   return (
     <nav>
       <div className="h-[50px] sm:h-[65px] lg:h-[85px] xxl:h-[110px] bg-gradient-color-1 relative">

@@ -15,8 +15,6 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
-  console.log('------item ', item);
-
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
