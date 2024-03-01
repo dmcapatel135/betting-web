@@ -229,7 +229,86 @@ function SportsMenu() {
           </div>
         </div>
       </div>
-      <div className="flex my-3 px-2  mr-3 w-full">
+      <div className="flex  mx-2 py-5">
+        <div className="flex-grow-0 xxl:flex-1 pl-0">
+          <div
+            className={`h-6 md:h-8   mx-1  flex items-center w-40 md:w-48 xxl:w-full xxl:text-center text-[8px] md:text-12  ${
+              !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
+            } text-white px-1 rounded-[4px] text-center font-[600]`}
+          >
+            {!(tab == 3) && (
+              <p>
+                {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="flex-1 border-black">
+          <div className="flex justify-center md:justify-end">
+            {marketsName
+              .filter((item) => item.sportId == sportId)[0]
+              ?.marketName.map((items, index) => {
+                return (
+                  <div
+                    key={index}
+                    // className={`${
+                    //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
+                    // } flex-1 `}
+                    className={`${
+                      items?.option?.length == 2 ? 'w-32' : 'w-36'
+                    } ${index > 0 ? 'hidden xl:block' : ''} `}
+                  >
+                    <div
+                      className={`flex ${
+                        marketsName.filter((item) => item.sportId == sportId)[0]
+                          ?.marketName.length == 1
+                          ? 'justify-between  md:justify-end md:mx-4'
+                          : 'justify-center'
+                      }`}
+                    >
+                      <div className="mx-auto md:mx-0">
+                        <div className="w-full flex justify-center">
+                          <h1 className="text-12 md:text-12 lg:text-[10px] xxl:text-14 font-[800] md:block text-black  mb-2">
+                            {items.name === 'Total'
+                              ? 'OVER/UNDER(2.5)'
+                              : items.name}
+                          </h1>
+                        </div>
+                        <div
+                          // className={`${items.option.length ==} flex justify-between`}
+                          className={`${
+                            items.option.length == 3
+                              ? 'w-32 md:w-36'
+                              : 'w-24 md:w-24'
+                          }  flex ${
+                            index == 2 ? '' : 'mx-auto'
+                          } justify-between`}
+                        >
+                          {items.option?.map((itemss, innerIndex) => {
+                            return (
+                              <div
+                                key={innerIndex}
+                                className="border-[1px]  flex justify-center items-center  md:h-8 h-6 w-[40px] md:w-[45px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                              >
+                                <span className="text-gray-900  md:text-12 lg:text-12 font-[500] text-10">
+                                  {itemss || 1}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <div className="flex-grow-0">
+          <div className="  h-5 w-16 text-black"></div>
+        </div>
+      </div>
+      {/* <div className="flex my-3 px-2  mr-3 w-full">
         <div className="flex  w-full">
           <div className="flex-grow-0 xxl:flex-1 pl-0">
             <div
@@ -299,7 +378,7 @@ function SportsMenu() {
             <div className="w-[50px]"></div>
           </div>
         </div>
-      </div>
+      </div> */}
       {allFixtures.length > 0 && (
         <div className=" mb-3 px-2">
           <InfiniteScroll
@@ -316,7 +395,11 @@ function SportsMenu() {
                     <BetCard index={index} item={item} sportId={sportId} />
                     {(index + 1) % 13 === 0 && (
                       <div className="text-black my-3">
-                        <img src={images.bannerImg1} alt="main" />
+                        <img
+                          src={images.bannerImg1}
+                          alt="main"
+                          className="w-full"
+                        />
                       </div>
                     )}
                   </div>
