@@ -23,13 +23,6 @@ const OuterLayout = () => {
 
   const navigate = useNavigate();
 
-  // const { pathname } = useLocation();
-
-  // if (!isLoggedIn()) {
-  //   localStorage.setItem('lastUrl', pathname);
-  //   return <Navigate to="/login" />;
-  // }
-
   useEffect(() => {
     if (sId) setSportId(sId);
     setSelectTournament(null);
@@ -47,18 +40,21 @@ const OuterLayout = () => {
     if (tab == 7) {
       navigate(`/dashboard/bet-slip/${tab}`);
     } else if (tab == 5) {
-      navigate(`/dashboard/jackpot/${tab}`);
+      setSelectTournament(null);
+      navigate('/dashboard/jackpot');
     } else if (tab == 8) {
       navigate(`/dashboard/how-to-play/${tab}`);
     } else if (sportId && tab && selectTournament) {
       navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
     } else if (sportId && tab) {
       navigate(`/dashboard/${sportId}/${tab}`);
+    } else if (selectTournament) {
+      navigate(`/dashboard/${selectTournament}`);
     }
   }, [sportId, navigate, tab, selectTournament]);
 
   useEffect(() => {
-    if (sportId && selectTournament)
+    if (sportId && selectTournament && tab)
       navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
   }, [sportId, tab, selectTournament, navigate]);
 
@@ -103,7 +99,11 @@ const OuterLayout = () => {
         <Navbar tab={tab} setTab={setTab} />
         <div className="grid grid-cols-12 ">
           <div className="md:col-span-2 md:block hidden">
-            <Sidebar tab={tab} setTab={setTab} />{' '}
+            <Sidebar
+              tab={tab}
+              setTab={setTab}
+              setSelectTournament={setSelectTournament}
+            />{' '}
           </div>
           <div className="md:col-span-10 col-span-full bg-white">
             {' '}

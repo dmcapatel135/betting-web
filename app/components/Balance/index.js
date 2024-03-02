@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Balance() {
   const [wallet, setWallet] = useState();
-  const { setTab } = useContext(MyContext);
+  const { setTab, setSelectTournament } = useContext(MyContext);
   const navigate = useNavigate();
 
   const getWalletBalance = useCallback(async () => {
@@ -24,6 +24,7 @@ function Balance() {
     <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
       <div
         onClick={() => {
+          setSelectTournament(null);
           setTab(null);
           navigate('/dashboard/my-bets');
         }}

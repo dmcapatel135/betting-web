@@ -52,7 +52,7 @@ function Sidebar({
                   onClick={() => {
                     setTab(item.id);
                   }}
-                  // to={selectRoute(item.name)}
+                  // to={item.path}
                   className={`px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
                     tab == item.id
                       ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'

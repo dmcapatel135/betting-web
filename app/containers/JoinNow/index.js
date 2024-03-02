@@ -17,8 +17,8 @@ import PinInput from 'react-pin-input';
 
 const initialState = {
   password: '',
-  dialCode: '+91',
-  country: 'India',
+  dialCode: '+255',
+  country: 'Tanzania',
   emailOrMobile: '',
   mobileVerificationCode: '',
   termsAndCondition: '',
@@ -269,94 +269,94 @@ function JoinNow() {
                     </div>
                   </div>
                 ) : (
-                  <form onSubmit={handleRegister}>
-                    <div className="basis-full lg:basis-1/3 flex-center">
-                      <div className="max-w-[400px] p-3  mx-auto w-full">
-                        <div className="text-center">
-                          <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
-                            Verify your mobile!
-                          </h1>
-                          <p className="text-gray-900 text-sm">
-                            We have sent you a 6 digit code, please enter to
-                            verify
-                          </p>
-                          <div className="flex justify-center gap-2 py-4">
-                            <PinInput
-                              length={6}
-                              initialValue=""
-                              type="numeric"
-                              inputMode="number"
-                              inputStyle={{
-                                width: '40px',
-                                height: '40px',
-                                textAlign: 'center',
-                                margin: 'auto 4px',
-                                border: '1px solid #FEAE04',
-                                background: 'rgba(217, 217, 217, 0.20)',
-                                borderRadius: '10px',
-                                justifyContent: 'center',
-                                fontSize: '20px',
-                                color: '#3D3D3D',
-                              }}
-                              onComplete={(value) => {
-                                handleChange({
-                                  target: {
-                                    name: 'mobileVerificationCode',
-                                    value,
-                                  },
-                                });
-                              }}
-                              autoSelect={true}
-                              regexCriteria={/^[0-9]*$/}
-                            />
-                          </div>
-                          <p className="text-sm my-2 text-gray-900">
-                            Not recieved an code?{' '}
-                            <button
-                              disabled={resendTimer ? true : false}
-                              className="text-gray-900 ml-1 hover:underline"
-                              onClick={handleSendRegisterCode}
-                            >
-                              {resendTimer ? resendTimer : 'Resend Code'}
-                            </button>
-                          </p>
-                          {verificationResponse &&
-                            verificationResponse.mobile.attempt > 1 && (
-                              <p className="text-12 text-gray-900 mb-2">
-                                Remaining retries{' '}
-                                <span className="text-primary-yellow ml-1 duration-200">
-                                  {' '}
-                                  {verificationResponse.mobile.maxAttempt -
-                                    verificationResponse.mobile.attempt}{' '}
-                                </span>
-                              </p>
-                            )}
-
-                          <button
-                            type="submit"
-                            onClick={handleRegister}
-                            className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
-                              form.mobileVerificationCode.length !== 6
-                                ? 'bg-lightgray border-lightgray'
-                                : 'bg-[#FEAE04] border-[#FEAE04]'
-                            } border-[#FEAE04] font-[700] rounded-[8px]`}
-                            disabled={
-                              form.mobileVerificationCode.length !== 6 ||
-                              form.mobileVerificationCode.length !== 6
-                            }
-                          >
-                            Verify Mobile
-                          </button>
-                          <span
-                            className="text-10 text-gray-900 md:text-12 hover:text-yellow cursor-pointer"
-                            onClick={() => setOtpScreen(true)}
-                          >
-                            Back
-                          </span>
+                  // <form onSubmit={}>
+                  <div className="basis-full lg:basis-1/3 flex-center">
+                    <div className="max-w-[400px] p-3  mx-auto w-full">
+                      <div className="text-center">
+                        <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
+                          Verify your mobile!
+                        </h1>
+                        <p className="text-gray-900 text-sm">
+                          We have sent you a 6 digit code, please enter to
+                          verify
+                        </p>
+                        <div className="flex justify-center gap-2 py-4">
+                          <PinInput
+                            length={6}
+                            initialValue=""
+                            type="numeric"
+                            inputMode="number"
+                            inputStyle={{
+                              width: '40px',
+                              height: '40px',
+                              textAlign: 'center',
+                              margin: 'auto 4px',
+                              border: '1px solid #FEAE04',
+                              background: 'rgba(217, 217, 217, 0.20)',
+                              borderRadius: '10px',
+                              justifyContent: 'center',
+                              fontSize: '20px',
+                              color: '#3D3D3D',
+                            }}
+                            onComplete={(value) => {
+                              handleChange({
+                                target: {
+                                  name: 'mobileVerificationCode',
+                                  value,
+                                },
+                              });
+                            }}
+                            autoSelect={true}
+                            regexCriteria={/^[0-9]*$/}
+                          />
                         </div>
+                        <p className="text-sm my-2 text-gray-900">
+                          Not recieved an code?{' '}
+                          <button
+                            disabled={resendTimer ? true : false}
+                            className="text-gray-900 ml-1 hover:underline"
+                            onClick={handleSendRegisterCode}
+                          >
+                            {resendTimer ? resendTimer : 'Resend Code'}
+                          </button>
+                        </p>
+                        {verificationResponse &&
+                          verificationResponse.mobile.attempt > 1 && (
+                            <p className="text-12 text-gray-900 mb-2">
+                              Remaining retries{' '}
+                              <span className="text-primary-yellow ml-1 duration-200">
+                                {' '}
+                                {verificationResponse.mobile.maxAttempt -
+                                  verificationResponse.mobile.attempt}{' '}
+                              </span>
+                            </p>
+                          )}
+
+                        <button
+                          type="submit"
+                          onClick={handleRegister}
+                          className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 ${
+                            form.mobileVerificationCode.length !== 6
+                              ? 'bg-lightgray border-lightgray'
+                              : 'bg-[#FEAE04] border-[#FEAE04]'
+                          } border-[#FEAE04] font-[700] rounded-[8px]`}
+                          disabled={
+                            form.mobileVerificationCode.length !== 6 ||
+                            form.mobileVerificationCode.length !== 6
+                          }
+                        >
+                          Verify Mobile
+                        </button>
+                        <span
+                          className="text-10 text-gray-900 md:text-12 hover:text-yellow cursor-pointer"
+                          onClick={() => setOtpScreen(true)}
+                        >
+                          Back
+                        </span>
                       </div>
                     </div>
-                  </form>
+                  </div>
+                  // </form>
                 )}
               </div>
             </div>

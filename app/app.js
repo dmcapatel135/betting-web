@@ -110,6 +110,15 @@ function App() {
             }
           />
           <Route
+            index
+            path="/dashboard/:eId"
+            element={
+              // <ProtectedRoutes>
+              <Batting />
+              // </ProtectedRoutes>
+            }
+          />
+          <Route
             path="/dashboard/single-bets/:sId/:statusId/:eventId/:eventNames"
             element={
               // <ProtectedRoutes>
@@ -118,7 +127,7 @@ function App() {
             }
           />
           <Route
-            path="/dashboard/jackpot/:statusId"
+            path="/dashboard/jackpot"
             element={
               // <ProtectedRoutes>
               <Jackpot />

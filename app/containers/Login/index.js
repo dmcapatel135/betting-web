@@ -15,7 +15,7 @@ import { isLoggedIn } from '@utils/apiHandlers';
 const initialState = {
   emailOrMobile: '',
   password: '',
-  dialCode: '',
+  dialCode: '+255',
 };
 
 function Login() {

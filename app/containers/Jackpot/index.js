@@ -330,10 +330,10 @@ function Jackpot() {
                                     <p>Total Price :</p>
                                   </div>
                                   <div className="font-[500] text-right">
-                                    <p>Tsh {stakeValue}</p>
+                                    <p>TSH {stakeValue}</p>
                                     <p>{ticket}</p>
                                     <p>
-                                      Tsh {formatNumber(ticket * stakeValue)}
+                                      TSH {formatNumber(ticket * stakeValue)}
                                     </p>
                                   </div>
                                 </div>

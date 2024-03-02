@@ -109,9 +109,9 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           <>
             <button className="flex bg-bluewhalelight text-14 font-[600]  text-white px-3 mx-1 py-1 rounded-[8px]">
               <img
-                src="/images/bikoicon/reply_all.png"
+                src="/images/bikoicon/share.png"
                 alt="icon"
-                className="mx-2"
+                className="mx-2  w-6 h-5"
               />
               Share
             </button>
@@ -119,7 +119,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               <img
                 src="/images/bikoicon/rebet.png"
                 alt="icon"
-                className="mx-2"
+                className="mx-2 w-6 h-5"
               />
               Rebet
             </button>

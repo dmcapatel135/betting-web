@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { reactIcons } from '@utils/icons';
 
-function SelectImage({ optionList, selectValue, setSelectValue }) {
-  const [select, setSelect] = useState(false);
+function SelectImage({
+  optionList,
+  selectValue,
+  setSelectValue,
+  select,
+  setSelect,
+}) {
   useEffect(() => {
     setSelectValue(optionList[0]);
   }, [optionList, setSelectValue]);
@@ -47,5 +52,7 @@ SelectImage.propTypes = {
   optionList: PropTypes.func,
   selectValue: PropTypes.object,
   setSelectValue: PropTypes.object,
+  select: PropTypes.bool,
+  setSelect: PropTypes.bool,
 };
 export default SelectImage;

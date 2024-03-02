@@ -18,7 +18,7 @@ const initialState = {
   code: '',
   newPassword: '',
   confirmPassword: '',
-  dialCode: '',
+  dialCode: '+255',
 };
 
 let resendCodeInterval;

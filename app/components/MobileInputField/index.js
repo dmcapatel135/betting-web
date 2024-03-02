@@ -31,7 +31,7 @@ function MobileInputField({
         </select>
       </div>
       <input
-        type="phone"
+        type="number"
         name="emailOrMobile"
         className="h-[40px] text-14 text-gray-900 pl-[85px] w-full outline-none border-[1px] border-[#FEAE04] rounded-[8px]"
         onChange={onChange}

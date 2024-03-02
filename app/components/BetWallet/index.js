@@ -25,7 +25,7 @@ function BetWallet({ stakeValue }) {
   // const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { setTab } = useContext(MyContext);
+  const { setTab, setSelectTournament } = useContext(MyContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,6 +104,7 @@ function BetWallet({ stakeValue }) {
         toast.error(response.error.message);
       }
     } else {
+      setSelectTournament(null);
       setTab(null);
       navigate('/login');
     }
@@ -148,6 +149,7 @@ function BetWallet({ stakeValue }) {
           <div className="flex my-2">
             <button
               onClick={() => {
+                setSelectTournament(null);
                 setTab(null);
                 navigate('/login');
               }}
@@ -157,6 +159,7 @@ function BetWallet({ stakeValue }) {
             </button>
             <button
               onClick={() => {
+                setSelectTournament(null);
                 setTab(null);
                 navigate('/join-now');
               }}
@@ -240,7 +243,8 @@ function BetWallet({ stakeValue }) {
             <div className="w-5 h-12 bg-yellow"></div>
             <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
-              {gameRules?.minimumOdds} minimum odds.
+              {gameRules?.minimumOdds}
+              {/* minimum odds. */}
               {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
             1.25 minimum odds. */}
             </span>

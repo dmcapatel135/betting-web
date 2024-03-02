@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -12,6 +12,7 @@ import { useAuth } from '@hooks';
 import { isLoggedIn } from '@utils/apiHandlers';
 import { useSelector } from 'react-redux';
 import { SelectImage } from '@components';
+import { MyContext } from '@components/MyContext/MyContext';
 
 const mobileMenuList = [
   {
@@ -107,6 +108,9 @@ const Navbar = ({ tab, setTab }) => {
   const { logout } = useAuth();
   const bets = useSelector((state) => state.bet.selectedBet);
   const [selectValue, setSelectValue] = useState();
+  const [select, setSelect] = useState(false);
+
+  const { setSelectTournament } = useContext(MyContext);
 
   return (
     <nav>
@@ -143,7 +147,10 @@ const Navbar = ({ tab, setTab }) => {
             </div>
             {/* </div> */}
           </div>
-          <div className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-evenly mx-2 md:mx-0">
+          <div
+            onMouseLeave={() => setSelect(false)}
+            className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-evenly mx-2 md:mx-0"
+          >
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
               <div className="text-white pr-1">
@@ -154,6 +161,7 @@ const Navbar = ({ tab, setTab }) => {
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
                 onClick={() => {
                   setTab(null);
+                  setSelectTournament(null);
                   navigate('/login');
                 }}
               >
@@ -163,6 +171,7 @@ const Navbar = ({ tab, setTab }) => {
             {isLoggedIn() ? (
               <button
                 onClick={() => {
+                  setSelectTournament(null);
                   setTab(null);
                   navigate('/dashboard/deposit');
                 }}
@@ -175,6 +184,7 @@ const Navbar = ({ tab, setTab }) => {
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 onClick={() => {
                   setTab(null);
+                  setSelectTournament(null);
                   navigate('/join-now');
                 }}
               >
@@ -189,6 +199,8 @@ const Navbar = ({ tab, setTab }) => {
                 optionList={optionList}
                 selectValue={selectValue}
                 setSelectValue={setSelectValue}
+                select={select}
+                setSelect={setSelect}
               />
             </div>
 
@@ -374,6 +386,7 @@ const Navbar = ({ tab, setTab }) => {
 Navbar.propTypes = {
   tab: PropTypes.string,
   setTab: PropTypes.func,
+  setSelectTournament: PropTypes.number,
 };
 
 export default Navbar;

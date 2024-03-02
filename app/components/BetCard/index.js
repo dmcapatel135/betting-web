@@ -192,20 +192,20 @@ function BetCard({ item, sportId }) {
                           </button>
                         );
                       })}
-                    {data['1x2']?.outcomes?.length == 0 ||
-                      (data['1x2'] == undefined && (
-                        <>
-                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
-                            -
-                          </button>
-                        </>
-                      ))}
+                    {(data['1x2']?.outcomes?.length == 0 ||
+                      data['1x2'] == undefined) && (
+                      <>
+                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                          -
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="w-32  hidden xl:block ">
@@ -253,7 +253,7 @@ function BetCard({ item, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center mr-2 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[52px] py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
@@ -265,17 +265,17 @@ function BetCard({ item, sportId }) {
                           </button>
                         );
                       })}
-                    {data['Total']?.outcomes?.length == 0 ||
-                      (data['Total'] == undefined && (
-                        <>
-                          <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
-                            -
-                          </button>
-                        </>
-                      ))}
+                    {(data['Total']?.outcomes?.length == 0 ||
+                      data['Total'] == undefined) && (
+                      <>
+                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                          -
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="w-32 hidden xl:block  ">
@@ -342,17 +342,17 @@ function BetCard({ item, sportId }) {
                           );
                         },
                       )}
-                    {data['Both teams to score']?.outcomes?.length == 0 ||
-                      (data['Both teams to score'] === undefined && (
-                        <div className="flex justify-between">
-                          <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                        </div>
-                      ))}
+                    {(data['Both teams to score']?.outcomes?.length == 0 ||
+                      data['Both teams to score'] === undefined) && (
+                      <div className="flex justify-between">
+                        <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </>
@@ -415,20 +415,20 @@ function BetCard({ item, sportId }) {
                         </button>
                       );
                     })}
-                  {data['1x2']?.outcomes?.length == 0 ||
-                    (data['1x2'] === undefined && (
-                      <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                      </>
-                    ))}
+                  {(data['1x2']?.outcomes?.length == 0 ||
+                    data['1x2'] === undefined) && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -490,17 +490,17 @@ function BetCard({ item, sportId }) {
                         </button>
                       );
                     })}
-                  {data['Winner']?.outcomes?.length == 0 ||
-                    (data['Winner'] === undefined && (
-                      <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                      </>
-                    ))}
+                  {(data['Winner']?.outcomes?.length == 0 ||
+                    data['Winner'] === undefined) && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -562,25 +562,25 @@ function BetCard({ item, sportId }) {
                         </button>
                       );
                     })}
-                  {data['1x2']?.outcomes?.length == 0 ||
-                    (data['1x2'] === undefined && (
-                      <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                      </>
-                    ))}
+                  {(data['1x2']?.outcomes?.length == 0 ||
+                    data['1x2'] === undefined) && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
             {sportId == 21 && (
-              <div className="w-32">
+              <div className="w-36">
                 <div
                   className="w-24 md:w-24
                       flex mx-auto justify-between"
@@ -643,17 +643,17 @@ function BetCard({ item, sportId }) {
                         );
                       },
                     )}
-                  {data['Winner (incl. super over)']?.outcomes?.length == 0 ||
-                    (data['Winner (incl. super over)'] === undefined && (
-                      <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                          -
-                        </button>
-                      </>
-                    ))}
+                  {(data['Winner (incl. super over)']?.outcomes?.length == 0 ||
+                    data['Winner (incl. super over)'] === undefined) && (
+                    <>
+                      <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                      <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        -
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )}
@@ -716,17 +716,17 @@ function BetCard({ item, sportId }) {
                           </button>
                         );
                       })}
-                    {data['Winner']?.outcomes?.length == 0 ||
-                      (data['Winner'] === undefined && (
-                        <div className="flex justify-between">
-                          <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                        </div>
-                      ))}
+                    {(data['Winner']?.outcomes?.length == 0 ||
+                      data['Winner'] === undefined) && (
+                      <div className="flex justify-between">
+                        <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="w-32 hidden xl:block ">
@@ -792,17 +792,17 @@ function BetCard({ item, sportId }) {
                           );
                         },
                       )}
-                    {data['1st set - winner']?.outcomes?.length == 0 ||
-                      (data['1st set - winner'] === undefined && (
-                        <>
-                          <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                        </>
-                      ))}
+                    {(data['1st set - winner']?.outcomes?.length == 0 ||
+                      data['1st set - winner'] === undefined) && (
+                      <>
+                        <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
                 <div className="w-32 hidden xl:block ">
@@ -868,17 +868,17 @@ function BetCard({ item, sportId }) {
                           );
                         },
                       )}
-                    {data['2nd set - winner']?.outcomes?.length == 0 ||
-                      (data['2nd set - winner'] === undefined && (
-                        <>
-                          <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                          <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
-                            -
-                          </button>
-                        </>
-                      ))}
+                    {(data['2nd set - winner']?.outcomes?.length == 0 ||
+                      data['2nd set - winner'] === undefined) && (
+                      <>
+                        <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                        <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          -
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </>

@@ -255,7 +255,11 @@ function SportsMenu() {
                     //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
                     // } flex-1 `}
                     className={`${
-                      items?.option?.length == 2 ? 'w-32' : 'w-36'
+                      items.name == 'Winner (incl. super over)'
+                        ? 'w-36'
+                        : items?.option?.length == 2
+                        ? 'w-32'
+                        : 'w-36'
                     } ${index > 0 ? 'hidden xl:block' : ''} `}
                   >
                     <div
@@ -412,7 +416,7 @@ function SportsMenu() {
       {allFixtures?.length == 0 && (
         <div className="text-center mt-12 mb-3 text-black">
           <span className="text-black md:text-14 text-10">
-            There is no Odds in many markets in this events
+            There is no Odds in any markets in this events
           </span>
         </div>
       )}
