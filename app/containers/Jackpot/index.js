@@ -13,6 +13,7 @@ import {
 } from '@components';
 import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
+import { CircularProgress } from '@mui/material';
 import { getReq, postReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
 import React, { useEffect, useState } from 'react';
@@ -341,12 +342,18 @@ function Jackpot() {
                                   <button
                                     disabled={!ticket || placeJackpotLoading}
                                     className={`w-full py-2 my-2 ${
-                                      ticket || placeJackpotLoading
+                                      ticket && !placeJackpotLoading
                                         ? 'bg-yellow text-white'
                                         : 'bg-lightestgray text-black'
                                     }`}
                                     onClick={() => handleBuyTicket(item.id)}
                                   >
+                                    {placeJackpotLoading && (
+                                      <CircularProgress
+                                        color="inherit"
+                                        size={20}
+                                      />
+                                    )}
                                     BUY TICKET
                                   </button>
                                 </div>

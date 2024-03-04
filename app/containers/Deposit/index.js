@@ -32,7 +32,7 @@ function Deposit() {
                   <label className="text-black text-12">
                     Your Mobile Number
                   </label>
-                  <MobileInputField />
+                  <MobileInputField selectValue={'+255'} />
                 </div>
                 <div className="my-2">
                   <label className="text-black text-12">

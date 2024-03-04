@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { postReq } from '@utils/apiHandlers';
 import { toast } from 'react-toastify';
+import { formatNumber } from '@utils/constants';
 
 function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const handleCancelBet = async (id) => {
@@ -30,7 +31,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             </div>
             <div>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {moment(item.createdAt).format('DD-MM-YYYY  hh:mm')}
+                {moment(item.createdAt).format('DD-MM-YYYY  hh:mm A')}
               </p>
               <p
                 onClick={() => setShowBets(item.id)}
@@ -57,16 +58,18 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 {item.bets.length}
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {item.bets
-                  .map((b) => b.odds)
-                  .reduce((a, b) => a * b, 1)
-                  .toFixed(2) *
-                  item?.stake *
-                  parseInt(
-                    item.appliedWinBonusRule
-                      ? item.appliedWinBonusRule?.percentage
-                      : 1,
-                  )}
+                {formatNumber(
+                  item.bets
+                    .map((b) => b.odds)
+                    .reduce((a, b) => a * b, 1)
+                    .toFixed(2) *
+                    item?.stake *
+                    parseInt(
+                      item.appliedWinBonusRule
+                        ? item.appliedWinBonusRule?.percentage
+                        : 1,
+                    ),
+                )}
               </p>
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
@@ -90,7 +93,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   .toFixed(2)}
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {item.stake}
+                {formatNumber(item.stake)}
               </p>
             </div>
           </div>
@@ -98,16 +101,29 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
       </div>
       <hr className="border-[1px] my-1 mx-3"></hr>
       <div className="flex justify-end my-2 px-3">
-        <button
-          onClick={() => handleCancelBet(item.id)}
-          className="flex bg-lightestgray px-3 mx-1 py-1 text-14 font-[600]  rounded-[8px]"
-        >
-          <img src="/images/bikoicon/cancel.png" alt="icon" className="mx-2" />
-          {item.status == 'Cancelled' ? 'Cancelled' : 'Cancel'}
-        </button>
+        {!(item.status == 'Cancelled') && (
+          <button
+            onClick={() => {
+              if (!(item.status == 'Cancelled')) handleCancelBet(item.id);
+            }}
+            className="flex bg-lightgray px-3 mx-1 py-1 text-14 font-[600] outline-none  rounded-[8px]"
+          >
+            <img
+              src="/images/bikoicon/cancel.png"
+              alt="icon"
+              className="mx-2"
+            />
+            {item.status == 'Cancelled' ? 'Cancelled' : 'Cancel'}
+          </button>
+        )}
+        {item.status == 'Cancelled' && (
+          <div className="bg-lightgray px-2 rounded-md py-1">
+            <span className="text-black">Cancelled</span>
+          </div>
+        )}
         {!(item.status == 'Cancelled') && (
           <>
-            <button className="flex bg-bluewhalelight text-14 font-[600]  text-white px-3 mx-1 py-1 rounded-[8px]">
+            <button className="flex bg-bluewhalelight text-14 font-[600] outline-none  text-white px-3 mx-1 py-1 rounded-[8px]">
               <img
                 src="/images/bikoicon/share.png"
                 alt="icon"
@@ -115,7 +131,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               />
               Share
             </button>
-            <button className="flex bg-green text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
+            <button className="flex bg-green outline-none text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
               <img
                 src="/images/bikoicon/rebet.png"
                 alt="icon"

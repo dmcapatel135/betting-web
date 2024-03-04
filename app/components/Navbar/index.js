@@ -13,6 +13,7 @@ import { isLoggedIn } from '@utils/apiHandlers';
 import { useSelector } from 'react-redux';
 import { SelectImage } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
+import { formatNumber } from '@utils/constants';
 
 const mobileMenuList = [
   {
@@ -34,14 +35,14 @@ const mobileMenuList = [
     title: 'LIVE',
     icon: '/images/bikoicon/livenowwhite.png',
     active_icon: '/images/bikoicon/live-now-active.png',
-    path: '/',
+    path: '/dashboard/live-now',
   },
   {
     id: 5,
     title: 'JACKPOT',
     icon: '/images/bikoicon/jackpotwhite.png',
     active_icon: '/images/bikoicon/jackpot-active.png',
-    path: '/',
+    path: '/dashboard/jackpot',
   },
   {
     id: 6,
@@ -55,7 +56,7 @@ const mobileMenuList = [
     title: 'SLIP',
     icon: '/images/bikoicon/slip.png',
     active_icon: '/images/bikoicon/slip-active.png',
-    path: '/',
+    path: '/dashboard/bet-slip',
   },
 ];
 
@@ -63,38 +64,65 @@ const menuList = [
   {
     id: 1,
     title: 'MY BETS',
-    icon: '/images/bikoicon/ballot.png',
+    icon: reactIcons.bets,
     active_icon: '',
+    path: '/dashboard/my-bets',
   },
   {
     id: 2,
     title: 'DEPOSIT',
-    icon: '/images/bikoicon/deposit.png',
+    icon: reactIcons.deposit,
     active_icon: '',
+    path: '/dashboard/deposit',
   },
   {
     id: 3,
     title: 'WITHDRAW',
-    icon: '/images/bikoicon/withdraw.png',
+    icon: reactIcons.withdraw,
     active_icon: '',
+    path: '/dashboard/withdraw',
   },
   {
     id: 4,
     title: 'TRANSACTIONS',
-    icon: '/images/bikoicon/transaction.png',
+    icon: reactIcons.transaction,
     active_icon: '',
+    path: '/dashboard/my-transactions',
   },
   {
     id: 5,
     title: 'HELP',
-    icon: '/images/bikoicon/help.png',
+    icon: reactIcons.help,
     active_icon: '',
+    path: '/dashboard/how-to-play',
   },
   {
-    id: 5,
-    title: 'LOGOUT',
-    icon: '/images/bikoicon/logout.png',
+    id: 6,
+    title: 'DOWNLOAD APP',
+    icon: reactIcons.android,
     active_icon: '',
+    path: '/dashboard/how-to-play',
+  },
+  {
+    id: 7,
+    title: 'NEWS',
+    icon: reactIcons.news,
+    active_icon: '',
+    path: '/dashboard/how-to-play',
+  },
+  {
+    id: 8,
+    title: 'MY ACCOUNT',
+    icon: reactIcons.myAccount,
+    active_icon: '',
+    path: '/dashboard/how-to-play',
+  },
+  {
+    id: 9,
+    title: 'LOGOUT',
+    icon: reactIcons.logout,
+    active_icon: '',
+    path: '/',
   },
 ];
 
@@ -110,7 +138,7 @@ const Navbar = ({ tab, setTab }) => {
   const [selectValue, setSelectValue] = useState();
   const [select, setSelect] = useState(false);
 
-  const { setSelectTournament } = useContext(MyContext);
+  const { setSelectTournament, wallet } = useContext(MyContext);
 
   return (
     <nav>
@@ -154,7 +182,9 @@ const Navbar = ({ tab, setTab }) => {
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
               <div className="text-white pr-1">
-                <span className="text-12 md:text-16 font-[700]">TSH 0</span>
+                <span className="text-12 md:text-16 font-[700]">
+                  TSH {formatNumber(wallet?.amount)}
+                </span>
               </div>
             ) : (
               <button
@@ -216,12 +246,28 @@ const Navbar = ({ tab, setTab }) => {
                 </div>
                 {option && (
                   <div
-                    className="absolute rounded-md bg-white mt-4 w-32 md:w-40 right-5 z-30 shadow-lg"
+                    className="absolute rounded-md bg-white mt-4 w-32 md:w-48 right-5 z-30 shadow-lg"
                     onMouseLeave={() => setOption(!option)}
                   >
                     <div className="text-gray-900 py-1 md:py-3 text-12 md:text-14 font-[400] font-roboto cursor-pointer">
                       <ul className="">
-                        <li
+                        {menuList.map((item) => {
+                          return (
+                            <li
+                              key={item.title}
+                              onClick={() => {
+                                setTab(null);
+                                navigate(`${item.path}`);
+                                if (item.title == 'LOGOUT') logout();
+                              }}
+                              className="py-3 flex  items-cent hover:bg-gradient-color-1 text-blue hover:text-white px-3"
+                            >
+                              <span className="mr-3  text-20">{item.icon}</span>
+                              <span className="text-14 ">{item.title}</span>
+                            </li>
+                          );
+                        })}
+                        {/* <li
                           onClick={() => {
                             setTab(null);
                             navigate('/dashboard/my-bets');
@@ -265,7 +311,7 @@ const Navbar = ({ tab, setTab }) => {
                           onClick={() => logout()}
                         >
                           Logout
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>

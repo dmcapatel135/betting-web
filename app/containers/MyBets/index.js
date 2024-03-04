@@ -24,6 +24,7 @@ const TabsName = [
   },
   { tabName: 'Settled', id: 3, icon: '/images/bikoicon/boxing.png' },
   { tabName: 'Jackpot', id: 4, icon: '/images/bikoicon/rugby.png' },
+  { tabName: 'Cancelled', id: 5, icon: '/images/bikoicon/rugby.png' },
 ];
 
 function MyBets() {
@@ -57,7 +58,6 @@ function MyBets() {
     },
     [pageSize],
   );
-  console.log('-----page ', page, queries, hasMore);
 
   useEffect(() => {
     setMyBets([]);
@@ -83,6 +83,7 @@ function MyBets() {
     } else if (step == 2) setStatus('Pending');
     else if (step == 3) setStatus('Settled');
     else if (step == 4) setStatus('Jackpot');
+    else if (step == 5) setStatus('Cancelled');
   }, [step]);
 
   // const fetchMoreData = () => {
@@ -90,6 +91,8 @@ function MyBets() {
   //   // setPage(newPage);
   //   getMyBetDetails(queries, newPage);
   // };
+
+  console.log('-----page ', page, hasMore, queries, myBets);
 
   return (
     <div className="grid grid-cols-12 h-full">

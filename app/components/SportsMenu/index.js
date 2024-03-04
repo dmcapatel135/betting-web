@@ -8,6 +8,7 @@ import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
+import { useSearchParams } from 'react-router-dom';
 
 function SportsMenu() {
   const [allSports, setAllSports] = useState();
@@ -19,6 +20,7 @@ function SportsMenu() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [queries, setQueries] = useState();
+  const [searchParams] = useSearchParams(window.location.search);
 
   const {
     sportId,
@@ -76,24 +78,48 @@ function SportsMenu() {
     let query = `date=${today}`;
     if (tab == 1 && sportId) {
       query = selectTournament
-        ? `date=${today}&tournamentId=${selectTournament}&popular=${true}`
+        ? `date=${today}&tournamentId=${
+            selectTournament
+              ? selectTournament
+              : searchParams.get('eId')
+              ? searchParams.get('eId')
+              : 1
+          }&popular=${true}`
         : `date=${today}&popular=${true}`;
     } else if (tab == 2 && sportId) {
       query = selectTournament
-        ? `date=${today}&tournamentId=${selectTournament}`
+        ? `date=${today}&tournamentId=${
+            selectTournament
+              ? selectTournament
+              : searchParams.get('eId')
+              ? searchParams.get('eId')
+              : 1
+          }`
         : `date=${today}`;
     } else if (tab == 3 && sportId) {
       query = selectTournament
-        ? `date=${upcoming.toISOString()}&tournamentId=${selectTournament}`
+        ? `date=${upcoming.toISOString()}&tournamentId=${
+            selectTournament
+              ? selectTournament
+              : searchParams.get('eId')
+              ? searchParams.get('eId')
+              : 1
+          }`
         : `date=${upcoming.toISOString()}`;
     } else if (tab == 4 && sportId) {
       query = selectTournament
-        ? `onlyLive=${true}&tournamentId=${selectTournament}`
+        ? `onlyLive=${true}&tournamentId=${
+            selectTournament
+              ? selectTournament
+              : searchParams.get('eId')
+              ? searchParams.get('eId')
+              : 1
+          }`
         : `onlyLive=${true}`;
     }
     setQueries(query);
     getAllFixtures(query);
-  }, [sportId, getAllFixtures, tab, selectTournament]);
+  }, [sportId, getAllFixtures, tab, selectTournament, searchParams]);
 
   const getAllFixtures = useCallback(
     async (query, newPage) => {
@@ -101,9 +127,13 @@ function SportsMenu() {
       setIsLoading(true);
 
       const response = await getReq(
-        `/sports/${sportId}/fixtures?skip=${
-          newPage ? newPage : page
-        }&take=${pageSize}&${query}`,
+        `/sports/${
+          sportId
+            ? sportId
+            : searchParams.get('sId')
+            ? searchParams.get('sId')
+            : 1
+        }/fixtures?skip=${newPage ? newPage : page}&take=${pageSize}&${query}`,
       );
 
       setIsLoading(false);
@@ -120,7 +150,7 @@ function SportsMenu() {
         }, 3000);
       }
     },
-    [sportId, page, pageSize],
+    [sportId, page, pageSize, searchParams],
   );
 
   const fetchMoreData = () => {
@@ -221,7 +251,7 @@ function SportsMenu() {
                 })}
               </select> */}
             </div>
-            <div className="flex-1">
+            <div className="flex-1 md:hidden block">
               <select className="w-full my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]">
                 <option>Market</option>
               </select>
@@ -232,12 +262,12 @@ function SportsMenu() {
       <div className="flex  mx-2 py-5">
         <div className="flex-grow-0 xxl:flex-1 pl-0">
           <div
-            className={`h-6 md:h-8   mx-1  flex items-center w-40 md:w-48 xxl:w-full xxl:text-center text-[8px] md:text-12  ${
+            className={`h-6 md:h-8   mx-1 flex justify-center items-center w-40 md:w-48 xxl:w-full text-center text-[8px] md:text-12  ${
               !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
-            } text-white px-1 rounded-[4px] text-center font-[600]`}
+            } text-white px-1 rounded-[4px]  font-[600]`}
           >
             {!(tab == 3) && (
-              <p>
+              <p className="">
                 {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
               </p>
             )}

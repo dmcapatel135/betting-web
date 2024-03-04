@@ -26,7 +26,7 @@ function SelectImage({
         <span className="mr-1 font-[800]">{reactIcons.arrowdown}</span>
       </div>
       {select && (
-        <div className="absolute min-w-24 max-w-fit border-[1px] top-11 rounded-md h-fit z-50 bg-white">
+        <div className="absolute min-w-28 pr-3 max-w-fit border-[1px] top-11 rounded-md h-fit z-50 bg-white">
           {optionList?.map((item, index) => {
             return (
               <div

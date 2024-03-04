@@ -811,9 +811,11 @@ function SigleBetDetails() {
                   <div key={index}>
                     <div className="md:my-3 my-1">
                       <div className="text-black">
-                        <h1 className="text-12 md:text-14 font-[500] py-2">
-                          {item.name}
-                        </h1>
+                        {item.outcomes.length > 0 && (
+                          <h1 className="text-12 md:text-14 font-[500] py-2">
+                            {item.name}
+                          </h1>
+                        )}
                       </div>
                       <div className="grid grid-cols-12">
                         {item.outcomes.map((innerItem, innerIndex) => {

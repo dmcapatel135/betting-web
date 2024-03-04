@@ -103,8 +103,25 @@ import { GoVerified } from 'react-icons/go';
 import { RiSecurePaymentLine, RiFlashlightLine } from 'react-icons/ri';
 
 import LiveIcon from '@components/SvgCompass/LiveIcon';
+import { RiLuggageDepositLine } from 'react-icons/ri';
+import { BiMoneyWithdraw } from 'react-icons/bi';
+import { MdOutlineManageAccounts } from 'react-icons/md';
+import { BsAndroid2 } from 'react-icons/bs';
+// import { GiNewspaper } from 'react-icons/gi';
+// import { GrTransaction } from 'react-icons/gr';
+import { FaReceipt } from 'react-icons/fa';
+import { MdHelp } from 'react-icons/md';
+import { AiOutlineTransaction } from 'react-icons/ai';
 
 export const reactIcons = {
+  help: <MdHelp />,
+  bets: <FaReceipt />,
+  transaction: <AiOutlineTransaction />,
+  // news: <GiNewspaper />,
+  android: <BsAndroid2 />,
+  myAccount: <MdOutlineManageAccounts />,
+  withdraw: <BiMoneyWithdraw />,
+  deposit: <RiLuggageDepositLine />,
   lock: <MdLock />,
   arrowup: <BsChevronUp />,
   livenow: <LiveIcon />,

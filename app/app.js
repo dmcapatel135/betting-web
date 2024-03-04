@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import {
   // DashboardLayout,
   OuterLayout,
-  Landing,
+  // Landing,
   // Dashboard,
   NotFound,
   Login,
@@ -58,82 +58,46 @@ function App() {
     <Fragment>
       <Routes>
         <Route path="/" element={<OuterLayout />}>
-          <Route index element={<Landing />} />
+          <Route index element={<Batting />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join-now" element={<JoinNow />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/dashboard/live-now" element={<Batting />} />
+          <Route path="/dashboard/upcoming" element={<Batting />} />
+          <Route path="/dashboard/popular" element={<Batting />} />
+          <Route path="/dashboard/jackpot" element={<Jackpot />} />
+          <Route path="/dashboard/how-to-play" element={<HowToPlay />} />
+          <Route path="/dashboard/my-bets" element={<MyBets />} />
+          <Route path="/dashboard/deposit" element={<Deposit />} />
+          <Route path="/dashboard/withdraw" element={<Withdraw />} />
+          <Route
+            path="/dashboard/single-bets/:eventId/:eventNames"
+            element={<SingleBetDetails />}
+          />
+          <Route
+            path="/dashboard/my-transactions"
+            element={<MyTransactions />}
+          />
+          <Route path="/dashboard/bet-slip" element={<MobileBetSlip />} />
+          <Route path="/dashboard" element={<Batting />} />
         </Route>
 
-        <Route path="/dashboard" element={<OuterLayout />}>
-          <Route
-            index
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
-          />
-          {/* <Route
-            index
-            path="/dashboard/live-now/:sId/:eId/"
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
-          /> */}
-          <Route
-            index
-            path="/dashboard/:sId/:statusId"
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
-          />
+        {/* <Route path="/dashboard" element={<OuterLayout />}>
+          <Route index element={<Batting />} />
+
+          <Route index path="/dashboard/:sId/:statusId" element={<Batting />} />
           <Route
             index
             path="/dashboard/:sId/:statusId/:eId"
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
+            element={<Batting />}
           />
-          <Route
-            index
-            path="/dashboard/upcoming"
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
-          />
-          <Route
-            index
-            path="/dashboard/:eId"
-            element={
-              // <ProtectedRoutes>
-              <Batting />
-              // </ProtectedRoutes>
-            }
-          />
+          <Route index path="/dashboard/upcoming" element={<Batting />} />
+          <Route index path="/dashboard/:eId" element={<Batting />} />
           <Route
             path="/dashboard/single-bets/:sId/:statusId/:eventId/:eventNames"
-            element={
-              // <ProtectedRoutes>
-              <SingleBetDetails />
-              // </ProtectedRoutes>
-            }
+            element={<SingleBetDetails />}
           />
-          <Route
-            path="/dashboard/jackpot"
-            element={
-              // <ProtectedRoutes>
-              <Jackpot />
-              // </ProtectedRoutes>
-            }
-          />
+          <Route path="/dashboard/jackpot" element={<Jackpot />} />
           <Route path="my-bets" element={<MyBets />} />
           <Route
             path="/dashboard/bet-slip/:statusId"
@@ -146,7 +110,7 @@ function App() {
             path="/dashboard/how-to-play/:statusId"
             element={<HowToPlay />}
           />
-        </Route>
+        </Route> */}
 
         <Route path="/*" element={<NotFound />} />
       </Routes>

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { reactIcons } from '@utils/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
 function BetCard({ item, sportId }) {
@@ -13,7 +13,7 @@ function BetCard({ item, sportId }) {
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const dispatch = useDispatch();
   const [data, setData] = useState({});
-  const { statusId } = useParams();
+  // const { statusId } = useParams();
   const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
 
@@ -195,15 +195,17 @@ function BetCard({ item, sportId }) {
                     {(data['1x2']?.outcomes?.length == 0 ||
                       data['1x2'] == undefined) && (
                       <>
-                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
-                          -
-                        </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
-                          -
-                        </button>
+                        <div className="flex justify-between">
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
+                            -
+                          </button>
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                            -
+                          </button>
+                          <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8 py-2 px-3">
+                            -
+                          </button>
+                        </div>
                       </>
                     )}
                   </div>
@@ -891,9 +893,7 @@ function BetCard({ item, sportId }) {
               onClick={() => {
                 setTab(null);
                 navigate(
-                  `/dashboard/single-bets/${item.sport.id}/${statusId}/${
-                    item.eventId
-                  }/${
+                  `/dashboard/single-bets/${item.eventId}/${
                     item?.competitors[0]?.name +
                     ' vs ' +
                     item?.competitors[1]?.name

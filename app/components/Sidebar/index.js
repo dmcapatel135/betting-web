@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import { MyContext } from '@components/MyContext/MyContext';
 
@@ -10,7 +10,7 @@ import { MyContext } from '@components/MyContext/MyContext';
 
 function Sidebar({
   isMobileSidebar,
-  tab,
+  // tab,
   setTab,
   setIsOpenMenuList,
   isOpenMenuList,
@@ -18,8 +18,9 @@ function Sidebar({
   const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
+  const [searchParams] = useSearchParams(window.location.search);
 
-  const { allTournaments, setSelectTournament, selectTournament, categories } =
+  const { allTournaments, setSelectTournament, categories } =
     useContext(MyContext);
 
   return (
@@ -51,13 +52,16 @@ function Sidebar({
                   end
                   onClick={() => {
                     setTab(item.id);
+                    setSelectTournament(null);
                   }}
-                  // to={item.path}
-                  className={`px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
-                    tab == item.id
-                      ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
-                      : ' hover:bg-primary-yellow  flex items-center gap-3'
-                  }`}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
+                      isActive
+                        ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
+                        : ' hover:bg-primary-yellow  flex items-center gap-3'
+                    }`
+                  }
                 >
                   {item.title == 'NOW' ? (
                     <div className="bg-blue w-14 px-1 flex items-center  text-white rounded-sm">
@@ -66,7 +70,11 @@ function Sidebar({
                     </div>
                   ) : (
                     <img
-                      src={tab == item.id ? item.active_icon : item.icon}
+                      src={
+                        item.path == window.location.pathname
+                          ? item.active_icon
+                          : item.icon
+                      }
                       className="w-[22px] h-[22px]"
                     />
                   )}
@@ -102,12 +110,15 @@ function Sidebar({
                     <li
                       key={item.id}
                       className="flex items-center cursor-pointer text-black "
-                      onClick={() => setSelectTournament(item.id)}
+                      onClick={() => {
+                        console.log('----select tourn');
+                        setSelectTournament(item.id);
+                      }}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
                       <span
                         className={`text-12 mx-2 ${
-                          selectTournament && selectTournament == item.id
+                          searchParams.get('eId') == item.id
                             ? ' bg-yellow font-[600] text-white w-full '
                             : 'text-black'
                         }  hover:text-blue rounded-sm pl-2 font-[500]`}
@@ -121,6 +132,7 @@ function Sidebar({
             </div>
           )}
         </div>
+        {/* {sportId == 1 && ( */}
         <div className="text-black pl-3">
           <div
             className="flex justify-between items-center cursor-pointer rounded-l-md h-10 px-3 bg-gradient-color-1 my-2"
@@ -147,7 +159,14 @@ function Sidebar({
                         onClick={() => setIsOpenLeague(item.id)}
                       >
                         <div className="flex items-center">
-                          <span>{item.flag}</span>
+                          <span>
+                            <i
+                              className={`fi fi-${
+                                item?.flag ? item?.flag?.toLowerCase() : 'un'
+                              }`}
+                              // className="fi fi-us"
+                            ></i>
+                          </span>
                           {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
                           <span className="text-12 mx-2 font-[500] text-black">
                             {item.name}
@@ -177,6 +196,7 @@ function Sidebar({
             </div>
           )}
         </div>
+        {/* )} */}
         <div className="text-black pl-3">
           <div className="flex justify-between cursor-pointer items-center rounded-l-md h-10 px-3 bg-gradient-color-2 my-2">
             <h className="text-white  text-12 leading-3 lg:leading-none lg:text-14 xxl:text-18 ">

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { fetchBetDetailsAction } from '@actions';
 import { formatNumber } from '@utils/constants';
 import { MyContext } from '@components/MyContext/MyContext';
+import { CircularProgress } from '@mui/material';
 
 function BetWallet({ stakeValue }) {
   const [openDialog, setOpenDailog] = useState();
@@ -22,6 +23,7 @@ function BetWallet({ stakeValue }) {
   const [stake, setStake] = useState(stakeValue || 1000);
   const [oddChange, setOddChange] = useState(true);
   const [totalSport, setTotalSport] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -91,12 +93,14 @@ function BetWallet({ stakeValue }) {
 
   const handlePlaceBet = async () => {
     if (isLoggedIn()) {
+      setIsLoading(true);
       const data = {
         stake: stake,
         acceptOddsChange: oddChange,
         bets: betData,
       };
       const response = await postReq('/users/me/bet-slips', data);
+      setIsLoading(false);
       if (response.status) {
         dispatch(fetchBetDetailsAction([]));
         toast.success('Congrats ! Bet place successfully');
@@ -353,15 +357,15 @@ function BetWallet({ stakeValue }) {
           </span>
         </div>
         <div className="flex justify-between text-black">
-          <span className="text-12">Net Amount (TZS)</span>
-          <span className="text-12">
-            {netAmount === 'NaN' ? 0 : formatNumber(netAmount)}
-          </span>
-        </div>
-        <div className="flex justify-between text-black">
           <span className="text-12">Possible winnings (TZS)</span>
           <span className="text-12">
             {calculation == 'NaN' ? 0 : formatNumber(calculation)}
+          </span>
+        </div>
+        <div className="flex justify-between text-black">
+          <span className="text-12">Net Amount (TZS)</span>
+          <span className="text-12">
+            {netAmount === 'NaN' ? 0 : formatNumber(netAmount)}
           </span>
         </div>
       </div>
@@ -374,8 +378,14 @@ function BetWallet({ stakeValue }) {
         </button>
         <button
           onClick={handlePlaceBet}
-          className="border-[1px] h-10 ml-3 text-gray-900 border-yellow w-52 hover:text-white hover:bg-yellow text-14 font-[700] rounded-md"
+          disabled={isLoading}
+          className={`${
+            isLoading
+              ? 'bg-lightestgray hover:bg-lightestgray border-lightestgray  '
+              : ''
+          } border-[1px] h-10 ml-3 text-gray-900 border-yellow w-52 hover:text-white hover:bg-yellow text-14 font-[700] rounded-md`}
         >
+          {isLoading && <CircularProgress color="inherit" size={20} />}
           PLACE BET
         </button>
       </div>
