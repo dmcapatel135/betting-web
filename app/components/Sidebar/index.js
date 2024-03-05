@@ -197,14 +197,18 @@ function Sidebar({
                               ></i>
                             </span>
                             {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
-                            <span className="text-12 mx-2 font-[500] text-black">
+                            <span className="text-10 mx-2 font-[500] text-black">
                               {item.name}
                             </span>
                           </div>
-                          <span className="text-12 font-[500]">
-                            {item.events}
-                          </span>
-                          <span>{reactIcons.arrowdown}</span>
+                          <div className="flex items-center">
+                            <span className="text-12 font-[500]">
+                              {item.events}
+                            </span>
+                            <span className="text-12 pl-2">
+                              {reactIcons.arrowdown}
+                            </span>
+                          </div>
                         </div>
                         {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>

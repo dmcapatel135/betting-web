@@ -42,7 +42,6 @@ const OuterLayout = () => {
       setSportId(1);
       setTab(2);
     } else if (params.get('sId') && params.get('eId')) {
-      console.log('-------working ');
       setSelectTournament(params.get('eId'));
       setSportId(params.get('sId'));
     } else if (params.get('sId')) {
