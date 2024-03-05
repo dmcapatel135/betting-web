@@ -1,9 +1,15 @@
 export const tabsName = [
-  { id: 1, tabName: 'POPULAR MATCH' },
-  { id: 2, tabName: 'TODAYs MATCHES', filterName: new Date() },
-  { id: 3, tabName: 'UPCOMING MATCHES', filterName: '' },
+  { id: 1, path: '/dashboard/popular', tabName: 'POPULAR MATCH' },
+  { id: 2, path: '/', tabName: 'TODAYs MATCHES', filterName: new Date() },
+  {
+    id: 3,
+    path: '/dashboard/upcoming',
+    tabName: 'UPCOMING MATCHES',
+    filterName: '',
+  },
   {
     id: 4,
+    path: '/dashboard/live-now',
     tabName: 'LIVE NOW',
     filterName: 'true',
     img: '/images/bikoicon/liveyellow.png',

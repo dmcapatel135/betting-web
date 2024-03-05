@@ -215,7 +215,7 @@ export const countryNameList =
   // ];
   [
     { name: 'United Kingdom', flag: '🇬🇧', code: 'GB', dial_code: '+44' },
-    { name: 'International', flag: '🌎', code: 'INT', dial_code: '+44' },
+    // { name: 'International', flag: '🌎', code: 'INT', dial_code: '+44' },
     { name: 'USA', flag: '🇺🇸', code: 'US', dial_code: '+1' },
     { name: 'Afghanistan', flag: '🇦🇫', code: 'AF', dial_code: '+93' },
     { name: 'Åland Islands', flag: '🇦🇽', code: 'AX', dial_code: '+358' },

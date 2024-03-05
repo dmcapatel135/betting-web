@@ -41,6 +41,12 @@ const OuterLayout = () => {
     } else if (window.location.pathname == '/') {
       setSportId(1);
       setTab(2);
+    } else if (params.get('sId') && params.get('eId')) {
+      console.log('-------working ');
+      setSelectTournament(params.get('eId'));
+      setSportId(params.get('sId'));
+    } else if (params.get('sId')) {
+      setSportId(params.get('sId'));
     }
   }, [sId, params]);
 
@@ -60,9 +66,9 @@ const OuterLayout = () => {
     } else if (sId) {
       navigate(`/dashboard?sId=${sId}`);
     } else if (eId) {
-      navigate(`/dashboard&eId=${eId}`);
+      navigate(`/dashboard?eId=${eId}`);
     }
-  }, [sId, eId, navigate]);
+  }, [sId, eId, navigate, sportId]);
 
   // useEffect(() => {
   //   if (tab == 7) {
@@ -96,6 +102,7 @@ const OuterLayout = () => {
           : 1
       }/tournaments`,
     );
+    // let topLeague = response.data.filter((item) => item.topLeague == true);
     setAllTournaments(response.data);
   }, [sportId, searchParams]);
 

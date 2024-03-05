@@ -111,11 +111,13 @@ function BetCard({ item, sportId }) {
                   {moment(item?.startTime).format('ddd MM/DD')}
                 </span>
               </p>
-              <img
-                src="/images/bikoicon/vector.png"
-                alt="icon"
-                className="md:block hidden  ml-1"
-              />
+              {item.popular && (
+                <img
+                  src="/images/bikoicon/vector.png"
+                  alt="icon"
+                  className="md:block hidden  ml-1"
+                />
+              )}
             </div>
             <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
               {item?.competitors[0]?.name || 'N.A'}

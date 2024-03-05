@@ -112,8 +112,10 @@ import { BsAndroid2 } from 'react-icons/bs';
 import { FaReceipt } from 'react-icons/fa';
 import { MdHelp } from 'react-icons/md';
 import { AiOutlineTransaction } from 'react-icons/ai';
+import { IoMdCloseCircle } from 'react-icons/io';
 
 export const reactIcons = {
+  closecircle: <IoMdCloseCircle />,
   help: <MdHelp />,
   bets: <FaReceipt />,
   transaction: <AiOutlineTransaction />,

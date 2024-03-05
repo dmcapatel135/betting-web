@@ -5,7 +5,7 @@ import {
   TalkToUs,
 } from '@components';
 import HeroSection from '@components/HeroSection';
-import { getReq } from '@utils/apiHandlers';
+import { getReq, isLoggedIn } from '@utils/apiHandlers';
 import React, { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -13,6 +13,7 @@ function MyTransactions() {
   const [myTransactions, setMyTransactions] = useState([]);
   const [page, setPage] = useState();
   const [hasMore, setHasMore] = useState();
+  const [wallet, setWallet] = useState([]);
 
   const handleGetTransactions = useCallback(async () => {
     const response = await getReq('/users/me/transactions');
@@ -33,6 +34,19 @@ function MyTransactions() {
     setPage(page + 1);
     handleGetTransactions();
   };
+
+  const getWalletBalance = useCallback(async () => {
+    const response = await getReq('/users/me/wallet');
+    if (response.status) {
+      setWallet(response.data);
+    }
+  }, [setWallet]);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      getWalletBalance();
+    }
+  }, [getWalletBalance]);
 
   return (
     <div className="grid grid-cols-12">
@@ -55,7 +69,7 @@ function MyTransactions() {
                     Account balance
                   </p>
                   <h1 className="text-black text-14 xl:text-16 xxl:text-20 font-[800] font-roboto">
-                    16249.95
+                    TSH {wallet.amount}
                   </h1>
                 </div>
               </div>
@@ -63,7 +77,7 @@ function MyTransactions() {
             <div className="md:border-[1px] my-3 md:p-3 p-0 md:border-[#A3A3A3]  md:shadow-md md:rounded-[8px]">
               <table className="w-full">
                 <thead className="bg-gradient-color-2 text-10 md:text-14 h-10 md:rounded-[8px]">
-                  <th className="rounded-l-[8px]">DATE & TIME</th>
+                  <th className="rounded-l-[8px] w-[50px]">DATE & TIME</th>
                   <th>DESCRIPTION</th>
                   <th>CREDIT</th>
                   <th>DEBIT</th>
@@ -81,7 +95,7 @@ function MyTransactions() {
                       return (
                         <tr key={index}>
                           <td>2023-12-09 10:48</td>
-                          <td>Narration</td>
+                          <td>{item.narration}</td>
                           <td></td>
                           <td>50000</td>
                           <td>16250</td>

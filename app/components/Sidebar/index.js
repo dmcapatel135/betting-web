@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import { MyContext } from '@components/MyContext/MyContext';
@@ -7,6 +7,7 @@ import { reactIcons } from '@utils/icons';
 
 import { navigations } from './constants';
 import { MyContext } from '@components/MyContext/MyContext';
+import { getReq } from '@utils/apiHandlers';
 
 function Sidebar({
   isMobileSidebar,
@@ -19,9 +20,30 @@ function Sidebar({
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [searchParams] = useSearchParams(window.location.search);
+  const [leagues, setLeagues] = useState([]);
 
-  const { allTournaments, setSelectTournament, categories } =
-    useContext(MyContext);
+  const {
+    allTournaments,
+    setSelectTournament,
+    categories,
+    selectTournament,
+    sportId,
+  } = useContext(MyContext);
+
+  const getLeagues = useCallback(
+    async (query) => {
+      const response = await getReq(
+        `/sports/${sportId}/tournaments?${query}&haveEvents=true`,
+      );
+      setLeagues(response.data);
+      // console.log('------responset ', response.data);
+    },
+    [sportId],
+  );
+
+  useEffect(() => {
+    if (isOpenLeague) getLeagues(isOpenLeague);
+  }, [isOpenLeague, getLeagues]);
 
   return (
     <div
@@ -109,21 +131,21 @@ function Sidebar({
                   return (
                     <li
                       key={item.id}
-                      className="flex items-center cursor-pointer text-black "
+                      className={`flex items-center  hover:text-blue justify-between cursor-pointer text-black ${
+                        (searchParams.get('eId') || selectTournament) == item.id
+                          ? ' bg-yellow font-[600] text-white w-full '
+                          : 'text-black'
+                      } `}
                       onClick={() => {
-                        console.log('----select tourn');
                         setSelectTournament(item.id);
                       }}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
-                      <span
-                        className={`text-12 mx-2 ${
-                          searchParams.get('eId') == item.id
-                            ? ' bg-yellow font-[600] text-white w-full '
-                            : 'text-black'
-                        }  hover:text-blue rounded-sm pl-2 font-[500]`}
-                      >
+                      <span className="text-12 mx-2  rounded-sm pl-2 font-[500]">
                         {item.name}
+                      </span>
+                      <span className="text-12 pr-2 font-[500]">
+                        {item.events}
                       </span>
                     </li>
                   );
@@ -156,34 +178,54 @@ function Sidebar({
                     <div key={item.id} className="px-3">
                       <li
                         className="flex text-black cursor-pointer justify-between items-center"
-                        onClick={() => setIsOpenLeague(item.id)}
+                        onClick={() => {
+                          if (isOpenLeague == item.id) {
+                            setIsOpenLeague(null);
+                          } else {
+                            setIsOpenLeague(item.id);
+                          }
+                        }}
                       >
-                        <div className="flex items-center">
-                          <span>
-                            <i
-                              className={`fi fi-${
-                                item?.flag ? item?.flag?.toLowerCase() : 'un'
-                              }`}
-                              // className="fi fi-us"
-                            ></i>
+                        <div className="flex w-full justify-between items-center">
+                          <div>
+                            <span>
+                              <i
+                                className={`fi fi-${
+                                  item?.flag ? item?.flag?.toLowerCase() : 'un'
+                                }`}
+                                // className="fi fi-us"
+                              ></i>
+                            </span>
+                            {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
+                            <span className="text-12 mx-2 font-[500] text-black">
+                              {item.name}
+                            </span>
+                          </div>
+                          <span className="text-12 font-[500]">
+                            {item.events}
                           </span>
-                          {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
-                          <span className="text-12 mx-2 font-[500] text-black">
-                            {item.name}
-                          </span>
+                          <span>{reactIcons.arrowdown}</span>
                         </div>
                         {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>
                       {isOpenLeague == item.id &&
-                        item?.league_list.map((items) => {
+                        leagues?.map((items) => {
                           return (
-                            <div key={items.id} className="px-5">
+                            <div
+                              onClick={() => setSelectTournament(items.id)}
+                              key={items.id}
+                              className={`px-5 cursor-pointer ${
+                                items.id == selectTournament
+                                  ? 'bg-yellow text-white'
+                                  : 'bg-white'
+                              } hover:text-blue`}
+                            >
                               <li className="flex justify-between">
                                 <span className="text-12 font-[500]">
-                                  {items.league}
+                                  {items.name}
                                 </span>
                                 <span className="text-12 font-[500]">
-                                  {items.total}
+                                  {items.events}
                                 </span>
                               </li>
                             </div>

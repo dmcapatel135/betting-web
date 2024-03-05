@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ import { reactIcons } from '@utils/icons';
 import { Drawer } from '@mui/material';
 import { images } from '@utils/images';
 import { useAuth } from '@hooks';
-import { isLoggedIn } from '@utils/apiHandlers';
+import { getReq, isLoggedIn } from '@utils/apiHandlers';
 import { useSelector } from 'react-redux';
 import { SelectImage } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
@@ -96,27 +96,27 @@ const menuList = [
     active_icon: '',
     path: '/dashboard/how-to-play',
   },
-  {
-    id: 6,
-    title: 'DOWNLOAD APP',
-    icon: reactIcons.android,
-    active_icon: '',
-    path: '/dashboard/how-to-play',
-  },
-  {
-    id: 7,
-    title: 'NEWS',
-    icon: reactIcons.news,
-    active_icon: '',
-    path: '/dashboard/how-to-play',
-  },
-  {
-    id: 8,
-    title: 'MY ACCOUNT',
-    icon: reactIcons.myAccount,
-    active_icon: '',
-    path: '/dashboard/how-to-play',
-  },
+  // {
+  //   id: 6,
+  //   title: 'DOWNLOAD APP',
+  //   icon: reactIcons.android,
+  //   active_icon: '',
+  //   path: '/dashboard/how-to-play',
+  // },
+  // {
+  //   id: 7,
+  //   title: 'NEWS',
+  //   icon: reactIcons.news,
+  //   active_icon: '',
+  //   path: '/dashboard/how-to-play',
+  // },
+  // {
+  //   id: 8,
+  //   title: 'MY ACCOUNT',
+  //   icon: reactIcons.myAccount,
+  //   active_icon: '',
+  //   path: '/dashboard/how-to-play',
+  // },
   {
     id: 9,
     title: 'LOGOUT',
@@ -137,8 +137,37 @@ const Navbar = ({ tab, setTab }) => {
   const bets = useSelector((state) => state.bet.selectedBet);
   const [selectValue, setSelectValue] = useState();
   const [select, setSelect] = useState(false);
+  const [search, setSearch] = useState();
+  const [searchData, setSearchData] = useState({});
+  const [event, setEvent] = useState();
 
-  const { setSelectTournament, wallet } = useContext(MyContext);
+  const { setSelectTournament, wallet, setSportId } = useContext(MyContext);
+
+  const getSearchEventTournament = async (query) => {
+    const response = await getReq(`/search?search=${query}`);
+    setSearchData(response.data);
+  };
+
+  useEffect(() => {
+    if (search?.length > 2) {
+      getSearchEventTournament(search);
+    } else {
+      setSearchData({});
+    }
+  }, [search]);
+
+  useEffect(() => {
+    if (event) {
+      navigate(
+        `/dashboard/single-bets/${event.id}/${
+          event?.competitors[0]?.name + ' vs ' + event?.competitors[1]?.name
+        }`,
+      );
+      setSearchData({});
+      setEvent();
+      setSearch('');
+    }
+  }, [navigate, event]);
 
   return (
     <nav>
@@ -164,14 +193,97 @@ const Navbar = ({ tab, setTab }) => {
             <div className="relative w-full">
               <input
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search for events and tournaments"
-                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-full pl-10 bg-green border-[1px] text-14 border-lightgray rounded-[8px] outline-none"
+                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-full px-10 bg-green border-[1px] text-14 border-lightgray rounded-[8px] outline-none"
               />
               <div className="bg-blue">
                 <span className="absolute text-white  ay-center left-1 top-3 lg:top-4 text-16 lg:text-[20px]">
                   {reactIcons.search}
                 </span>
               </div>
+              {search && (
+                <div className="bg-blue">
+                  <span
+                    onClick={() => {
+                      setSearchData({});
+                      setSearch('');
+                    }}
+                    className="absolute text-white  ay-center right-1 cursor-pointer top-3 lg:top-4 text-16 lg:text-[20px]"
+                  >
+                    {reactIcons.closecircle}
+                  </span>
+                </div>
+              )}
+              {Object.values(searchData).length > 0 && (
+                <div className="bg-white p-3 text-black w-full top-10 shadow-md rounded-sm max-h-fit min-h-20 absolute z-30">
+                  <div>
+                    <div className="text-black">
+                      <span className="text-blue text-14 font-[600]">
+                        EVENTS
+                      </span>
+                    </div>
+                    <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
+                      {searchData.events.map((item) => {
+                        return (
+                          <li
+                            key={item.id}
+                            onClick={() => setEvent(item)}
+                            className="text-black list-none cursor-pointer  hover:text-blue"
+                          >
+                            <span className="text-12 font-[400]">
+                              {item?.competitors[0]?.name +
+                                ' vs ' +
+                                item?.competitors[1]?.name}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </div>
+
+                    {searchData.events.length == 0 && (
+                      <div className="text-center">
+                        <span className="text-14 text-black my-2 text-[400]">
+                          No events found
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-black">
+                      <span className="text-blue text-14 font-[600]">
+                        TOURNAMENTS
+                      </span>
+                    </div>
+                    <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
+                      {searchData.tournaments.map((item) => {
+                        return (
+                          <li
+                            key={item.id}
+                            onClick={() => {
+                              setSelectTournament(item.id);
+                              setSportId(item.sport.id);
+                              setSearchData({});
+                              setSearch('');
+                            }}
+                            className="text-black list-none cursor-pointer py-1"
+                          >
+                            <span className="text-12">{item.tournament}</span>
+                          </li>
+                        );
+                      })}
+                    </div>
+                    {searchData.tournaments.length == 0 && (
+                      <div className="text-center">
+                        <span className="text-14 text-black font-[400] my-2">
+                          No tournaments found
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
             {/* </div> */}
           </div>
@@ -224,7 +336,7 @@ const Navbar = ({ tab, setTab }) => {
             {/* <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
             </select> */}
-            <div className=" hidden md:block md:order-2">
+            <div className="w-32 hidden md:block md:order-2">
               <SelectImage
                 optionList={optionList}
                 selectValue={selectValue}
@@ -267,51 +379,6 @@ const Navbar = ({ tab, setTab }) => {
                             </li>
                           );
                         })}
-                        {/* <li
-                          onClick={() => {
-                            setTab(null);
-                            navigate('/dashboard/my-bets');
-                          }}
-                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        >
-                          My Bets
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTab(null);
-                            navigate('/dashboard/deposit');
-                          }}
-                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        >
-                          Deposit
-                        </li>
-                        <li
-                          onClick={() => {
-                            setTab(null);
-                            navigate('/dashboard/withdraw');
-                          }}
-                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                        >
-                          Withdraw
-                        </li>
-                        <li
-                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                          onClick={() => {
-                            setTab(null);
-                            navigate('/dashboard/my-transactions');
-                          }}
-                        >
-                          Transactions
-                        </li>
-                        <li className="py-1 hover:bg-gradient-color-1 hover:text-white px-3">
-                          Help
-                        </li>
-                        <li
-                          className="py-1 hover:bg-gradient-color-1 hover:text-white px-3"
-                          onClick={() => logout()}
-                        >
-                          Logout
-                        </li> */}
                       </ul>
                     </div>
                   </div>

@@ -56,7 +56,13 @@ function SportsMenu() {
   //get to tournaments according to sports
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(`/sports/${sportId}/tournaments`);
-    setAllTournaments(response.data);
+    if (sportId == 1)
+      setAllTournaments(
+        response.data?.filter((item) => item.topLeague == true),
+      );
+    else {
+      setAllTournaments(response.data);
+    }
   }, [sportId]);
 
   useEffect(() => {
