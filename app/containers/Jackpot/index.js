@@ -14,11 +14,12 @@ import {
 import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
 import { CircularProgress } from '@mui/material';
-import { getReq, postReq } from '@utils/apiHandlers';
+import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const TabsName = [
   {
@@ -55,15 +56,15 @@ function Jackpot() {
   const [pageSize, setPageSize] = useState(10);
   const [stakeValue, setStakeValue] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  // const [jackpotEvent, setJackpotEvent] = useState();
   const [ticket, setTicket] = useState(0);
   const [finishedJackpot, setFinishedJackpot] = useState([]);
   const [jackpotLoading, setJackpotLoading] = useState(false);
   const [jackpotData, setJackpotData] = useState([]);
   const [placeJackpotLoading, setPlaceJackpotLoading] = useState(false);
-  // const [bets, setBets] = useState([]);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleGetJackpotFixtures = async (jackpotEventId) => {
     setIsLoading(true);
@@ -165,8 +166,6 @@ function Jackpot() {
     }
   }, [openCard, dispatch]);
 
-  // console.log('------jackpot ', jackpotEvent);
-
   const handleClearAllBet = () => {
     dispatch(fetchJackpotDetailsAction([]));
   };
@@ -214,21 +213,25 @@ function Jackpot() {
   }, [selectedJackpot, jackpotFixtures]);
 
   const handleBuyTicket = async (jackpotEventId) => {
-    setPlaceJackpotLoading(true);
-    const data = {
-      jackpotEventId: jackpotEventId,
-      acceptOddsChange: true,
-      bets: jackpotData,
-    };
+    if (isLoggedIn()) {
+      setPlaceJackpotLoading(true);
+      const data = {
+        jackpotEventId: jackpotEventId,
+        acceptOddsChange: true,
+        bets: jackpotData,
+      };
 
-    const response = await postReq('/users/me/bet-slips/jackpot', data);
-    setPlaceJackpotLoading(false);
-    if (response.status) {
-      dispatch(fetchJackpotDetailsAction([]));
-      setOpenCard(null);
-      toast.success('Congrats ! Jackpot bet place successfully');
-    } else if (response.error) {
-      toast.error(response.error.message);
+      const response = await postReq('/users/me/bet-slips/jackpot', data);
+      setPlaceJackpotLoading(false);
+      if (response.status) {
+        dispatch(fetchJackpotDetailsAction([]));
+        setOpenCard(null);
+        toast.success('Congrats ! Jackpot bet place successfully');
+      } else if (response.error) {
+        toast.error(response.error.message);
+      }
+    } else {
+      navigate('/login');
     }
   };
 

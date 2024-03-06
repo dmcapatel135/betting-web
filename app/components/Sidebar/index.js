@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { NavLink, useSearchParams } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import { MyContext } from '@components/MyContext/MyContext';
 
 import { reactIcons } from '@utils/icons';
 
@@ -16,11 +15,13 @@ function Sidebar({
   setIsOpenMenuList,
   isOpenMenuList,
 }) {
-  const [isOpenTournament, setIsOpenTournament] = useState(true);
+  const naviagte = useNavigate();
+  const [isOpenTournament, setIsOpenTournament] = useState(false);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [searchParams] = useSearchParams(window.location.search);
   const [leagues, setLeagues] = useState([]);
+  const [isOpenOtherCountry, setIsOpenOtherCountry] = useState(false);
 
   const {
     allTournaments,
@@ -28,6 +29,8 @@ function Sidebar({
     categories,
     selectTournament,
     sportId,
+    otherCountries,
+    setSportId,
   } = useContext(MyContext);
 
   const getLeagues = useCallback(
@@ -35,8 +38,7 @@ function Sidebar({
       const response = await getReq(
         `/sports/${sportId}/tournaments?${query}&haveEvents=true`,
       );
-      setLeagues(response.data);
-      // console.log('------responset ', response.data);
+      setLeagues(response.data.map((d) => ({ ...d, sportId })));
     },
     [sportId],
   );
@@ -44,6 +46,10 @@ function Sidebar({
   useEffect(() => {
     if (isOpenLeague) getLeagues(isOpenLeague);
   }, [isOpenLeague, getLeagues]);
+
+  const handleManageUrl = (path) => {
+    return `${path}${window.location.search}`;
+  };
 
   return (
     <div
@@ -74,9 +80,8 @@ function Sidebar({
                   end
                   onClick={() => {
                     setTab(item.id);
-                    setSelectTournament(null);
                   }}
-                  to={item.path}
+                  to={item.state ? handleManageUrl(item.path) : item.path}
                   className={({ isActive }) =>
                     `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
                       isActive
@@ -131,17 +136,19 @@ function Sidebar({
                   return (
                     <li
                       key={item.id}
-                      className={`flex items-center  hover:text-blue justify-between cursor-pointer text-black ${
+                      className={`flex items-center  hover:text-blue py-1 justify-between cursor-pointer text-black ${
                         (searchParams.get('eId') || selectTournament) == item.id
                           ? ' bg-yellow font-[600] text-white w-full '
                           : 'text-black'
                       } `}
                       onClick={() => {
                         setSelectTournament(item.id);
+                        setSportId(item.sportId);
+                        naviagte(`/?sId=${item.sportId}&eId=${item.id}`);
                       }}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
-                      <span className="text-12 mx-2  rounded-sm pl-2 font-[500]">
+                      <span className="text-12 mx-2 leading-5  rounded-sm pl-2 font-[500]">
                         {item.name}
                       </span>
                       <span className="text-12 pr-2 font-[500]">
@@ -160,6 +167,7 @@ function Sidebar({
             className="flex justify-between items-center cursor-pointer rounded-l-md h-10 px-3 bg-gradient-color-1 my-2"
             onClick={() => {
               setIsOpenTournament(false);
+              setIsOpenOtherCountry(false);
               setIsOpenpopularCountry(!isOpenpopularCountry);
             }}
           >
@@ -214,9 +222,16 @@ function Sidebar({
                       </li>
                       {isOpenLeague == item.id &&
                         leagues?.map((items) => {
+                          console.log('-------item ', items);
                           return (
                             <div
-                              onClick={() => setSelectTournament(items.id)}
+                              onClick={() => {
+                                setSelectTournament(items.id);
+                                setSportId(items.sportId);
+                                naviagte(
+                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                );
+                              }}
                               key={items.id}
                               className={`px-5 cursor-pointer ${
                                 items.id == selectTournament
@@ -244,12 +259,96 @@ function Sidebar({
         </div>
         {/* )} */}
         <div className="text-black pl-3">
-          <div className="flex justify-between cursor-pointer items-center rounded-l-md h-10 px-3 bg-gradient-color-2 my-2">
+          <div
+            onClick={() => {
+              setIsOpenTournament(false);
+              setIsOpenOtherCountry(!isOpenOtherCountry);
+              setIsOpenpopularCountry(false);
+            }}
+            className="flex justify-between cursor-pointer items-center rounded-l-md h-10 px-3 bg-gradient-color-2 my-2"
+          >
             <h className="text-white  text-12 leading-3 lg:leading-none lg:text-14 xxl:text-18 ">
               OTHER COUNTRIES
             </h>
             <span className="text-white">{reactIcons.arrowdown}</span>
           </div>
+          {isOpenOtherCountry && (
+            <div className="pl-2 overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
+              <ul>
+                {otherCountries.map((item) => {
+                  return (
+                    <div key={item.id} className="px-3">
+                      <li
+                        className="flex text-black cursor-pointer justify-between items-center"
+                        onClick={() => {
+                          if (isOpenLeague == item.id) {
+                            setIsOpenLeague(null);
+                          } else {
+                            setIsOpenLeague(item.id);
+                          }
+                        }}
+                      >
+                        <div className="flex w-full justify-between items-center">
+                          <div>
+                            <span>
+                              <i
+                                className={`fi fi-${
+                                  item?.flag ? item?.flag?.toLowerCase() : 'un'
+                                }`}
+                                // className="fi fi-us"
+                              ></i>
+                            </span>
+                            {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
+                            <span className="text-10 mx-2 font-[500] text-black">
+                              {item.name}
+                            </span>
+                          </div>
+                          <div className="flex items-center">
+                            <span className="text-12 font-[500]">
+                              {item.events}
+                            </span>
+                            <span className="text-12 pl-2">
+                              {reactIcons.arrowdown}
+                            </span>
+                          </div>
+                        </div>
+                        {/* <span>{reactIcons.arrowdown}</span> */}
+                      </li>
+                      {isOpenLeague == item.id &&
+                        leagues?.map((items) => {
+                          return (
+                            <div
+                              onClick={() => {
+                                setSelectTournament(items.id);
+                                setSportId(items.sportId);
+                                naviagte(
+                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                );
+                              }}
+                              key={items.id}
+                              className={`px-5 cursor-pointer ${
+                                items.id == selectTournament
+                                  ? 'bg-yellow text-white'
+                                  : 'bg-white'
+                              } hover:text-blue`}
+                            >
+                              <li className="flex justify-between">
+                                <span className="text-12 font-[500]">
+                                  {items.name}
+                                </span>
+                                <span className="text-12 font-[500]">
+                                  {items.events}
+                                </span>
+                              </li>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>

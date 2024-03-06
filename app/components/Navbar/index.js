@@ -302,8 +302,8 @@ const Navbar = ({ tab, setTab }) => {
               <button
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
                 onClick={() => {
-                  setTab(null);
-                  setSelectTournament(null);
+                  // setTab(null);
+                  // setSelectTournament(null);
                   navigate('/login');
                 }}
               >
@@ -313,8 +313,8 @@ const Navbar = ({ tab, setTab }) => {
             {isLoggedIn() ? (
               <button
                 onClick={() => {
-                  setSelectTournament(null);
-                  setTab(null);
+                  // setSelectTournament(null);
+                  // setTab(null);
                   navigate('/dashboard/deposit');
                 }}
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
@@ -325,8 +325,8 @@ const Navbar = ({ tab, setTab }) => {
               <button
                 className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 onClick={() => {
-                  setTab(null);
-                  setSelectTournament(null);
+                  // setTab(null);
+                  // setSelectTournament(null);
                   navigate('/join-now');
                 }}
               >
@@ -368,7 +368,7 @@ const Navbar = ({ tab, setTab }) => {
                             <li
                               key={item.title}
                               onClick={() => {
-                                setTab(null);
+                                // setTab(null);
                                 navigate(`${item.path}`);
                                 if (item.title == 'LOGOUT') logout();
                               }}
@@ -473,7 +473,11 @@ const Navbar = ({ tab, setTab }) => {
                   <NavLink
                     key={index}
                     end
-                    // onClick={() => setIsDrawerOpen(false)}
+                    // onClick={() => {
+                    //   setSelectTournament(null);
+                    //   setTab(null);
+                    //   setSportId(null);
+                    // }}
                     to={item.path}
                     className={({ isActive }) =>
                       `px-3 py-2 lg:py-2 md:text-12 xxl:text-14 h-10 text-black text-end  ml-[100px] cursor-pointer  2xl:text-base ${

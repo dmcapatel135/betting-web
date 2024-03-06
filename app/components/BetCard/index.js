@@ -1,19 +1,19 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-// import { Link } from 'react-router-dom';
 import { reactIcons } from '@utils/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
 function BetCard({ item, sportId }) {
+  const [searchParams] = useSearchParams();
+
   const [bets, setBets] = useState([]);
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const dispatch = useDispatch();
   const [data, setData] = useState({});
-  // const { statusId } = useParams();
   const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
 
@@ -134,7 +134,7 @@ function BetCard({ item, sportId }) {
         </div>
         <div className="flex-1 border-black">
           <div className="flex justify-center md:justify-end">
-            {sportId == 1 && (
+            {(sportId || searchParams.get('sId')) == 1 && (
               <>
                 <div className="w-36  ">
                   <div
@@ -196,7 +196,7 @@ function BetCard({ item, sportId }) {
                       })}
                     {(data['1x2']?.outcomes?.length == 0 ||
                       data['1x2'] == undefined) && (
-                      <>
+                      <div className="w-32 md:w-36">
                         <div className="flex justify-between">
                           <button className="bg-[#EAEAEA] flex justify-between  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-[40px] md:w-[45px] h-6 md:h-8  py-2 px-3">
                             -
@@ -208,7 +208,7 @@ function BetCard({ item, sportId }) {
                             -
                           </button>
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -361,7 +361,7 @@ function BetCard({ item, sportId }) {
                 </div>
               </>
             )}
-            {sportId == 2 && (
+            {(sportId || searchParams.get('sId')) == 2 && (
               <div className="w-36 md:w-40 ">
                 <div
                   className="w-32 md:w-36 
@@ -436,7 +436,7 @@ function BetCard({ item, sportId }) {
                 </div>
               </div>
             )}
-            {sportId == 10 && (
+            {(sportId || searchParams.get('sId')) == 10 && (
               <div className="w-32">
                 <div
                   className="w-24 md:w-24
@@ -508,7 +508,7 @@ function BetCard({ item, sportId }) {
                 </div>
               </div>
             )}
-            {sportId == 12 && (
+            {(sportId || searchParams.get('sId')) == 12 && (
               <div className="w-36 md:w-40 ">
                 <div
                   className="w-32 md:w-36 
@@ -583,7 +583,7 @@ function BetCard({ item, sportId }) {
                 </div>
               </div>
             )}
-            {sportId == 21 && (
+            {(sportId || searchParams.get('sId')) == 21 && (
               <div className="w-36">
                 <div
                   className="w-24 md:w-24
@@ -661,7 +661,7 @@ function BetCard({ item, sportId }) {
                 </div>
               </div>
             )}
-            {sportId == 5 && (
+            {(sportId || searchParams.get('sId')) == 5 && (
               <>
                 <div className="w-32">
                   <div

@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  // Navigate,
-  Outlet,
-  // useLocation,
-  useNavigate,
-  useSearchParams,
-  useParams,
-} from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { Footer, Navbar } from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
@@ -14,95 +7,23 @@ import { getReq, isLoggedIn } from '@utils/apiHandlers';
 import { countryNameList } from '@api/country';
 
 const OuterLayout = () => {
-  const { sId, eId } = useParams();
   const [params] = useSearchParams();
-  const [sportId, setSportId] = useState();
-  const [selectTournament, setSelectTournament] = useState();
+  const [sportId, setSportId] = useState(params.get('sId') || 1);
+  const [selectTournament, setSelectTournament] = useState(
+    params.get('eId') || null,
+  );
   const [allTournaments, setAllTournaments] = useState();
   const [categories, setCategories] = useState();
   const [tab, setTab] = useState();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [wallet, setWallet] = useState();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (
-      window.location.pathname == '/' &&
-      params.get('sId') &&
-      params.get('eId')
-    ) {
-      setSelectTournament(params.get('eId'));
-      setSportId(params.get('sId'));
-    } else if (window.location.pathname == '/' && params.get('eId')) {
-      // setSportId(1);
-    } else if (window.location.pathname == '/' && params.get('sId')) {
-      setSportId(params.get('sId'));
-    } else if (window.location.pathname == '/') {
-      setSportId(1);
-      setTab(2);
-    } else if (params.get('sId') && params.get('eId')) {
-      setSelectTournament(params.get('eId'));
-      setSportId(params.get('sId'));
-    } else if (params.get('sId')) {
-      setSportId(params.get('sId'));
-    }
-  }, [sId, params]);
-
-  useEffect(() => {
-    if (sportId & selectTournament) {
-      setSearchParams({ sId: sportId, eId: selectTournament });
-    } else if (sportId) {
-      setSearchParams({ sId: sportId });
-    } else if (selectTournament) {
-      navigate(`/dashboard?eId=${selectTournament}`);
-    }
-  }, [selectTournament, sportId, navigate, setSearchParams, sId, eId]);
-
-  useEffect(() => {
-    if (eId & sId) {
-      navigate(`/dashboard?sId=${sId}&eId=${eId}`);
-    } else if (sId) {
-      navigate(`/dashboard?sId=${sId}`);
-    } else if (eId) {
-      navigate(`/dashboard?eId=${eId}`);
-    }
-  }, [sId, eId, navigate, sportId]);
-
-  // useEffect(() => {
-  //   if (tab == 7) {
-  //     navigate(`/dashboard/bet-slip/${tab}`);
-  //   } else if (tab == 5) {
-  //     setSelectTournament(null);
-  //     navigate('/dashboard/jackpot');
-  //   } else if (tab == 8) {
-  //     navigate(`/dashboard/how-to-play/${tab}`);
-  //   } else if (sportId && tab && selectTournament) {
-  //     navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
-  //   } else if (sportId && tab) {
-  //     navigate(`/dashboard/${sportId}/${tab}`);
-  //   } else if (selectTournament) {
-  //     navigate(`/dashboard/${selectTournament}`);
-  //   }
-  // }, [sportId, navigate, tab, selectTournament]);
-
-  // useEffect(() => {
-  //   if (sportId && selectTournament && tab)
-  //     navigate(`/dashboard/${sportId}/${tab}/${selectTournament}`);
-  // }, [sportId, tab, selectTournament, navigate]);
+  const [otherCountries, setOtherCountries] = useState([]);
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(
-      `/sports/${
-        sportId
-          ? sportId
-          : searchParams.get('sId')
-          ? searchParams.get('sId')
-          : 1
-      }/tournaments`,
+      `/sports/${sportId ?? searchParams.get('sId') ?? 1}/tournaments`,
     );
-    // let topLeague = response.data.filter((item) => item.topLeague == true);
-    setAllTournaments(response.data);
+    setAllTournaments(response.data.map((d) => ({ ...d, sportId })));
   }, [sportId, searchParams]);
 
   useEffect(() => {
@@ -111,21 +32,18 @@ const OuterLayout = () => {
 
   const getAllCategories = useCallback(async () => {
     const response = await getReq(
-      `/sports/${
-        sportId
-          ? sportId
-          : searchParams.get('sId')
-          ? searchParams.get('sId')
-          : 1
-      }/categories`,
+      `/sports/${sportId ?? searchParams.get('sId') ?? 1}/categories`,
     );
-    const mergedCategories = response?.data?.map((category) => {
+    const categoriesWithFlags = response?.data?.map((category) => {
       const country = countryNameList.find(
         (country) => country.name === category.name,
       );
       return { ...category, flag: country?.code };
     });
-    setCategories(mergedCategories);
+    setCategories(categoriesWithFlags.filter((item) => item.popular == true));
+    setOtherCountries(
+      categoriesWithFlags.filter((item) => item.popular == false),
+    );
   }, [sportId, searchParams]);
 
   useEffect(() => {
@@ -158,6 +76,7 @@ const OuterLayout = () => {
           setTab,
           categories,
           wallet,
+          otherCountries,
         }}
       >
         <Navbar tab={tab} setTab={setTab} />
@@ -167,11 +86,10 @@ const OuterLayout = () => {
               tab={tab}
               setTab={setTab}
               setSelectTournament={setSelectTournament}
-            />{' '}
+            />
           </div>
           <div className="md:col-span-10 col-span-full bg-white">
-            {' '}
-            <Outlet />{' '}
+            <Outlet />
           </div>
         </div>
         <Footer />

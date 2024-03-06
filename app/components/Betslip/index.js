@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Balance } from '@components';
-// import { Link } from 'react-router-dom';
 import { isLoggedIn } from '@utils/apiHandlers';
-import { MyContext } from '@components/MyContext/MyContext';
 import { useNavigate } from 'react-router-dom';
 import { images } from '@utils/images';
 
 function BetSlip() {
-  const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
 
   return (
@@ -21,7 +18,6 @@ function BetSlip() {
           <div className="flex my-2">
             <button
               onClick={() => {
-                setTab(null);
                 navigate('/login');
               }}
               className="h-[32px] xxl:h-[48px] w-[60px] xxl:w-[110px] border-[1px] border-[#E7A024] text-12 xxl:text-18 hover:text-white bg-white text-black  hover:bg-gradient-color-2   rounded-[6px]"
@@ -31,7 +27,6 @@ function BetSlip() {
 
             <button
               onClick={() => {
-                setTab(null);
                 navigate('/join-now');
               }}
               className="h-[32px] xxl:h-[48px] w-[70px] xxl:w-[110px] text-12 xxl:text-18 bg-white ml-3 text-black  border-[1px] border-[#E7A024] hover:bg-gradient-color-2 hover:text-white rounded-[6px]"
@@ -55,17 +50,21 @@ function BetSlip() {
       </div>
       <div className="text-center">
         <div className="my-5 flex justify-center px-3 ">
-          <img src={images.emptybetslip} alt="beticon" className="rounded-md" />
+          <img
+            src={images.emptybetslip}
+            alt="beticon"
+            className="rounded-md h-56"
+          />
         </div>
         {/* <span className="text-14 font-[600] text-[#BD1842]">
           Betslip is empty
         </span> */}
       </div>
-      <div className="my-5 px-3">
+      {/* <div className="my-5 px-3">
         <button className="py-2 bg-gradient-color-2 w-full rounded-[8px]">
           Learn How To Place Bet
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

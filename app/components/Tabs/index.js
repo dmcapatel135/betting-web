@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { MyContext } from '@components/MyContext/MyContext';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Tabs({ popularSports }) {
   const { setSportId, sportId } = useContext(MyContext);
   const [searchParams] = useSearchParams(window.location.search);
+  const navigate = useNavigate();
+
+  console.log('-----search paramas ', searchParams.get('sId'), sportId);
 
   return (
     <div className="border-[1px] border-bluewhale mt-3 px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
@@ -14,18 +17,19 @@ function Tabs({ popularSports }) {
           <div
             key={item.id}
             className={`${
-              (searchParams.get('sId') || sportId) == item.id
+              (sportId || searchParams.get('sId')) == item.id
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black '
             } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-fit rounded-lg`}
             onClick={() => {
               setSportId(item.id);
+              navigate(`${window.location.pathname}?sId=${item.id}`);
             }}
           >
             <div className="flex  h-12  md:justify-center items-center">
               <img
                 src={
-                  (searchParams.get('sId') || sportId) == item.id
+                  (sportId || searchParams.get('sId')) == item.id
                     ? item.active_icon
                     : item.icon
                 }

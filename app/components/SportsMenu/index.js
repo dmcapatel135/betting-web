@@ -8,7 +8,7 @@ import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function SportsMenu() {
   const [allSports, setAllSports] = useState();
@@ -20,7 +20,8 @@ function SportsMenu() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [queries, setQueries] = useState();
-  const [searchParams] = useSearchParams(window.location.search);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const {
     sportId,
@@ -179,11 +180,14 @@ function SportsMenu() {
               <div
                 key={item.id}
                 className={`${
-                  tab == item.id
+                  window.location.pathname == item.path
                     ? 'text-white border-b-[3px] border-yellow'
                     : 'text-white  w-36'
                 } mx-3 flex-1 flex items-center justify-center text-center`}
-                onClick={() => setTab(item.id)}
+                onClick={() => {
+                  setTab(item.id);
+                  navigate(`${item.path}`);
+                }}
               >
                 {/* {item.img && <img src={item.img} alt="icon" />} */}
                 <span className="text-12 sm:text-12 cursor-pointer lg:text-12 xxl:text-14 text-blue font-[700]">
@@ -280,69 +284,75 @@ function SportsMenu() {
           </div>
         </div>
         <div className="flex-1 border-black">
-          <div className="flex justify-center md:justify-end">
-            {marketsName
-              .filter((item) => item.sportId == sportId)[0]
-              ?.marketName.map((items, index) => {
-                return (
-                  <div
-                    key={index}
-                    // className={`${
-                    //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
-                    // } flex-1 `}
-                    className={`${
-                      items.name == 'Winner (incl. super over)'
-                        ? 'w-36'
-                        : items?.option?.length == 2
-                        ? 'w-32'
-                        : 'w-36'
-                    } ${index > 0 ? 'hidden xl:block' : ''} `}
-                  >
+          {allFixtures.length > 0 && (
+            <div className="flex justify-center md:justify-end">
+              {marketsName
+                .filter(
+                  (item) =>
+                    item.sportId == (sportId || searchParams.get('sId')),
+                )[0]
+                ?.marketName.map((items, index) => {
+                  return (
                     <div
-                      className={`flex ${
-                        marketsName.filter((item) => item.sportId == sportId)[0]
-                          ?.marketName.length == 1
-                          ? 'justify-between  md:justify-end md:mx-4'
-                          : 'justify-center'
-                      }`}
+                      key={index}
+                      // className={`${
+                      //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
+                      // } flex-1 `}
+                      className={`${
+                        items.name == 'Winner (incl. super over)'
+                          ? 'w-36'
+                          : items?.option?.length == 2
+                          ? 'w-32'
+                          : 'w-36'
+                      } ${index > 0 ? 'hidden xl:block' : ''} `}
                     >
-                      <div className="mx-auto md:mx-0">
-                        <div className="w-full flex justify-center">
-                          <h1 className="text-12 md:text-12 lg:text-[10px] xxl:text-14 font-[800] md:block text-black  mb-2">
-                            {items.name === 'Total'
-                              ? 'OVER/UNDER(2.5)'
-                              : items.name}
-                          </h1>
-                        </div>
-                        <div
-                          // className={`${items.option.length ==} flex justify-between`}
-                          className={`${
-                            items.option.length == 3
-                              ? 'w-32 md:w-36'
-                              : 'w-24 md:w-24'
-                          }  flex ${
-                            index == 2 ? '' : 'mx-auto'
-                          } justify-between`}
-                        >
-                          {items.option?.map((itemss, innerIndex) => {
-                            return (
-                              <div
-                                key={innerIndex}
-                                className="border-[1px]  flex justify-center items-center  md:h-8 h-6 w-[40px] md:w-[45px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
-                              >
-                                <span className="text-gray-900  md:text-12 lg:text-12 font-[500] text-10">
-                                  {itemss || 1}
-                                </span>
-                              </div>
-                            );
-                          })}
+                      <div
+                        className={`flex ${
+                          marketsName.filter(
+                            (item) => item.sportId == sportId,
+                          )[0]?.marketName.length == 1
+                            ? 'justify-between  md:justify-end md:mx-4'
+                            : 'justify-center'
+                        }`}
+                      >
+                        <div className="mx-auto md:mx-0">
+                          <div className="w-full flex justify-center">
+                            <h1 className="text-12 md:text-12 lg:text-[10px] xxl:text-14 font-[800] md:block text-black  mb-2">
+                              {items.name === 'Total'
+                                ? 'OVER/UNDER(2.5)'
+                                : items.name}
+                            </h1>
+                          </div>
+                          <div
+                            // className={`${items.option.length ==} flex justify-between`}
+                            className={`${
+                              items.option.length == 3
+                                ? 'w-32 md:w-36'
+                                : 'w-24 md:w-24'
+                            }  flex ${
+                              index == 2 ? '' : 'mx-auto'
+                            } justify-between`}
+                          >
+                            {items.option?.map((itemss, innerIndex) => {
+                              return (
+                                <div
+                                  key={innerIndex}
+                                  className="border-[1px]  flex justify-center items-center  md:h-8 h-6 w-[40px] md:w-[45px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                                >
+                                  <span className="text-gray-900  md:text-12 lg:text-12 font-[500] text-10">
+                                    {itemss || 1}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-          </div>
+                  );
+                })}
+            </div>
+          )}
         </div>
         <div className="flex-grow-0">
           <div className="  h-5 w-16 text-black"></div>
