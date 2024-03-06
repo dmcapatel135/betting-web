@@ -430,7 +430,7 @@ function SportsMenu() {
         </div>
       </div> */}
       {allFixtures.length > 0 && (
-        <div className=" mb-3 px-2">
+        <div className=" mb-20 px-2 ">
           <InfiniteScroll
             dataLength={allFixtures.length}
             next={fetchMoreData}

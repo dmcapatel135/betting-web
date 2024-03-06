@@ -36,7 +36,7 @@ function Sidebar({
   const getLeagues = useCallback(
     async (query) => {
       const response = await getReq(
-        `/sports/${sportId}/tournaments?${query}&haveEvents=true`,
+        `/sports/${sportId}/tournaments?categoryId=${query}&haveEvents=true`,
       );
       setLeagues(response.data.map((d) => ({ ...d, sportId })));
     },
@@ -222,7 +222,6 @@ function Sidebar({
                       </li>
                       {isOpenLeague == item.id &&
                         leagues?.map((items) => {
-                          console.log('-------item ', items);
                           return (
                             <div
                               onClick={() => {

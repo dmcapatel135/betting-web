@@ -21,7 +21,7 @@ function BetWallet({ stakeValue }) {
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
   const [stake, setStake] = useState(stakeValue || 1000);
-  const [oddChange, setOddChange] = useState(true);
+  const [oddChange, setOddChange] = useState(false);
   const [totalSport, setTotalSport] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
