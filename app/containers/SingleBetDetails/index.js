@@ -220,7 +220,7 @@ function SigleBetDetails() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 md:col-span-8">
+      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-2">
           <div className="h-fit text-black w-full bg-[#b9e6ea]">
             <div className="flex justify-center">
@@ -311,7 +311,7 @@ function SigleBetDetails() {
                   className="mySwiper"
                 >
                   <SwiperSlide className="pb-3">
-                    <div className="mx-5 w-[330px] md:w-[300px] h-44 mb-5  bg-[#b9e6ea] px-2">
+                    <div className="mx-5 w-[330px] md:w-[300px] 2xl:w-auto h-44 mb-5  bg-[#b9e6ea] px-2">
                       <div className="">
                         <div className="text-center">
                           <p className="text-gray-900 text-12">
@@ -962,7 +962,7 @@ function SigleBetDetails() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 pt-3 md:block hidden border-l-[1px] px-3 border-gray-700">
+      <div className="col-span-4 2xl:col-span-3 pt-3 md:block hidden border-l-[1px] px-3 border-gray-700">
         {/* <RightSideSection /> */}
         {bets?.length > 0 ? (
           <BetWallet selectedBet={selectedBet} />

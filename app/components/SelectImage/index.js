@@ -14,16 +14,16 @@ function SelectImage({
   }, [optionList, setSelectValue]);
 
   return (
-    <div className="relative mx-2">
+    <div className="relative">
       <div
         onClick={() => setSelect(!select)}
-        className="border-[1px] border-lightgray font-[400] md:font-[500] text-10 md:text-14 xxl:text-18 min-w-24 max-w-fit cursor-pointer justify-between rounded-[8px] h-[32px] bg-darkjunglegreen flex items-center"
+        className="border-[1px] border-lightgray font-[400] md:font-[500] text-10 md:text-14 xxl:text-18 min-w-24 2xl:min-w-[120px] max-w-fit cursor-pointer justify-between rounded-[8px] h-[32px] 2xl:h-[42px] bg-darkjunglegreen flex items-center"
       >
-        <div className="flex items-center">
+        <div className="flex items-center pl-1">
           <img src={selectValue?.icon} className="mx-1 w-4 h-4" alt="icon" />
           <span className="">{selectValue?.name}</span>
         </div>
-        <span className="mr-1 font-[800]">{reactIcons.arrowdown}</span>
+        <span className="pr-2 font-[800]">{reactIcons.arrowdown}</span>
       </div>
       {select && (
         <div className="absolute min-w-28 pr-3 max-w-fit border-[1px] top-11 rounded-md h-fit z-50 bg-white">

@@ -38,7 +38,7 @@ const Footer = () => {
                   </div>
                 </div>
                 <h1 className="text-14 md:text-16">
-                  Customer Care- Call 022 222 0100{' '}
+                  Customer Care- Call 0222 220 100{' '}
                 </h1>
               </div>
             </div>
@@ -60,7 +60,7 @@ const Footer = () => {
                 © 2023 All rights Reserved. BIKOSPORTS, a trade mark of MOBIBET
                 COMPANY LTD. TIN: 127-321-361. Reg. Company N: 118069 Tanzania,
                 Dar es Salaam. Office Address: 45 MIGOMBANI STREET 116, DAR ES
-                SALAAM, P.O.BOX 3254. Tel: 022 222 0100
+                SALAAM, P.O.BOX 3254. Tel: 0222 220 100
               </span>
             </div>
           </div>

@@ -163,13 +163,13 @@ function JoinNow() {
                       <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
                         Join Now!
                       </h1>
-                      <p className="text-12 text-[#3D3D3D] font-[400]">
+                      <p className="text-12 text-[#3D3D3D] font-[400] 2xl:text-16">
                         Please enter your details
                       </p>
                     </div>
                     <div className="px-2 md:px-4 lg:px-16">
                       <div className="my-2 text-left">
-                        <label className="text-gray-900 text-12">
+                        <label className="text-gray-900 text-12 2xl:text-14">
                           Your Mobile Number
                         </label>
                         <MobileInputField
@@ -186,7 +186,7 @@ function JoinNow() {
                         {renderError(error?.mobile)}
                       </div>
                       <div className="text-left my-2">
-                        <label className="text-gray-900 text-12">
+                        <label className="text-gray-900 text-12 2xl:text-14">
                           Password
                         </label>
                         <div className="relative text-left">
@@ -248,15 +248,15 @@ function JoinNow() {
                           onClick={() => setTerms(!terms)}
                           className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-12px]"
                         ></span>
-                        <span className="text-gray-900 text-10 md:text-12 md:ml-4 lg:ml-2 ">
+                        <span className="text-gray-900 text-10 md:text-12 2xl:text-14 md:ml-4 lg:ml-2 ">
                           By creating an account you accept the{' '}
                           <Link className="underline hover:text-yellow">
                             Terms and Conditions
                           </Link>
                         </span>
                         <div className="text-center">
-                          <p className="text-gray-900 text-10 md:text-12">
-                            Alerady have an account?{' '}
+                          <p className="text-gray-900 text-10 md:text-12 2xl:text-14">
+                            Already have an account?{' '}
                             <Link
                               to="/login"
                               className="underline hover:text-yellow text-10 md:text-12"
@@ -271,7 +271,7 @@ function JoinNow() {
                 ) : (
                   // <form onSubmit={}>
                   <div className="basis-full lg:basis-1/3 flex-center">
-                    <div className="max-w-[400px] p-3  mx-auto w-full">
+                    <div className="max-w-[400px] p-3  mx-auto w-full mt-10">
                       <div className="text-center">
                         <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
                           Verify your mobile!

@@ -68,13 +68,13 @@ function Login() {
                     <h1 className="text-[24px] md:text-[32px] py-2 text-[#3D3D3D] font-[700]">
                       Welcome Back!
                     </h1>
-                    <p className="text-12 text-[#3D3D3D] font-[400]">
+                    <p className="text-12 2xl:text-16 text-[#3D3D3D] font-[400]">
                       Please enter your details
                     </p>
                   </div>
                   <div className="px-2 md:px-16">
                     <div className="my-2 text-left">
-                      <label className="text-gray-900 text-12">
+                      <label className="text-gray-900 text-12 2xl:text-14">
                         Your Mobile Number
                       </label>
                       <MobileInputField
@@ -91,7 +91,9 @@ function Login() {
                       {renderError(error.emailOrMobile)}
                     </div>
                     <div className="text-left my-2">
-                      <label className="text-gray-900 text-12">Password</label>
+                      <label className="text-gray-900 text-12 2xl:text-14">
+                        Password
+                      </label>
                       <div className="relative text-left">
                         <input
                           type={isPasswordVisible ? 'text' : 'password'}
@@ -142,11 +144,11 @@ function Login() {
                       LOG IN
                     </button>
                     <div className="text-center my-2">
-                      <span className="text-gray-900 text-10 md:text-12">
+                      <span className="text-gray-900 text-10 md:text-12 2xl:text-14">
                         Don&apos;t have an Account?{' '}
                         <Link
                           to="/join-now"
-                          className="underline hover:text-yellow text-10 md:text-12"
+                          className="underline hover:text-yellow text-10 md:text-12 2xl:text-14"
                         >
                           JOIN NOW
                         </Link>

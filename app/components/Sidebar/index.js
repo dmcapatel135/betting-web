@@ -53,10 +53,10 @@ function Sidebar({
 
   return (
     <div
-      className={` min-h-screen h-full w-full   md:block bg-white ${
+      className={`border-r min-h-screen h-full w-full   md:block bg-gray-800 ${
         isMobileSidebar
-          ? 'border-r-[1px] border-black  bg-opacity-[0.53] bg-white backdrop-blur-[20px]'
-          : 'bg-white border-[1px] border-[#A3A3A3] pt-3'
+          ? ' border-black  bg-opacity-[0.53] bg-white backdrop-blur-[20px]'
+          : 'bg-white border-[#A3A3A3] pt-3'
       }`}
     >
       {isMobileSidebar && (
@@ -122,9 +122,9 @@ function Sidebar({
               setIsOpenpopularCountry(false);
             }}
           >
-            <h className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
+            <h3 className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               TOURNAMENTS
-            </h>
+            </h3>
             <span className="text-white">
               {isOpenTournament ? reactIcons.arrowup : reactIcons.arrowdown}
             </span>

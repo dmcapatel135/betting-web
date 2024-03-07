@@ -10,8 +10,8 @@ export const setAuthCookie = () => {
     isDevelopment
       ? 'test__user__isLoggedIn'
       : isProductionApp
-      ? '__user__isLoggedIn'
-      : `${APP_ENV}__user__isLoggedIn`,
+        ? '__user__isLoggedIn'
+        : `${APP_ENV}__user__isLoggedIn`,
     'true',
     { expires: 1 },
   );
@@ -22,8 +22,8 @@ export const removeAuthCookie = () => {
     isDevelopment
       ? 'test__user__isLoggedIn'
       : isProductionApp
-      ? '__user__isLoggedIn'
-      : `${APP_ENV}__user__isLoggedIn`,
+        ? '__user__isLoggedIn'
+        : `${APP_ENV}__user__isLoggedIn`,
     'true',
     { expires: 1 },
   );
@@ -35,8 +35,8 @@ export const isLoggedIn = () => {
       isDevelopment
         ? 'test__user__isLoggedIn'
         : isProductionApp
-        ? '__user__isLoggedIn'
-        : `${APP_ENV}__user__isLoggedIn`,
+          ? '__user__isLoggedIn'
+          : `${APP_ENV}__user__isLoggedIn`,
     ),
   );
 };

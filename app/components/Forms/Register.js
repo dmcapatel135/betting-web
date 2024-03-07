@@ -235,10 +235,10 @@ const Register = () => {
       {isOtpScreen && (
         <form onSubmit={handleRegister}>
           <div className="basis-full lg:basis-1/3 flex-center">
-            <div className="max-w-[400px] p-3  mx-auto w-full">
+            <div className="max-w-[400px] p-3  mx-auto w-full mt-10">
               <div className="text-center">
                 <h6 className="py-4">Verfiy your email ownership.</h6>
-                <p className="text-primary-yellow text-sm">
+                <p className="text-primary-yellow text-sm 2xl:text-14 pt-2">
                   We have sent you a 6 digit code, please enter to verify
                 </p>
                 <div className="flex justify-center gap-2 py-4">

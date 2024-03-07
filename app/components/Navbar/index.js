@@ -196,13 +196,11 @@ const Navbar = ({ tab, setTab }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search for events and tournaments"
-                className="h-[32px] lg:h-[32px] xxl:h-[48px] w-full px-10 bg-green border-[1px] text-14 border-lightgray rounded-[8px] outline-none"
+                className="placeholder:text-18 placeholder:text-slate-300 2xl:pt-1 h-[32px] lg:h-[32px] 2xl:h-[42px] w-full px-10 bg-green border-[1px] text-14 border-lightgray rounded-[8px] outline-none"
               />
-              <div className="bg-blue">
-                <span className="absolute text-white  ay-center left-1 top-3 lg:top-4 text-16 lg:text-[20px]">
-                  {reactIcons.search}
-                </span>
-              </div>
+              <span className="absolute text-white  ay-center left-2 text-16 lg:text-[20px]  2xl:text-[26px]">
+                {reactIcons.search}
+              </span>
               {search && (
                 <div className="bg-blue">
                   <span
@@ -289,7 +287,7 @@ const Navbar = ({ tab, setTab }) => {
           </div>
           <div
             onMouseLeave={() => setSelect(false)}
-            className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-evenly mx-2 md:mx-0"
+            className="lg:col-span-3 md:col-span-4  col-span-6 flex items-center justify-end gap-4 pr-4 mx-2 md:mx-0"
           >
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
@@ -300,7 +298,7 @@ const Navbar = ({ tab, setTab }) => {
               </div>
             ) : (
               <button
-                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
+                className="h-[24px] lg:h-[32px] 2xl:h-[42px] w-[60px] lg:w-[80px] 2xl:w-[110px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-gradient-color-2 hover:bg-black rounded-[8px] order-2 md:order-1"
                 onClick={() => {
                   // setTab(null);
                   // setSelectTournament(null);
@@ -317,13 +315,13 @@ const Navbar = ({ tab, setTab }) => {
                   // setTab(null);
                   navigate('/dashboard/deposit');
                 }}
-                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
+                className="h-[24px] lg:h-[32px] 2xl:h-[42px] w-[60px] lg:w-[80px] 2xl:w-[110px] border-[1px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
               >
                 Deposit
               </button>
             ) : (
               <button
-                className="h-[24px] lg:h-[32px] xxl:h-[48px] w-[60px] lg:w-[80px] xxl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
+                className="h-[24px] lg:h-[32px] 2xl:h-[42px] w-[60px] lg:w-[80px] 2xl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
                 onClick={() => {
                   // setTab(null);
                   // setSelectTournament(null);
@@ -336,7 +334,7 @@ const Navbar = ({ tab, setTab }) => {
             {/* <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
             </select> */}
-            <div className="w-32 hidden md:block md:order-2">
+            <div className="hidden md:block md:order-2">
               <SelectImage
                 optionList={optionList}
                 selectValue={selectValue}
