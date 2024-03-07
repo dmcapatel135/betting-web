@@ -78,12 +78,13 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
+    console.log('------tab ', tab, selectTournament);
     const date = new Date();
     const upcoming = new Date(date);
     upcoming.setDate(date.getDate() + 1);
     let today = date.toISOString();
     let query = `date=${today}`;
-    if (tab == 1 && sportId) {
+    if (window.location.pathname == '/dashboard/popular' && sportId) {
       query = selectTournament
         ? `date=${today}&tournamentId=${
             selectTournament
@@ -93,7 +94,7 @@ function SportsMenu() {
               : 1
           }&popular=${true}`
         : `date=${today}&popular=${true}`;
-    } else if (tab == 2 && sportId) {
+    } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
         ? `date=${today}&tournamentId=${
             selectTournament
@@ -103,7 +104,7 @@ function SportsMenu() {
               : 1
           }`
         : `date=${today}`;
-    } else if (tab == 3 && sportId) {
+    } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
         ? `date=${upcoming.toISOString()}&tournamentId=${
             selectTournament
@@ -113,7 +114,7 @@ function SportsMenu() {
               : 1
           }`
         : `date=${upcoming.toISOString()}`;
-    } else if (tab == 4 && sportId) {
+    } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
             selectTournament
