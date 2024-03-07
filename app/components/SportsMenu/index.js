@@ -56,7 +56,9 @@ function SportsMenu() {
 
   //get to tournaments according to sports
   const getAllTournaments = useCallback(async () => {
-    const response = await getReq(`/sports/${sportId}/tournaments`);
+    const response = await getReq(
+      `/sports/${sportId}/tournaments?haveActiveEvents=${true}`,
+    );
     if (sportId == 1)
       setAllTournaments(
         response.data?.filter((item) => item.topLeague == true),
@@ -78,22 +80,26 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
-    console.log('------tab ', tab, selectTournament);
+    // let interval = setInterval(() => {
     const date = new Date();
-    const upcoming = new Date(date);
-    upcoming.setDate(date.getDate() + 1);
+    const dateString = new Date(date);
+    dateString.setDate(moment(date.getDate() + 1));
+    let upcoming = moment(
+      dateString,
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
+    ).format('YYYY-MM-DD');
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
       query = selectTournament
-        ? `date=${today}&tournamentId=${
+        ? `tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }&popular=${true}`
-        : `date=${today}&popular=${true}`;
+        : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
         ? `date=${today}&tournamentId=${
@@ -106,14 +112,14 @@ function SportsMenu() {
         : `date=${today}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `date=${upcoming.toISOString()}&tournamentId=${
+        ? `fromDate=${upcoming}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `date=${upcoming.toISOString()}`;
+        : `date=${upcoming}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
@@ -127,6 +133,7 @@ function SportsMenu() {
     }
     setQueries(query);
     getAllFixtures(query);
+    // }, 5000);
   }, [sportId, getAllFixtures, tab, selectTournament, searchParams]);
 
   const getAllFixtures = useCallback(

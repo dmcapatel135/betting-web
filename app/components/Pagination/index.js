@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
   const onPageChange = (event) => {
-    setPage(event.selected + 1);
+    setPage(event.selected + 10);
   };
 
   return (

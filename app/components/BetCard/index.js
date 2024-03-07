@@ -894,13 +894,7 @@ function BetCard({ item, sportId }) {
             <div
               onClick={() => {
                 setTab(null);
-                navigate(
-                  `/dashboard/single-bets/${item.eventId}/${
-                    item?.competitors[0]?.name +
-                    ' vs ' +
-                    item?.competitors[1]?.name
-                  }`,
-                );
+                navigate(`/dashboard/single-bets/${item.eventId}`);
               }}
               className="border-[1px]  md:h-8 h-6 mr-2   md:mr-2  w-[40px] md:min-w-[45px] md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
             >

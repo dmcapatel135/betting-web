@@ -4,7 +4,7 @@ import moment from 'moment';
 import { fetchJackpotDetailsAction } from '@actions';
 import { useDispatch, useSelector } from 'react-redux';
 
-function JackpotDetailCard({ fixtures }) {
+function JackpotDetailCard({ fixtures, jackpotId }) {
   const selectedJackpot = useSelector((state) => state.jackpot.selectedJackpot);
 
   const [bets, setBets] = useState([]);
@@ -38,6 +38,7 @@ function JackpotDetailCard({ fixtures }) {
           bet: bet,
           betDetails: betDetails,
           eventNames: eventNames,
+          jackpotId: jackpotId,
         },
       ];
     });
@@ -59,12 +60,15 @@ function JackpotDetailCard({ fixtures }) {
       (bet) =>
         bet.eventId == parseInt(eventId) &&
         bet.betDetails.id === marketId &&
-        bet.bet.id === outcomeventId,
+        bet.bet.id === outcomeventId &&
+        bet.jackpotId == jackpotId,
     );
 
     if (bet) return true;
     else return false;
   };
+
+  console.log('-----jackpot ', selectedJackpot);
 
   return (
     <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
@@ -97,6 +101,7 @@ function JackpotDetailCard({ fixtures }) {
                       fixtures?.mappedEventId,
                       fixtures?.market?.id,
                       item?.id,
+                      jackpotId,
                     )
                   ) {
                     handleRemoveBet(
@@ -121,6 +126,7 @@ function JackpotDetailCard({ fixtures }) {
                     fixtures?.mappedEventId,
                     fixtures?.market?.id,
                     item?.id,
+                    jackpotId,
                   )
                     ? 'bg-green text-white'
                     : 'bg-gray-800'
@@ -163,6 +169,7 @@ function JackpotDetailCard({ fixtures }) {
 
 JackpotDetailCard.propTypes = {
   fixtures: PropTypes.object,
+  jackpotId: PropTypes.string,
 };
 
 export default JackpotDetailCard;

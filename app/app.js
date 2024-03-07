@@ -71,7 +71,7 @@ function App() {
           <Route path="/dashboard/deposit" element={<Deposit />} />
           <Route path="/dashboard/withdraw" element={<Withdraw />} />
           <Route
-            path="/dashboard/single-bets/:eventId/:eventNames"
+            path="/dashboard/single-bets/:eventId"
             element={<SingleBetDetails />}
           />
           <Route

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Balance from '@components/Balance';
 import { reactIcons } from '@utils/icons';
-import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
+import { isLoggedIn, postReq } from '@utils/apiHandlers';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { fetchBetDetailsAction } from '@actions';
@@ -15,7 +15,7 @@ import { CircularProgress } from '@mui/material';
 function BetWallet({ stakeValue }) {
   const [openDialog, setOpenDailog] = useState();
   const [game, setGame] = useState('sport');
-  const [gameRules, setGameRules] = useState();
+  // const [gameRules, setGameRules] = useState();
   const [bonus, setBonus] = useState([]);
   const [totalOdd, setTotalOdd] = useState(0);
   const [betData, setBetData] = useState([]);
@@ -24,10 +24,11 @@ function BetWallet({ stakeValue }) {
   const [oddChange, setOddChange] = useState(false);
   const [totalSport, setTotalSport] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
   // const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { setTab, setSelectTournament } = useContext(MyContext);
+  const { setTab, setSelectTournament, gameRules } = useContext(MyContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,14 +43,14 @@ function BetWallet({ stakeValue }) {
     setTotalSport(filteredData);
   }, [bets]);
 
-  const getGamesRules = async () => {
-    const response = await getReq('/win-bonus-policies/active');
-    setGameRules(response.data);
-  };
+  // const getGamesRules = async () => {
+  //   const response = await getReq('/win-bonus-policies/active');
+  //   setGameRules(response.data);
+  // };
 
-  useEffect(() => {
-    getGamesRules();
-  }, []);
+  // useEffect(() => {
+  //   getGamesRules();
+  // }, []);
 
   useEffect(() => {
     const rule = bets.filter((item) => item.bet.odds >= gameRules?.minimumOdds);
@@ -196,7 +197,7 @@ function BetWallet({ stakeValue }) {
               alt="icon"
               className="mx-2"
             />
-            <span className="text-12 ">{totalSport.length}</span>
+            <span className="text-12 ">{selectedBet?.length}</span>
           </div>
           {/* <div
             className={`w-1/2 flex justify-center cursor-pointer ${
@@ -242,9 +243,9 @@ function BetWallet({ stakeValue }) {
             Learn How To Place Bet
           </button>
         </div> */}
-        {bonus?.length > 0 && (
+        {!(selectedBet.length > gameRules?.rules?.length) && (
           <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
-            <div className="w-5 h-12 bg-yellow"></div>
+            {/* <div className="w-5 h-12 bg-yellow"></div> */}
             <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
               {gameRules?.rules[bonus?.length - 1]?.message}.
               {gameRules?.minimumOdds}
@@ -278,7 +279,9 @@ function BetWallet({ stakeValue }) {
               </div>
               <div className="flex justify-between w-full px-3 items-center ">
                 <div className="text-gray-900">
-                  <p className="text-12 xxl:text-14  font-[600]">{`${item.eventNames}`}</p>
+                  <p className="text-12 xxl:text-14  font-[600]">{`${
+                    item.eventNames ? item.eventNames : 'N.A'
+                  }`}</p>
                   <span className="text-12 text-black">
                     {item.betDetails.name + ' - ' + item.bet.name}
                   </span>

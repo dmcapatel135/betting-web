@@ -160,11 +160,11 @@ function Jackpot() {
   //   }
   // }, [bets, dispatch]);
 
-  useEffect(() => {
-    if (openCard != null) {
-      dispatch(fetchJackpotDetailsAction([]));
-    }
-  }, [openCard, dispatch]);
+  // useEffect(() => {
+  //   if (openCard != null) {
+  //     dispatch(fetchJackpotDetailsAction([]));
+  //   }
+  // }, [openCard, dispatch]);
 
   const handleClearAllBet = () => {
     dispatch(fetchJackpotDetailsAction([]));
@@ -311,7 +311,10 @@ function Jackpot() {
                               return (
                                 <>
                                   <div className="mb-3">
-                                    <JackpotDetailCard fixtures={fixtures} />
+                                    <JackpotDetailCard
+                                      jackpotId={item.id}
+                                      fixtures={fixtures}
+                                    />
                                   </div>
                                 </>
                               );
