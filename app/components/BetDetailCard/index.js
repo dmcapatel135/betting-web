@@ -64,11 +64,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                     .reduce((a, b) => a * b, 1)
                     .toFixed(2) *
                     item?.stake *
-                    parseInt(
-                      item.appliedWinBonusRule
-                        ? item.appliedWinBonusRule?.percentage
-                        : 1,
-                    ),
+                    parseInt(item.winBonus ? item.winBonus : 1),
                 )}
               </p>
             </div>

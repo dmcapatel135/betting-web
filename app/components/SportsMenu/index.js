@@ -80,6 +80,7 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
+    // let interval = setInterval(() => {
     const date = new Date();
     const dateString = new Date(date);
     dateString.setDate(moment(date.getDate() + 1));
@@ -87,7 +88,6 @@ function SportsMenu() {
       dateString,
       'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
     ).format('YYYY-MM-DD');
-    console.log('------upcoming ', upcoming);
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
@@ -133,6 +133,7 @@ function SportsMenu() {
     }
     setQueries(query);
     getAllFixtures(query);
+    // }, 5000);
   }, [sportId, getAllFixtures, tab, selectTournament, searchParams]);
 
   const getAllFixtures = useCallback(
