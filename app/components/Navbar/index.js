@@ -199,35 +199,33 @@ const Navbar = ({ tab, setTab }) => {
                 {reactIcons.search}
               </span>
               {search && (
-                <div className="bg-blue">
-                  <span
-                    onClick={() => {
-                      setSearchData({});
-                      setSearch('');
-                    }}
-                    className="absolute text-white  ay-center right-1 cursor-pointer top-3 lg:top-4 text-16 lg:text-[20px]"
-                  >
-                    {reactIcons.closecircle}
-                  </span>
-                </div>
+                <span
+                  onClick={() => {
+                    setSearchData({});
+                    setSearch('');
+                  }}
+                  className="absolute text-white  ay-center right-2 cursor-pointer text-16 lg:text-[20px]  2xl:text-[26px]"
+                >
+                  {reactIcons.closecircle}
+                </span>
               )}
               {Object.values(searchData).length > 0 && (
                 <div className="bg-white p-3 text-black w-full top-10 shadow-md rounded-sm max-h-fit min-h-20 absolute z-30">
                   <div>
                     {searchData.events.length > 0 && (
                       <div className="text-black">
-                        <span className="text-blue text-14 font-[600]">
+                        <span className="text-blue text-14 2xl:text-20 font-[800]">
                           EVENTS
                         </span>
                       </div>
                     )}
-                    <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
+                    <div className="overflow-y-auto custom-scroll-sm max-h-60 h-full mt-2">
                       {searchData.events.map((item) => {
                         return (
                           <li
                             key={item.id}
                             onClick={() => setEvent(item)}
-                            className="text-black list-none cursor-pointer border-[1px] mb-2 p-2 mx-2 hover:text-blue"
+                            className="text-black list-none cursor-pointer border-[1px] rounded-md mb-2 p-2 hover:text-blue"
                           >
                             <div className="flex items-center">
                               <img src="/images/bikoicon/acute.png" />
@@ -272,12 +270,12 @@ const Navbar = ({ tab, setTab }) => {
                   <div>
                     {searchData.tournaments.length > 0 && (
                       <div className="text-black">
-                        <span className="text-blue text-14 font-[600]">
+                        <span className="text-blue text-14 2xl:text-20 font-[800] ">
                           TOURNAMENTS
                         </span>
                       </div>
                     )}
-                    <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
+                    <div className="overflow-y-auto custom-scroll-sm max-h-60 h-full mt-2">
                       {searchData.tournaments.map((item) => {
                         return (
                           <li
@@ -288,10 +286,12 @@ const Navbar = ({ tab, setTab }) => {
                               setSearchData({});
                               setSearch('');
                             }}
-                            className="text-black list-none border-[1px] mb-1 p-2 mx-2 cursor-pointer py-1"
+                            className="text-black list-none border-[1px] mb-2 p-2 rounded-md cursor-pointer py-1"
                           >
-                            <p className="text-14">{item.tournament}</p>
-                            <span className="text-12">
+                            <p className="text-14 2xl:text-16 font-bold">
+                              {item.tournament}
+                            </p>
+                            <span className="text-12 2xl:text-14">
                               {item?.sport?.name}/{item?.category?.name}
                             </span>
                           </li>
