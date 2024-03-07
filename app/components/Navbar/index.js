@@ -159,11 +159,7 @@ const Navbar = ({ tab, setTab }) => {
 
   useEffect(() => {
     if (event) {
-      navigate(
-        `/dashboard/single-bets/${event.id}/${
-          event?.competitors[0]?.name + ' vs ' + event?.competitors[1]?.name
-        }`,
-      );
+      navigate(`/dashboard/single-bets/${event.id}/`);
       setSearchData({});
       setEvent();
       setSearch('');
@@ -220,7 +216,7 @@ const Navbar = ({ tab, setTab }) => {
               {Object.values(searchData).length > 0 && (
                 <div className="bg-white p-3 text-black w-full top-10 shadow-md rounded-sm max-h-fit min-h-20 absolute z-30">
                   <div>
-                    {searchData.events.length >= 0 && (
+                    {searchData.events.length > 0 && (
                       <div className="text-black">
                         <span className="text-blue text-14 font-[600]">
                           EVENTS
@@ -233,7 +229,7 @@ const Navbar = ({ tab, setTab }) => {
                           <li
                             key={item.id}
                             onClick={() => setEvent(item)}
-                            className="text-black list-none cursor-pointer border-[1px] mb-2 p-2  hover:text-blue"
+                            className="text-black list-none cursor-pointer border-[1px] mb-2 p-2 mx-2 hover:text-blue"
                           >
                             <div className="flex items-center">
                               <img src="/images/bikoicon/acute.png" />
@@ -294,9 +290,12 @@ const Navbar = ({ tab, setTab }) => {
                               setSearchData({});
                               setSearch('');
                             }}
-                            className="text-black list-none cursor-pointer py-1"
+                            className="text-black list-none border-[1px] mb-1 p-2 mx-2 cursor-pointer py-1"
                           >
-                            <span className="text-12">{item.tournament}</span>
+                            <p className="text-14">{item.tournament}</p>
+                            <span className="text-12">
+                              {item?.sport?.name}/{item?.category?.name}
+                            </span>
                           </li>
                         );
                       })}

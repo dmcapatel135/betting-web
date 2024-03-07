@@ -18,6 +18,7 @@ const OuterLayout = () => {
   const [searchParams] = useSearchParams();
   const [wallet, setWallet] = useState();
   const [otherCountries, setOtherCountries] = useState([]);
+  const [gameRules, setGameRules] = useState();
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(
@@ -67,6 +68,15 @@ const OuterLayout = () => {
     }
   }, [getWalletBalance]);
 
+  const getGamesRules = async () => {
+    const response = await getReq('/win-bonus-policies/active');
+    setGameRules(response.data);
+  };
+
+  useEffect(() => {
+    getGamesRules();
+  }, []);
+
   return (
     <>
       <MyContext.Provider
@@ -81,6 +91,7 @@ const OuterLayout = () => {
           categories,
           wallet,
           otherCountries,
+          gameRules,
         }}
       >
         <Navbar tab={tab} setTab={setTab} />

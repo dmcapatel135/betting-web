@@ -81,8 +81,13 @@ function SportsMenu() {
     setAllFixtures([]);
     setPage(0);
     const date = new Date();
-    const upcoming = new Date(date);
-    upcoming.setDate(date.getDate() + 1);
+    const dateString = new Date(date);
+    dateString.setDate(moment(date.getDate() + 1));
+    let upcoming = moment(
+      dateString,
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
+    ).format('YYYY-MM-DD');
+    console.log('------upcoming ', upcoming);
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
@@ -107,14 +112,14 @@ function SportsMenu() {
         : `date=${today}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `fromDate=${upcoming.toISOString()}&tournamentId=${
+        ? `fromDate=${upcoming}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
               ? searchParams.get('eId')
               : 1
           }`
-        : `date=${upcoming.toISOString()}`;
+        : `date=${upcoming}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${

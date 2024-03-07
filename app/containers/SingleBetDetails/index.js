@@ -49,14 +49,14 @@ const TabsName = [
 // ];
 
 function SigleBetDetails() {
-  const { eventId, eventNames, sId } = useParams();
+  const { eventId, sId } = useParams();
   const [step, setStep] = useState(isMobile ? 'Board' : 'Head to head');
   // const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [allMarketData, setAllMarketData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [marketDataOdds, setMarketDataOdds] = useState();
   const [mergedData, setMergedData] = useState([]);
-  // const [eventName, setEventName] = useState();
+  const [eventName, setEventName] = useState();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [bets, setBets] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -72,18 +72,19 @@ function SigleBetDetails() {
     setAllMarketData(response.data);
   }, [eventId]);
 
-  // const getEventName = useCallback(async () => {
-  //   const response = await getReq(`/events/${eventId}`);
-  //   console.log(response);
-  //   setEventName(
-  //     response?.data?.season?.name || response?.data?.tournament?.name,
-  //   );
-  // }, [eventId]);
+  const getEventName = useCallback(async () => {
+    const response = await getReq(`/events/${eventId}`);
+    console.log(response);
+    setEventName(
+      `${response?.data?.competitors[0]?.name} -
+        ${response?.data?.competitors[1]?.name}`,
+    );
+  }, [eventId]);
 
   useEffect(() => {
     getAllMarketData();
-    // getEventName();
-  }, [getAllMarketData, eventId]);
+    getEventName();
+  }, [getAllMarketData, eventId, getEventName]);
 
   useEffect(() => {
     const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
@@ -150,7 +151,7 @@ function SigleBetDetails() {
           sportId: sId,
           bet: bet,
           betDetails: betDetails,
-          eventNames: eventNames,
+          eventName: eventName,
           specifiers: specifiers,
         };
         return updatedBets;
@@ -162,7 +163,7 @@ function SigleBetDetails() {
             sportId: sId,
             bet: bet,
             betDetails: betDetails,
-            eventNames: eventNames,
+            eventName: eventName,
             specifiers: specifiers,
           },
         ];
@@ -795,7 +796,7 @@ function SigleBetDetails() {
           <div>
             <div className="bg-yellow py-1 rounded-md mt-5 px-3">
               <h1 className="text-white text-14 font-[600]">
-                {eventNames} - ALL MARKETS
+                {eventName} - ALL MARKETS
               </h1>
             </div>
           </div>
