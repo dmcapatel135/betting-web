@@ -21,7 +21,9 @@ const OuterLayout = () => {
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(
-      `/sports/${sportId ?? searchParams.get('sId') ?? 1}/tournaments`,
+      `/sports/${
+        sportId ?? searchParams.get('sId') ?? 1
+      }/tournaments?haveActiveEvents=${true}`,
     );
     setAllTournaments(response.data.map((d) => ({ ...d, sportId })));
   }, [sportId, searchParams]);
@@ -32,7 +34,9 @@ const OuterLayout = () => {
 
   const getAllCategories = useCallback(async () => {
     const response = await getReq(
-      `/sports/${sportId ?? searchParams.get('sId') ?? 1}/categories`,
+      `/sports/${
+        sportId ?? searchParams.get('sId') ?? 1
+      }/categories?haveActiveEvents=${true}`,
     );
     const categoriesWithFlags = response?.data?.map((category) => {
       const country = countryNameList.find(

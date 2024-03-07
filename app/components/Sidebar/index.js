@@ -16,7 +16,7 @@ function Sidebar({
   isOpenMenuList,
 }) {
   const naviagte = useNavigate();
-  const [isOpenTournament, setIsOpenTournament] = useState(false);
+  const [isOpenTournament, setIsOpenTournament] = useState(true);
   const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [searchParams] = useSearchParams(window.location.search);
@@ -36,7 +36,7 @@ function Sidebar({
   const getLeagues = useCallback(
     async (query) => {
       const response = await getReq(
-        `/sports/${sportId}/tournaments?categoryId=${query}&haveEvents=true`,
+        `/sports/${sportId}/tournaments?categoryId=${query}&haveActiveEvents=${true}`,
       );
       setLeagues(response.data.map((d) => ({ ...d, sportId })));
     },
@@ -152,7 +152,7 @@ function Sidebar({
                         {item.name}
                       </span>
                       <span className="text-12 pr-2 font-[500]">
-                        {item.events}
+                        {item.activeEvents}
                       </span>
                     </li>
                   );
@@ -211,7 +211,7 @@ function Sidebar({
                           </div>
                           <div className="flex items-center">
                             <span className="text-12 font-[500]">
-                              {item.events}
+                              {item.activeEvents}
                             </span>
                             <span className="text-12 pl-2">
                               {reactIcons.arrowdown}
@@ -243,7 +243,7 @@ function Sidebar({
                                   {items.name}
                                 </span>
                                 <span className="text-12 font-[500]">
-                                  {items.events}
+                                  {items.activeEvents}
                                 </span>
                               </li>
                             </div>
@@ -304,7 +304,7 @@ function Sidebar({
                           </div>
                           <div className="flex items-center">
                             <span className="text-12 font-[500]">
-                              {item.events}
+                              {item.activeEvents}
                             </span>
                             <span className="text-12 pl-2">
                               {reactIcons.arrowdown}
@@ -336,7 +336,7 @@ function Sidebar({
                                   {items.name}
                                 </span>
                                 <span className="text-12 font-[500]">
-                                  {items.events}
+                                  {items.activeEvents}
                                 </span>
                               </li>
                             </div>

@@ -56,7 +56,9 @@ function SportsMenu() {
 
   //get to tournaments according to sports
   const getAllTournaments = useCallback(async () => {
-    const response = await getReq(`/sports/${sportId}/tournaments`);
+    const response = await getReq(
+      `/sports/${sportId}/tournaments?haveActiveEvents=${true}`,
+    );
     if (sportId == 1)
       setAllTournaments(
         response.data?.filter((item) => item.topLeague == true),
@@ -78,7 +80,6 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
-    console.log('------tab ', tab, selectTournament);
     const date = new Date();
     const upcoming = new Date(date);
     upcoming.setDate(date.getDate() + 1);
@@ -86,14 +87,14 @@ function SportsMenu() {
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
       query = selectTournament
-        ? `date=${today}&tournamentId=${
+        ? `tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
               ? searchParams.get('eId')
               : 1
           }&popular=${true}`
-        : `date=${today}&popular=${true}`;
+        : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
         ? `date=${today}&tournamentId=${
@@ -106,7 +107,7 @@ function SportsMenu() {
         : `date=${today}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `date=${upcoming.toISOString()}&tournamentId=${
+        ? `fromDate=${upcoming.toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')

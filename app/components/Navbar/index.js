@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { SelectImage } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import { formatNumber } from '@utils/constants';
+import moment from 'moment';
 
 const mobileMenuList = [
   {
@@ -149,7 +150,7 @@ const Navbar = ({ tab, setTab }) => {
   };
 
   useEffect(() => {
-    if (search?.length > 2) {
+    if (search?.trim()?.length > 2) {
       getSearchEventTournament(search);
     } else {
       setSearchData({});
@@ -219,43 +220,69 @@ const Navbar = ({ tab, setTab }) => {
               {Object.values(searchData).length > 0 && (
                 <div className="bg-white p-3 text-black w-full top-10 shadow-md rounded-sm max-h-fit min-h-20 absolute z-30">
                   <div>
-                    <div className="text-black">
-                      <span className="text-blue text-14 font-[600]">
-                        EVENTS
-                      </span>
-                    </div>
+                    {searchData.events.length >= 0 && (
+                      <div className="text-black">
+                        <span className="text-blue text-14 font-[600]">
+                          EVENTS
+                        </span>
+                      </div>
+                    )}
                     <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
                       {searchData.events.map((item) => {
                         return (
                           <li
                             key={item.id}
                             onClick={() => setEvent(item)}
-                            className="text-black list-none cursor-pointer  hover:text-blue"
+                            className="text-black list-none cursor-pointer border-[1px] mb-2 p-2  hover:text-blue"
                           >
-                            <span className="text-12 font-[400]">
-                              {item?.competitors[0]?.name +
-                                ' vs ' +
-                                item?.competitors[1]?.name}
+                            <div className="flex items-center">
+                              <img src="/images/bikoicon/acute.png" />
+                              <p className="text-10 ml-1 md:text-10">
+                                {moment(item?.startTime).format('hh:mm A')}{' '}
+                                <span className="font-[600]">
+                                  {moment(item?.startTime).format('ddd MM/DD')}
+                                </span>
+                              </p>
+                              {item.popular && (
+                                <img
+                                  src="/images/bikoicon/vector.png"
+                                  alt="icon"
+                                  className="md:block hidden  ml-1"
+                                />
+                              )}
+                            </div>
+                            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                              {item?.competitors[0]?.name || 'N.A'}
+                              {/* v/s{' '} */}
+                            </h2>
+                            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                              {item?.competitors[1]?.name || 'N.A'}{' '}
+                            </h2>
+                            <span className="text-[9px]  leading-none md:text-10">
+                              {item?.sport?.name}/{item?.category?.name}/
+                              {item?.tournament?.name}
                             </span>
                           </li>
                         );
                       })}
                     </div>
 
-                    {searchData.events.length == 0 && (
+                    {/* {searchData.events.length == 0 && (
                       <div className="text-center">
                         <span className="text-14 text-black my-2 text-[400]">
                           No events found
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div>
-                    <div className="text-black">
-                      <span className="text-blue text-14 font-[600]">
-                        TOURNAMENTS
-                      </span>
-                    </div>
+                    {searchData.tournaments.length > 0 && (
+                      <div className="text-black">
+                        <span className="text-blue text-14 font-[600]">
+                          TOURNAMENTS
+                        </span>
+                      </div>
+                    )}
                     <div className="overflow-y-auto custom-scroll-sm max-h-40 min-h-8">
                       {searchData.tournaments.map((item) => {
                         return (
@@ -274,13 +301,13 @@ const Navbar = ({ tab, setTab }) => {
                         );
                       })}
                     </div>
-                    {searchData.tournaments.length == 0 && (
+                    {/* {searchData.tournaments.length == 0 && (
                       <div className="text-center">
                         <span className="text-14 text-black font-[400] my-2">
                           No tournaments found
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               )}
