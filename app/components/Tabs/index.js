@@ -37,7 +37,7 @@ function Tabs({ popularSports }) {
                 className="w-6 h-6"
               />
               <span className="px-2 text-14 lg:text-[15px] xxl:text-16">
-                {item.name == 'Basketball' ? 'BasketBall' : item.name}
+                {item.name == 'Basketball' ? 'Basketball' : item.name}
               </span>
             </div>
           </div>
