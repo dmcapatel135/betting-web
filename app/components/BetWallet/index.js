@@ -279,7 +279,9 @@ function BetWallet({ stakeValue }) {
               </div>
               <div className="flex justify-between w-full px-3 items-center ">
                 <div className="text-gray-900">
-                  <p className="text-12 xxl:text-14  font-[600]">{`${item.eventNames}`}</p>
+                  <p className="text-12 xxl:text-14  font-[600]">{`${
+                    item.eventNames ? item.eventNames : 'N.A'
+                  }`}</p>
                   <span className="text-12 text-black">
                     {item.betDetails.name + ' - ' + item.bet.name}
                   </span>
