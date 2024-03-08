@@ -56,7 +56,7 @@ const OuterLayout = () => {
   }, [sportId, getAllCategories]);
 
   const getWalletBalance = useCallback(async () => {
-    const response = await getReq('/users/me/wallet');
+    const response = await getReq('/users/me/wallets');
     if (response.status) {
       setWallet(response.data);
     }
@@ -92,6 +92,7 @@ const OuterLayout = () => {
           wallet,
           otherCountries,
           gameRules,
+          getWalletBalance,
         }}
       >
         <Navbar tab={tab} setTab={setTab} />

@@ -2,13 +2,13 @@ import { getReq } from '@utils/apiHandlers';
 import { SET_USER, CLEANUP } from '../actions/actionConstants';
 
 export const getUser = async () => {
-  const response = await getReq('/users/me');
+  const response = await getReq('/users/me/wallets');
   if (response.status) {
     response.data = {
       ...response.data,
-      mobile: response.data.mobile
-        ? response.data.mobile.replace(response.data.dialCode, '')
-        : null,
+      // mobile: response.data.mobile
+      //   ? response.data.mobile.replace(response.data.dialCode, '')
+      //   : null,
     };
     return response.data;
   }

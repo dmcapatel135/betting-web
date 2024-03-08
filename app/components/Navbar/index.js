@@ -149,6 +149,10 @@ const Navbar = ({ tab, setTab }) => {
     setSearchData(response.data);
   };
 
+  const userWallet = useSelector((state) => state.user);
+
+  console.log('------use ', userWallet);
+
   useEffect(() => {
     if (search?.trim()?.length > 2) {
       getSearchEventTournament(search);
@@ -165,6 +169,8 @@ const Navbar = ({ tab, setTab }) => {
       setSearch('');
     }
   }, [navigate, event]);
+
+  console.log('-----wallet dfds', wallet);
 
   return (
     <nav className="sticky z-[999999] top-0 left-0">
@@ -319,7 +325,12 @@ const Navbar = ({ tab, setTab }) => {
             {isLoggedIn() ? (
               <div className="text-white pr-1">
                 <span className="text-12 md:text-16 font-[700]">
-                  TSH {formatNumber(wallet?.amount)}
+                  TSH{' '}
+                  {formatNumber(
+                    Object.values(userWallet)?.filter(
+                      (item) => item.type == 'Main',
+                    )[0]?.amount,
+                  )}
                 </span>
               </div>
             ) : (

@@ -1,13 +1,22 @@
+import { init } from '@actions';
 import { MyContext } from '@components/MyContext/MyContext';
 // import { getReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 // import { Link } from 'react-router-dom';
 
 function Balance() {
-  const { setTab, setSelectTournament, wallet } = useContext(MyContext);
+  const { setTab, setSelectTournament } = useContext(MyContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const userWallet = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(init());
+  }, [dispatch]);
 
   return (
     <div className="flex justify-between border-b-[1px] border-blue items-center px-3">
@@ -26,9 +35,13 @@ function Balance() {
         {/* </Link> */}
       </div>
       <div className="flex my-2">
-        <span className="text-black text-14">Your Balance</span>
+        <span className="text-black text-14 pr-2">Your Balance</span>
         <span className="text-black text-14 font-[700]">
-          TSH {formatNumber(wallet?.amount)}
+          TSH{' '}
+          {formatNumber(
+            Object.values(userWallet)?.filter((item) => item.type == 'Main')[0]
+              ?.amount,
+          )}
         </span>
       </div>
     </div>
