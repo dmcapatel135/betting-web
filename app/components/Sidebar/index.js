@@ -56,7 +56,7 @@ function Sidebar({
       className={`border-r min-h-screen h-full w-full   md:block bg-gray-800 ${
         isMobileSidebar
           ? ' border-black  bg-opacity-[0.53] bg-white backdrop-blur-[20px]'
-          : 'bg-white border-[#A3A3A3] pt-3'
+          : 'bg-white border-[#A3A3A3] '
       }`}
     >
       {isMobileSidebar && (
@@ -67,7 +67,7 @@ function Sidebar({
           {reactIcons.close}
         </div>
       )}
-      <div className="">
+      <div className="sticky py-3 top-[85px]">
         <div className="flex flex-col items-start  border-b-black gap-5">
           <ul className="grid grid-cols-1 w-full gap-1 md:gap-2 pl-3">
             {navigations.map((item, index) => (

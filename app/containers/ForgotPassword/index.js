@@ -120,7 +120,7 @@ function ForgotPassword() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 md:col-span-8">
+      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
         <div className="h-fit">
           <div
             className="border-[1px] rounded-[8px] shadow-inner border-[#A3A3A3] m-5"
@@ -130,7 +130,7 @@ function ForgotPassword() {
               <div className="col-span-3 lg:block hidden pr-4">
                 <AuthSideSection imgHeight="345px" />
               </div>
-              <div className="lg:col-span-9 h-[450px] col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
+              <div className="lg:col-span-9 col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
                 {!isResetPasswordScreen ? (
                   <div className="text-center">
                     <div className="text-black mt-2 md:mt-16 mb-5">
@@ -331,7 +331,7 @@ function ForgotPassword() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 md:block hidden">
+      <div className="col-span-4 2xl:col-span-3 md:block hidden">
         <RightSideSection />
       </div>
     </div>

@@ -146,7 +146,7 @@ function JoinNow() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 md:col-span-8">
+      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
         <div className="h-fit">
           <div
             className="border-[1px] rounded-[8px] shadow-inner border-[#A3A3A3] m-5"
@@ -220,7 +220,7 @@ function JoinNow() {
                         </div>
                       </div>
                       <button
-                        className={`w-full  h-[40px] xxl:h-[48px] lg:w-full xxl:w-[110px] border-[1px] lg:font-14 xxl:font-18 outline-none ${
+                        className={`w-full mt-4 h-[42px] xxl:h-[48px] lg:w-full xxl:w-[110px] border lg:font-14 xxl:font-18 outline-none ${
                           isLoading
                             ? 'bg-lightgray border-lightgray'
                             : 'bg-yellow border-yellow'
@@ -366,7 +366,7 @@ function JoinNow() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 md:block hidden">
+      <div className="col-span-4 2xl:col-span-3 md:block hidden">
         <RightSideSection />
       </div>
     </div>

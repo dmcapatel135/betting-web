@@ -167,7 +167,7 @@ const Navbar = ({ tab, setTab }) => {
   }, [navigate, event]);
 
   return (
-    <nav>
+    <nav className="sticky z-[999999] top-0 left-0">
       <div className="h-[50px] sm:h-[65px] lg:h-[85px] xxl:h-[110px] bg-gradient-color-1 relative">
         <div className="grid grid-cols-12">
           <div className="lg:col-span-2 md:col-span-3 col-span-6 ">

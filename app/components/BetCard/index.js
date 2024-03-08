@@ -133,7 +133,7 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
         <div className="flex-1 border-black">
-          <div className="flex justify-center md:justify-end gap-4">
+          <div className="flex justify-center md:justify-end gap-4 pr-6">
             {(sportId || searchParams.get('sId')) == 1 && (
               <>
                 <div className="  ">
@@ -215,7 +215,7 @@ function BetCard({ item, sportId }) {
                 <div className="  hidden xl:block ">
                   <div
                     className="
-                      flex mx-auto px-2 justify-center gap-2 min-w-[156px]"
+                      flex mx-auto px-2 justify-center gap-2 max-w-[110px]"
                   >
                     {data['Total']?.outcomes?.length > 0 &&
                       data['Total']?.outcomes?.map((innerItem, innerIndex) => {
@@ -272,10 +272,10 @@ function BetCard({ item, sportId }) {
                     {(data['Total']?.outcomes?.length == 0 ||
                       data['Total'] == undefined) && (
                       <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6   md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
                           -
                         </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6   md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
                           -
                         </button>
                       </>
@@ -286,7 +286,7 @@ function BetCard({ item, sportId }) {
                   <div
                     // className={`${items.option.length ==} flex justify-between`}
                     className="
-                      flex px-2 justify-center gap-2 min-w-[156px]"
+                      flex px-2 justify-center gap-2 max-w-[110px]"
                   >
                     {data['Both teams to score']?.outcomes?.length > 0 &&
                       data['Both teams to score']?.outcomes?.map(
@@ -896,7 +896,7 @@ function BetCard({ item, sportId }) {
                 setTab(null);
                 navigate(`/dashboard/single-bets/${item.eventId}`);
               }}
-              className="border-[1px]  md:h-8 h-6 mr-2   md:mr-2  w-[40px] md:min-w-[45px] md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+              className="border-[1px]  md:h-8 h-6 mr-2   md:mr-2  w-[40px] md:min-w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:max-w-fit  font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer "
             >
               <img
                 src="/images/bikoicon/moving.png"

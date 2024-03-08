@@ -4,7 +4,7 @@ import React from 'react';
 function HeroSection() {
   return (
     <div className="mb-5">
-      <img src={images.bannerImg} />
+      <img className="w-full" src={images.bannerImg} />
     </div>
   );
 }

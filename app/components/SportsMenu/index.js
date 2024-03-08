@@ -299,7 +299,7 @@ function SportsMenu() {
             )}
           </div>
         </div>
-        <div className="flex-1 border-black">
+        <div className="flex-1 border-black pr-6">
           {allFixtures.length > 0 && (
             <div className="flex justify-center md:justify-end gap-4">
               {marketsName
@@ -331,9 +331,14 @@ function SportsMenu() {
                             : 'justify-center'
                         }`}
                       >
-                        <div className=" min-w-[156px]">
+                        <div
+                          style={{
+                            maxWidth: `${index === 0 ? 156 : 110}px`,
+                          }}
+                          className="w-full"
+                        >
                           <div className="w-full flex justify-center">
-                            <h1 className="text-12 md:text-12 lg:text-[10px] 2xl:text-14 font-[800] md:block text-black  mb-2">
+                            <h1 className="text-12 md:text-12 lg:text-[10px] flex-center text-center 2xl:text-14 font-[800] md:block text-black  mb-2 h-[48px]">
                               {items.name === 'Total'
                                 ? 'OVER/UNDER(2.5)'
                                 : items.name}

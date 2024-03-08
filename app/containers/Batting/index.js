@@ -30,22 +30,24 @@ function Batting() {
             tab == 7
               ? 'col-span-12 mb-5'
               : 'hidden md:block md:col-span-4 2xl:col-span-3'
-          } mr-3 ml-1 border-l-[1px] border-[#A3A3A3] pt-5 mb-3 h-full pl-3`}
+          } mr-3 ml-1 border-l-[1px] border-[#A3A3A3]  mb-3 h-full pl-3`}
         >
-          {selectedBet.length > 0 ? (
-            <BetWallet />
-          ) : isLoggedIn() ? (
-            <Betslip />
-          ) : (
-            <div>
-              <img src={images.AppImg} alt="app" className="" />
-              <img src={images.contactImg} alt="app" className="py-2" />
-            </div>
-          )}
+          <div className="sticky top-[85px] py-5">
+            {selectedBet.length > 0 ? (
+              <BetWallet />
+            ) : isLoggedIn() ? (
+              <Betslip />
+            ) : (
+              <div>
+                <img src={images.AppImg} alt="app" className="" />
+                <img src={images.contactImg} alt="app" className="py-2" />
+              </div>
+            )}
 
-          <CompanyContact />
-          <CustomerCareContact />
-          <TalkToUs />
+            <CompanyContact />
+            <CustomerCareContact />
+            <TalkToUs />
+          </div>
         </div>
       </div>
     </main>

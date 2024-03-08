@@ -71,27 +71,27 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
   console.log('-----jackpot ', selectedJackpot);
 
   return (
-    <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-      <div className="flex justify-between py-2">
+    <div className="bg-white border rounded-md border-lightgray border-md p-3">
+      <div className="flex justify-between">
         <div className=" flex-1 text-black">
-          <p className="text-12 mb-5">
+          <p className="text-12 2xl:text-16 font-semibold mb-5">
             {/* 11:15 pm Wed 06/12 */}
             {moment(fixtures?.mappedEvent?.startTime).format(
               'hh:mm a ddd MM/DD',
             )}
           </p>
-          <span className="text-10 mt-20 text-gray-900">
+          <span className="text-10 2xl:text-14 mt-20 text-gray-900">
             {/* Football/England/Premier League */}
             {fixtures?.mappedEvent?.tournament?.category?.sport?.name}/
             {fixtures?.mappedEvent?.tournament?.category?.name}/
             {fixtures?.mappedEvent?.tournament?.name}
           </span>
         </div>
-        <div className="flex-1 text-14 font-[500] text-center text-black">
+        <div className="flex-1 flex-center flex-col text-14 font-[500] text-center text-black">
           <p>{fixtures?.mappedEvent?.competitors[0].name || 'N.A'}</p>
           <p>{fixtures?.mappedEvent?.competitors[1].name || 'N.A'}</p>
         </div>
-        <div className="flex-1 mr-5 flex justify-between items-center">
+        <div className="flex-1 pr-5 flex justify-end gap-8 items-center">
           {fixtures?.market?.outcomes?.map((item, index) => {
             return (
               <div
@@ -130,32 +130,32 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
                   )
                     ? 'bg-green text-white'
                     : 'bg-gray-800'
-                } text-gray-900 text-12 w-12 h-8 border-[1px] cursor-pointer border-lightgray`}
+                } text-gray-900 text-12 w-12 h-8 2xl:w-[48px] 2xl:h-[36px] font-medium 2xl:text-14 border-[1px] cursor-pointer border-lightgray`}
               >
                 <span>{item.odds}</span>
               </div>
             );
           })}
           {fixtures?.market == null && (
-            <div className="flex justify-between w-full">
+            <div className="flex gap-8 justify-end w-full">
               <div
                 className="flex justify-center rounded-md items-center 
                 bg-gray-800
-               text-gray-900 text-12 w-12 h-8 border-[1px] cursor-pointer border-lightgray"
+               text-gray-900 text-12 w-12 h-8 2xl:w-[48px] 2xl:h-[36px] font-medium 2xl:text-14 border-[1px] cursor-pointer border-lightgray"
               >
                 <span>-</span>
               </div>
               <div
                 className="flex justify-center rounded-md items-center 
                 bg-gray-800
-               text-gray-900 text-12 w-12 h-8 border-[1px] cursor-pointer border-lightgray"
+               text-gray-900 text-12 w-12 h-8 2xl:w-[48px] 2xl:h-[36px] font-medium 2xl:text-14 border-[1px] cursor-pointer border-lightgray"
               >
                 <span>-</span>
               </div>
               <div
                 className="flex justify-center rounded-md items-center 
                 bg-gray-800
-               text-gray-900 text-12 w-12 h-8 border-[1px] cursor-pointer border-lightgray"
+               text-gray-900 text-12 w-12 h-8 2xl:w-[48px] 2xl:h-[36px] font-medium 2xl:text-14 border-[1px] cursor-pointer border-lightgray"
               >
                 <span>-</span>
               </div>

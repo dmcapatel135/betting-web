@@ -41,6 +41,7 @@ const TabsName = [
     active_icon: '/images/bikoicon/boxingwhite.png',
   },
 ];
+const Draw = [{ name: 'Home' }, { name: 'Draw' }, { name: 'Away' }];
 
 function Jackpot() {
   const [step, setStep] = useState(TabsName[0].id);
@@ -237,7 +238,7 @@ function Jackpot() {
 
   return (
     <div className="grid grid-cols-12 h-full">
-      <div className="col-span-12 md:col-span-8 pt-5 mb-5">
+      <div className="col-span-12 md:col-span-8 2xl:col-span-9 pt-5 mb-5">
         <div className="px-5">
           <div className="border-[1px] border-bluewhale px-5 md:px-0 flex  bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
             {TabsName?.map((item) => {
@@ -259,7 +260,7 @@ function Jackpot() {
                       alt="profile_icon"
                       className="w-6 h-6"
                     /> */}
-                    <span className="px-2 text-12 md:text-14  xxl:text-16">
+                    <span className="px-2 text-12 font-medium md:text-14 2xl:text-16">
                       {item.name}
                     </span>
                   </div>
@@ -298,12 +299,17 @@ function Jackpot() {
                         {openCard == index && (
                           <>
                             {jackpotFixtures.length > 0 && (
-                              <div className="flex text-black justify-end mr-10 mt-5">
-                                <p className="mr-4 text-14 font-[600]">Home</p>
-                                <p className="ml-8 mr-12 text-14 font-[600]">
-                                  Draw
-                                </p>
-                                <p className="text-14  font-[600]">Away</p>
+                              <div className="flex text-black justify-end mr-8 mt-5 ">
+                                <div className="gap-8 flex justify-end min-w-[256px]">
+                                  {Draw.map((item, index) => (
+                                    <p
+                                      key={index}
+                                      className="text-14 text-center w-[48px] font-[600]"
+                                    >
+                                      {item.name}
+                                    </p>
+                                  ))}
+                                </div>
                               </div>
                             )}
                             {jackpotFixtures.map((fixtures) => {
@@ -330,16 +336,24 @@ function Jackpot() {
                             )}
                             {jackpotFixtures.length > 0 && (
                               <div>
-                                <div className="flex text-black justify-between">
-                                  <div>
-                                    <p>Price :</p>
-                                    <p>Total Tickets :</p>
-                                    <p>Total Price :</p>
+                                <div className="flex flex-col gap-2 text-black">
+                                  <div className="flex justify-between">
+                                    <p className="font-semibold">Price :</p>
+                                    <p className="font-semibold">
+                                      TSH {stakeValue}
+                                    </p>
                                   </div>
-                                  <div className="font-[500] text-right">
-                                    <p>TSH {stakeValue}</p>
-                                    <p>{ticket}</p>
-                                    <p>
+                                  <div className="flex justify-between">
+                                    <p className="font-semibold">
+                                      Total Tickets :
+                                    </p>
+                                    <p className="font-semibold">{ticket}</p>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <p className="font-semibold text-lg">
+                                      Total Price :
+                                    </p>
+                                    <p className="font-bold">
                                       TSH {formatNumber(ticket * stakeValue)}
                                     </p>
                                   </div>
@@ -347,7 +361,7 @@ function Jackpot() {
                                 <div>
                                   <button
                                     disabled={!ticket || placeJackpotLoading}
-                                    className={`w-full py-2 my-2 ${
+                                    className={`w-full py-2 my-2 h-[42px] font-semibold rounded-lg ${
                                       ticket && !placeJackpotLoading
                                         ? 'bg-yellow text-white'
                                         : 'bg-lightestgray text-black'
@@ -477,7 +491,7 @@ function Jackpot() {
           </div>
         )}
       </div>
-      <div className="col-span-4 md:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
+      <div className="col-span-4 2xl:col-span-3 md:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
         {selectedBet.length > 0 ? (
           <BetWallet stakeValue={stakeValue} />
         ) : (

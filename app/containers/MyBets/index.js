@@ -97,7 +97,7 @@ function MyBets() {
   return (
     <div className="grid grid-cols-12 h-full">
       <ShareBetModal />
-      <div className="col-span-12 md:col-span-8">
+      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-2">
           <HeroSection />
           {showBets ? (
@@ -219,16 +219,24 @@ function MyBets() {
                   })}
                 {myBets.length == 0 && !isLoading && (
                   <div className="text-center text-black">
-                    <span>There is no bets available</span>
+                    <span>
+                      {step === 1 && 'There are currently no betslips.'}
+                      {step === 2 && 'There are currently no pending betslips.'}
+                      {step === 3 && 'There are currently no settled betslips.'}
+                      {step === 4 && 'There are currently no jackpot tickets.'}
+                      {step === 5 &&
+                        'There are currently no cancelled betslips or tickets.'}
+                    </span>
                   </div>
                 )}
+
                 {isLoading && <SkeletonLoader />}
               </div>
             </div>
           )}
         </div>
       </div>
-      <div className="col-span-4  pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
+      <div className="col-span-4 2xl:col-span-3 pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

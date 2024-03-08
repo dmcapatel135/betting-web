@@ -11,6 +11,7 @@ import {
   FaStar,
   FaFacebookMessenger,
   FaSms,
+  FaFacebook,
 } from 'react-icons/fa';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import { FiCheckCircle, FiMapPin, FiUsers } from 'react-icons/fi';
@@ -100,8 +101,12 @@ import {
   HiOutlineDocumentReport,
 } from 'react-icons/hi';
 import { GoVerified } from 'react-icons/go';
-import { RiSecurePaymentLine, RiFlashlightLine } from 'react-icons/ri';
-
+import {
+  RiSecurePaymentLine,
+  RiFlashlightLine,
+  RiInstagramFill,
+} from 'react-icons/ri';
+import { VscTwitter } from 'react-icons/vsc';
 import LiveIcon from '@components/SvgCompass/LiveIcon';
 import { RiLuggageDepositLine } from 'react-icons/ri';
 import { BiMoneyWithdraw } from 'react-icons/bi';
@@ -197,9 +202,12 @@ export const reactIcons = {
   wallet: <BiWallet />,
   date: <MdDateRange />,
   insta: <AiFillInstagram />,
+  instagram: <RiInstagramFill />,
   facebook: <BiLogoFacebook />,
+  facebook2: <FaFacebook />,
   linkdin: <FaLinkedinIn />,
   twitter: <AiOutlineTwitter />,
+  twitter2: <VscTwitter />,
   queto: <ImQuotesLeft />,
   clock: <AiOutlineClockCircle />,
   paybyapp: <RiSecurePaymentLine />,

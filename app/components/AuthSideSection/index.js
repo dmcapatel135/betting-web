@@ -45,11 +45,13 @@ function AuthSideSection({ bgBtn, imgHeight }) {
         />{' '}
         JOIN NOW
       </button>
-      <img
-        src={images.authside}
-        alt="img"
-        className={`rounded-[8px] ${imgHeight ? 'h-[345px]' : ''}`}
-      />
+      <div className="rounded-[8px] overflow-hidden h-[345px]">
+        <img
+          src={images.authside}
+          alt="img"
+          className={`w-full h-full object-cover ${imgHeight ? '' : ''}`}
+        />
+      </div>
     </div>
   );
 }
