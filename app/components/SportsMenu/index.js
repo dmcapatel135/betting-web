@@ -374,7 +374,7 @@ function SportsMenu() {
           )}
         </div>
         <div className="flex-grow-0">
-          <div className="  h-5 w-16 text-black"></div>
+          <div className="  h-5 w-6 lg:w-16 text-black"></div>
         </div>
       </div>
       {/* <div className="flex my-3 px-2  mr-3 w-full">
