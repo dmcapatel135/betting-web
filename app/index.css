@@ -302,6 +302,11 @@ input[type='number'] {
 .swiper-slide.swiper-slide-active {
   width: 100% !important;
 }
+.scrollbar-width::-webkit-scrollbar {
+  display: none;
+}
+
+/* For Firefox and other browsers */
 .scrollbar-width {
   scrollbar-width: none;
 }

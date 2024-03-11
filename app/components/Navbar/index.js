@@ -176,12 +176,12 @@ const Navbar = ({ tab, setTab }) => {
     <nav className="sticky z-[999999] top-0 left-0">
       <div className="h-[50px] sm:h-[65px] lg:h-[85px] xxl:h-[110px] bg-gradient-color-1 relative">
         <div className="grid grid-cols-12">
-          <div className="lg:col-span-2 md:col-span-3 col-span-6 ">
+          <div className="lg:col-span-2 md:col-span-3 col-span-4 ">
             <div className="flex items-center h-[48px] md:h-full">
               <img
                 src={images.football}
                 alt="football"
-                className=" sm:w-[100px]  lg:w-[105px] xxl:w-full  sm:h-[65px] lg:h-[85px] xxl:h-full hidden sm:block"
+                className=" sm:w-[100px]  lg:w-[105px] xxl:w-full  sm:h-[65px] lg:h-[85px] xxl:h-full hidden lg:block"
               />
               <img
                 src={images.bikoSport}
@@ -319,7 +319,7 @@ const Navbar = ({ tab, setTab }) => {
           </div>
           <div
             onMouseLeave={() => setSelect(false)}
-            className="lg:col-span-3 md:col-span-4 xl:col-span-4 2xl:col-span-3 col-span-6 flex items-center justify-end gap-4 pr-4 mx-2 md:mx-0"
+            className="lg:col-span-3 md:col-span-4 xl:col-span-4 2xl:col-span-3 col-span-8 flex items-center justify-end gap-4 pr-4 mx-2 md:mx-0"
           >
             {/* <div className="flex justify-between"> */}
             {isLoggedIn() ? (
@@ -393,7 +393,7 @@ const Navbar = ({ tab, setTab }) => {
                 </div>
                 {option && (
                   <div
-                    className="absolute rounded-md bg-white mt-4 w-32 md:w-48 right-5 z-30 shadow-lg"
+                    className="absolute rounded-md bg-white mt-4 w-40 md:w-48 right-5 z-30 shadow-lg"
                     onMouseLeave={() => setOption(!option)}
                   >
                     <div className="text-gray-900 py-1 md:py-3 text-12 md:text-14 font-[400] font-roboto cursor-pointer">
