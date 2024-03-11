@@ -5,28 +5,17 @@ import {
   TalkToUs,
 } from '@components';
 import HeroSection from '@components/HeroSection';
-import { getReq } from '@utils/apiHandlers';
-import { formatNumber } from '@utils/constants';
-import React, { useCallback, useEffect, useState } from 'react';
-<<<<<<< HEAD
+// import { getReq } from '@utils/apiHandlers';
+// import { formatNumber } from '@utils/constants';
+import React from 'react';
+// , { useState } useCallback, useEffect,
 // import InfiniteScroll from 'react-infinite-scroll-component';
 
 function MyTransactions() {
   // const [myTransactions, setMyTransactions] = useState([]);
   // const [page, setPage] = useState();
-  // const [hasMore, setHasMore] = useState();
-  const [wallet, setWallet] = useState([]);
-=======
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSelector } from 'react-redux';
-
-function MyTransactions() {
-  const [myTransactions, setMyTransactions] = useState([]);
-  const [page, setPage] = useState();
-  const [hasMore, setHasMore] = useState();
-
-  const userWallet = useSelector((state) => state.user);
->>>>>>> aa135787bf2df5a06296cf388f0ed2ea7cf21ce4
+  // const [hasMore, setHasMore] = useState();sss
+  // const [wallet, setWallet] = useState([]);
 
   // const handleGetTransactions = useCallback(async () => {
   //   const response = await getReq('/users/me/transactions');
@@ -70,11 +59,11 @@ function MyTransactions() {
                   </p>
                   <h1 className="text-black text-14 xl:text-16 text-right xxl:text-20 font-[800] font-roboto">
                     TSH{' '}
-                    {formatNumber(
+                    {/* {formatNumber(
                       Object.values(userWallet)?.filter(
                         (item) => item.type == 'Main',
                       )[0]?.amount,
-                    )}
+                    )} */}
                   </h1>
                 </div>
               </div>
