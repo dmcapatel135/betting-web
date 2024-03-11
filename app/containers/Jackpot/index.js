@@ -299,8 +299,8 @@ function Jackpot() {
                         {openCard == index && (
                           <>
                             {jackpotFixtures.length > 0 && (
-                              <div className="flex text-black justify-end mr-8 mt-5 ">
-                                <div className="gap-8 flex justify-end min-w-[256px]">
+                              <div className="flex text-black justify-end mr-4 xl:mr-8 mt-5 ">
+                                <div className="gap-3 xl:gap-8 flex justify-end min-w-[256px]">
                                   {Draw.map((item, index) => (
                                     <p
                                       key={index}

@@ -317,9 +317,9 @@ function BetWallet({ stakeValue }) {
           >
             <span className="text-24">-</span>
           </div>
-          <div className="h-10 w-24 flex justify-center items-center">
+          <div className="h-10  flex justify-center items-center">
             <input
-              className="text-black text-center text-14 outline-none border-none h-8"
+              className="text-black w-full text-center text-14 outline-none border-none h-8"
               placeholder="Your Stake"
               value={stake}
               onChange={(e) => setStake(e.target.value)}

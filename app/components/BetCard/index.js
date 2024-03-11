@@ -407,7 +407,7 @@ function BetCard({ item, sportId }) {
                             )
                               ? 'bg-green text-white border-green'
                               : ''
-                          } bg-[#EAEAEA] flex justify-center  items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
+                          } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                         >
                           <span className="font-[500]">
                             {innerItem.active ? (

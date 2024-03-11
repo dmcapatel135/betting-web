@@ -80,18 +80,18 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
               'hh:mm a ddd MM/DD',
             )}
           </p>
-          <span className="text-10 2xl:text-14 mt-20 text-gray-900">
+          <p className="text-10 leading-4 2xl:text-14 text-gray-900">
             {/* Football/England/Premier League */}
             {fixtures?.mappedEvent?.tournament?.category?.sport?.name}/
             {fixtures?.mappedEvent?.tournament?.category?.name}/
             {fixtures?.mappedEvent?.tournament?.name}
-          </span>
+          </p>
         </div>
         <div className="flex-1 flex-center flex-col text-14 font-[500] text-center text-black">
           <p>{fixtures?.mappedEvent?.competitors[0].name || 'N.A'}</p>
           <p>{fixtures?.mappedEvent?.competitors[1].name || 'N.A'}</p>
         </div>
-        <div className="flex-1 pr-5 flex justify-end gap-8 items-center">
+        <div className="flex-1 xl:pr-5 flex justify-end gap-3 xl:gap-8 items-center">
           {fixtures?.market?.outcomes?.map((item, index) => {
             return (
               <div
@@ -137,7 +137,7 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
             );
           })}
           {fixtures?.market == null && (
-            <div className="flex gap-8 justify-end w-full">
+            <div className="flex gap-3 xl:gap-8 justify-end w-full xl:pr-5 items-center">
               <div
                 className="flex justify-center rounded-md items-center 
                 bg-gray-800
