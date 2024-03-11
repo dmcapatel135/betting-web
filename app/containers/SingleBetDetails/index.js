@@ -312,7 +312,7 @@ function SigleBetDetails() {
                   className="mySwiper"
                 >
                   <SwiperSlide className="pb-3">
-                    <div className="mx-5 w-[330px] md:w-[300px] 2xl:w-auto h-44 mb-5  bg-[#b9e6ea] px-2">
+                    <div className="mx-5 w-auto h-44 mb-5  bg-[#b9e6ea] px-2">
                       <div className="">
                         <div className="text-center">
                           <p className="text-gray-900 text-12">
@@ -374,7 +374,7 @@ function SigleBetDetails() {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="mx-5 w-[330px] md:w-[300px] h-44 mb-5  bg-[#b9e6ea] px-2">
+                    <div className="mx-5 h-44 mb-5  bg-[#b9e6ea] px-2">
                       <div className="">
                         <div className="text-center">
                           <p className="text-gray-900 text-12">

@@ -29,13 +29,13 @@ function Deposit() {
               </div>
               <div className="px-5 my-5">
                 <div>
-                  <label className="text-black text-12">
+                  <label className="text-black text-14">
                     Your Mobile Number
                   </label>
                   <MobileInputField selectValue={'+255'} />
                 </div>
                 <div className="my-2">
-                  <label className="text-black text-12">
+                  <label className="text-black text-14">
                     Amount to Deposit
                   </label>
                   <input
@@ -45,17 +45,17 @@ function Deposit() {
                   />
                 </div>
                 <div>
-                  <button className="w-full bg-yellow h-10 font-[700] text-14 rounded-lg">
+                  <button className="w-full mt-4 bg-yellow h-10 font-[700] text-14 rounded-lg">
                     DEPOSIT
                   </button>
                 </div>
               </div>
-              <hr></hr>
+              <hr className="border-t  border-purple-300"></hr>
               <div className="px-5 my-5 text-black">
                 <h1 className="text-16 md:text-20 font-[500]">
                   DEPOSIT INSTRUCTIONS
                 </h1>
-                <ol className="text-12">
+                <ol className="text-12 pt-2">
                   <li>1. Enter the amount you want to deposit.</li>
                   <li>2. Click on the deposit button.</li>
                   <li>3. Check your phone for a Request.</li>
@@ -128,7 +128,7 @@ function Deposit() {
                     <p className="font-[500] text-14 md:text-16">
                       KUWEKA PESA KUPITIA TIGOPESA
                     </p>
-                    <ol className="text-12">
+                    <ol className="text-12 pt-2">
                       <li>1. Piga *150*01#</li>
                       <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
                       <li>
@@ -149,11 +149,11 @@ function Deposit() {
                     <p className="font-[500] text-14 md:text-16">
                       KUWEKA PESA KUPITIA MPESA
                     </p>
-                    <ol className="text-12">
-                      <li>1. Piga *150*01#</li>
+                    <ol className="text-12 pt-2">
+                      <li>1. Piga *150*00#</li>
                       <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
                       <li>
-                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                        3. Chagua 4 Weka namba ya kampuni/biashara: 101010
                       </li>
                       <li>
                         4. Weka Namba yako ya Account (phone number) au Receipt
@@ -170,11 +170,11 @@ function Deposit() {
                     <p className="font-[500] text-16">
                       KUWEKA PESA KUPITIA AIRTEL
                     </p>
-                    <ol className="text-12">
-                      <li>1. Piga *150*01#</li>
-                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                    <ol className="text-12 pt-2">
+                      <li>1. Piga *150*60#</li>
+                      <li>2. Chagua 5 Lipa bili</li>
                       <li>
-                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                        3. Chagua 4 Weka namba ya kampuni/biashara: 101010
                       </li>
                       <li>
                         4. Weka Namba yako ya Account (phone number) au Receipt
@@ -191,11 +191,11 @@ function Deposit() {
                     <p className="font-[500] text-16">
                       KUWEKA PESA KUPITIA HALOPESA
                     </p>
-                    <ol className="text-12">
-                      <li>1. Piga *150*01#</li>
-                      <li>2. Chagua 4 Lipa kwa TIGOPESA</li>
+                    <ol className="text-12 pt-2">
+                      <li>1. Piga *150*88#</li>
+                      <li>2. Chagua 4 Lipa bili</li>
                       <li>
-                        3. Chagua 3 Weka namba ya kampuni/biashara: 101010
+                        3. Chagua 3 Ingiza namba ya kampuni/biashara: 101010
                       </li>
                       <li>
                         4. Weka Namba yako ya Account (phone number) au Receipt

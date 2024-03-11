@@ -32,7 +32,7 @@ function Batting() {
               : 'hidden md:block md:col-span-4 2xl:col-span-3'
           } mr-3 ml-1 border-l-[1px] border-[#A3A3A3]  mb-3 h-full pl-3`}
         >
-          <div className="sticky top-[85px] py-5">
+          <div className="sticky top-[85px] py-5 h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
             {selectedBet.length > 0 ? (
               <BetWallet />
             ) : isLoggedIn() ? (

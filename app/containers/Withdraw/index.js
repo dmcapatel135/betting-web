@@ -23,18 +23,18 @@ function Withdraw() {
             >
               <div className="bg-blue text-center rounded-t-lg">
                 <h1 className="text-14 md:text-16 py-2 font-[700]">
-                  DEPOSIT FUNDS (MOBILE MONEY)
+                  WITHDRAW FUNDS (MOBILE MONEY)
                 </h1>
               </div>
               <div className="px-5 my-5">
                 <div>
-                  <label className="text-black text-12">
+                  <label className="text-black text-14">
                     Your Mobile Number
                   </label>
                   <MobileInputField selectValue={'+255'} />
                 </div>
                 <div className="my-2">
-                  <label className="text-black text-12">
+                  <label className="text-black text-14">
                     Amount to Withdraw
                   </label>
                   <input
@@ -49,12 +49,12 @@ function Withdraw() {
                   </button>
                 </div>
               </div>
-              <hr></hr>
+              <hr className="border-t  border-purple-300"></hr>
               <div className="px-5 my-5 text-black">
                 <h1 className="text-16 md:text-20 font-[500]">
                   WITHDRAWAL INSTRUCTIONS
                 </h1>
-                <ol className="text-12">
+                <ol className="text-12 pt-2">
                   <li>1. Enter the amount you want to withdraw</li>
                   <li>2. Click on the Withdraw button.</li>
                   <li>3. Check your phone for a Confirmation.</li>

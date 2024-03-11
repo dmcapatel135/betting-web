@@ -296,3 +296,12 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+.Toastify__toast-container {
+  z-index: 999999999 !important;
+}
+.swiper-slide.swiper-slide-active {
+  width: 100% !important;
+}
+.scrollbar-width {
+  scrollbar-width: none;
+}

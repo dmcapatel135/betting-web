@@ -67,7 +67,7 @@ function Sidebar({
           {reactIcons.close}
         </div>
       )}
-      <div className="sticky py-3 top-[85px]">
+      <div className="sticky py-3 top-[85px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
         <div className="flex flex-col items-start  border-b-black gap-5">
           <ul className="grid grid-cols-1 w-full gap-1 md:gap-2 pl-3">
             {navigations.map((item, index) => (
@@ -179,7 +179,7 @@ function Sidebar({
             </span>
           </div>
           {isOpenpopularCountry && (
-            <div className="pl-2 overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
+            <div className="pl-2 overflow-y-auto custom-scroll-sm max-h-64">
               <ul>
                 {categories.map((item) => {
                   return (
@@ -298,7 +298,7 @@ function Sidebar({
                               ></i>
                             </span>
                             {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
-                            <span className="text-10 mx-2 font-[500] text-black">
+                            <span className="text-10 mx-2 2xl:text-[13px] font-[500] text-black">
                               {item.name}
                             </span>
                           </div>

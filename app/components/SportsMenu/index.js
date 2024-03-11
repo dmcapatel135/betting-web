@@ -299,7 +299,7 @@ function SportsMenu() {
             )}
           </div>
         </div>
-        <div className="flex-1 border-black pr-6">
+        <div className="flex-1 border-black pr-3 2xl:pr-6">
           {allFixtures.length > 0 && (
             <div className="flex justify-center md:justify-end gap-4">
               {marketsName
@@ -327,7 +327,7 @@ function SportsMenu() {
                           marketsName.filter(
                             (item) => item.sportId == sportId,
                           )[0]?.marketName.length == 1
-                            ? 'justify-between  md:justify-end md:mx-4'
+                            ? 'justify-between  md:justify-end 2xl:mx-4'
                             : 'justify-center'
                         }`}
                       >
@@ -449,7 +449,7 @@ function SportsMenu() {
         </div>
       </div> */}
       {allFixtures.length > 0 && (
-        <div className=" mb-20 px-2 ">
+        <div className="px-2 ">
           <InfiniteScroll
             dataLength={allFixtures.length}
             next={fetchMoreData}

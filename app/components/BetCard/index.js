@@ -133,14 +133,14 @@ function BetCard({ item, sportId }) {
           </div>
         </div>
         <div className="flex-1 border-black">
-          <div className="flex justify-center md:justify-end gap-4 pr-6">
+          <div className="flex justify-center md:justify-end gap-4 pr-3 2xl:pr-6">
             {(sportId || searchParams.get('sId')) == 1 && (
               <>
                 <div className="  ">
                   <div
                     className={`${
                       data['1x2'] ? '' : ''
-                    }  flex mx-auto justify-center gap-2 min-w-[156px] `}
+                    }  flex mx-auto justify-center gap-2 2xl:min-w-[156px] `}
                   >
                     {data['1x2']?.outcomes?.length > 0 &&
                       data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
@@ -215,7 +215,7 @@ function BetCard({ item, sportId }) {
                 <div className="  hidden xl:block ">
                   <div
                     className="
-                      flex mx-auto px-2 justify-center gap-2 max-w-[110px]"
+                      flex mx-auto justify-center gap-2 max-w-[110px] 2xl:min-w-[110px]"
                   >
                     {data['Total']?.outcomes?.length > 0 &&
                       data['Total']?.outcomes?.map((innerItem, innerIndex) => {
@@ -257,7 +257,7 @@ function BetCard({ item, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-between md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-center md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
@@ -272,10 +272,10 @@ function BetCard({ item, sportId }) {
                     {(data['Total']?.outcomes?.length == 0 ||
                       data['Total'] == undefined) && (
                       <>
-                        <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-center w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
                           -
                         </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-center  w-[40px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] text-center py-2 px-3">
                           -
                         </button>
                       </>
@@ -286,7 +286,7 @@ function BetCard({ item, sportId }) {
                   <div
                     // className={`${items.option.length ==} flex justify-between`}
                     className="
-                      flex px-2 justify-center gap-2 max-w-[110px]"
+                      flex 2xl:px-2 justify-center gap-2 w-full min-w-[110px] 2xl:max-w-[110px]"
                   >
                     {data['Both teams to score']?.outcomes?.length > 0 &&
                       data['Both teams to score']?.outcomes?.map(
@@ -349,10 +349,10 @@ function BetCard({ item, sportId }) {
                     {(data['Both teams to score']?.outcomes?.length == 0 ||
                       data['Both teams to score'] === undefined) && (
                       <div className="flex justify-between">
-                        <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6    items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                           -
                         </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] 2xl:w-[48px] md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between  md:duration-300 w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:h-8 h-6   items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                           -
                         </button>
                       </div>
@@ -362,10 +362,10 @@ function BetCard({ item, sportId }) {
               </>
             )}
             {(sportId || searchParams.get('sId')) == 2 && (
-              <div className="w-36 md:w-40 ">
+              <div className=" ">
                 <div
-                  className="w-32 md:w-36 
-                   flex  mx-auto md:mx-0 justify-between"
+                  className="
+                   flex  mx-auto md:mx-0 justify-between gap-2 2xl:mx-4"
                 >
                   {data['1x2']?.outcomes?.length > 0 &&
                     data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
@@ -407,7 +407,7 @@ function BetCard({ item, sportId }) {
                             )
                               ? 'bg-green text-white border-green'
                               : ''
-                          } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
+                          } bg-[#EAEAEA] flex justify-center  items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                         >
                           <span className="font-[500]">
                             {innerItem.active ? (
@@ -422,13 +422,13 @@ function BetCard({ item, sportId }) {
                   {(data['1x2']?.outcomes?.length == 0 ||
                     data['1x2'] === undefined) && (
                     <>
-                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-center w-[40px] md:h-8 h-6 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  md:w-[45px]  items-center 2xl:mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-center w-[40px] md:h-8 h-6 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center 2xl:mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-center w-[40px] md:h-8 h-6 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center 2xl:mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
                     </>
@@ -497,10 +497,10 @@ function BetCard({ item, sportId }) {
                   {(data['Winner']?.outcomes?.length == 0 ||
                     data['Winner'] === undefined) && (
                     <>
-                      <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between w-[45px] md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[45px] md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
                     </>
@@ -554,7 +554,7 @@ function BetCard({ item, sportId }) {
                             )
                               ? 'bg-green text-white border-green'
                               : ''
-                          } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
+                          } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] py-2 px-3`}
                         >
                           <span className="font-[500]">
                             {innerItem.active ? (
@@ -569,13 +569,13 @@ function BetCard({ item, sportId }) {
                   {(data['1x2']?.outcomes?.length == 0 ||
                     data['1x2'] === undefined) && (
                     <>
-                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between w-[40px] md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between  w-[40px] md:h-8 h-6  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
                     </>
@@ -650,10 +650,10 @@ function BetCard({ item, sportId }) {
                   {(data['Winner (incl. super over)']?.outcomes?.length == 0 ||
                     data['Winner (incl. super over)'] === undefined) && (
                     <>
-                      <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between w-12 md:h-8 h-6  md:w-[45PX] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
-                      <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                      <button className="bg-[#EAEAEA] flex justify-between  w-12 md:h-8 h-6  md:w-[45PX] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                         -
                       </button>
                     </>
@@ -708,7 +708,7 @@ function BetCard({ item, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] text-black text-10  rounded-[4px] md:rounded-[4px] w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-between   items-center  border-[#A3A3A3] border-[1px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 text-black text-10  rounded-[4px] md:rounded-[4px] w-[40px] md:h-8 h-6  md:w-[45px] py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
@@ -723,10 +723,10 @@ function BetCard({ item, sportId }) {
                     {(data['Winner']?.outcomes?.length == 0 ||
                       data['Winner'] === undefined) && (
                       <div className="flex justify-between">
-                        <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6  md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between w-[52px] md:h-8 h-6 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                           -
                         </button>
-                        <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6  md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        <button className="bg-[#EAEAEA] flex justify-between  w-[52px] md:h-8 h-6 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                           -
                         </button>
                       </div>
