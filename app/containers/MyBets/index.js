@@ -239,7 +239,7 @@ function MyBets() {
           )}
         </div>
       </div>
-      <div className="col-span-4  pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
+      <div className="col-span-4 2xl:col-span-3  pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
         {selectedBet.length > 0 ? <BetWallet /> : <Betslip wallet="true" />}
         <CompanyContact />
         <CustomerCareContact />
