@@ -179,18 +179,18 @@ function MyBets() {
                                         </p>
                                       </td>
                                       <td>
-                                        {innerItem.status == 'Settled'
-                                          ? innerItem.settlement.result
-                                          : innerItem.status}
+                                        {innerItem?.status == 'Settled'
+                                          ? innerItem?.settlement?.result
+                                          : innerItem?.status}
                                       </td>
                                       <td>
-                                        {innerItem.settlement.voidFactor
-                                          ? innerItem.settlement.voidFactor
+                                        {innerItem?.settlement?.voidFactor
+                                          ? innerItem?.settlement?.voidFactor
                                           : 'N.A'}
                                       </td>
                                       <td>
-                                        {innerItem.settlement.voidReason
-                                          ? innerItem.settlement.voidReason
+                                        {innerItem?.settlement?.voidReason
+                                          ? innerItem?.settlement?.voidReason
                                           : 'N.A'}
                                       </td>
                                     </tr>
