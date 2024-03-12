@@ -184,12 +184,12 @@ const Navbar = ({ tab, setTab }) => {
           <img
             src={images.bikoSport}
             alt="logo"
-            className="w-[117px] h-[30px] sm:w-[130px] lg:w-[180px] md:h-[44px] mx-2 cursor-pointer"
+            className="w-[117px] sm:w-[130px] lg:w-[180px] mx-2 cursor-pointer"
             onClick={() => navigate('/')}
           />
         </div>
 
-        <div className="hidden sm:flex flex-1 items-center 2xl:pl-[140px]">
+        <div className="hidden lg:flex flex-1 items-center 2xl:pl-[140px]">
           {/* <div className="flex items-center mx-[150px]"> */}
           <div className="relative w-full">
             <input
@@ -333,7 +333,7 @@ const Navbar = ({ tab, setTab }) => {
             </div>
           ) : (
             <button
-              className="h-[24px] lg:h-[32px] 2xl:h-[42px] w-[60px] lg:w-[80px] 2xl:w-[110px] font-[400] md:font-[700] text-10 md:text-14 xxl:text-18 bg-gradient-color-2 hover:bg-black rounded-[8px] order-2 md:order-1"
+              className="h-[42px] w-[110px] font-[700] text-14 bg-gradient-color-2 hover:bg-black rounded-[8px] order-2 md:order-1"
               onClick={() => {
                 // setTab(null);
                 // setSelectTournament(null);
@@ -356,7 +356,7 @@ const Navbar = ({ tab, setTab }) => {
             </button>
           ) : (
             <button
-              className="h-[42px] w-[80px] xl:w-[110px] border-[1px] text-10 lg:text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
+              className="h-[42px] w-[110px] border text-14 font-[400] md:font-[700] xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-1 md:order-2"
               onClick={() => {
                 // setTab(null);
                 // setSelectTournament(null);
@@ -369,7 +369,7 @@ const Navbar = ({ tab, setTab }) => {
           {/* <select className="h-[32px] lg:h-[32px] xxl:h-[48px] lg:w-[85px] xxl:w-[110px] text-12 lg:text-14 xxl:text-18 hidden sm:block font-[700] cursor-pointer  bg-darkjunglegreen hover:bg-gradient-color-2 border-[1px] border-lightgray rounded-[8px] md:order-2">
               <option>English</option>
             </select> */}
-          <div className="hidden md:block md:order-2">
+          <div className="hidden lg:block md:order-2">
             <SelectImage
               optionList={optionList}
               selectValue={selectValue}
@@ -420,7 +420,7 @@ const Navbar = ({ tab, setTab }) => {
           )}
         </div>
       </div>
-      <div className="block md:hidden">
+      <div className="block lg:hidden">
         <hr className="border-[1px]"></hr>
         <div className="w-full h-[62px] flex items-center bg-gradient-color-1">
           {mobileMenuList.map((item, index) => (
@@ -464,7 +464,7 @@ const Navbar = ({ tab, setTab }) => {
             </NavLink>
           ))}
           {isOpenMenuList && (
-            <div className="absolute top-[115px] w-[300px] z-50">
+            <div className="absolute top-[130px] w-[300px] z-50">
               <Sidebar
                 tab={tab}
                 setTab={setTab}

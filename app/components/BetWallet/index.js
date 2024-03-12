@@ -256,7 +256,7 @@ function BetWallet({ stakeValue }) {
           </div>
         )}
       </div>
-      <hr className="border-[1px]"></hr>
+      <hr className="border bg-white"></hr>
       <div className="px-3 my-5">
         <div className="h-10 flex justify-center items-center bg-[#02CBDB] rounded-[8px]">
           <span
@@ -277,16 +277,26 @@ function BetWallet({ stakeValue }) {
               >
                 <img src="/images/bikoicon/close_small.png" alt="icon" />
               </div>
-              <div className="flex justify-between w-full px-3 items-center ">
+              <div className="flex flex-col xl:flex-row justify-between w-full px-3 pb-2 xl:items-center ">
                 <div className="text-gray-900">
-                  <p className="text-12 xxl:text-14  font-[600]">{`${
+                  <p className="text-12 xxl:text-14 font-[600]">{`${
                     item.eventNames ? item.eventNames : 'N.A'
                   }`}</p>
-                  <span className="text-12 text-black">
+                  <span className="text-12 text-black hidden xl:flex">
                     {item.betDetails.name + ' - ' + item.bet.name}
                   </span>
+                  <div className="flex justify-between gap-2 xl:hidden">
+                    <span className="text-12 text-black">
+                      {item.betDetails.name + ' - ' + item.bet.name}
+                    </span>
+                    <div className="flex justify-center items-center rounded-md bg-yellow text-white h-7 w-10">
+                      <span className="text-14 font-[600]">
+                        {item.bet.odds || '2.95'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-center items-center rounded-md bg-yellow h-7 w-10">
+                <div className="justify-center items-center rounded-md bg-yellow h-7 w-10 hidden xl:flex">
                   <span className="text-14 font-[600]">
                     {item.bet.odds || '2.95'}
                   </span>
@@ -310,10 +320,10 @@ function BetWallet({ stakeValue }) {
       </div>
       <div className="px-3">
         <span className="text-black text-16">Your stake</span>
-        <div className="h-[40px] border-[1px] border-yellow rounded-xl flex justify-between my-2">
+        <div className="h-[40px] border-[1px] border-yellow rounded-lg flex justify-between my-2">
           <div
             onClick={() => setStake(stake - 1)}
-            className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-12 text-center rounded-l-xl"
+            className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-12 text-center rounded-l-lg"
           >
             <span className="text-24">-</span>
           </div>
@@ -327,7 +337,7 @@ function BetWallet({ stakeValue }) {
           </div>
           <div
             onClick={() => setStake(stake + 1)}
-            className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-12 rounded-r-xl"
+            className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-12 rounded-r-lg"
           >
             <span className="text-24">+</span>
           </div>

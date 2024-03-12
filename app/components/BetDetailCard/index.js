@@ -96,20 +96,16 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         </div>
       </div>
       <hr className="border-[1px] my-1 mx-3"></hr>
-      <div className="flex justify-end my-2 px-3">
+      <div className="flex gap-4 justify-end my-2 px-3">
         {!(item.status == 'Cancelled') && (
           <button
             onClick={() => {
               if (!(item.status == 'Cancelled')) handleCancelBet(item.id);
             }}
-            className="flex bg-lightgray px-3 mx-1 py-1 text-14 font-[600] outline-none  rounded-[8px]"
+            className="btn bg-lightgray"
           >
-            <img
-              src="/images/bikoicon/cancel.png"
-              alt="icon"
-              className="mx-2"
-            />
-            {item.status == 'Cancelled' ? 'Cancelled' : 'Cancel'}
+            <img src="/images/bikoicon/cancel.png" alt="icon" className="" />
+            <span> {item.status == 'Cancelled' ? 'Cancelled' : 'Cancel'}</span>
           </button>
         )}
         {item.status == 'Cancelled' && (
@@ -119,21 +115,21 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         )}
         {!(item.status == 'Cancelled') && (
           <>
-            <button className="flex bg-bluewhalelight text-14 font-[600] outline-none  text-white px-3 mx-1 py-1 rounded-[8px]">
+            <button className="btn bg-bluewhalelight">
               <img
                 src="/images/bikoicon/share.png"
                 alt="icon"
-                className="mx-2  w-6 h-5"
+                className="w-6 h-5"
               />
-              Share
+              <span> Share</span>
             </button>
-            <button className="flex bg-green outline-none text-14 font-[600] text-white px-3 mx-1 py-1 rounded-[8px]">
+            <button className="btn bg-green">
               <img
                 src="/images/bikoicon/rebet.png"
                 alt="icon"
-                className="mx-2 w-6 h-5"
+                className="w-6 h-5"
               />
-              Rebet
+              <span>Rebet</span>
             </button>
           </>
         )}

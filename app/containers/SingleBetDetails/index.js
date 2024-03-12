@@ -221,7 +221,7 @@ function SigleBetDetails() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
+      <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-2">
           <div className="h-fit text-black w-full bg-[#b9e6ea]">
             <div className="flex justify-center">

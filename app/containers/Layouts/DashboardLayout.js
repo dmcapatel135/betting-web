@@ -26,7 +26,7 @@ const DashboardLayout = ({ menu }) => {
   return (
     <main>
       <div className="grid grid-cols-12 ">
-        <div className="md:col-span-2 md:block hidden">
+        <div className="md:col-span-2 lg:block hidden">
           <Sidebar
             selectTournament={selectTournament}
             setSelectTournament={setSelectTournament}

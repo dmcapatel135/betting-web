@@ -36,24 +36,24 @@ function BetSlip() {
           </div>
         </div>
       )}
-      <div className="flex items-center my-3 px-3">
-        <div className="flex items-center">
-          <span className="text-12 text-black">Booking code</span>
+      <div className="flex flex-col items-start my-3 px-3">
+        <span className="text-14 text-black">Booking code</span>
+        <div className="flex items-center gap-2 w-full">
           <input
             type="text"
-            className="w-[150px] mx-3 h-8  border-[1px] text-gray-900 px-2 text-14 outline-none rounded-sm  border-yellow"
+            className="w-full h-8 border text-gray-900 px-2 text-14 outline-none rounded-sm  border-yellow"
           />
+          <button className="px-3 flex-1 h-8 bg-gradient-color-2 text-12 rounded-sm">
+            Load
+          </button>
         </div>
-        <button className="px-3 h-8 bg-gradient-color-2 text-12 rounded-sm">
-          Load
-        </button>
       </div>
       <div className="text-center">
-        <div className="my-5 flex justify-center px-3 ">
+        <div className="my-5 flex justify-center px-3 h-56">
           <img
             src={images.emptybetslip}
             alt="beticon"
-            className="rounded-md h-56"
+            className="rounded-md w-full h-full object-cover"
           />
         </div>
         {/* <span className="text-14 font-[600] text-[#BD1842]">

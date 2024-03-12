@@ -22,14 +22,14 @@ function Batting() {
   return (
     <main className="md:pl-5">
       <div className="grid grid-cols-12">
-        <div className="col-span-12 md:col-span-8 2xl:col-span-9">
+        <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
           <SportsMenu />
         </div>
         <div
           className={`${
             tab == 7
               ? 'col-span-12 mb-5'
-              : 'hidden md:block md:col-span-4 2xl:col-span-3'
+              : 'hidden lg:block md:col-span-4 2xl:col-span-3'
           } mr-3 ml-1 border-l-[1px] border-[#A3A3A3]  mb-3 h-full pl-3`}
         >
           <div className="sticky top-[85px] py-5 h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
