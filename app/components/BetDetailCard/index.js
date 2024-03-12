@@ -55,6 +55,8 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     dispatch(fetchBetDetailsAction(array));
   };
 
+  console.log('-----itmne ', item);
+
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -62,10 +64,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           <div className="flex justify-between">
             <div>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Date
+                Placed Date
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Bet ID
+                Betslip ID
               </p>
             </div>
             <div>
@@ -86,7 +88,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           <div className="flex justify-between">
             <div>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Games
+                Matches
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
                 Possible Win TSH
@@ -97,14 +99,12 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 {item.bets.length}
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {formatNumber(
-                  item.bets
-                    .map((b) => b.odds)
-                    .reduce((a, b) => a * b, 1)
-                    .toFixed(2) *
-                    item?.stake *
-                    parseInt(item.winBonus ? item.winBonus : 1),
-                )}
+                {item.bets
+                  .map((b) => b.odds)
+                  .reduce((a, b) => a * b, 1)
+                  .toFixed(2) *
+                  item?.stake *
+                  parseInt(item.winBonus ? item.winBonus : 1)}
               </p>
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
@@ -114,10 +114,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           <div className="flex justify-between pr-5 md:pr-0 md:justify-around">
             <div>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Odds
+                Total Odds
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Stake TZS
+                Stake TSH
               </p>
             </div>
             <div>
@@ -131,6 +131,27 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 {formatNumber(item.stake)}
               </p>
             </div>
+          </div>
+        </div>
+        <div className="col-span-6 md:col-span-4">
+          <div className="flex justify-between  pr-5  md:pr-0">
+            <div className="flex-shrink w-[130px]">
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                Bonge Bonus
+              </p>
+              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                Stake TSH
+              </p> */}
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                {item.winBonus ? item.winBonus : 0}
+              </p>
+              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                {formatNumber(item.stake)}
+              </p> */}
+            </div>
+            <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
           </div>
         </div>
       </div>

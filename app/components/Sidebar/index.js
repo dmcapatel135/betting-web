@@ -253,6 +253,13 @@ function Sidebar({
                   );
                 })}
               </ul>
+              {categories.length == 0 && (
+                <div>
+                  <span className="text-black font-[500] text-14">
+                    No popular countries at this moment
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </div>

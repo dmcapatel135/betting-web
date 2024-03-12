@@ -48,13 +48,13 @@ function MyBets() {
       const response = await getReq(
         `/users/me/bet-slips?skip=${
           newPage ? newPage : 0
-        }&take=${pageSize}${query}`,
+        }&take=${pageSize}${query ? query : ''}`,
       );
       if (response.status) {
         setIsLoading(false);
       }
       if (response.data.data.length > 0) {
-        setMyBets((prev) => [...prev, ...response.data.data]);
+        setMyBets(response.data.data);
       } else {
         setHasMore(false);
       }
@@ -116,54 +116,92 @@ function MyBets() {
               </div>
               <div>
                 {myBets.length > 0 &&
-                  myBets?.map((item, index) => {
-                    return (
-                      <div key={index} className="my-2">
-                        <BetDetailCard
-                          showBets={showBets}
-                          setShowBets={setShowBets}
-                          item={item}
-                          index={index}
-                        />
-                        <div className="mt-2 overflow-auto">
-                          <table className="text-black w-full overflow-auto text-14">
-                            <thead className="bg-yellow h-12 rounded-t-md">
-                              <th className="rounded-tl-md">START</th>
-                              <th>GAME</th>
-                              <th>MKT</th>
-                              <th>ODDS</th>
-                              <th>PICK</th>
-                              <th>FT</th>
-                              <th className="rounded-tr-md">STATUS</th>
-                            </thead>
-                            <tbody className="text-center text-12">
-                              {item?.bets.map((innerItem, innerIndex) => {
-                                return (
-                                  <tr key={innerIndex}>
-                                    <td>
-                                      {moment(innerItem.createdAt).format(
-                                        'DD-MM-yy hh:mm',
-                                      )}
-                                    </td>
-                                    <td>
-                                      {innerItem.event.competitors[0].name +
-                                        'v/s' +
-                                        innerItem.event.competitors[1].name}
-                                    </td>
-                                    <td>{innerItem.market}</td>
-                                    <td>{innerItem.odds}</td>
-                                    <td>{innerItem.outcome}</td>
-                                    <td>{innerItem.outcome}</td>
-                                    <td>{innerItem.status}</td>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </table>
+                  myBets
+                    .filter((item) => item.id == showBets)
+                    ?.map((item, index) => {
+                      return (
+                        <div key={index} className="my-2">
+                          <BetDetailCard
+                            showBets={showBets}
+                            setShowBets={setShowBets}
+                            item={item}
+                            index={index}
+                            getMyBetDetails={getMyBetDetails}
+                          />
+                          <div className="mt-2 overflow-auto">
+                            <table className="text-black w-full overflow-auto text-14">
+                              <thead className="bg-yellow h-12 rounded-t-md">
+                                <th className="rounded-tl-md">
+                                  MATCH START TIME
+                                </th>
+                                <th>GAME</th>
+                                <th>MKT</th>
+                                <th>ODDS</th>
+                                <th>PICK</th>
+                                <th>TEAM</th>
+                                <th className="rounded-tr-md">STATUS</th>
+                                <th>VOID FACTOR</th>
+                                <th>VOID REASON</th>
+                              </thead>
+                              <tbody className="text-center text-12">
+                                {item?.bets.map((innerItem, innerIndex) => {
+                                  console.log('------inner item ', innerItem);
+                                  return (
+                                    <tr key={innerIndex}>
+                                      <td>
+                                        {moment(innerItem.createdAt).format(
+                                          'DD-MM-yy hh:mm',
+                                        )}
+                                      </td>
+                                      <td>
+                                        {
+                                          innerItem?.event?.tournament?.category
+                                            ?.sport?.name
+                                        }
+                                        /
+                                        {
+                                          innerItem?.event?.tournament?.category
+                                            ?.name
+                                        }
+                                        /{innerItem?.event?.tournament?.name}
+                                      </td>
+                                      <td>{innerItem.market}</td>
+                                      <td>{innerItem.odds}</td>
+                                      <td>{innerItem.outcome}</td>
+                                      <td>
+                                        <p>
+                                          {innerItem?.event?.competitors[0]
+                                            ?.name || 'N.A'}
+                                        </p>
+                                        <p>
+                                          {innerItem?.event?.competitors[1]
+                                            ?.name || 'N.A'}
+                                        </p>
+                                      </td>
+                                      <td>
+                                        {innerItem.status == 'Settled'
+                                          ? innerItem.settlement.result
+                                          : innerItem.status}
+                                      </td>
+                                      <td>
+                                        {innerItem.settlement.voidFactor
+                                          ? innerItem.settlement.voidFactor
+                                          : 'N.A'}
+                                      </td>
+                                      <td>
+                                        {innerItem.settlement.voidReason
+                                          ? innerItem.settlement.voidReason
+                                          : 'N.A'}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
               </div>
             </div>
           ) : (
@@ -198,17 +236,6 @@ function MyBets() {
                   myBets.map((item, index) => {
                     return (
                       <div key={index} className="my-2">
-                        {/* <InfiniteScroll
-                          dataLength={myBets.length}
-                          next={fetchMoreData}
-                          hasMore={hasMore}
-                          // loader={<SkeletonLoader />}
-                          // endMessage={
-                          //   <div className="text-center my-2">
-                          //     <p>No more items to load.</p>
-                          //   </div>
-                          // }
-                        > */}
                         <BetDetailCard
                           showBets={showBets}
                           setShowBets={setShowBets}
@@ -216,7 +243,6 @@ function MyBets() {
                           index={index}
                           getMyBetDetails={getMyBetDetails}
                         />
-                        {/* </InfiniteScroll> */}
                       </div>
                     );
                   })}

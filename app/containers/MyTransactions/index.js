@@ -2,40 +2,67 @@ import {
   Betslip,
   CompanyContact,
   CustomerCareContact,
+  Pagination,
   TalkToUs,
 } from '@components';
 import HeroSection from '@components/HeroSection';
-// import { getReq } from '@utils/apiHandlers';
-// import { formatNumber } from '@utils/constants';
-import React from 'react';
-// , { useState } useCallback, useEffect,
-// import InfiniteScroll from 'react-infinite-scroll-component';
+import { formatNumber } from '@utils/constants';
+import { getReq } from '@utils/apiHandlers';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import DatePickerCustom from '@components/FormElements/DatePickerCustom';
 
 function MyTransactions() {
-  // const [myTransactions, setMyTransactions] = useState([]);
-  // const [page, setPage] = useState();
-  // const [hasMore, setHasMore] = useState();sss
-  // const [wallet, setWallet] = useState([]);
+  const [myTransactions, setMyTransactions] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dataCount, setDataCount] = useState();
+  const [pageSize, setPageSize] = useState(10);
+  // const [hasMore, setHasMore] = useState();
+  const [date, setDate] = useState();
+  const [type, setType] = useState('');
 
-  // const handleGetTransactions = useCallback(async () => {
-  //   const response = await getReq('/users/me/transactions');
+  const userWallet = useSelector((state) => state.user);
 
-  //   if (response.data.data.length > 0) {
-  //     setMyTransactions((prevState) => [...prevState, ...response.data.data]);
-  //   } else {
-  //     setMyTransactions([...response.data.data]);
-  //     setHasMore(false);
-  //   }
-  // }, [setMyTransactions]);
+  const handleGetTransactions = useCallback(
+    async (query) => {
+      const response = await getReq(
+        `/users/me/transactions?skip=${page}&take=${pageSize}${query ? query : ''}`,
+      );
+      // setMyTransactions(response.data.data);
+      setDataCount(response.data.data.dataCount);
 
-  // useEffect(() => {
-  //   handleGetTransactions();
-  // }, [handleGetTransactions]);
+      if (response.status) {
+        setMyTransactions(response.data.data);
+      }
+    },
+    [setMyTransactions, page, pageSize],
+  );
 
-  // const fetchMoreData = () => {
-  //   setPage(page + 1);
-  //   handleGetTransactions();
-  // };
+  useEffect(() => {
+    handleGetTransactions();
+  }, [handleGetTransactions, page, pageSize]);
+
+  useEffect(() => {
+    let query;
+    let newDate = moment(
+      date,
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
+    ).format('YYYY-MM-DD');
+    if (date && type) {
+      query = `&date=${newDate}&type=${type}`;
+    } else if (date) {
+      query = `&date=${newDate}`;
+    } else if (type) {
+      query = `&type=${type}`;
+    }
+    handleGetTransactions(query);
+  }, [date, type, handleGetTransactions]);
+
+  const handleDate = (date) => {
+    console.log('-----date', date);
+    setDate(date);
+  };
 
   return (
     <div className="grid grid-cols-12">
@@ -58,54 +85,72 @@ function MyTransactions() {
                     Account balance
                   </p>
                   <h1 className="text-black text-14 xl:text-16 text-right xxl:text-20 font-[800] font-roboto">
-                    {/* TSH{' '}
+                    TSH{' '}
                     {formatNumber(
                       Object.values(userWallet)?.filter(
                         (item) => item.type == 'Main',
                       )[0]?.amount,
-                    )} */}
+                    )}
                   </h1>
                 </div>
               </div>
             </div>
             <div className="md:border my-4 md:p-3 p-0 md:border-[#A3A3A3]  md:shadow-md md:rounded-[8px]">
+              <div className="flex justify-end my-1">
+                <select
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  className="py-1 px-3 mx-2 outline-none rounded-md bg-blue text-white"
+                >
+                  <option>Credit</option>
+                  <option>Debit</option>
+                </select>
+                <DatePickerCustom
+                  handleDate={handleDate}
+                  date={date}
+                  className="border border-blue"
+                />
+              </div>
               <table className="w-full">
                 <thead className="bg-gradient-color-2 text-10 md:text-14 h-10 md:rounded-[8px]">
-                  <th className="rounded-l-[8px]">DATE & TIME</th>
+                  <th className="rounded-l-[8px] ">DATE & TIME</th>
                   <th>DESCRIPTION</th>
-                  <th>CREDIT</th>
-                  <th>DEBIT</th>
+                  <th>TYPE</th>
+                  <th>STATUS</th>
+                  <th>AMOUNT</th>
                   <th className="rounded-r-[8px]">BALANCE</th>
                 </thead>
                 <tbody className="text-gray-900 text-center text-10 md:text-12 font-[500]">
-                  {/* <InfiniteScroll
-                    dataLength={myTransactions.length}
-                    next={fetchMoreData}
-                    hasMore={hasMore}
-                    loader={<h4>Loading...</h4>}
-                    endMessage={<p>No more data to load.</p>}
-                  >
-                    {myTransactions.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>2023-12-09 10:48</td>
-                          <td>{item.narration}</td>
-                          <td></td>
-                          <td>50000</td>
-                          <td>16250</td>
-                        </tr>
-                      );
-                    })}
-                  </InfiniteScroll> */}
-                  <tr>
-                    <td>2023-12-09 10:48</td>
-                    <td>narration</td>
-                    <td>-</td>
-                    <td>50000</td>
-                    <td>16250</td>
-                  </tr>
+                  {myTransactions.map((item, index) => {
+                    return (
+                      <tr key={index} className="py-2">
+                        <td>
+                          {moment(item.timestamp).format('DD-MM-yyyy hh:mm A')}
+                        </td>
+                        <td>{item.narration}</td>
+                        <td>{item.type}</td>
+                        <td>{item.status}</td>
+                        <td>{formatNumber(item.amount)}</td>
+                        <td>{formatNumber(item.availableBalance)}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
+              {myTransactions.length == 0 && (
+                <div className="text-center my-3 text-black w-full">
+                  <span className="text-14">No Activity Found</span>
+                </div>
+              )}
+              {myTransactions.length > 10 && (
+                <Pagination
+                  page={page}
+                  setPage={setPage}
+                  dataCount={dataCount}
+                  pageSize={pageSize}
+                  setPageSize={setPageSize}
+                />
+              )}
             </div>
           </div>
         </div>

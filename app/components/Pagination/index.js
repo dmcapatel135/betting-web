@@ -3,8 +3,8 @@ import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 
 const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
-  const onPageChange = (event) => {
-    setPage(event.selected + 10);
+  const onPageChange = () => {
+    setPage(page + 10);
   };
 
   return (

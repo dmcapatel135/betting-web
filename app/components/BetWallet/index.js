@@ -243,18 +243,19 @@ function BetWallet({ stakeValue }) {
             Learn How To Place Bet
           </button>
         </div> */}
-        {!(selectedBet.length > gameRules?.rules?.length) && (
-          <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
-            {/* <div className="w-5 h-12 bg-yellow"></div> */}
-            <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
-              {gameRules?.rules[bonus?.length - 1]?.message}.
-              {gameRules?.minimumOdds}
-              {/* minimum odds. */}
-              {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
+        {!(selectedBet.length > gameRules?.rules?.length) &&
+          gameRules?.rules[bonus?.length - 1]?.message && (
+            <div className="h-12 mt-5 flex items-center bg-yellow rounded-br-[16px]">
+              {/* <div className="w-5 h-12 bg-yellow"></div> */}
+              <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
+                {gameRules?.rules[bonus?.length - 1]?.message}.
+                {gameRules?.minimumOdds}
+                {/* minimum odds. */}
+                {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
             1.25 minimum odds. */}
-            </span>
-          </div>
-        )}
+              </span>
+            </div>
+          )}
       </div>
       <hr className="border bg-white"></hr>
       <div className="px-3 my-5">
