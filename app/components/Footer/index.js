@@ -26,41 +26,26 @@ const Footer = () => {
               />
             </div>
             <div className="mt-0 lg:mt-8">
-              <div className="flex items-center justify-between mr-5 lg:block">
-                <span className="lg:my-3 text-12 md:text-14 2xl:text-18">
+              <div className="flex items-center gap-3 lg:justify-between mr-5 lg:block">
+                <span className="lg:my-3 text-14 2xl:text-18">
                   Join our community :
                 </span>
-                <div className="flex gap-4 text-36 text-primary-700 my-2 lg:my-5">
-                  {/* <img
-                    src="/images/bikoicon/facebook.png"
-                    alt="icon"
-                    className="mr-4 cursor-pointer md:w-10 w-8"
-                  />
-                  <img
-                    src="/images/bikoicon/instagram.png"
-                    alt="icon"
-                    className="mr-4 cursor-pointer md:w-10 w-8"
-                  />
-                  <img
-                    src="/images/bikoicon/twitter.png"
-                    alt="icon"
-                    className="cursor-pointer md:w-10 w-8"
-                  /> */}
+                <div className="flex gap-2 lg:gap-4 text-22 lg:text-36 text-primary-700 my-2 lg:my-5">
                   {icons.map((item, index) => (
                     <span key={index}>{item.icon}</span>
                   ))}
                 </div>
               </div>
-              <h1 className="text-14 md:text-16">
-                Customer Care- Call 0222 220 100{' '}
+              <h1 className="text-14 lg:text-16">
+                Customer Care- Call 0222 220 100
               </h1>
             </div>
 
             <div className="my-3 md:hidden block">
-              <hr className="border-[1px] w-full"></hr>
+              <hr className="border w-full"></hr>
             </div>
           </div>
-          <div className="col-span-full lg:col-span-6 mt-2 md:mt-0 lg:order-2 order-3 flex flex-col justify-end">
+          <div className="col-span-full lg:col-span-6 mt-2 lg:mt-0 lg:order-2 order-3 flex flex-col justify-end">
             <div className="text-center text-14 lg:text-[14px] xxl:text-16 px-3 md:px-0 lg:px-16">
               <span>
                 All correspondence to Director General 27th Floor, PSPF Towers,

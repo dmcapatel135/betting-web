@@ -80,7 +80,7 @@
     @apply flex items-center justify-center;
   }
   .btn {
-    @apply text-22 text-white  font-medium py-3 px-8 min-w-[100px] h-[60px] gap-4 flex-center;
+    @apply text-16 rounded-lg text-white flex items-center justify-center font-medium py-2 px-4 min-w-[100px] h-[42px] gap-2;
   }
   .btn-primary {
     @apply bg-primary-400;

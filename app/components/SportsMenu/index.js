@@ -176,7 +176,7 @@ function SportsMenu() {
 
   return (
     <>
-      <div className="md:block hidden pr-2">
+      <div className="lg:block hidden pr-2">
         <Tabs popularSports={popularSports} allSports={allSports} />
       </div>
       <div className="my-0 md:my-2  md:mr-2 bg-white rounded-b-[8px]">
@@ -285,10 +285,10 @@ function SportsMenu() {
           </div>
         </div>
       </div>
-      <div className="flex  mx-2 py-1 px-2">
+      <div className="flex  mx-4 py-1 lg:px-2">
         <div className="flex-grow-0 xxl:flex-1 pl-0">
           <div
-            className={`h-6 md:h-8 2xl:h-[42px] mx-1 flex justify-center items-center w-40 md:w-48 xxl:w-full text-center text-[8px] md:text-12  ${
+            className={`h-6 md:h-8 2xl:h-[42px] lg:mx-1 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
               !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
             } text-white px-1 rounded-[4px]  font-[600]`}
           >
@@ -299,7 +299,7 @@ function SportsMenu() {
             )}
           </div>
         </div>
-        <div className="flex-1 border-black pr-3 2xl:pr-6">
+        <div className="flex-1 border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6">
           {allFixtures.length > 0 && (
             <div className="flex justify-center md:justify-end gap-4">
               {marketsName
@@ -374,7 +374,7 @@ function SportsMenu() {
           )}
         </div>
         <div className="flex-grow-0">
-          <div className="  h-5 w-6 lg:w-16 text-black"></div>
+          <div className="  h-5 w-6 md:w-16 text-black"></div>
         </div>
       </div>
       {/* <div className="flex my-3 px-2  mr-3 w-full">

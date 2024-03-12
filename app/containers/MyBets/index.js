@@ -97,7 +97,7 @@ function MyBets() {
   return (
     <div className="grid grid-cols-12 h-full">
       <ShareBetModal />
-      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
+      <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-2">
           <HeroSection />
           {showBets ? (
@@ -236,7 +236,7 @@ function MyBets() {
           )}
         </div>
       </div>
-      <div className="col-span-4 2xl:col-span-3 pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
+      <div className="col-span-4 2xl:col-span-3 pt-5 lg:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3 mr-3">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

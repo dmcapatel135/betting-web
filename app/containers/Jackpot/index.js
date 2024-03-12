@@ -238,7 +238,7 @@ function Jackpot() {
 
   return (
     <div className="grid grid-cols-12 h-full">
-      <div className="col-span-12 md:col-span-8 2xl:col-span-9 pt-5 mb-5">
+      <div className="col-span-12 lg:col-span-8 2xl:col-span-9 pt-5 mb-5">
         <div className="px-5">
           <div className="border-[1px] border-bluewhale px-5 md:px-0 flex  bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
             {TabsName?.map((item) => {
@@ -491,7 +491,7 @@ function Jackpot() {
           </div>
         )}
       </div>
-      <div className="col-span-4 2xl:col-span-3 md:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
+      <div className="col-span-4 2xl:col-span-3 lg:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
         {selectedBet.length > 0 ? (
           <BetWallet stakeValue={stakeValue} />
         ) : (

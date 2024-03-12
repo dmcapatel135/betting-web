@@ -39,7 +39,7 @@ function MyTransactions() {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-12 md:col-span-8 2xl:col-span-9">
+      <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-0">
           <HeroSection />
           <div className="my-3 px-3 md:px-0">
@@ -110,7 +110,7 @@ function MyTransactions() {
           </div>
         </div>
       </div>
-      <div className="col-span-4 2xl:col-span-3 mt-3 ml-1 mr-3 md:block hidden">
+      <div className="col-span-4 2xl:col-span-3 mt-3 ml-1 mr-3 lg:block hidden">
         {/* <RightSideSection /> */}
         {/* <BetWallet /> */}
         <Betslip wallet="true" />

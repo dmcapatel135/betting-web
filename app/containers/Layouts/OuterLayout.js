@@ -97,14 +97,14 @@ const OuterLayout = () => {
       >
         <Navbar tab={tab} setTab={setTab} />
         <div className="grid grid-cols-12 ">
-          <div className="md:col-span-2 md:block hidden">
+          <div className="md:col-span-2 lg:block hidden">
             <Sidebar
               tab={tab}
               setTab={setTab}
               setSelectTournament={setSelectTournament}
             />
           </div>
-          <div className="md:col-span-10 col-span-full bg-white">
+          <div className="md:col-span-12 lg:col-span-10 col-span-full bg-white">
             <Outlet />
           </div>
         </div>

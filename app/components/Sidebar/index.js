@@ -67,7 +67,7 @@ function Sidebar({
           {reactIcons.close}
         </div>
       )}
-      <div className="sticky py-3 top-[85px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
+      <div className="sticky py-3 top-[85px] h-[calc(100svh-150px)] lg:h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
         <div className="flex flex-col items-start  border-b-black gap-5">
           <ul className="grid grid-cols-1 w-full gap-1 md:gap-2 pl-3">
             {navigations.map((item, index) => (
