@@ -16,7 +16,7 @@ import JackpotResultCard from '@components/JackpotResultCard';
 import { CircularProgress } from '@mui/material';
 import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -67,15 +67,28 @@ function Jackpot() {
 
   const navigate = useNavigate();
 
-  const handleGetJackpotFixtures = async (jackpotEventId) => {
-    setIsLoading(true);
-    setPageSize(10);
-    const response = await getReq(
-      `/jackpot-events/${jackpotEventId}/fixtures?skip=${page}&take=${pageSize}`,
-    );
-    setIsLoading(false);
-    setJackpotFixtures(response.data);
-  };
+  const handleGetJackpotFixtures = useCallback(
+    async (jackpotEventId) => {
+      setIsLoading(true);
+      setPageSize(10);
+      const response = await getReq(
+        `/jackpot-events/${jackpotEventId}/fixtures?skip=${page}&take=${pageSize}`,
+      );
+      setIsLoading(false);
+      setJackpotFixtures([...response.data]);
+    },
+    [pageSize, page],
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleGetJackpotFixtures(openCard);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [handleGetJackpotFixtures, openCard]);
 
   const handleGetJackpots = async () => {
     setJackpotLoading(true);
@@ -296,7 +309,7 @@ function Jackpot() {
                         // setJackpotEvent={setJackpotEvent}
                       />
                       <div>
-                        {openCard == index && (
+                        {openCard == item.id && (
                           <>
                             {jackpotFixtures.length > 0 && (
                               <div className="flex text-black justify-end mr-4 xl:mr-8 mt-5 ">

@@ -103,6 +103,19 @@ function SigleBetDetails() {
     };
   }, [eventId]);
 
+  const handleMergeMarkets = (data) => {
+    const mergedData = data.reduce((acc, curr) => {
+      const existingOutcome = acc.find((item) => item.name === curr.name);
+      if (existingOutcome) {
+        existingOutcome.outcomes.push(...curr.outcomes);
+      } else {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    setMergedData(mergedData);
+  };
+
   useEffect(() => {
     if (allMarketData.length > 0 && marketDataOdds) {
       const allMarkets = _.keyBy(allMarketData, buildMarketKey);
@@ -130,7 +143,8 @@ function SigleBetDetails() {
           });
         }
       }
-      setMergedData(markets);
+      handleMergeMarkets(markets);
+      // setMergedData(markets);
     }
   }, [allMarketData, marketDataOdds]);
 
@@ -151,7 +165,7 @@ function SigleBetDetails() {
           sportId: sId,
           bet: bet,
           betDetails: betDetails,
-          eventName: eventName,
+          eventNames: eventName,
           specifiers: specifiers,
         };
         return updatedBets;
@@ -163,7 +177,7 @@ function SigleBetDetails() {
             sportId: sId,
             bet: bet,
             betDetails: betDetails,
-            eventName: eventName,
+            eventNames: eventName,
             specifiers: specifiers,
           },
         ];

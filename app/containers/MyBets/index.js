@@ -13,6 +13,8 @@ import {
 import ShareBetModal from '@components/ShareBetModal.js';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
+import BetWallet from '@components/BetWallet';
 // import InfiniteScroll from 'react-infinite-scroll-component';
 
 const TabsName = [
@@ -37,6 +39,7 @@ function MyBets() {
   const [queries, setQueries] = useState('');
   const [hasMore, setHasMore] = useState(true);
   const [pageSize, setPageSize] = useState(10);
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
 
   const getMyBetDetails = useCallback(
     async (query, newPage) => {
@@ -236,10 +239,8 @@ function MyBets() {
           )}
         </div>
       </div>
-      <div className="col-span-4 2xl:col-span-3 pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
-        {/* <RightSideSection /> */}
-        {/* <BetWallet /> */}
-        <Betslip wallet="true" />
+      <div className="col-span-4  pt-5 md:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3">
+        {selectedBet.length > 0 ? <BetWallet /> : <Betslip wallet="true" />}
         <CompanyContact />
         <CustomerCareContact />
         <TalkToUs />

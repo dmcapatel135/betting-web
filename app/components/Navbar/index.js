@@ -142,7 +142,7 @@ const Navbar = ({ tab, setTab }) => {
   const [searchData, setSearchData] = useState({});
   const [event, setEvent] = useState();
 
-  const { setSelectTournament, wallet, setSportId } = useContext(MyContext);
+  const { setSelectTournament, setSportId } = useContext(MyContext);
 
   const getSearchEventTournament = async (query) => {
     const response = await getReq(`/search?search=${query}`);
@@ -150,8 +150,6 @@ const Navbar = ({ tab, setTab }) => {
   };
 
   const userWallet = useSelector((state) => state.user);
-
-  console.log('------use ', userWallet);
 
   useEffect(() => {
     if (search?.trim()?.length > 2) {
@@ -169,8 +167,6 @@ const Navbar = ({ tab, setTab }) => {
       setSearch('');
     }
   }, [navigate, event]);
-
-  console.log('-----wallet dfds', wallet);
 
   return (
     <nav className="sticky z-[999999] top-0 left-0">
