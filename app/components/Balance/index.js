@@ -19,7 +19,7 @@ function Balance() {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row 2xl:flex-col items-start xl:items-center 2xl:items-start gap-2 justify-between border-b-[1px] border-blue p-3">
+    <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row items-start xl:items-center 2xl:items-start gap-2 justify-between border-b-[1px] border-blue p-3">
       <div
         onClick={() => {
           setSelectTournament(null);

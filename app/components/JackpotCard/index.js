@@ -28,7 +28,7 @@ function JackpotCard({
       <div className="mt-3">
         <button
           onClick={() => {
-            setOpenCard(index);
+            setOpenCard(item.id);
             handleGetJackpotFixtures(item.id);
             setStakeValue(item.betAmount);
           }}

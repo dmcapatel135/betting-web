@@ -4,8 +4,13 @@ import moment from 'moment';
 import { postReq } from '@utils/apiHandlers';
 import { toast } from 'react-toastify';
 import { formatNumber } from '@utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBetDetailsAction } from '@actions';
 
 function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
+  const dispatch = useDispatch();
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
+
   const handleCancelBet = async (id) => {
     const response = await postReq(`/users/me/bet-slips/${id}/cancel`);
     if (response.status) {
@@ -14,6 +19,40 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     } else {
       toast.error(response.error.message);
     }
+  };
+
+  const handleRebet = (data) => {
+    let array = [];
+    data.bets.forEach((element) => {
+      let index = selectedBet.findIndex(
+        (item) => item.eventId == element.eventId,
+      );
+      if (index == -1) {
+        array.push({
+          // sportId: ,
+          eventId: element.eventId,
+          bet: {
+            id: element.outcomeId,
+            odds: element.odds,
+            probabilities: '',
+            active: '',
+            name: element.outcome,
+          },
+          betDetails: { id: element.marketId, name: element.market },
+          eventNames:
+            element?.event?.competitors[0]?.name +
+            '-' +
+            element?.event?.competitors[1]?.name,
+          specifiers: element?.specifiers
+            ? element?.specifiers.join('|')
+            : null,
+        });
+      } else {
+        console.log('------message fdsfsd ');
+      }
+    });
+    array = [...array, ...selectedBet];
+    dispatch(fetchBetDetailsAction(array));
   };
 
   return (
@@ -123,7 +162,12 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               />
               <span> Share</span>
             </button>
-            <button className="btn bg-green">
+            <button
+              onClick={() => {
+                handleRebet(item);
+              }}
+              className="btn bg-green"
+            >
               <img
                 src="/images/bikoicon/rebet.png"
                 alt="icon"

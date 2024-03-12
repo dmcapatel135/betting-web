@@ -68,8 +68,6 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
     else return false;
   };
 
-  console.log('-----jackpot ', selectedJackpot);
-
   return (
     <div className="bg-white border rounded-md border-lightgray border-md p-3">
       <div className="flex justify-between">

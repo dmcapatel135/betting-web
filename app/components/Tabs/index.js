@@ -8,8 +8,6 @@ function Tabs({ popularSports }) {
   const [searchParams] = useSearchParams(window.location.search);
   const navigate = useNavigate();
 
-  console.log('-----search paramas ', searchParams.get('sId'), sportId);
-
   return (
     <div className="border border-bluewhale mt-3 px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer">
       {popularSports?.map((item) => {

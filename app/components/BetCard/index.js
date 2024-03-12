@@ -7,7 +7,7 @@ import { fetchBetDetailsAction } from '@actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
-function BetCard({ item, sportId }) {
+function BetCard({ item, index, sportId }) {
   const [searchParams] = useSearchParams();
 
   const [bets, setBets] = useState([]);
@@ -16,6 +16,8 @@ function BetCard({ item, sportId }) {
   const [data, setData] = useState({});
   const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
+
+  console.log('----index ', index);
 
   useEffect(() => {
     setBets(selectedBet);
