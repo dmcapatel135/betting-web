@@ -24,23 +24,32 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const handleRebet = (data) => {
     let array = [];
     data.bets.forEach((element) => {
-      array.push({
-        // sportId: ,
-        eventId: element.eventId,
-        bet: {
-          id: element.outcomeId,
-          odds: element.odds,
-          probabilities: '',
-          active: '',
-          name: element.outcome,
-        },
-        betDetails: { id: element.marketId, name: element.market },
-        eventNames:
-          element?.event?.competitors[0]?.name +
-          '-' +
-          element?.event?.competitors[1]?.name,
-        specifiers: element?.specifiers ? element?.specifiers.join('|') : null,
-      });
+      let index = selectedBet.findIndex(
+        (item) => item.eventId == element.eventId,
+      );
+      if (index == -1) {
+        array.push({
+          // sportId: ,
+          eventId: element.eventId,
+          bet: {
+            id: element.outcomeId,
+            odds: element.odds,
+            probabilities: '',
+            active: '',
+            name: element.outcome,
+          },
+          betDetails: { id: element.marketId, name: element.market },
+          eventNames:
+            element?.event?.competitors[0]?.name +
+            '-' +
+            element?.event?.competitors[1]?.name,
+          specifiers: element?.specifiers
+            ? element?.specifiers.join('|')
+            : null,
+        });
+      } else {
+        console.log('------message fdsfsd ');
+      }
     });
     array = [...array, ...selectedBet];
     dispatch(fetchBetDetailsAction(array));

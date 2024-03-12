@@ -269,7 +269,6 @@ function BetWallet({ stakeValue }) {
       </div>
       <div className="border-t-[1px] mb-2 my-5 border-blue  overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
         {bets?.map((item, index) => {
-          console.log('-------events name ', item);
           return (
             <div key={index} className="flex border-b-[1px] border-blue ">
               <div

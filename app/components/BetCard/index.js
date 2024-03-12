@@ -17,6 +17,8 @@ function BetCard({ item, index, sportId }) {
   const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
 
+  console.log('----index ', index);
+
   useEffect(() => {
     setBets(selectedBet);
   }, [selectedBet]);
