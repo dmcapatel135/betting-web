@@ -58,8 +58,8 @@ function MyTransactions() {
                     Account balance
                   </p>
                   <h1 className="text-black text-14 xl:text-16 text-right xxl:text-20 font-[800] font-roboto">
-                    TSH{' '}
-                    {/* {formatNumber(
+                    {/* TSH{' '}
+                    {formatNumber(
                       Object.values(userWallet)?.filter(
                         (item) => item.type == 'Main',
                       )[0]?.amount,
