@@ -99,12 +99,14 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 {item.bets.length}
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {item.bets
-                  .map((b) => b.odds)
-                  .reduce((a, b) => a * b, 1)
-                  .toFixed(2) *
-                  item?.stake *
-                  parseInt(item.winBonus ? item.winBonus : 1)}
+                {formatNumber(
+                  item.bets
+                    .map((b) => b.odds)
+                    .reduce((a, b) => a * b, 1)
+                    .toFixed(2) *
+                    item?.stake *
+                    parseInt(item.winBonus ? item.winBonus : 1),
+                )}
               </p>
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>

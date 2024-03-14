@@ -214,7 +214,7 @@ function ForgotPassword() {
                         />
                         {renderError(error.code)}
                       </div>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end items-center ">
                         <p className="my-2 text-gray-900 text-12">
                           Not recieved an code?{' '}
                           <button
@@ -225,19 +225,19 @@ function ForgotPassword() {
                             {resendTimer ? resendTimer : 'Resend Code'}
                           </button>
                         </p>
+                        {verificationResponse &&
+                          verificationResponse.attempt > 1 && (
+                            <div className="flex justify-end ml-2">
+                              <p className="text-12 text-gray-900">
+                                Remaining retries{' '}
+                                <span className="text-primary-yellow ml-1 duration-200">
+                                  {verificationResponse.maxAttempt -
+                                    verificationResponse.attempt}
+                                </span>
+                              </p>
+                            </div>
+                          )}
                       </div>
-                      {verificationResponse &&
-                        verificationResponse.attempt > 1 && (
-                          <div className="flex justify-end">
-                            <p className="text-12 text-gray-900">
-                              Remaining retries{' '}
-                              <span className="text-primary-yellow ml-1 duration-200">
-                                {verificationResponse.maxAttempt -
-                                  verificationResponse.attempt}
-                              </span>
-                            </p>
-                          </div>
-                        )}
                       <div className="grid grid-cols-2 my-2 w-full">
                         <div className="text-left mr-2">
                           <label className="text-gray-900 text-12">

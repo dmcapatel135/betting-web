@@ -90,7 +90,9 @@ function BetWallet({ stakeValue }) {
 
   const percentageValue =
     (totalOdd * stake * gameRules?.rules[bonus?.length - 1]?.percentage) / 100;
-  const calculation = (totalOdd * stake + percentageValue).toFixed(2);
+  const calculation = isNaN(percentageValue)
+    ? (totalOdd * stake).toFixed(2)
+    : (totalOdd * stake + percentageValue).toFixed(2);
 
   const handlePlaceBet = async () => {
     if (isLoggedIn()) {
@@ -145,6 +147,7 @@ function BetWallet({ stakeValue }) {
   const netAmount = (calculation - ((calculation - stake) * 10) / 100).toFixed(
     2,
   );
+  console.log('----tax', tax);
 
   return (
     <div className="w-full border-[1px] border-blue  rounded-[8px] relative">
@@ -292,15 +295,13 @@ function BetWallet({ stakeValue }) {
                     </span>
                     <div className="flex justify-center items-center rounded-md bg-yellow text-white h-7 w-10">
                       <span className="text-14 font-[600]">
-                        {item.bet.odds || '2.95'}
+                        {item.bet.odds}
                       </span>
                     </div>
                   </div>
                 </div>
                 <div className="justify-center items-center rounded-md bg-yellow h-7 w-10 hidden xl:flex">
-                  <span className="text-14 font-[600]">
-                    {item.bet.odds || '2.95'}
-                  </span>
+                  <span className="text-14 font-[600]">{item.bet.odds}</span>
                 </div>
               </div>
             </div>
