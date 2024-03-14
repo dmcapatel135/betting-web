@@ -128,32 +128,33 @@ function MyBets() {
                             index={index}
                             getMyBetDetails={getMyBetDetails}
                           />
-                          <div className="mt-2 overflow-auto">
-                            <table className="text-black w-full overflow-auto text-14">
+                          <div className="mt-2  overflow-auto">
+                            <table className="text-black  w-full  text-14">
                               <thead className="bg-yellow h-12 rounded-t-md">
-                                <th className="rounded-tl-md">
+                                <th className="w-[160px] rounded-tl-md">
                                   MATCH START TIME
                                 </th>
-                                <th>GAME</th>
-                                <th>MKT</th>
-                                <th>ODDS</th>
-                                <th>PICK</th>
-                                <th>TEAM</th>
-                                <th className="rounded-tr-md">STATUS</th>
-                                <th>VOID FACTOR</th>
-                                <th>VOID REASON</th>
+                                <th className="w-[220px]">GAME</th>
+                                <th className="w-[100px]">MKT</th>
+                                <th className="w-[100px]">ODDS</th>
+                                <th className="w-[150px]">PICK</th>
+                                <th className="w-[200px]">TEAM</th>
+                                <th className="w-[100px]">STATUS</th>
+                                <th className="w-[100px]">VOID FACTOR</th>
+                                <th className="rounded-tr-md w-[100px]">
+                                  VOID REASON
+                                </th>
                               </thead>
                               <tbody className="text-center text-12">
                                 {item?.bets.map((innerItem, innerIndex) => {
-                                  console.log('------inner item ', innerItem);
                                   return (
                                     <tr key={innerIndex}>
-                                      <td>
-                                        {moment(innerItem.createdAt).format(
-                                          'DD-MM-yy hh:mm',
-                                        )}
+                                      <td className="w-[160px]">
+                                        {moment(
+                                          innerItem.event.startTime,
+                                        ).format('DD-MM-yy hh:mm A')}
                                       </td>
-                                      <td>
+                                      <td className="w-[220px]">
                                         {
                                           innerItem?.event?.tournament?.category
                                             ?.sport?.name
@@ -165,10 +166,16 @@ function MyBets() {
                                         }
                                         /{innerItem?.event?.tournament?.name}
                                       </td>
-                                      <td>{innerItem.market}</td>
-                                      <td>{innerItem.odds}</td>
-                                      <td>{innerItem.outcome}</td>
-                                      <td>
+                                      <td className="w-[100px]">
+                                        {innerItem.market}
+                                      </td>
+                                      <td className="w-[100px]">
+                                        {innerItem.odds}
+                                      </td>
+                                      <td className="w-[150px]">
+                                        {innerItem.outcome}
+                                      </td>
+                                      <td className="w-[200px]">
                                         <p>
                                           {innerItem?.event?.competitors[0]
                                             ?.name || 'N.A'}
@@ -178,17 +185,17 @@ function MyBets() {
                                             ?.name || 'N.A'}
                                         </p>
                                       </td>
-                                      <td>
+                                      <td className="w-[100px]">
                                         {innerItem?.status == 'Settled'
                                           ? innerItem?.settlement?.result
                                           : innerItem?.status}
                                       </td>
-                                      <td>
+                                      <td className="w-[100px]">
                                         {innerItem?.settlement?.voidFactor
                                           ? innerItem?.settlement?.voidFactor
                                           : 'N.A'}
                                       </td>
-                                      <td>
+                                      <td className="w-[100px]">
                                         {innerItem?.settlement?.voidReason
                                           ? innerItem?.settlement?.voidReason
                                           : 'N.A'}

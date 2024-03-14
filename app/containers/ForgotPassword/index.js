@@ -128,7 +128,7 @@ function ForgotPassword() {
           >
             <div className="grid grid-cols-12 md:p-3">
               <div className="col-span-3 lg:block hidden pr-4">
-                <AuthSideSection imgHeight="345px" />
+                <AuthSideSection imgHeight="345px" bgBtn={true} />
               </div>
               <div className="lg:col-span-9 col-span-full bg-[#F4F4F4] border-[1px] rounded-[8px] md:border-[#A3A3A3]">
                 {!isResetPasswordScreen ? (

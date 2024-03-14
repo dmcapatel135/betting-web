@@ -11,7 +11,8 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import DatePickerCustom from '@components/FormElements/DatePickerCustom';
+import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';
+// import DatePickerCustom from '@components/FormElements/DatePickerCustom';
 
 function MyTransactions() {
   const [myTransactions, setMyTransactions] = useState([]);
@@ -19,20 +20,29 @@ function MyTransactions() {
   const [dataCount, setDataCount] = useState();
   const [pageSize, setPageSize] = useState(10);
   // const [hasMore, setHasMore] = useState();
-  const [date, setDate] = useState();
+  // const [date, setDate] = useState();
   const [type, setType] = useState('');
+  const [startDate, setStartDate] = useState(
+    moment().startOf('month').toDate(),
+  );
+  const [endDate, setEndDate] = useState(moment().endOf('month').toDate());
 
   const userWallet = useSelector((state) => state.user);
+
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
 
   const handleGetTransactions = useCallback(
     async (query) => {
       const response = await getReq(
         `/users/me/transactions?skip=${page}&take=${pageSize}${query ? query : ''}`,
       );
-      // setMyTransactions(response.data.data);
-      setDataCount(response.data.data.dataCount);
 
       if (response.status) {
+        setDataCount(response.data.count);
         setMyTransactions(response.data.data);
       }
     },
@@ -45,24 +55,21 @@ function MyTransactions() {
 
   useEffect(() => {
     let query;
-    let newDate = moment(
-      date,
-      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
-    ).format('YYYY-MM-DD');
-    if (date && type) {
-      query = `&date=${newDate}&type=${type}`;
-    } else if (date) {
-      query = `&date=${newDate}`;
+    if (startDate && endDate && type) {
+      query = `&fromDate=${moment(startDate)
+        .startOf('date')
+        .toISOString()}&toDate=${moment(endDate)
+        .endOf('date')
+        .toISOString()}&type=${type}`;
+    } else if (startDate && endDate) {
+      query = `&fromDate=${moment(startDate)
+        .startOf('date')
+        .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
     } else if (type) {
       query = `&type=${type}`;
     }
     handleGetTransactions(query);
-  }, [date, type, handleGetTransactions]);
-
-  const handleDate = (date) => {
-    console.log('-----date', date);
-    setDate(date);
-  };
+  }, [startDate, endDate, type, handleGetTransactions]);
 
   return (
     <div className="grid grid-cols-12">
@@ -77,7 +84,7 @@ function MyTransactions() {
                     MY TRANSACTIONS
                   </h1>
                   <p className="text-gray-900 pt-1 text-10 xl:text-12 2xl:text-14 font-[500]">
-                    As at 11/12/2023 11:36
+                    As at {moment(new Date()).format('DD-MM-yyyy  hh:mm A')}
                   </p>
                 </div>
                 <div>
@@ -100,15 +107,16 @@ function MyTransactions() {
                 <select
                   value={type}
                   onChange={(e) => setType(e.target.value)}
-                  className="py-1 px-3 mx-2 outline-none rounded-md bg-blue text-white"
+                  className=" px-3 mx-2 outline-none rounded-[4px] bg-white border border-blue text-black"
                 >
                   <option>Credit</option>
                   <option>Debit</option>
                 </select>
-                <DatePickerCustom
-                  handleDate={handleDate}
-                  date={date}
-                  className="border border-blue"
+                <DateRangePickerCustom
+                  onChange={onChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  className="h-10 !rounded-[4px] border-[1px] !text-black text-ellipsis border-blue"
                 />
               </div>
               <table className="w-full">
@@ -142,15 +150,15 @@ function MyTransactions() {
                   <span className="text-14">No Activity Found</span>
                 </div>
               )}
-              {myTransactions.length > 10 && (
-                <Pagination
-                  page={page}
-                  setPage={setPage}
-                  dataCount={dataCount}
-                  pageSize={pageSize}
-                  setPageSize={setPageSize}
-                />
-              )}
+              {/* {myTransactions.length > 10 && ( */}
+              <Pagination
+                page={page}
+                setPage={setPage}
+                dataCount={dataCount}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+              />
+              {/* )} */}
             </div>
           </div>
         </div>

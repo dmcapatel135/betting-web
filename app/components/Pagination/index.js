@@ -3,8 +3,8 @@ import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
 
 const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
-  const onPageChange = () => {
-    setPage(page + 10);
+  const onPageChange = (e) => {
+    setPage(e.selected * 10);
   };
 
   return (
@@ -30,7 +30,7 @@ const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
         renderOnZeroPageCount={null}
         containerClassName="flex justify-center gap-2  items-center"
         pageClassName="pagination-item-style"
-        activeClassName="bg-primary-700 text-white"
+        activeClassName="bg-yellow border-yellow text-white"
         previousClassName="pagination-item-style"
         nextClassName="pagination-item-style"
         disabledClassName="disabled-item"

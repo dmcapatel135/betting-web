@@ -226,12 +226,14 @@ function SigleBetDetails() {
     };
   }, []);
 
-  const handleSlideChange = (index) => {
-    console.log('-----index ', index);
+  const handleSlideChange = () => {
+    // console.log('-----index ', index);
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slideTo(2);
     }
   };
+
+  console.log('-----merged array ', mergedData);
 
   return (
     <div className="grid grid-cols-12">
@@ -460,7 +462,7 @@ function SigleBetDetails() {
                       </span>
                       <span className="text-12">1/3</span>
                       <span
-                        onClick={() => handleSlideChange(1)}
+                        onClick={() => handleSlideChange()}
                         className="text-14 text-lightgray cursor-pointer"
                       >
                         {reactIcons.arrowright}

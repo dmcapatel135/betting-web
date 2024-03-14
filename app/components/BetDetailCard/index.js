@@ -57,6 +57,14 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
 
   console.log('-----itmne ', item);
 
+  let possiblewin =
+    item.bets
+      .map((b) => b.odds)
+      .reduce((a, b) => a * b, 1)
+      .toFixed(2) *
+    item?.stake *
+    parseInt(item.winBonus ? item.winBonus : 1);
+
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
       <div className="grid grid-cols-12 p-3">
@@ -99,14 +107,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 {item.bets.length}
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {formatNumber(
-                  item.bets
-                    .map((b) => b.odds)
-                    .reduce((a, b) => a * b, 1)
-                    .toFixed(2) *
-                    item?.stake *
-                    parseInt(item.winBonus ? item.winBonus : 1),
-                )}
+                {formatNumber(possiblewin?.toFixed(2))}
               </p>
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
@@ -135,22 +136,50 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             </div>
           </div>
         </div>
-        <div className="col-span-6 md:col-span-4">
-          <div className="flex justify-between  pr-5  md:pr-0">
-            <div className="flex-shrink w-[130px]">
+        <div className="col-span-6   md:col-span-4">
+          <div className="flex justify-between">
+            <div className="w-[130px]">
+              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                Placed Date
+              </p> */}
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
                 Bonge Bonus
               </p>
-              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Stake TSH
-              </p> */}
             </div>
             <div className="flex-1 text-left">
-              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                {moment(item.createdAt).format('DD-MM-YYYY  hh:mm A')}
+              </p> */}
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600] cursor-pointer ">
                 {item.winBonus ? item.winBonus : 0}
               </p>
+            </div>
+            <hr className=" w-[1px] h-10 mr-2 md:mx-4 border-[1px]"></hr>
+          </div>
+        </div>
+        <div className="col-span-6  md:col-span-4">
+          <div className="flex justify-between">
+            <div>
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                Won amount
+              </p>
               {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {formatNumber(item.stake)}
+                Possible Win TSH
+              </p> */}
+            </div>
+            <div>
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                {formatNumber(item.wonAmount ? item.wonAmount : 0)}
+              </p>
+              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
+                {formatNumber(
+                  item.bets
+                    .map((b) => b.odds)
+                    .reduce((a, b) => a * b, 1)
+                    .toFixed(2) *
+                    item?.stake *
+                    parseInt(item.winBonus ? item.winBonus : 1),
+                )}
               </p> */}
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
@@ -159,7 +188,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
       </div>
       <hr className="border-[1px] my-1 mx-3"></hr>
       <div className="flex gap-4 justify-end my-2 px-3">
-        {!(item.status == 'Cancelled') && (
+        {(!(item.status == 'Cancelled') || item.status == 'Settled') && (
           <button
             onClick={() => {
               if (!(item.status == 'Cancelled')) handleCancelBet(item.id);

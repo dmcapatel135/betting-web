@@ -310,3 +310,16 @@ input[type='number'] {
 .scrollbar-width {
   scrollbar-width: none;
 }
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  overflow: auto;
+  /* @apply min-h-[200px] xl:max-h-[500px] max-h-[680px]; */
+}
