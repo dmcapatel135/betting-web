@@ -184,7 +184,7 @@ function BetCard({ item, index, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-center items-center border-[#A3A3A3] border text-black text-10  rounded-[4px] md:rounded-[4px] w-[40px]  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
@@ -257,7 +257,7 @@ function BetCard({ item, index, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-center  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
@@ -333,7 +333,7 @@ function BetCard({ item, index, sportId }) {
                                 )
                                   ? 'bg-green text-white border-green'
                                   : ''
-                              } bg-[#EAEAEA] flex justify-center md:w-[45px] items-center 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] w-full py-2 px-3`}
+                              } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                             >
                               <span className="font-[500]">
                                 {innerItem.active ? (
@@ -702,7 +702,7 @@ function BetCard({ item, index, sportId }) {
                               )
                                 ? 'bg-green text-white border-green'
                                 : ''
-                            } bg-[#EAEAEA] flex justify-center   items-center  border-[#A3A3A3] border-[1px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 text-black text-10  rounded-[4px] md:rounded-[4px] w-[40px]   md:w-[45px] py-2 px-3`}
+                            } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[40px] h-6 md:h-8  md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                           >
                             <span className="font-[500]">
                               {innerItem.active ? (
