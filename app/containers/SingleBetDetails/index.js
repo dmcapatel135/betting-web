@@ -1,5 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
+import React, {
+  useCallback,
+  useEffect,
+  // useRef,
+  useState,
+} from 'react';
 import {
   //   BetDetailsContext,
   BetWallet,
@@ -15,62 +19,52 @@ import { getReq } from '@utils/apiHandlers';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
-import { images } from '@utils/images';
+// import { images } from '@utils/images';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+// import 'swiper/css';
+// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
 
-import { Pagination, Navigation } from 'swiper/modules';
+// import { Pagination, Navigation } from 'swiper/modules';
 
-const buildMarketKey = (market) => {
-  if (!market.specifiers) {
-    return market.id.toString();
-  } else {
-    return market.id
-      .toString()
-      .concat('-', market.specifiers?.sort().join('|'));
-  }
-};
-
-const TabsName = [
-  { id: 1, title: 'Board', icon: images.board },
-  { id: 2, title: 'Head to head', icon: images.headtohead },
-  { id: 3, title: 'Standing', icon: images.standing },
-  { id: 4, title: 'Linups', icon: images.lineups },
-];
-// const marketTab = [
-//   { id: 1, title: 'OVERALL', icon: images.board },
-//   { id: 2, title: 'HOME', icon: images.headtohead },
-//   { id: 3, title: 'AWAY', icon: images.standing },
+// const TabsName = [
+//   { id: 1, title: 'Board', icon: images.board },
+//   { id: 2, title: 'Head to head', icon: images.headtohead },
+//   { id: 3, title: 'Standing', icon: images.standing },
+//   { id: 4, title: 'Linups', icon: images.lineups },
 // ];
 
 function SigleBetDetails() {
   const { eventId, sId } = useParams();
-  const [step, setStep] = useState(isMobile ? 'Board' : 'Head to head');
+  // const [step, setStep] = useState(isMobile ? 'Board' : 'Head to head');
   // const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  const [allMarketData, setAllMarketData] = useState([]);
+  // const [allMarketData, setAllMarketData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [marketDataOdds, setMarketDataOdds] = useState();
+  // const [marketDataOdds, setMarketDataOdds] = useState();
   const [mergedData, setMergedData] = useState([]);
   const [eventName, setEventName] = useState();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [bets, setBets] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   // const [tab, setTab] = useState(1);
+  const [loadNum, setLoadNum] = useState();
 
   const dispatch = useDispatch();
-  const swiperRef = useRef(null);
+  // const swiperRef = useRef(null) ;
 
   const getAllMarketData = useCallback(async () => {
     setIsLoading(true);
+    setLoadNum(loadNum + 1);
     const response = await getReq(`/events/${eventId}/markets`);
-    setIsLoading(false);
-    setAllMarketData(response.data);
-  }, [eventId]);
+    if (response.status) {
+      setIsLoading(false);
+      setMergedData(response.data);
+    }
+    // setAllMarketData(response.data);
+  }, [eventId, loadNum]);
 
   const getEventName = useCallback(async () => {
     const response = await getReq(`/events/${eventId}`);
@@ -83,76 +77,24 @@ function SigleBetDetails() {
 
   useEffect(() => {
     getAllMarketData();
-    getEventName();
-  }, [getAllMarketData, eventId, getEventName]);
+  }, [getAllMarketData]);
 
   useEffect(() => {
-    const eventSource = new EventSource(`${API_URL}/events/${eventId}/odds`, {
-      withCredentials: true,
-    });
-
-    const handleEventSourceMessage = (event) => {
-      updateState(JSON.parse(event?.data));
-    };
-
-    eventSource.addEventListener('message', handleEventSourceMessage);
+    let interval = setInterval(() => {
+      getAllMarketData();
+    }, 1500);
+    getEventName();
 
     return () => {
-      eventSource.removeEventListener('message', handleEventSourceMessage);
-      eventSource.close();
+      clearInterval(interval);
     };
-  }, [eventId]);
+  }, [getAllMarketData, eventId, getEventName]);
 
-  const handleMergeMarkets = (data) => {
-    const mergedData = data.reduce((acc, curr) => {
-      const existingOutcome = acc.find((item) => item.name === curr.name);
-      if (existingOutcome) {
-        existingOutcome.outcomes.push(...curr.outcomes);
-      } else {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-    setMergedData(mergedData);
-  };
-
-  useEffect(() => {
-    if (allMarketData.length > 0 && marketDataOdds) {
-      const allMarkets = _.keyBy(allMarketData, buildMarketKey);
-      const markets = [];
-      for (const oddsMarket of marketDataOdds.odds.markets) {
-        const market = allMarkets[buildMarketKey(oddsMarket)];
-        if (market) {
-          const allOutcomes = _.keyBy(market.outcomes, 'id');
-          markets.push({
-            ...market,
-            outcomes: _.compact(
-              oddsMarket.outcomes.map((outcome) => {
-                if (allOutcomes[outcome.id]) {
-                  return {
-                    ...allOutcomes[outcome.id],
-                    odds: outcome.odds,
-                    active: outcome.active,
-                    selected: oddsMarket?.specifiers
-                      ? oddsMarket.specifiers?.join('|')
-                      : null,
-                  };
-                }
-              }),
-            ),
-          });
-        }
-      }
-      handleMergeMarkets(markets);
-      // setMergedData(markets);
-    }
-  }, [allMarketData, marketDataOdds]);
-
-  const updateState = (newObject) => {
-    setMarketDataOdds((prevState) => {
-      return { ...prevState, ...newObject };
-    });
-  };
+  // const updateState = (newObject) => {
+  //   setMarketDataOdds((prevState) => {
+  //     return { ...prevState, ...newObject };
+  //   });
+  // };
 
   const addToBetSlip = (eventId, bet, betDetails, specifiers) => {
     setBets((prev) => {
@@ -213,37 +155,35 @@ function SigleBetDetails() {
     dispatch(fetchBetDetailsAction(updatedBets));
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
+  //   };
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Check on initial render
+  //   window.addEventListener('resize', handleResize);
+  //   handleResize(); // Check on initial render
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
 
-  const handleSlideChange = () => {
-    // console.log('-----index ', index);
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideTo(2);
-    }
-  };
-
-  console.log('-----merged array ', mergedData);
+  // const handleSlideChange = () => {
+  //   // console.log('-----index ', index);
+  //   if (swiperRef.current && swiperRef.current.swiper) {
+  //     swiperRef.current.swiper.slideTo(2);
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
         <div className="md:p-5 p-2">
           <div className="h-fit text-black w-full bg-[#b9e6ea]">
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <span className="text-12 text-gray-900">19 Jan 19:30</span>
-            </div>
-            <div className="flex px-3 justify-between items-center mb-1">
+            </div> */}
+            {/* <div className="flex px-3 justify-between items-center mb-1">
               <div className="flex">
                 <img
                   src="/images/bikoicon/cape.png"
@@ -258,9 +198,9 @@ function SigleBetDetails() {
                   className="w-10 h-8 ml-1"
                 />
               </div>
-            </div>
-            <div className="flex border-t-[1px] border-b-[1px] border-lightgray">
-              {/* {TabsName.map((item) => {
+            </div> */}
+            {/* <div className="flex border-t-[1px] border-b-[1px] border-lightgray"> */}
+            {/* {TabsName.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -280,11 +220,10 @@ function SigleBetDetails() {
                   </div>
                 );
               })} */}
-              {TabsName.map((item) => {
+            {/* {TabsName.map((item) => {
                 if (item.title === 'Board' && !isMobile) {
                   return null; // Skip rendering the "Board" tab on non-mobile devices
                 }
-
                 return (
                   <div
                     key={item.id}
@@ -303,9 +242,9 @@ function SigleBetDetails() {
                     </div>
                   </div>
                 );
-              })}
-            </div>
-            <div className="flex">
+              })} */}
+            {/* </div> */}
+            {/* <div className="flex">
               <div
                 className={`w-full  md:w-[50%] bg-[#5c8301] ${
                   isMobile && step == 'Board' ? 'block' : 'md:block hidden'
@@ -547,11 +486,11 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </SwiperSlide>
-                    {/* <SwiperSlide>
+                    <SwiperSlide>
                       <div className="text-black">2 point</div>
-                    </SwiperSlide> */}
+                    </SwiperSlide>
                   </Swiper>
-                  {/* <div className="m-5">
+                  <div className="m-5">
                     <div className="">
                       <div className="text-center">
                         <p className="text-gray-900 text-14">WIN PROBABILITY</p>
@@ -608,7 +547,7 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
               )}
               {step == 'Standing' && (
@@ -624,13 +563,13 @@ function SigleBetDetails() {
                       </span>
                     </div>
                   </div>
-                  {/* <div>
+                  <div>
                     <span className="text-12">STANDINGS</span>
                   </div>
-                  <hr></hr> */}
+                  <hr></hr>
                   <div>
                     <p className="text-12">SERIE A</p>
-                    {/* <div className="flex border-[1px] mx-2 border-gray-500 w-48">
+                    <div className="flex border-[1px] mx-2 border-gray-500 w-48">
                       {marketTab.map((item) => {
                         return (
                           <div
@@ -650,7 +589,7 @@ function SigleBetDetails() {
                           </div>
                         );
                       })}
-                    </div> */}
+                    </div>
                     <div className="m-5">
                       <div className="">
                         <div className="text-center">
@@ -711,7 +650,7 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </div>
-                    {/* {tab == 'OVERALL' && (
+                    {tab == 'OVERALL' && (
                       <div className="w-full">
                         <table className="text-12 border-[1px] w-full border-black">
                           <thead>
@@ -730,7 +669,7 @@ function SigleBetDetails() {
                           </thead>
                         </table>
                       </div>
-                    )} */}
+                    )}
                   </div>
                 </div>
               )}
@@ -807,7 +746,7 @@ function SigleBetDetails() {
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
           <div>
             <div className="bg-yellow py-1 rounded-md mt-5 px-3">
@@ -817,8 +756,9 @@ function SigleBetDetails() {
             </div>
           </div>
           <div>
-            {isLoading && (
+            {isLoading && loadNum == 1 && (
               <div>
+                <p className="text-black">Loading.....</p>
                 <Loading />
               </div>
             )}
@@ -854,7 +794,11 @@ function SigleBetDetails() {
                                         eventId,
                                         item.id,
                                         innerItem.id,
-                                        innerItem.selected,
+                                        innerItem.market.specifiers
+                                          ? innerItem?.market.specifiers.join(
+                                              '|',
+                                            )
+                                          : null,
                                       )
                                     ) {
                                       handleRemoveBet(eventId, sId);
@@ -863,7 +807,11 @@ function SigleBetDetails() {
                                         eventId,
                                         innerItem,
                                         item,
-                                        innerItem.selected,
+                                        innerItem.market.specifiers
+                                          ? innerItem?.market?.specifiers?.join(
+                                              '|',
+                                            )
+                                          : null,
                                       );
                                     }
                                   }}
@@ -872,7 +820,11 @@ function SigleBetDetails() {
                                       eventId,
                                       item.id,
                                       innerItem.id,
-                                      innerItem.selected,
+                                      innerItem.market.specifiers
+                                        ? innerItem?.market?.specifiers.join(
+                                            '|',
+                                          )
+                                        : null,
                                     )
                                       ? 'bg-green text-white'
                                       : ''
@@ -882,7 +834,8 @@ function SigleBetDetails() {
                                     {innerItem.name}
                                   </span>
                                   <span className="text-[700]">
-                                    {innerItem.active ? (
+                                    {innerItem.active == 1 &&
+                                    innerItem?.market?.status == 1 ? (
                                       innerItem.odds
                                     ) : (
                                       <span>{reactIcons.lock}</span>
@@ -971,11 +924,11 @@ function SigleBetDetails() {
                   </div>
                 );
               })}
-            {allMarketData?.length === 0 && (
+            {/* {mergedData?.length == 0 && !isLoading && (
               <div className="text-center mt-5 text-black">
                 <span>No markets found</span>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

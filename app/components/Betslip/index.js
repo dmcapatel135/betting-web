@@ -36,7 +36,7 @@ function BetSlip() {
           </div>
         </div>
       )}
-      <div className="flex flex-col items-start my-3 px-3">
+      {/* <div className="flex flex-col items-start my-3 px-3">
         <span className="text-14 text-black">Booking code</span>
         <div className="flex items-center gap-2 w-full">
           <input
@@ -47,7 +47,7 @@ function BetSlip() {
             Load
           </button>
         </div>
-      </div>
+      </div> */}
       <div className="text-center">
         <div className="my-5 flex justify-center px-3 h-56">
           <img

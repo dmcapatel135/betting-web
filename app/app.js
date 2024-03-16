@@ -23,7 +23,10 @@ import {
 import Deposit from '@containers/Deposit';
 import Withdraw from '@containers/Withdraw';
 import { useDispatch } from 'react-redux';
-import { fetchBetDetailsAction, fetchJackpotDetailsAction } from '@actions';
+import {
+  fetchBetDetailsAction,
+  // fetchJackpotDetailsAction
+} from '@actions';
 import { loadStateFromJackpotLocalStorage, loadStateFromLocalStorage } from '.';
 
 function App() {
@@ -44,13 +47,13 @@ function App() {
   }, [hash]);
 
   useEffect(() => {
-    let data = [];
+    // let data = [];
     if (loadStateFromJackpotLocalStorage()?.selectedJackpot) {
-      data = loadStateFromJackpotLocalStorage()?.selectedJackpot;
+      // data = loadStateFromJackpotLocalStorage()?.selectedJackpot;
     }
     if (loadStateFromLocalStorage()) {
       dispatch(fetchBetDetailsAction(loadStateFromLocalStorage().selectedBet));
-      dispatch(fetchJackpotDetailsAction(data));
+      // dispatch(fetchJackpotDetailsAction(data));
     }
   }, [dispatch]);
 

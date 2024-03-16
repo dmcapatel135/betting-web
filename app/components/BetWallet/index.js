@@ -262,14 +262,14 @@ function BetWallet({ stakeValue }) {
       </div>
       <hr className="border bg-white"></hr>
       <div className="px-3 my-5">
-        <div className="h-10 flex justify-center items-center bg-[#02CBDB] rounded-[8px]">
+        {/* <div className="h-10 flex justify-center items-center bg-[#02CBDB] rounded-[8px]">
           <span
             className="text-14 font-[700] cursor-pointer"
             onClick={() => setOpenDailog(true)}
           >
             Booking code Generated
           </span>
-        </div>
+        </div> */}
       </div>
       <div className="border-t-[1px] mb-2 my-5 border-blue  overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
         {bets?.map((item, index) => {
