@@ -67,7 +67,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
 
   return (
     <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
-      <div className="grid grid-cols-12 p-3">
+      {/* <div className="grid grid-cols-12 p-3">
         <div className="col-span-6   md:col-span-4">
           <div className="flex justify-between">
             <div>
@@ -139,17 +139,11 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         <div className="col-span-6   md:col-span-4">
           <div className="flex justify-between">
             <div className="w-[130px]">
-              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Placed Date
-              </p> */}
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
                 Bonge Bonus
               </p>
             </div>
             <div className="flex-1 text-left">
-              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {moment(item.createdAt).format('DD-MM-YYYY  hh:mm A')}
-              </p> */}
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600] cursor-pointer ">
                 {item.winBonus ? item.winBonus : 0}
               </p>
@@ -163,26 +157,111 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
                 Won amount
               </p>
-              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                Possible Win TSH
-              </p> */}
             </div>
             <div>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
                 {formatNumber(item.wonAmount ? item.wonAmount : 0)}
               </p>
-              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16 font-[600]">
-                {formatNumber(
-                  item.bets
-                    .map((b) => b.odds)
-                    .reduce((a, b) => a * b, 1)
-                    .toFixed(2) *
-                    item?.stake *
-                    parseInt(item.winBonus ? item.winBonus : 1),
-                )}
-              </p> */}
             </div>
             <hr className=" w-[1px] h-10 ml-4 md:block hidden border-[1px]"></hr>
+          </div>
+        </div>
+      </div> */}
+      <div className="grid gap-5 grid-cols-12 p-3">
+        <div className="col-span-6 md:col-span-4">
+          <div className="flex justify-between items-center gap-2 h-full">
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex gap-2">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Placed Date
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                  {moment(item.createdAt).format('DD-MM-YYYY  hh:mm A')}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Betslip ID
+                </p>
+                <p
+                  onClick={() => setShowBets(item.id)}
+                  className="text-gray-900 text-12 md:text-14 xxl:text-16 cursor-pointer underline font-semibold"
+                >
+                  {item.id}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Bonge Bonus
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                  {item.winBonus ? item.winBonus : 0}
+                </p>
+              </div>
+            </div>
+            <hr className=" w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+          </div>
+        </div>
+        <div className="col-span-6  md:col-span-4">
+          <div className="flex justify-between items-center gap-2 h-full">
+            <div className="flex  h-full flex-col justify-between gap-2">
+              <div className="flex gap-2">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Matches
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
+                  {item.bets.length}
+                </p>
+              </div>
+              <div className="flex gap-2 ">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Possible Win TSH
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                  {formatNumber(possiblewin?.toFixed(2))}
+                </p>
+              </div>
+              <div className="flex gap-2 ">
+                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Won amount
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                  {formatNumber(item.wonAmount ? item.wonAmount : 0)}
+                </p>
+              </div>
+            </div>
+            <hr className="w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+          </div>
+        </div>
+        <div className="col-span-6 md:col-span-4">
+          <div className="flex flex-col justify-between gap-2 h-full">
+            <div className="flex gap-2 ">
+              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                Total Odds
+              </p>
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                {item.bets
+                  .map((b) => b.odds)
+                  .reduce((a, b) => a * b, 1)
+                  .toFixed(2)}
+              </p>
+            </div>
+            <div className="flex gap-2 ">
+              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                Stake TSH
+              </p>
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                {formatNumber(item.stake)}
+              </p>
+            </div>
+            <div className="flex gap-2 opacity-0">
+              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                VOID REASON
+              </p>
+              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                VOID REASON
+              </p>
+            </div>
           </div>
         </div>
       </div>
