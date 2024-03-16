@@ -215,11 +215,11 @@ function MyBets() {
                                   className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px] mt-2"
                                 >
                                   <div className="grid gap-5 grid-cols-12 p-3">
-                                    <div className="col-span-6 md:col-span-4">
-                                      <div className="flex justify-between items-center gap-2 h-full">
+                                    <div className="col-span-6 2xl:col-span-4">
+                                      <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex flex-col justify-between h-full">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MATCH START TIME
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -229,7 +229,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               GAME
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 cursor-pointer">
@@ -250,7 +250,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Team
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -261,11 +261,11 @@ function MyBets() {
                                         <hr className=" w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
                                       </div>
                                     </div>
-                                    <div className="col-span-6  md:col-span-4">
-                                      <div className="flex justify-between items-center gap-2 h-full">
+                                    <div className="col-span-6 2xl:col-span-4">
+                                      <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex  h-full flex-col justify-between gap-2">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               ODDS
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
@@ -273,7 +273,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               PICK
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -281,7 +281,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MKT
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -290,13 +290,14 @@ function MyBets() {
                                             </p>
                                           </div>
                                         </div>
-                                        <hr className="w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+                                        <hr className="w-[1px] hidden 2xl:flex min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
                                       </div>
                                     </div>
-                                    <div className="col-span-6 md:col-span-4">
+                                    <hr className="w-full col-span-12 2xl:hidden border-b-[2px]"></hr>
+                                    <div className="col-span-6 2xl:col-span-4">
                                       <div className="flex flex-col justify-between gap-2 h-full">
                                         <div className="flex gap-2 ">
-                                          <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             STATUS
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -306,7 +307,7 @@ function MyBets() {
                                           </p>
                                         </div>
                                         <div className="flex gap-2 ">
-                                          <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             VOID FACTOR
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -317,7 +318,7 @@ function MyBets() {
                                           </p>
                                         </div>
                                         <div className="flex gap-2 ">
-                                          <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             VOID REASON
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">

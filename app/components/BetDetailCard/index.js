@@ -169,10 +169,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
       </div> */}
       <div className="grid gap-5 grid-cols-12 p-3">
         <div className="col-span-6 md:col-span-4">
-          <div className="flex justify-between items-center gap-2 h-full">
+          <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex flex-col justify-between h-full">
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Placed Date
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -180,7 +180,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Betslip ID
                 </p>
                 <p
@@ -191,7 +191,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Bonge Bonus
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -203,10 +203,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
         <div className="col-span-6  md:col-span-4">
-          <div className="flex justify-between items-center gap-2 h-full">
+          <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex  h-full flex-col justify-between gap-2">
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Matches
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
@@ -214,7 +214,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Possible Win TSH
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -222,7 +222,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -236,7 +236,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         <div className="col-span-6 md:col-span-4">
           <div className="flex flex-col justify-between gap-2 h-full">
             <div className="flex gap-2 ">
-              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                 Total Odds
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -247,7 +247,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               </p>
             </div>
             <div className="flex gap-2 ">
-              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                 Stake TSH
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -255,7 +255,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               </p>
             </div>
             <div className="flex gap-2 opacity-0">
-              <p className="text-gray-900 min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                 VOID REASON
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
