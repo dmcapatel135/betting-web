@@ -16,7 +16,7 @@ function SportsMenu() {
   const [allTournaments, setAllTournaments] = useState();
   const [allFixtures, setAllFixtures] = useState([]);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(25);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [queries, setQueries] = useState();
@@ -119,7 +119,7 @@ function SportsMenu() {
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `date=${upcoming}`;
+        : `fromDate=${upcoming}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
@@ -169,7 +169,7 @@ function SportsMenu() {
   );
 
   const fetchMoreData = () => {
-    const newPage = page + 10;
+    const newPage = page + 25;
     setPage(newPage);
     getAllFixtures(queries, newPage);
   };
