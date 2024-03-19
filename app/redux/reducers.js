@@ -1,11 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import ui from './modules/ui';
-import notification from './modules/notification';
+import user from './modules/user';
+import betModule from './modules/bet';
+import jackpotModule from './modules/jackpot';
 
 export default function createReducer() {
   const rootReducer = combineReducers({
-    ui,
-    notification,
+    user: user,
+    bet: betModule,
+    jackpot: jackpotModule,
   });
 
   return rootReducer;

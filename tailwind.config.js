@@ -8,7 +8,20 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        josefin: ['Josefin', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
+        robotocondesed: ['Roboto', 'sans-serif'],
+      },
+      backgroundImage: {
+        'gradient-color-1':
+          'var(--new-gradient-color-1, linear-gradient(90deg, #6D2299 0%, #3F1F63 100%))',
+        'gradient-color-2':
+          'var(--new-gradient-color-2, linear-gradient(90deg, #E79B24 0.11%, #F1CC30 99.85%))',
+        'gradient-color-3':
+          'var(--new-gradient-color-3, linear-gradient(90deg, rgba(0, 104, 139, 0.15) 0%, rgba(2, 203, 219, 0.15) 100%))',
+        'gradient-color-4':
+          'var(--new-gradient-color-4, linear-gradient(90deg, #00688B 0%, #02CBDB 100%))',
+        'gradient-color-5':
+          'var(--new-gradient-color-5, linear-gradient(180deg, rgba(39, 6, 85, 0.80) 0%, rgba(118, 32, 243, 0.81) 100%)',
       },
       fontSize: {
         10: '10px',
@@ -39,11 +52,18 @@ module.exports = {
           1000: '#70798B',
           1100: '#2B3541',
         },
-        green: '#009925',
-        bluewhale: '#023747',
-        bluewhalelight: '#00586A',
+        gray: {
+          900: '#3D3D3D',
+          800: '#EAEAEA',
+          700: '#A3A3A3',
+        },
+        maroon: '#C6224E',
+        blue: '#3F1F63',
+        // green: '#098224',
+        green: '#6D2299',
+        bluewhalelight: '#006E8F',
         lightgray: '#999999',
-        yellow: '#F1BC00',
+        yellow: '#E79B24',
         astronautblue: '#0f425e',
         mutedblue: '#37779c',
         gainsboro: '#dadedf',
@@ -51,9 +71,10 @@ module.exports = {
         stormdust: '#626262',
         deeppink: '#F82E2E',
         dark: '#1E2029',
-        lightestgray: '#D9D9D9',
+        lightestgray: '#E6E7EB',
         tealishblue: '#969CCB',
         riverbed: '#3F4765',
+        darkjunglegreen: '#222222',
       },
       borderRadius: {
         20: '20px',
@@ -64,6 +85,7 @@ module.exports = {
       md: '768px',
       lg: '1024px',
       xl: '1280px',
+      xl2: '1366px',
       '2xl': '1536px',
     },
     container: {
@@ -71,7 +93,7 @@ module.exports = {
       padding: {
         DEFAULT: '1rem',
         sm: '2rem',
-        lg: '4rem',
+        lg: '2rem',
         xl: '5rem',
         '2xl': '6rem',
       },

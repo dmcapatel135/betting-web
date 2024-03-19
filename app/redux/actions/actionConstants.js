@@ -1,17 +1,12 @@
-// UI Action
-export const SET_UI = 'SET_UI';
+export const INIT = 'INIT';
+export const CLEANUP = 'CLEANUP';
+export const SET_USER = 'SET_USER';
+export const REFRESH_USER_DETAILS = 'REFRESH_USER_DETAILS';
 
-// Notification Action
-export const SET_NOTIF = 'SET_NOTIF';
-export const SHOW_TOAST = 'SHOW_TOAST';
-export const HIDE_TOAST = 'HIDE_TEST';
+// actions/betConstants.js
 
-//user
-export const SET_USER_DETAILS = 'SET_USER_DETAILS';
-export const SET_USER_SETTINGS = 'SET_USER_SETTINGS';
-export const GET_USER_DETAILS = 'GET_USER_DETAILS';
-export const UPDATE_USER_DETAILS = 'UPDATE_USER_DETAILS';
-export const UPDATE_USER_SETTINGS = 'UPDATE_USER_SETTINGS';
-export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_SELECTED_BET = 'SET_SELECTED_BET';
+export const FETCH_BET_DETAILS = 'FETCH_BET_DETAILS';
 
-export const OPEN_LOGIN_MODAL = 'OPEN_LOGIN_MODAL';
+export const SET_SELECTED_JACKPOT = 'SET_SELECTED_JACKPOT';
+export const FETCH_JACKPOT_DETAILS = 'FETCH_JACKPOT_DETAILS';

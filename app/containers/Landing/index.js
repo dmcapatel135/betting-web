@@ -1,34 +1,39 @@
 import React, { useEffect } from 'react';
 
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { withTranslation } from 'react-i18next';
-import { setNotif } from 'Actions';
-import Template from '../../components/Template/Template';
-import HeroSection from './HeroSection';
-import CoinSection from './CoinSection';
-import Resources from './Resources';
+import { RightSideSection } from '@components';
+// import Tabs from '@components/Tabs';
+import { isLoggedIn } from '@utils/apiHandlers';
+import { useNavigate } from 'react-router-dom';
+import SportsMenu from '@components/SportsMenu';
 
-function Landing(props) {
-  const { t } = props;
+// const tabsName = [
+//   { id: 1, tabName: 'STRONG MATCH' },
+//   { id: 2, tabName: 'TODAYs MATCHES' },
+//   { id: 3, tabName: 'UPCOMING MATCHES' },
+//   { id: 4, tabName: 'LIVE NOW' },
+// ];
 
-  const dispatch = useDispatch();
+const Landing = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(setNotif({ message: t('MSG001'), variant: 'success' }));
-  }, []);
+    if (isLoggedIn()) {
+      navigate('/dashboard');
+    }
+  });
 
   return (
-    <Template>
-      <HeroSection />
-      <CoinSection />
-      <Resources />
-    </Template>
+    <main className="md:pl-5  md:py-2">
+      <div className="grid grid-cols-12">
+        <div className="col-span-12 lg:col-span-8">
+          <SportsMenu />
+        </div>
+        <div className="col-span-4 md:block hidden">
+          <RightSideSection />
+        </div>
+      </div>
+    </main>
   );
-}
-
-Landing.propTypes = {
-  t: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(Landing);
+export default Landing;

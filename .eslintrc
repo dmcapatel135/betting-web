@@ -8,6 +8,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
@@ -25,7 +26,9 @@
   },
   "globals": {
     "API_URL": "readonly",
-    "CLIENT_URL": "readonly"
+    "CLIENT_URL": "readonly",
+    "NODE_ENV": "readonly",
+    "APP_ENV": "readonly"
   },
   "rules": {
     "linebreak-style": ["error", "unix"],

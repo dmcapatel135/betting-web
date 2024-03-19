@@ -7,8 +7,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const common = require('./webpack.common.js');
 
 const env = dotenv.config().parsed;
-env.API_URL = env.PROD_API_URL;
-env.CLIENT_URL = env.PROD_CLIENT_URL;
+env.NODE_ENV = 'production';
 
 const envVariables = Object.keys(env).reduce((prev, next) => {
   prev[next] = JSON.stringify(env[next]);
