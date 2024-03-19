@@ -19,7 +19,7 @@ function Balance() {
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col md:flex-row lg:flex-col xl2:flex-row items-start xl2:items-center 2xl:items-start gap-2 justify-between border-b-[1px] border-blue p-3">
+    <div className="flex flex-col lg:flex-row items-center gap-2 justify-between border-b-[1px] border-blue p-3">
       <div
         onClick={() => {
           setSelectTournament(null);
@@ -34,7 +34,7 @@ function Balance() {
         </p>
         {/* </Link> */}
       </div>
-      <div className="flex">
+      <div className="flex flex-col 3xl:flex-row">
         <span className="text-black text-14 pr-2">Your Balance</span>
         <span className="text-black text-14 font-[700]">
           TSH{' '}

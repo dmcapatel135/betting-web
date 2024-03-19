@@ -73,7 +73,7 @@ function Sidebar({
             {navigations.map((item, index) => (
               <div
                 key={index}
-                className={`${item.title === 'HOME' ? 'md:block hidden' : ''}`}
+                className={`${item.title === 'HOME' ? 'lg:block hidden' : ''}`}
               >
                 <NavLink
                   key={index}

@@ -1,22 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import {
-  BetDetailCard,
-  // BetWallet,
-  Betslip,
-  CompanyContact,
-  CustomerCareContact,
-  HeroSection,
-  SkeletonLoader,
-  TalkToUs,
-} from '@components';
+import { BetDetailCard, HeroSection, SkeletonLoader } from '@components';
 import ShareBetModal from '@components/ShareBetModal.js';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
-import BetWallet from '@components/BetWallet';
 import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';
-// import InfiniteScroll from 'react-infinite-scroll-component';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -40,7 +28,6 @@ function MyBets() {
   const [queries, setQueries] = useState('');
   const [hasMore, setHasMore] = useState(true);
   const [pageSize, setPageSize] = useState(10);
-  const selectedBet = useSelector((state) => state.bet.selectedBet);
 
   const getMyBetDetails = useCallback(
     async (query, newPage) => {
@@ -99,10 +86,10 @@ function MyBets() {
   console.log('-----page ', page, hasMore, queries, myBets);
 
   return (
-    <div className="grid grid-cols-12 h-full">
+    <div className="">
       <ShareBetModal />
-      <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
-        <div className="md:p-5 p-2">
+      <div className="">
+        <div className="">
           <HeroSection />
           {showBets ? (
             <>
@@ -212,14 +199,14 @@ function MyBets() {
                               return (
                                 <div
                                   key={innerIndex}
-                                  className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px] mt-2"
+                                  className="border border-green/50  shadow-md rounded-[8px] mt-2"
                                 >
-                                  <div className="grid gap-5 grid-cols-12 p-3">
-                                    <div className="col-span-6 2xl:col-span-4">
+                                  <div className="grid gap-2 grid-cols-6 xl:grid-cols-12 p-3">
+                                    <div className="col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex flex-col justify-between h-full">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MATCH START TIME
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -229,10 +216,10 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               GAME
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 cursor-pointer">
+                                            <p className="text-gray-900 flex-1 text-12 md:text-14 xxl:text-16 cursor-pointer break-all">
                                               {
                                                 innerItem?.event?.tournament
                                                   ?.category?.sport?.name
@@ -250,7 +237,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Team
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -258,46 +245,50 @@ function MyBets() {
                                             </p>
                                           </div>
                                         </div>
-                                        <hr className=" w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+                                        <div className="hidden xl:flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
                                       </div>
                                     </div>
-                                    <div className="col-span-6 2xl:col-span-4">
+                                    <hr className="w-full col-span-6 xl:col-span-12 xl:hidden border-t border-t-green/50"></hr>
+                                    <div className="col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
-                                        <div className="flex  h-full flex-col justify-between gap-2">
+                                        <div className="flex  h-full flex-col justify-between 2xl:gap-2">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
-                                              ODDS
+                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                              PICK
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
+                                              {innerItem.outcome}@
                                               {innerItem.odds}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
-                                              PICK
-                                            </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                              {innerItem.outcome}
-                                            </p>
-                                          </div>
-                                          <div className="flex gap-2 ">
-                                            <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MKT
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                                            <p className="text-gray-900 flex-1 text-12 md:text-14 xxl:text-16 ">
                                               {innerItem?.event?.competitors[0]
                                                 ?.name || 'N.A'}
                                             </p>
                                           </div>
+                                          <div className="flex gap-2 ">
+                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                              STATUS
+                                            </p>
+                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                                              {innerItem?.status == 'Settled'
+                                                ? innerItem?.settlement?.result
+                                                : innerItem?.status}
+                                            </p>
+                                          </div>
                                         </div>
-                                        <hr className="w-[1px] hidden 2xl:flex min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+                                        {/* <hr className="w-[1px] hidden 2xl:flex min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr> */}
                                       </div>
                                     </div>
-                                    <hr className="w-full col-span-12 2xl:hidden border-b-[2px]"></hr>
-                                    <div className="col-span-6 2xl:col-span-4">
-                                      <div className="flex flex-col justify-between gap-2 h-full">
-                                        <div className="flex gap-2 ">
-                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                    {/* <hr className="w-full col-span-6 xl:col-span-12 2xl:hidden "></hr> */}
+                                    {/* <div className="col-span-6 xl:col-span-12 2xl:col-span-4">
+                                      <div className="flex flex-col justify-between 2xl:gap-2 h-full">
+                                        <div className="flex gap-2">
+                                          <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             STATUS
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -307,7 +298,7 @@ function MyBets() {
                                           </p>
                                         </div>
                                         <div className="flex gap-2 ">
-                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                          <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             VOID FACTOR
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -318,7 +309,7 @@ function MyBets() {
                                           </p>
                                         </div>
                                         <div className="flex gap-2 ">
-                                          <p className="text-gray-900  min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                          <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                             VOID REASON
                                           </p>
                                           <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -329,7 +320,7 @@ function MyBets() {
                                           </p>
                                         </div>
                                       </div>
-                                    </div>
+                                    </div> */}
                                   </div>
                                 </div>
                               );
@@ -343,7 +334,7 @@ function MyBets() {
           ) : (
             <div>
               <div
-                className="flex gap-2 items-center h-[50px] rounded-lg border text-primary-200 
+                className="flex justify-end flex-wrap items-center gap-6 rounded-lg border text-primary-200 
                border-primary-200 px-4 py-2"
               >
                 <button className="relative before:absolute before:left-0 before:w-full before:-bottom-2 before:bg-primary-700   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]">
@@ -359,7 +350,7 @@ function MyBets() {
                   className="h-10 !rounded-[4px] border-[1px] !text-black text-ellipsis border-blue"
                 />
               </div>
-              <div className="border-[1px]  mt-5 border-blue px-1 md:px-0 flex bg-white w-full rounded-lg cursor-pointer  md:h-12 xxl:h-16">
+              <div className="border  mt-5 border-blue flex bg-white w-full px-3 rounded-lg cursor-pointer  md:h-12 xxl:h-16">
                 {TabsName.map((item) => {
                   return (
                     <div
@@ -368,7 +359,7 @@ function MyBets() {
                         step === item.id
                           ? 'bg-gradient-color-1 text-white'
                           : 'bg-white text-black'
-                      } px-1 md:px-0 xl:px-3 mx-3 my-1 w-fit md:w-28  rounded-lg`}
+                      } px-1 md:px-0 xl:px-3 xl:mx-3 my-1 w-fit xl:w-28  rounded-lg`}
                       onClick={() => {
                         setStep(item.id);
                         // setStatus(item.tabName == 'All' ? '' : item.tabName);
@@ -417,12 +408,6 @@ function MyBets() {
             </div>
           )}
         </div>
-      </div>
-      <div className="col-span-4 2xl:col-span-3 pt-5 lg:block hidden h-full border-[#A3A3A3] border-l-[1px] pl-3 mr-3">
-        {selectedBet.length > 0 ? <BetWallet /> : <Betslip wallet="true" />}
-        <CompanyContact />
-        <CustomerCareContact />
-        <TalkToUs />
       </div>
     </div>
   );

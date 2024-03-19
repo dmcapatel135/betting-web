@@ -70,9 +70,9 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
 
   return (
     <div className="bg-white border rounded-md border-lightgray border-md p-3">
-      <div className="flex justify-between">
-        <div className=" flex-1 text-black">
-          <p className="text-12 2xl:text-16 font-semibold mb-5">
+      <div className="flex flex-col gap-2 lg:flex-row justify-between">
+        <div className=" text-black text-center lg:text-left w-full lg:w-40 2xl:w-56">
+          <p className="text-12 2xl:text-16 font-semibold lg:mb-5">
             {/* 11:15 pm Wed 06/12 */}
             {moment(fixtures?.mappedEvent?.startTime).format(
               'hh:mm a ddd MM/DD',
@@ -89,7 +89,7 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
           <p>{fixtures?.mappedEvent?.competitors[0].name || 'N.A'}</p>
           <p>{fixtures?.mappedEvent?.competitors[1].name || 'N.A'}</p>
         </div>
-        <div className="flex-1 xl:pr-5 flex justify-end gap-3 xl:gap-8 items-center">
+        <div className=" xl:pr-5 flex justify-center lg:justify-end gap-3 xl:gap-5 items-center">
           {fixtures?.market?.outcomes?.map((item, index) => {
             return (
               <div
@@ -135,7 +135,7 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
             );
           })}
           {fixtures?.market == null && (
-            <div className="flex gap-3 xl:gap-8 justify-end w-full xl:pr-5 items-center">
+            <div className="w-full flex-1 flex justify-center lg:justify-end gap-3 xl:gap-5 items-center">
               <div
                 className="flex justify-center rounded-md items-center 
                 bg-gray-800

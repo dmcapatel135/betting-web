@@ -1,11 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { Footer, Navbar } from '@components';
+import {
+  BetWallet,
+  Betslip,
+  CompanyContact,
+  CustomerCareContact,
+  Footer,
+  Navbar,
+  TalkToUs,
+} from '@components';
 import Sidebar from '@components/Sidebar';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq, isLoggedIn } from '@utils/apiHandlers';
 import { countryNameList } from '@api/country';
-
+import { images } from '@utils/images';
+import { useSelector } from 'react-redux';
+// import ExampleComponent from '@components/ExampleComponent';
 const OuterLayout = () => {
   const [params] = useSearchParams();
   const [sportId, setSportId] = useState(params.get('sId') || 1);
@@ -76,7 +86,7 @@ const OuterLayout = () => {
   useEffect(() => {
     getGamesRules();
   }, []);
-
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
   return (
     <>
       <MyContext.Provider
@@ -96,16 +106,35 @@ const OuterLayout = () => {
         }}
       >
         <Navbar tab={tab} setTab={setTab} />
-        <div className="grid grid-cols-12 ">
-          <div className="md:col-span-2 lg:block hidden">
+        <div className="flex gap-4 h-hull">
+          <div className="w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
             <Sidebar
               tab={tab}
               setTab={setTab}
               setSelectTournament={setSelectTournament}
             />
           </div>
-          <div className="md:col-span-12 lg:col-span-10 col-span-full bg-white">
+          <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5 lg:pb-0 bg-white">
+            {/* <ExampleComponent addon /> */}
             <Outlet />
+          </div>
+          <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
+            <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
+              {selectedBet.length > 0 ? (
+                <BetWallet />
+              ) : isLoggedIn() ? (
+                <Betslip />
+              ) : (
+                <div>
+                  <img src={images.AppImg} alt="app" className="" />
+                  <img src={images.contactImg} alt="app" className="py-2" />
+                </div>
+              )}
+
+              <CompanyContact />
+              <CustomerCareContact />
+              <TalkToUs />
+            </div>
           </div>
         </div>
         <Footer />

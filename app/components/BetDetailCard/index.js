@@ -66,7 +66,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     parseInt(item.winBonus ? item.winBonus : 1);
 
   return (
-    <div className="border-[1px] border-[#A3A3A3]  shadow-md rounded-[8px]">
+    <div className="border border-green  shadow-md rounded-[8px]">
       {/* <div className="grid grid-cols-12 p-3">
         <div className="col-span-6   md:col-span-4">
           <div className="flex justify-between">
@@ -167,12 +167,12 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
       </div> */}
-      <div className="grid gap-5 grid-cols-12 p-3">
-        <div className="col-span-6 md:col-span-4">
+      <div className="grid gap-2 grid-cols-6 xl:grid-cols-12 p-3">
+        <div className="col-span-6 xl:col-span-6 2xl:col-span-4">
           <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex flex-col justify-between h-full">
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Placed Date
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -180,7 +180,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Betslip ID
                 </p>
                 <p
@@ -191,7 +191,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Bonge Bonus
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -199,14 +199,15 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
             </div>
-            <hr className=" w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+            <div className="hidden xl:flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
           </div>
         </div>
-        <div className="col-span-6  md:col-span-4">
+        <div className="w-full col-span-6 xl:col-span-12 xl:hidden border-t border-t-green/50"></div>
+        <div className="col-span-6 xl:col-span-6 2xl:col-span-4">
           <div className="flex justify-between items-center 2xl:gap-2 h-full">
-            <div className="flex  h-full flex-col justify-between gap-2">
+            <div className="flex  h-full flex-col justify-between">
               <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Matches
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
@@ -214,7 +215,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Possible Win TSH
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -222,7 +223,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
               <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -230,13 +231,14 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                 </p>
               </div>
             </div>
-            <hr className="w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-[1px]"></hr>
+            <div className="w-[1px] hidden 2xl:flex min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
           </div>
         </div>
-        <div className="col-span-6 md:col-span-4">
-          <div className="flex flex-col justify-between gap-2 h-full">
+        <div className="w-full col-span-6 xl:col-span-12 2xl:hidden border-t border-t-green/50 "></div>
+        <div className="col-span-6 xl:col-span-12 2xl:col-span-4">
+          <div className="flex flex-col justify-between h-full">
             <div className="flex gap-2 ">
-              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                 Total Odds
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -247,15 +249,15 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               </p>
             </div>
             <div className="flex gap-2 ">
-              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                 Stake TSH
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                 {formatNumber(item.stake)}
               </p>
             </div>
-            <div className="flex gap-2 opacity-0">
-              <p className="text-gray-900 min-w-[88px]  2xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+            <div className=" gap-2 2xl:flex hidden opacity-0">
+              <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
                 VOID REASON
               </p>
               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -265,8 +267,8 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
       </div>
-      <hr className="border-[1px] my-1 mx-3"></hr>
-      <div className="flex gap-4 justify-end my-2 px-3">
+      <hr className="border-t border-t-green/50 my-1 mx-3"></hr>
+      <div className="flex gap-2 sm:gap-4 justify-end my-2 px-3">
         {(!(item.status == 'Cancelled') || item.status == 'Settled') && (
           <button
             onClick={() => {
