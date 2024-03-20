@@ -48,22 +48,32 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             : null,
         });
       } else {
-        console.log('------message fdsfsd ');
+        console.log('');
       }
     });
     array = [...array, ...selectedBet];
     dispatch(fetchBetDetailsAction(array));
   };
 
-  console.log('-----itmne ', item);
-
   let possiblewin =
     item.bets
       .map((b) => b.odds)
       .reduce((a, b) => a * b, 1)
       .toFixed(2) *
-    item?.stake *
-    parseInt(item.winBonus ? item.winBonus : 1);
+    item.stake *
+    parseInt(
+      !(item.winBonus == null) && !(item.winBonus == 0) ? item.winBonus : 1,
+    );
+
+  const handleButton = (status) => {
+    if (status == 'Settled') {
+      return false;
+    } else if (status == 'Cancelled') {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <div className="border border-green  shadow-md rounded-[8px]">
