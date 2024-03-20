@@ -103,14 +103,9 @@ function MyTransactions() {
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-<<<<<<< HEAD
-          className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-black"
-        >
-=======
           className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-14 text-black"
         >
           <option>Select</option>
->>>>>>> 3c4f18f (feat : fixed some bugs)
           <option>Credit</option>
           <option>Debit</option>
         </select>
