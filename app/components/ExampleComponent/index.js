@@ -9,7 +9,7 @@ const ExampleComponent = ({ addonBet, addon }) => {
         </div>
         <div className="flex-1 flex justify-end gap-2 sm:gap-3 xl2:gap-4">
           <div className="hidden xl:flex flex-col justify-center gap-2 w-[136px] sm:w-[156px] ">
-            <h4 className="text-12 break-all md:text-12 text-center 2xl:text-14 font-[800] text-black xl:min-h-[48px]">
+            <h4 className="text-12 break-all md:text-12 text-center font-[800] text-black xl:min-h-[48px]">
               3 WAY
             </h4>
             <div className="flex justify-center gap-2">
@@ -21,7 +21,7 @@ const ExampleComponent = ({ addonBet, addon }) => {
             </div>
           </div>
           <div className="flex-col flex justify-center gap-2 w-[90px] sm:w-[106px]">
-            <h4 className="text-12 break-all md:text-12 text-center 2xl:text-14 font-[800] text-black xl:min-h-[48px]">
+            <h4 className="text-12 break-all md:text-12 text-center font-[800] text-black xl:min-h-[48px]">
               OVER/UNDER(2.5)
             </h4>
             <div className="flex justify-center gap-2">
@@ -34,7 +34,7 @@ const ExampleComponent = ({ addonBet, addon }) => {
           </div>
 
           <div className="flex-col hidden xl:flex justify-center gap-2 w-[90px] sm:w-[106px]">
-            <h4 className="text-12 break-all md:text-12 text-center 2xl:text-14 font-[800] text-black xl:min-h-[48px]">
+            <h4 className="text-12 break-all md:text-12 text-center font-[800] text-black xl:min-h-[48px]">
               BOTH TEAMS TO SCORE
             </h4>
             <div className="flex justify-center gap-2">
