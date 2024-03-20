@@ -29,7 +29,9 @@ function JackpotCard({
         <button
           onClick={() => {
             setOpenCard(item.id);
-            handleGetJackpotFixtures(item.id);
+            if (item.id) {
+              handleGetJackpotFixtures(item.id);
+            }
             setStakeValue(item.betAmount);
           }}
           className={`w-full text-12 md:text-14 2xl:text-16 h-[42px]  ${

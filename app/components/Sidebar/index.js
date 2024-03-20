@@ -158,6 +158,13 @@ function Sidebar({
                   );
                 })}
               </ul>
+              {allTournaments?.length == 0 && (
+                <div>
+                  <span className="text-black font-[500] text-14">
+                    No tournaments at this moment.{' '}
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </div>

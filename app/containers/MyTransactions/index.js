@@ -65,6 +65,12 @@ function MyTransactions() {
     handleGetTransactions(query);
   }, [startDate, endDate, type, handleGetTransactions]);
 
+  const handleClear = () => {
+    setStartDate(moment().startOf('month').toDate());
+    setEndDate(moment().endOf('month').toDate());
+    setType('');
+  };
+
   return (
     <>
       <HeroSection />
@@ -97,8 +103,14 @@ function MyTransactions() {
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
+<<<<<<< HEAD
           className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-black"
         >
+=======
+          className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-14 text-black"
+        >
+          <option>Select</option>
+>>>>>>> 3c4f18f (feat : fixed some bugs)
           <option>Credit</option>
           <option>Debit</option>
         </select>
@@ -109,6 +121,7 @@ function MyTransactions() {
           className="h-[42px] !rounded-[4px] border-[1px] !text-black text-ellipsis border-blue"
         />
         <button
+          onClick={handleClear}
           type="reset"
           className="btn border text-black border-primary-700 hover:bg-primary-700"
         >
@@ -151,16 +164,16 @@ function MyTransactions() {
                         {formatNumber(item.availableBalance)}
                       </td>
                     </tr>
-                    <tr>
-                      {myTransactions.length == 0 && (
-                        <div className="text-center my-3 text-black w-full">
-                          <span className="text-14">No Activity Found</span>
-                        </div>
-                      )}
-                    </tr>
                   </>
                 );
               })}
+              <tr>
+                {myTransactions.length == 0 && (
+                  <div className="text-center my-3 text-black w-full">
+                    <span className="text-14 text-black">No Data Found</span>
+                  </div>
+                )}
+              </tr>
             </tbody>
           </table>
         </div>
