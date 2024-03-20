@@ -478,15 +478,15 @@ function SportsMenu() {
         </div>
       )}
       {isLoading && <SkeletonLoader />}
-      {allFixtures?.length == 0 && (
+      {allFixtures?.length == 0 && !isLoading && (
         <div className="text-center flex flex-col items-center gap-5 mt-12 mb-3 text-black">
           {/* <img
             src="/images/bikoicon/oops.png"
             className="w-[150px] object-contain"
             alt=""
           /> */}
-          <span className="text-black md:text-14 2xl:text-18 font-semibold text-10">
-            There are no Matches.
+          <span className="text-black md:text-14 2xl:text-18 font-[500] text-10">
+            There are no matches.
           </span>
         </div>
       )}

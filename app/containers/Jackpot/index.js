@@ -75,13 +75,15 @@ function Jackpot() {
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleGetJackpotFixtures(openCard);
-    }, 5000);
+    if (openCard) {
+      const interval = setInterval(() => {
+        handleGetJackpotFixtures(openCard);
+      }, 5000);
 
-    return () => {
-      clearInterval(interval);
-    };
+      return () => {
+        clearInterval(interval);
+      };
+    }
   }, [handleGetJackpotFixtures, openCard]);
 
   const handleGetJackpots = async () => {
