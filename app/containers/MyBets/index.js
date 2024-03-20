@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { BetDetailCard, HeroSection, SkeletonLoader } from '@components';
+import {
+  BetDetailCard,
+  HeroSection,
+  Pagination,
+  SkeletonLoader,
+} from '@components';
 import ShareBetModal from '@components/ShareBetModal.js';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
@@ -14,7 +19,6 @@ const TabsName = [
     icon: '/images/bikoicon/sports_and_outdoors.png',
   },
   { tabName: 'Settled', id: 3, icon: '/images/bikoicon/boxing.png' },
-  // { tabName: 'Jackpot', id: 4, icon: '/images/bikoicon/rugby.png' },
   { tabName: 'Cancelled', id: 5, icon: '/images/bikoicon/rugby.png' },
 ];
 
@@ -28,26 +32,27 @@ function MyBets() {
   const [queries, setQueries] = useState('');
   const [hasMore, setHasMore] = useState(true);
   const [pageSize, setPageSize] = useState(10);
+  const [dataCount, setDataCount] = useState();
+  // const [type, setType] = useState('Normal Bet');
 
   const getMyBetDetails = useCallback(
-    async (query, newPage) => {
+    async (query) => {
       setIsLoading(true);
       setPageSize(10);
       const response = await getReq(
-        `/users/me/bet-slips?skip=${
-          newPage ? newPage : 0
-        }&take=${pageSize}${query ? query : ''}`,
+        `/users/me/bet-slips?skip=${page}&take=${pageSize}${query ? query : ''}`,
       );
       if (response.status) {
         setIsLoading(false);
       }
       if (response.data.data.length > 0) {
         setMyBets(response.data.data);
+        setDataCount(response.data.count);
       } else {
         setHasMore(false);
       }
     },
-    [pageSize],
+    [pageSize, page],
   );
 
   useEffect(() => {
@@ -58,8 +63,10 @@ function MyBets() {
     else if (status) query = `&status=${status}`;
     else query = '';
     setQueries(query);
+    // if (type) {
     getMyBetDetails(query);
-  }, [status, getMyBetDetails]);
+    // }
+  }, [status, getMyBetDetails, page]);
 
   // useEffect(() => {
   //   if (showBets) {
@@ -337,10 +344,16 @@ function MyBets() {
                 className="flex justify-end flex-wrap items-center gap-6 rounded-lg border text-primary-200 
                border-primary-200 px-4 py-2"
               >
-                <button className="relative before:absolute before:left-0 before:w-full before:-bottom-2 before:bg-primary-700   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]">
+                <button
+                  // onClick={setType('Normal Bet')}
+                  className="relative before:absolute before:left-0 before:w-full before:-bottom-2 before:bg-primary-700   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]"
+                >
                   Normal Bet
                 </button>
-                <button className="text-center mr-auto w-[120px] relative">
+                <button
+                  // onClick={setType('Jackpot')}
+                  className="text-center mr-auto w-[120px] relative"
+                >
                   Jackpot
                 </button>
                 <DateRangePickerCustom
@@ -404,6 +417,15 @@ function MyBets() {
                 )}
 
                 {isLoading && <SkeletonLoader />}
+                <div className="border-t">
+                  <Pagination
+                    page={page}
+                    setPage={setPage}
+                    dataCount={dataCount}
+                    pageSize={pageSize}
+                    setPageSize={setPageSize}
+                  />
+                </div>
               </div>
             </div>
           )}
