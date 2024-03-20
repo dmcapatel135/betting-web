@@ -453,29 +453,31 @@ function Jackpot() {
                   openResult={openResult}
                 />
                 {openResult == index && (
-                  <div className="my-2">
-                    <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-                      <div className="flex justify-between py-2">
-                        <div className=" flex-1 text-black">
-                          <p className="text-10 md:text-12 mb-5">
-                            11:15 pm Wed 06/12
-                          </p>
-                          <span className="text-10 mt-20 text-gray-900">
+                  <>
+                    <div className="flex text-black justify-between text-12 py-2 px-3">
+                      <div className=" ">Match</div>
+                      <div className=" ">Result</div>
+                    </div>
+                    <div className="flex justify-between py-2 bg-white border-[1px] rounded-md border-lightgray border-md px-3 mb-2">
+                      <div className=" flex-1 text-black">
+                        <div className="text-12 md:text-14 font-[500] text-black">
+                          <span>Manchester United </span>
+                          <span>Chelsa FC</span>
+                        </div>
+                        <div className="text-10 md:text-12 flex flex-col xl2:flex-row md:gap-1 leading-snug">
+                          <span className="">11:15 pm Wed 06/12</span>
+                          <span className="">
                             Football/England/Premier League
                           </span>
                         </div>
-                        <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
-                          <p>Manchester United </p>
-                          <p>Chelsa FC</p>
-                        </div>
-                        <div className="flex-1  mr-5 flex justify-end items-center">
-                          <p className="text-black text-10 md:text-12 font-[600]">
-                            Frosinone Calcio- (3:1)
-                          </p>
-                        </div>
+                      </div>
+                      <div className="flex-1 flex justify-end items-center">
+                        <p className="text-black text-10 md:text-12 font-[600]">
+                          Frosinone Calcio- (3:1)
+                        </p>
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             );
