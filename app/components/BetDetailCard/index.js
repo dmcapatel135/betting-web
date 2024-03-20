@@ -279,7 +279,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
       </div>
       <hr className="border-t border-t-green/50 my-1 mx-3"></hr>
       <div className="flex gap-2 sm:gap-4 justify-end my-2 px-3">
-        {(!(item.status == 'Cancelled') || item.status == 'Settled') && (
+        {handleButton(item.status) && (
           <button
             onClick={() => {
               if (!(item.status == 'Cancelled')) handleCancelBet(item.id);
