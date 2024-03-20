@@ -9,7 +9,7 @@ function Tabs({ popularSports }) {
   const navigate = useNavigate();
 
   return (
-    <div className="border border-bluewhale mt-3 px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer">
+    <div className="border border-bluewhale px-5 md:px-0 md:flex bg-white w-full rounded-lg cursor-pointer">
       {popularSports?.map((item) => {
         return (
           <div
@@ -18,7 +18,7 @@ function Tabs({ popularSports }) {
               (sportId || searchParams.get('sId')) == item.id
                 ? 'bg-gradient-color-1 text-white'
                 : 'bg-white text-black '
-            } px-1 xl:px-3 ml-3 mr-0 xl:mx-3 my-2 w-full md:w-fit rounded-lg flex-center`}
+            } px-1 lg:px-0 xl:px-3 ml-3 mr-0 xl:mx-3 my-2 w-full md:w-fit rounded-lg flex-center`}
             onClick={() => {
               setSportId(item.id);
               navigate(`${window.location.pathname}?sId=${item.id}`);
