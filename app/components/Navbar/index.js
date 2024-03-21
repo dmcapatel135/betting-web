@@ -168,6 +168,8 @@ const Navbar = ({ tab, setTab }) => {
     }
   }, [navigate, event]);
 
+  console.log('---------search date length ', Object.values(searchData));
+
   return (
     <nav className="sticky z-[999999] top-0 left-0">
       <div className="h-[64px] lg:h-[85px] bg-gradient-color-1 relative flex gap-2 md:gap-4 lg:gap-6 xl:gap-8 2xl:gap-16 items-center justify-between">

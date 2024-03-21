@@ -59,13 +59,11 @@ function SportsMenu() {
     const response = await getReq(
       `/sports/${sportId}/tournaments?haveActiveEvents=${true}`,
     );
-    if (sportId == 1)
-      setAllTournaments(
-        response.data?.filter((item) => item.topLeague == true),
-      );
-    else {
-      setAllTournaments(response.data);
-    }
+    // if (sportId == 1)
+    setAllTournaments(response.data?.filter((item) => item.topLeague == true));
+    // else {
+    //   setAllTournaments(response.data);
+    // }
   }, [sportId]);
 
   useEffect(() => {
@@ -102,14 +100,18 @@ function SportsMenu() {
         : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
-        ? `date=${today}&tournamentId=${
+        ? `&fromDate=${moment(today)
+            .startOf('date')
+            .toISOString()}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `date=${today}`;
+        : `&fromDate=${moment(today)
+            .startOf('date')
+            .toISOString()}&toDate=${moment(today).endOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
         ? `fromDate=${upcoming}&tournamentId=${
@@ -138,7 +140,7 @@ function SportsMenu() {
 
   const getAllFixtures = useCallback(
     async (query, newPage) => {
-      setPageSize(10);
+      setPageSize(25);
       setIsLoading(true);
 
       const response = await getReq(
@@ -248,7 +250,6 @@ function SportsMenu() {
               <select
                 value={selectTournament}
                 onChange={(e) => {
-                  console.log('-------------e.target .value ', e.target.value);
                   setSelectTournament(e.target.value);
                 }}
                 className="w-full pl-2 my-2 bg-blue custom-select-drop font-[600] text-12 md:text-14 text-center text-white h-[32px] 2xl:h-[42px]  outline-none  rounded-[4px]"
@@ -375,7 +376,18 @@ function SportsMenu() {
           )}
         </div>
         <div className="flex-grow-0">
-          <div className="  h-5 w-6 md:w-16 text-black"></div>
+          <div className="  h-5 w-6 md:w-16 text-black">
+            <button
+              onClick={() => {
+                setSportId(1);
+                setSelectTournament(null);
+              }}
+              type="reset"
+              className="btn border text-black ml-2 border-primary-700 h-[33px] !min-w-[65px] !text-12 !rounded-md hover:bg-primary-700"
+            >
+              Clear
+            </button>
+          </div>
         </div>
       </div>
       {/* <div className="flex my-3 px-2  mr-3 w-full">
