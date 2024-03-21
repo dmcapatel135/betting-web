@@ -144,7 +144,7 @@ function Sidebar({
                       onClick={() => {
                         setSelectTournament(item.id);
                         setSportId(item.sportId);
-                        naviagte(`/?sId=${item.sportId}&eId=${item.id}`);
+                        naviagte(`?sId=${item.sportId}&eId=${item.id}`);
                       }}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
