@@ -176,13 +176,13 @@ function SportsMenu() {
 
   return (
     <>
-      <div className="lg:block hidden pr-2">
+      <div className="lg:block hidden">
         <Tabs popularSports={popularSports} allSports={allSports} />
       </div>
-      <div className="my-0 md:my-2  md:mr-2 bg-white rounded-b-[8px]">
-        <img className="w-full" src={images.bannerImg} />
+      <div className="my-0 md:my-2 bg-white rounded-b-[8px]">
+        <img className="w-full rounded-lg" src={images.bannerImg} />
 
-        <div className="mt-5  hidden md:flex justify-between px-5">
+        <div className="mt-5 hidden md:flex justify-between px-5">
           {tabsName?.map((item) => {
             return (
               <div
@@ -190,7 +190,7 @@ function SportsMenu() {
                 className={`${
                   window.location.pathname == item.path
                     ? 'text-white border-b-[3px] border-yellow'
-                    : 'text-white  w-36'
+                    : 'text-white  xl:w-36'
                 } mx-3 flex-1 flex items-center justify-center text-center`}
                 onClick={() => {
                   setTab(item.id);
@@ -205,7 +205,7 @@ function SportsMenu() {
             );
           })}
         </div>
-        <div className="px-3">
+        <div className="lg:px-3">
           {/* <select
             value={selectTournament}
             onChange={(e) => {
@@ -222,7 +222,7 @@ function SportsMenu() {
               );
             })}
           </select> */}
-          <div className="flex gap-3">
+          <div className="flex flex-col lg:flex-row lg:gap-3">
             <div className="flex-1">
               <select
                 value={sportId}
@@ -299,9 +299,9 @@ function SportsMenu() {
             )}
           </div>
         </div>
-        <div className="flex-1 border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6">
+        <div className="flex-1 border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6 mr-2 md:mr-0">
           {allFixtures.length > 0 && (
-            <div className="flex justify-center md:justify-end gap-4">
+            <div className="flex justify-end gap-4">
               {marketsName
                 .filter(
                   (item) =>
@@ -338,7 +338,7 @@ function SportsMenu() {
                           className="w-full"
                         >
                           <div className="w-full flex justify-center">
-                            <h1 className="text-12 md:text-12 lg:text-[10px] flex-center text-center 2xl:text-14 font-[800] md:block text-black  mb-2 h-[48px]">
+                            <h1 className="text-12 md:text-12 lg:text-[10px] flex-center text-center 2xl:text-14 font-[800] md:block text-black  mb-2 xl:h-[48px]">
                               {items.name === 'Total'
                                 ? 'OVER/UNDER(2.5)'
                                 : items.name}
@@ -449,7 +449,7 @@ function SportsMenu() {
         </div>
       </div> */}
       {allFixtures.length > 0 && (
-        <div className="px-2 ">
+        <div className="lg:px-2">
           <InfiniteScroll
             dataLength={allFixtures.length}
             next={fetchMoreData}
@@ -478,15 +478,15 @@ function SportsMenu() {
         </div>
       )}
       {isLoading && <SkeletonLoader />}
-      {allFixtures?.length == 0 && (
+      {allFixtures?.length == 0 && !isLoading && (
         <div className="text-center flex flex-col items-center gap-5 mt-12 mb-3 text-black">
           {/* <img
             src="/images/bikoicon/oops.png"
             className="w-[150px] object-contain"
             alt=""
           /> */}
-          <span className="text-black md:text-14 2xl:text-18 font-semibold text-10">
-            There are no Matches.
+          <span className="text-black md:text-14 2xl:text-18 font-[500] text-10">
+            There are no matches.
           </span>
         </div>
       )}

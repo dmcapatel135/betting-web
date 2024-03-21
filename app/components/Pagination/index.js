@@ -1,36 +1,34 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import PropTypes from 'prop-types';
-
-const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
-  const onPageChange = (e) => {
-    setPage(e.selected * 10);
+const Pagination = ({ dataCount, pageSize, setPage, page }) => {
+  const handlePageClick = (event) => {
+    setPage(event.selected);
   };
-
   return (
-    <div className="py-4 flex items-center justify-between px-3">
-      <div>
-        <label className="text-black text-14 mr-2 ">Page Size</label>
+    <div className="py-4 flex justify-end items-center">
+      {/* <div>
+        <label className="text-black">Page Size</label>
         <select
-          value={pageSize}
           onChange={(e) => setPageSize(e.target.value)}
-          className="h-7 w-12 text-black bg-white rounded-[4px]  outline-none border-[1px]"
+          value={pageSize}
+          className="w-16 border-[1px] custom-select-drop text-black ml-3 border-yellow rounded-md py-1 px-2 border-solid"
         >
           <option value={'10'}>10</option>
           <option value={'20'}>20</option>
         </select>
-      </div>
+      </div> */}
       <ReactPaginate
         nextLabel="Next"
-        previousLabel="Prev"
-        forcePage={page - 1}
-        onPageChange={onPageChange}
-        pageRangeDisplayed={8}
+        onPageChange={handlePageClick}
+        forcePage={page}
+        pageRangeDisplayed={2}
         pageCount={Math.ceil(dataCount / pageSize)}
+        previousLabel="Prev"
         renderOnZeroPageCount={null}
-        containerClassName="flex justify-center gap-2  items-center"
+        containerClassName="flex justify-center text-black gap-2 items-center"
         pageClassName="pagination-item-style"
-        activeClassName="bg-yellow border-yellow text-white"
+        activeClassName="bg-yellow text-white"
         previousClassName="pagination-item-style"
         nextClassName="pagination-item-style"
         disabledClassName="disabled-item"
@@ -38,13 +36,11 @@ const Pagination = ({ page, setPage, dataCount, pageSize, setPageSize }) => {
     </div>
   );
 };
-
 Pagination.propTypes = {
-  page: PropTypes.number.isRequired,
-  setPage: PropTypes.func.isRequired,
-  dataCount: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  setPageSize: PropTypes.number.isRequired,
+  setPage: PropTypes.number,
+  pageCount: PropTypes.number,
+  pageSize: PropTypes.number,
+  dataCount: PropTypes.number,
+  page: PropTypes.number,
 };
-
 export default Pagination;

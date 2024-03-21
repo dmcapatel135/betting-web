@@ -1,17 +1,12 @@
 // import { fetchBetDetailsAction } from '@actions';
 import { fetchJackpotDetailsAction } from '@actions';
 import {
-  Betslip,
-  CompanyContact,
-  CustomerCareContact,
   JackpotCard,
   // JackpotDailyCard,
   JackpotDetailCard,
   Loader,
   // SkeletonLoader,
-  TalkToUs,
 } from '@components';
-import BetWallet from '@components/BetWallet';
 import JackpotResultCard from '@components/JackpotResultCard';
 import { CircularProgress } from '@mui/material';
 import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
@@ -49,7 +44,6 @@ function Jackpot() {
   const [openResult, setOpenResult] = useState(false);
   const [jackpots, setJackpots] = useState([]);
   const [jackpotFixtures, setJackpotFixtures] = useState([]);
-  const selectedBet = useSelector((state) => state.bet.selectedBet);
   const selectedJackpot = useSelector((state) => state.jackpot.selectedJackpot);
 
   const [hasMore, setHasMore] = useState(true);
@@ -81,13 +75,15 @@ function Jackpot() {
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      handleGetJackpotFixtures(openCard);
-    }, 5000);
+    if (openCard) {
+      const interval = setInterval(() => {
+        handleGetJackpotFixtures(openCard);
+      }, 5000);
 
-    return () => {
-      clearInterval(interval);
-    };
+      return () => {
+        clearInterval(interval);
+      };
+    }
   }, [handleGetJackpotFixtures, openCard]);
 
   const handleGetJackpots = async () => {
@@ -250,157 +246,156 @@ function Jackpot() {
   };
 
   return (
-    <div className="grid grid-cols-12 h-full">
-      <div className="col-span-12 lg:col-span-8 2xl:col-span-9 pt-5 mb-5">
-        <div className="px-5">
-          <div className="border-[1px] border-bluewhale px-5 md:px-0 flex  bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
-            {TabsName?.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className={`${
-                    step === item.id
-                      ? 'bg-gradient-color-1 text-white'
-                      : 'bg-white text-black'
-                  } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-full flex-1 flext justify-center rounded-md md:rounded-lg`}
-                  onClick={() => {
-                    setStep(item.id);
-                  }}
-                >
-                  <div className="flex h-8 md:h-12 justify-center items-center">
-                    {/* <img
+    <div className="mb-5">
+      <div className="">
+        <div className="border-[1px] border-bluewhale px-5 md:px-0 flex  bg-white w-full rounded-lg cursor-pointer  md:h-14 xxl:h-16">
+          {TabsName?.map((item) => {
+            return (
+              <div
+                key={item.id}
+                className={`${
+                  step === item.id
+                    ? 'bg-gradient-color-1 text-white'
+                    : 'bg-white text-black'
+                } px-1 xl:px-3 md:mx-3 my-1 w-full md:w-full flex-1 flext justify-center rounded-md md:rounded-lg`}
+                onClick={() => {
+                  setStep(item.id);
+                }}
+              >
+                <div className="flex h-8 md:h-12 justify-center items-center">
+                  {/* <img
                       src={step === item.id ? item.active_icon : item.icon}
                       alt="profile_icon"
                       className="w-6 h-6"
                     /> */}
-                    <span className="px-2 text-12 font-medium md:text-14 2xl:text-16">
-                      {item.name}
-                    </span>
-                  </div>
+                  <span className="px-2 text-12 font-medium md:text-14 2xl:text-16">
+                    {item.name}
+                  </span>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-        {step === 1 && (
-          <div className="px-5">
-            <InfiniteScroll
-              dataLength={jackpots.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              // loader={<SkeletonLoader />}
-              endMessage={<p className="text-black">No more items to load.</p>}
-            >
-              {jackpots.length == 0 && !isLoading && (
-                <div>
-                  <span>There is no jackpots available</span>
-                </div>
-              )}
-              {jackpots.length > 0 &&
-                jackpots.map((item, index) => {
-                  return (
-                    <div key={index} className="my-3">
-                      <JackpotCard
-                        item={item}
-                        index={index}
-                        handleGetJackpotFixtures={handleGetJackpotFixtures}
-                        setOpenCard={setOpenCard}
-                        setStakeValue={setStakeValue}
-                        // setJackpotEvent={setJackpotEvent}
-                      />
-                      <div>
-                        {openCard == item.id && (
-                          <>
-                            {jackpotFixtures.length > 0 && (
-                              <div className="flex text-black justify-end mr-4 xl:mr-8 mt-5 ">
-                                <div className="gap-3 xl:gap-8 flex justify-end min-w-[256px]">
-                                  {Draw.map((item, index) => (
-                                    <p
-                                      key={index}
-                                      className="text-14 text-center w-[48px] font-[600]"
-                                    >
-                                      {item.name}
-                                    </p>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            {jackpotFixtures.map((fixtures) => {
-                              // setJackpotEvent(fixtures);
-                              return (
-                                <>
-                                  <div className="mb-3">
-                                    <JackpotDetailCard
-                                      jackpotId={item.id}
-                                      fixtures={fixtures}
-                                    />
-                                  </div>
-                                </>
-                              );
-                            })}
-                            {isLoading && <Loader />}
-                            {jackpotFixtures.length == 0 && !isLoading && (
-                              <div className="flex justify-center my-5">
-                                <span className="text-black font-12">
-                                  There are no active Weekly jackpots at the
-                                  moment.
-                                </span>
-                              </div>
-                            )}
-                            {jackpotFixtures.length > 0 && (
-                              <div>
-                                <div className="flex flex-col gap-2 text-black">
-                                  <div className="flex justify-between">
-                                    <p className="font-semibold">Price :</p>
-                                    <p className="font-semibold">
-                                      TSH {stakeValue}
-                                    </p>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <p className="font-semibold">
-                                      Total Tickets :
-                                    </p>
-                                    <p className="font-semibold">{ticket}</p>
-                                  </div>
-                                  <div className="flex justify-between">
-                                    <p className="font-semibold text-lg">
-                                      Total Price :
-                                    </p>
-                                    <p className="font-bold">
-                                      TSH {formatNumber(ticket * stakeValue)}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div>
-                                  <button
-                                    disabled={!ticket || placeJackpotLoading}
-                                    className={`w-full py-2 my-2 h-[42px] font-semibold rounded-lg ${
-                                      ticket && !placeJackpotLoading
-                                        ? 'bg-yellow text-white'
-                                        : 'bg-lightestgray text-black'
-                                    }`}
-                                    onClick={() => handleBuyTicket(item.id)}
-                                  >
-                                    {placeJackpotLoading && (
-                                      <CircularProgress
-                                        color="inherit"
-                                        size={20}
-                                      />
-                                    )}
-                                    BUY TICKET
-                                  </button>
-                                </div>
-                                <div className="flex justify-end">
+      </div>
+      {step === 1 && (
+        <div className="">
+          <InfiniteScroll
+            dataLength={jackpots.length}
+            next={fetchMoreData}
+            hasMore={hasMore}
+            // loader={<SkeletonLoader />}
+            endMessage={<p className="text-black">No more items to load.</p>}
+          >
+            {jackpots.length == 0 && !isLoading && (
+              <div>
+                <span>There is no jackpots available</span>
+              </div>
+            )}
+            {jackpots.length > 0 &&
+              jackpots.map((item, index) => {
+                return (
+                  <div key={index} className="my-3">
+                    <JackpotCard
+                      item={item}
+                      index={index}
+                      handleGetJackpotFixtures={handleGetJackpotFixtures}
+                      setOpenCard={setOpenCard}
+                      setStakeValue={setStakeValue}
+                      // setJackpotEvent={setJackpotEvent}
+                    />
+                    <div>
+                      {openCard == item.id && (
+                        <>
+                          {jackpotFixtures.length > 0 && (
+                            <div className="flex text-black justify-center lg:justify-end lg:mr-4 xl:mr-8 mt-5 ">
+                              <div className="gap-3 xl:gap-5 flex justify-center lg:justify-end lg:min-w-[256px]">
+                                {Draw.map((item, index) => (
                                   <p
-                                    onClick={handleClearAllBet}
-                                    className="text-black underline cursor-pointer hover:text-yellow"
+                                    key={index}
+                                    className="text-14 text-center w-[48px] font-[600]"
                                   >
-                                    Clear All
+                                    {item.name}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {jackpotFixtures.map((fixtures) => {
+                            // setJackpotEvent(fixtures);
+                            return (
+                              <>
+                                <div className="mb-3">
+                                  <JackpotDetailCard
+                                    jackpotId={item.id}
+                                    fixtures={fixtures}
+                                  />
+                                </div>
+                              </>
+                            );
+                          })}
+                          {isLoading && <Loader />}
+                          {jackpotFixtures.length == 0 && !isLoading && (
+                            <div className="flex justify-center my-5">
+                              <span className="text-black font-12">
+                                There are no active Weekly jackpots at the
+                                moment.
+                              </span>
+                            </div>
+                          )}
+                          {jackpotFixtures.length > 0 && (
+                            <div>
+                              <div className="flex flex-col gap-2 text-black">
+                                <div className="flex justify-between">
+                                  <p className="font-semibold">Price :</p>
+                                  <p className="font-semibold">
+                                    TSH {stakeValue}
+                                  </p>
+                                </div>
+                                <div className="flex justify-between">
+                                  <p className="font-semibold">
+                                    Total Tickets :
+                                  </p>
+                                  <p className="font-semibold">{ticket}</p>
+                                </div>
+                                <div className="flex justify-between">
+                                  <p className="font-semibold text-lg">
+                                    Total Price :
+                                  </p>
+                                  <p className="font-bold">
+                                    TSH {formatNumber(ticket * stakeValue)}
                                   </p>
                                 </div>
                               </div>
-                            )}
-                            {/* <div className="flex h-16 rounded-sm bg-lightestgray px-5 justify-between items-center">
+                              <div>
+                                <button
+                                  disabled={!ticket || placeJackpotLoading}
+                                  className={`w-full py-2 my-2 h-[42px] font-semibold rounded-lg ${
+                                    ticket && !placeJackpotLoading
+                                      ? 'bg-yellow text-white'
+                                      : 'bg-lightestgray text-black'
+                                  }`}
+                                  onClick={() => handleBuyTicket(item.id)}
+                                >
+                                  {placeJackpotLoading && (
+                                    <CircularProgress
+                                      color="inherit"
+                                      size={20}
+                                    />
+                                  )}
+                                  BUY TICKET
+                                </button>
+                              </div>
+                              <div className="flex justify-end">
+                                <p
+                                  onClick={handleClearAllBet}
+                                  className="text-black underline cursor-pointer hover:text-yellow"
+                                >
+                                  Clear All
+                                </p>
+                              </div>
+                            </div>
+                          )}
+                          {/* <div className="flex h-16 rounded-sm bg-lightestgray px-5 justify-between items-center">
                               <div className="flex">
                                 <button
                                   onClick={handleClearAllBet}
@@ -425,95 +420,84 @@ function Jackpot() {
                                 </button>
                               </div>
                             </div> */}
-                          </>
-                        )}
-                      </div>
+                        </>
+                      )}
                     </div>
-                  );
-                })}
-            </InfiniteScroll>
-            {jackpotLoading && (
-              <div>
-                <Loader />
-              </div>
-            )}
-          </div>
-        )}
-        {step === 2 && (
-          <div className="px-5 my-5">
-            {/* <div className="border-[1px] border-blue rounded-md bg-gray-800 text-center justify-center py-3">
+                  </div>
+                );
+              })}
+          </InfiniteScroll>
+          {jackpotLoading && (
+            <div>
+              <Loader />
+            </div>
+          )}
+        </div>
+      )}
+      {step === 2 && (
+        <div className="my-5">
+          {/* <div className="border-[1px] border-blue rounded-md bg-gray-800 text-center justify-center py-3">
               <h1 className="text-black text-20 font-[600]">
                 WEEKLY JACKPOT 21 JAN 2024
               </h1>
               <p className="text-12 text-black font-[500] py-2">17 GAMES</p>
               <h1 className="text-blue text-20 font-[600]">TSH 1,000</h1>
             </div> */}
-            {finishedJackpot.map((item, index) => {
-              return (
-                <div key={item.id}>
-                  <JackpotResultCard
-                    index={index}
-                    item={item}
-                    setOpenResult={setOpenResult}
-                    openResult={openResult}
-                  />
-                  {openResult == index && (
-                    <div className="my-2">
-                      <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-                        <div className="flex justify-between py-2">
-                          <div className=" flex-1 text-black">
-                            <p className="text-10 md:text-12 mb-5">
-                              11:15 pm Wed 06/12
-                            </p>
-                            <span className="text-10 mt-20 text-gray-900">
-                              Football/England/Premier League
-                            </span>
-                          </div>
-                          <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
-                            <p>Manchester United </p>
-                            <p>Chelsa FC</p>
-                          </div>
-                          <div className="flex-1  mr-5 flex justify-end items-center">
-                            <p className="text-black text-10 md:text-12 font-[600]">
-                              Frosinone Calcio- (3:1)
-                            </p>
-                          </div>
+          {finishedJackpot.map((item, index) => {
+            return (
+              <div key={item.id}>
+                <JackpotResultCard
+                  index={index}
+                  item={item}
+                  setOpenResult={setOpenResult}
+                  openResult={openResult}
+                />
+                {openResult == index && (
+                  <div className="my-2">
+                    <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
+                      <div className="flex justify-between py-2">
+                        <div className=" flex-1 text-black">
+                          <p className="text-10 md:text-12 mb-5">
+                            11:15 pm Wed 06/12
+                          </p>
+                          <span className="text-10 mt-20 text-gray-900">
+                            Football/England/Premier League
+                          </span>
+                        </div>
+                        <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
+                          <p>Manchester United </p>
+                          <p>Chelsa FC</p>
+                        </div>
+                        <div className="flex-1  mr-5 flex justify-end items-center">
+                          <p className="text-black text-10 md:text-12 font-[600]">
+                            Frosinone Calcio- (3:1)
+                          </p>
                         </div>
                       </div>
                     </div>
-                  )}
-                </div>
-              );
-            })}
-            {finishedJackpot.length == 0 && (
-              <div className="text-center mt-5">
-                <p className="text-black text-14">
-                  There is no jackpot results is available
-                </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        )}
-        {step === 3 && (
-          <div className="px-5 my-5">
-            <div className="border-[1px] border-blue rounded-md h-16 md:h-28 bg-gray-800 text-center justify-center py-3">
-              <h1 className="text-black text-12 md:text-20 font-[600]">
-                You&apos;ll be notified of any changes in the rules
-              </h1>
+            );
+          })}
+          {finishedJackpot.length == 0 && (
+            <div className="text-center mt-5">
+              <p className="text-black text-14">
+                There is no jackpot results is available
+              </p>
             </div>
+          )}
+        </div>
+      )}
+      {step === 3 && (
+        <div className="my-5">
+          <div className="border-[1px] border-blue rounded-md h-16 md:h-28 bg-gray-800 text-center justify-center py-3">
+            <h1 className="text-black text-12 md:text-20 font-[600]">
+              You&apos;ll be notified of any changes in the rules
+            </h1>
           </div>
-        )}
-      </div>
-      <div className="col-span-4 2xl:col-span-3 lg:block hidden pt-5 border-l-[1px] px-3 border-[#A3A3A3]">
-        {selectedBet.length > 0 ? (
-          <BetWallet stakeValue={stakeValue} />
-        ) : (
-          <Betslip />
-        )}
-        <CompanyContact />
-        <CustomerCareContact />
-        <TalkToUs />
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -64,7 +64,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="col-span-full md:col-span-6 lg:col-span-3 order-2 lg:order-3">
-            <div className="text-center md:text-end mb-2">
+            <div className="md:text-end mb-2">
               <h1 className="text-16 font-[600] pb-3 cursor-pointer ">
                 About Explain Bikosports
               </h1>

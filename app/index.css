@@ -28,7 +28,7 @@
     @apply overflow-x-hidden text-base;
   }
   body {
-    @apply font-roboto text-white bg-primary-100;
+    @apply font-roboto text-white bg-white;
   }
   p {
     @apply leading-6 font-roboto;
@@ -90,6 +90,12 @@
   }
   .btn-outline-white {
     @apply border border-white;
+  }
+  .bet-btn {
+    @apply bg-[#EAEAEA] hover:bg-green/80 hover:text-white flex justify-center items-center text-center border-[#A3A3A3] border text-black rounded-[4px] w-[40px] h-6 sm:h-8 md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] text-10 xl:text-12 2xl:text-14 py-2 px-3;
+  }
+  .box-bet {
+    @apply bg-white flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black rounded-[4px] w-[40px] h-6 sm:h-8 md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] text-10 xl:text-12 2xl:text-14 py-2 px-3;
   }
 }
 

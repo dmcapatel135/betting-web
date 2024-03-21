@@ -4,15 +4,7 @@ import React, {
   // useRef,
   useState,
 } from 'react';
-import {
-  //   BetDetailsContext,
-  BetWallet,
-  Betslip,
-  CompanyContact,
-  CustomerCareContact,
-  Loading,
-  TalkToUs,
-} from '@components';
+import { Loading } from '@components';
 import { reactIcons } from '@utils/icons';
 // import ReactSimplyCarousel from 'react-simply-carousel';
 import { getReq } from '@utils/apiHandlers';
@@ -176,14 +168,12 @@ function SigleBetDetails() {
   // };
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-12 lg:col-span-8 2xl:col-span-9">
-        <div className="md:p-5 p-2">
-          <div className="h-fit text-black w-full bg-[#b9e6ea]">
-            {/* <div className="flex justify-center">
+    <>
+      <div className="h-fit text-black w-full bg-[#b9e6ea]">
+        {/* <div className="flex justify-center">
               <span className="text-12 text-gray-900">19 Jan 19:30</span>
             </div> */}
-            {/* <div className="flex px-3 justify-between items-center mb-1">
+        {/* <div className="flex px-3 justify-between items-center mb-1">
               <div className="flex">
                 <img
                   src="/images/bikoicon/cape.png"
@@ -199,8 +189,8 @@ function SigleBetDetails() {
                 />
               </div>
             </div> */}
-            {/* <div className="flex border-t-[1px] border-b-[1px] border-lightgray"> */}
-            {/* {TabsName.map((item) => {
+        {/* <div className="flex border-t-[1px] border-b-[1px] border-lightgray"> */}
+        {/* {TabsName.map((item) => {
                 return (
                   <div
                     key={item.id}
@@ -220,7 +210,7 @@ function SigleBetDetails() {
                   </div>
                 );
               })} */}
-            {/* {TabsName.map((item) => {
+        {/* {TabsName.map((item) => {
                 if (item.title === 'Board' && !isMobile) {
                   return null; // Skip rendering the "Board" tab on non-mobile devices
                 }
@@ -243,8 +233,8 @@ function SigleBetDetails() {
                   </div>
                 );
               })} */}
-            {/* </div> */}
-            {/* <div className="flex">
+        {/* </div> */}
+        {/* <div className="flex">
               <div
                 className={`w-full  md:w-[50%] bg-[#5c8301] ${
                   isMobile && step == 'Board' ? 'block' : 'md:block hidden'
@@ -747,103 +737,97 @@ function SigleBetDetails() {
                 </div>
               )}
             </div> */}
-          </div>
+      </div>
+      <div>
+        <div className="bg-yellow py-1 rounded-md mt-5 px-3">
+          <h1 className="text-white text-14 font-[600]">
+            {eventName} - ALL MARKETS
+          </h1>
+        </div>
+      </div>
+      <div>
+        {isLoading && loadNum == 1 && (
           <div>
-            <div className="bg-yellow py-1 rounded-md mt-5 px-3">
-              <h1 className="text-white text-14 font-[600]">
-                {eventName} - ALL MARKETS
-              </h1>
-            </div>
+            <p className="text-black">Loading.....</p>
+            <Loading />
           </div>
-          <div>
-            {isLoading && loadNum == 1 && (
-              <div>
-                <p className="text-black">Loading.....</p>
-                <Loading />
-              </div>
-            )}
-            {mergedData?.length > 0 &&
-              mergedData?.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <div className="md:my-3 my-1">
-                      <div className="text-black">
-                        {item.outcomes.length > 0 && (
-                          <h1 className="text-12 md:text-14 font-[500] py-2">
-                            {item.name}
-                          </h1>
-                        )}
-                      </div>
-                      <div className="grid grid-cols-12">
-                        {item.outcomes.map((innerItem, innerIndex) => {
-                          return (
-                            <div
-                              key={innerIndex}
-                              className={`flex mb-2 ${
-                                item.outcomes.length % 2 === 0
-                                  ? 'col-span-6'
-                                  : 'col-span-4'
-                              }`}
+        )}
+        {mergedData?.length > 0 &&
+          mergedData?.map((item, index) => {
+            return (
+              <div key={index}>
+                <div className="md:my-3 my-1">
+                  <div className="text-black">
+                    {item.outcomes.length > 0 && (
+                      <h1 className="text-12 md:text-14 font-[500] py-2">
+                        {item.name}
+                      </h1>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-12">
+                    {item.outcomes.map((innerItem, innerIndex) => {
+                      return (
+                        <div
+                          key={innerIndex}
+                          className={`flex mb-2 ${
+                            item.outcomes.length % 2 === 0
+                              ? 'col-span-6'
+                              : 'col-span-4'
+                          }`}
+                        >
+                          <div className="flex-1 mr-2">
+                            <button
+                              disabled={innerItem.active ? false : true}
+                              onClick={() => {
+                                if (
+                                  selectBet(
+                                    eventId,
+                                    item.id,
+                                    innerItem.id,
+                                    innerItem.market.specifiers
+                                      ? innerItem?.market.specifiers.join('|')
+                                      : null,
+                                  )
+                                ) {
+                                  handleRemoveBet(eventId, sId);
+                                } else {
+                                  addToBetSlip(
+                                    eventId,
+                                    innerItem,
+                                    item,
+                                    innerItem.market.specifiers
+                                      ? innerItem?.market?.specifiers?.join('|')
+                                      : null,
+                                  );
+                                }
+                              }}
+                              className={`${
+                                selectBet(
+                                  eventId,
+                                  item.id,
+                                  innerItem.id,
+                                  innerItem.market.specifiers
+                                    ? innerItem?.market?.specifiers.join('|')
+                                    : null,
+                                )
+                                  ? 'bg-green text-white'
+                                  : ''
+                              } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-3`}
                             >
-                              <div className="flex-1 mr-2">
-                                <button
-                                  disabled={innerItem.active ? false : true}
-                                  onClick={() => {
-                                    if (
-                                      selectBet(
-                                        eventId,
-                                        item.id,
-                                        innerItem.id,
-                                        innerItem.market.specifiers
-                                          ? innerItem?.market.specifiers.join(
-                                              '|',
-                                            )
-                                          : null,
-                                      )
-                                    ) {
-                                      handleRemoveBet(eventId, sId);
-                                    } else {
-                                      addToBetSlip(
-                                        eventId,
-                                        innerItem,
-                                        item,
-                                        innerItem.market.specifiers
-                                          ? innerItem?.market?.specifiers?.join(
-                                              '|',
-                                            )
-                                          : null,
-                                      );
-                                    }
-                                  }}
-                                  className={`${
-                                    selectBet(
-                                      eventId,
-                                      item.id,
-                                      innerItem.id,
-                                      innerItem.market.specifiers
-                                        ? innerItem?.market?.specifiers.join(
-                                            '|',
-                                          )
-                                        : null,
-                                    )
-                                      ? 'bg-green text-white'
-                                      : ''
-                                  } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-3`}
-                                >
-                                  <span className="text-center font-[700] leading-3 flex-1">
-                                    {innerItem.name}
-                                  </span>
-                                  <span className="text-[700]">
-                                    {innerItem.active == 1 &&
-                                    innerItem?.market?.status == 1 ? (
-                                      innerItem.odds
-                                    ) : (
-                                      <span>{reactIcons.lock}</span>
-                                    )}
-                                  </span>
-                                </button>
-                              </div>
-                              {/* <div className="flex-1 mr-2">
+                              <span className="text-center font-[700] leading-3 flex-1">
+                                {innerItem.name}
+                              </span>
+                              <span className="text-[700]">
+                                {innerItem.active == 1 &&
+                                innerItem?.market?.status == 1 ? (
+                                  innerItem.odds
+                                ) : (
+                                  <span>{reactIcons.lock}</span>
+                                )}
+                              </span>
+                            </button>
+                          </div>
+                          {/* <div className="flex-1 mr-2">
                               <button className="bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-12 rounded-md w-full py-2 px-3">
                                 <span className="text-center font-[700] flex-1">
                                   Draw
@@ -859,12 +843,12 @@ function SigleBetDetails() {
                                 <span className="font-[700]">2.09</span>
                               </button>
                             </div> */}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    {/* <div className="my-3">
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                {/* <div className="my-3">
                       <div className="text-black">
                         <h1 className="text-14 font-[500] py-2">
                           DOUBLE CHANCE
@@ -897,7 +881,7 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </div> */}
-                    {/* <div className="my-3">
+                {/* <div className="my-3">
                       <div className="text-black">
                         <h1 className="text-14 font-[500] py-2">DRAW NO BET</h1>
                       </div>
@@ -921,29 +905,16 @@ function SigleBetDetails() {
                         </div>
                       </div>
                     </div> */}
-                  </div>
-                );
-              })}
-            {/* {mergedData?.length == 0 && !isLoading && (
+              </div>
+            );
+          })}
+        {/* {mergedData?.length == 0 && !isLoading && (
               <div className="text-center mt-5 text-black">
                 <span>No markets found</span>
               </div>
             )} */}
-          </div>
-        </div>
       </div>
-      <div className="col-span-4 2xl:col-span-3 pt-3 md:block hidden border-l-[1px] px-3 border-gray-700">
-        {/* <RightSideSection /> */}
-        {bets?.length > 0 ? (
-          <BetWallet selectedBet={selectedBet} />
-        ) : (
-          <Betslip selectedBet={selectedBet} />
-        )}
-        <CompanyContact />
-        <CustomerCareContact />
-        <TalkToUs />
-      </div>
-    </div>
+    </>
   );
 }
 
