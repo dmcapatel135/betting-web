@@ -22,6 +22,8 @@ function MyTransactions() {
   const [endDate, setEndDate] = useState(moment().endOf('month').toDate());
 
   const userWallet = useSelector((state) => state.user);
+  const [queries, setQueries] = useState('');
+  let pageCount = 10;
 
   const onChange = (dates) => {
     const [start, end] = dates;
@@ -32,7 +34,7 @@ function MyTransactions() {
   const handleGetTransactions = useCallback(
     async (query) => {
       const response = await getReq(
-        `/users/me/transactions?skip=${page}&take=${pageSize}${query ? query : ''}`,
+        `/users/me/transactions?skip=${page * pageCount}&take=${pageSize}${query ? query : ''}`,
       );
 
       if (response.status) {
@@ -40,30 +42,31 @@ function MyTransactions() {
         setMyTransactions(response.data.data);
       }
     },
-    [setMyTransactions, page, pageSize],
+    [setMyTransactions, page, pageSize, pageCount],
   );
 
   useEffect(() => {
-    handleGetTransactions();
-  }, [handleGetTransactions, page, pageSize]);
+    handleGetTransactions(queries);
+  }, [page]); // eslint-disable-line
 
   useEffect(() => {
-    let query;
-    if (startDate && endDate && type) {
-      query = `&fromDate=${moment(startDate)
-        .startOf('date')
-        .toISOString()}&toDate=${moment(endDate)
-        .endOf('date')
-        .toISOString()}&type=${type}`;
-    } else if (startDate && endDate) {
-      query = `&fromDate=${moment(startDate)
-        .startOf('date')
-        .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
-    } else if (type) {
-      query = `&type=${type}`;
+    let query = '';
+    setPage(0);
+    if (type) {
+      console.log('-----------tupeessd', type);
+      query = query + `&type=${type}`;
     }
+    if (startDate && endDate) {
+      query =
+        query +
+        `&fromDate=${moment(startDate)
+          .startOf('date')
+          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
+    }
+
+    setQueries(query);
     handleGetTransactions(query);
-  }, [startDate, endDate, type, handleGetTransactions]);
+  }, [startDate, endDate, type]); // eslint-disable-line
 
   const handleClear = () => {
     setStartDate(moment().startOf('month').toDate());

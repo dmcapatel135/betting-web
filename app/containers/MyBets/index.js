@@ -29,44 +29,55 @@ function MyBets() {
   const [status, setStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
-  const [queries, setQueries] = useState('');
-  const [hasMore, setHasMore] = useState(true);
   const [pageSize, setPageSize] = useState(10);
   const [dataCount, setDataCount] = useState();
-  // const [type, setType] = useState('Normal Bet');
+  const [betType, setBetType] = useState('Normal Bet');
+  const [queries, setQueries] = useState('');
+  const [startDate, setStartDate] = useState(
+    moment().startOf('month').toDate(),
+  );
+  const [endDate, setEndDate] = useState(moment().endOf('month').toDate());
+  let pageCount = 10;
 
   const getMyBetDetails = useCallback(
     async (query) => {
       setIsLoading(true);
       setPageSize(10);
       const response = await getReq(
-        `/users/me/bet-slips?skip=${page}&take=${pageSize}${query ? query : ''}`,
+        `/users/me/bet-slips?skip=${page * pageCount}&take=${pageSize}${query ? query : ''}`,
       );
       if (response.status) {
         setIsLoading(false);
-      }
-      if (response.data.data.length > 0) {
         setMyBets(response.data.data);
         setDataCount(response.data.count);
-      } else {
-        setHasMore(false);
       }
     },
-    [pageSize, page],
+    [pageSize, page, pageCount],
   );
+
+  useEffect(() => {
+    getMyBetDetails(queries);
+  }, [page]); // eslint-disable-line
 
   useEffect(() => {
     setMyBets([]);
     setPage(0);
     let query;
-    if (status == 'Jackpot') query = '&type=Jackpot';
-    else if (status) query = `&status=${status}`;
-    else query = '';
+    if (betType == 'Jackpot') {
+      query = `&type=Jackpot${status ? `&status=${status}` : ''}`;
+    } else {
+      query = `&type=Normal${status ? `&status=${status}` : ''}`;
+    }
+    if (startDate && endDate) {
+      query =
+        query +
+        `&fromDate=${moment(startDate)
+          .startOf('date')
+          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
+    }
     setQueries(query);
-    // if (type) {
     getMyBetDetails(query);
-    // }
-  }, [status, getMyBetDetails, page]);
+  }, [status, betType, startDate, endDate]); // eslint-disable-line
 
   // useEffect(() => {
   //   if (showBets) {
@@ -74,6 +85,11 @@ function MyBets() {
   //     setMyBets(bets);
   //   }
   // }, [myBets, showBets]);
+  const onChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
 
   useEffect(() => {
     if (step == 1) {
@@ -90,7 +106,12 @@ function MyBets() {
   //   getMyBetDetails(queries, newPage);
   // };
 
-  console.log('-----page ', page, hasMore, queries, myBets);
+  const handleClear = () => {
+    setStartDate(moment().startOf('month').toDate());
+    setEndDate(moment().endOf('month').toDate());
+    setStatus('');
+    setQueries('');
+  };
 
   return (
     <div className="">
@@ -341,27 +362,44 @@ function MyBets() {
           ) : (
             <div>
               <div
-                className="flex justify-end flex-wrap items-center gap-6 rounded-lg border text-primary-200 
+                className="flex  justify-between flex-wrap items-center gap-6 rounded-lg border text-primary-200 
                border-primary-200 px-4 py-2"
               >
-                <button
-                  // onClick={setType('Normal Bet')}
-                  className="relative before:absolute before:left-0 before:w-full before:-bottom-2 before:bg-primary-700   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]"
-                >
-                  Normal Bet
-                </button>
-                <button
-                  // onClick={setType('Jackpot')}
-                  className="text-center mr-auto w-[120px] relative"
-                >
-                  Jackpot
-                </button>
-                <DateRangePickerCustom
-                  // onChange={onChange}
-                  startDate={moment().startOf('month').toDate()}
-                  endDate={moment().endOf('month').toDate()}
-                  className="h-10 !rounded-[4px] border-[1px] !text-black text-ellipsis border-blue"
-                />
+                <div>
+                  <button
+                    onClick={() => {
+                      setStep(1);
+                      setBetType('Normal Bet');
+                    }}
+                    className={`relative before:absolute before:left-0 before:w-full before:-bottom-2 ${betType == 'Normal Bet' ? 'before:bg-primary-700' : 'before:bg-white'}   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]`}
+                  >
+                    Normal Bet
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStep(1);
+                      setBetType('Jackpot');
+                    }}
+                    className={`relative before:absolute before:left-0 before:w-full before:-bottom-2 ${betType == 'Jackpot' ? 'before:bg-primary-700' : 'before:bg-white'}   before:h-[4px] before:rounded-xl font-semibold text-center w-[120px]`}
+                  >
+                    Jackpot
+                  </button>
+                </div>
+                <div className="flex items-center">
+                  <DateRangePickerCustom
+                    onChange={onChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    className="h-10 !rounded-[4px] border-[1px] !text-black text-ellipsis border-blue"
+                  />
+                  <button
+                    onClick={handleClear}
+                    type="reset"
+                    className="btn border text-black ml-2 border-primary-700 h-[33px] !rounded-md hover:bg-primary-700"
+                  >
+                    Clear
+                  </button>
+                </div>
               </div>
               <div className="border  mt-5 border-blue flex bg-white w-full px-3 rounded-lg cursor-pointer  md:h-12 xxl:h-16">
                 {TabsName.map((item) => {
@@ -375,7 +413,7 @@ function MyBets() {
                       } px-1 md:px-0 xl:px-3 xl:mx-3 my-1 w-fit xl:w-28  rounded-lg`}
                       onClick={() => {
                         setStep(item.id);
-                        // setStatus(item.tabName == 'All' ? '' : item.tabName);
+                        setStatus(item.tabName == 'All' ? '' : item.tabName);
                       }}
                     >
                       <div className="flex  h-10  md:justify-center items-center">

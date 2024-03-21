@@ -115,7 +115,7 @@ const OuterLayout = () => {
             />
           </div>
           <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5 lg:pb-0 bg-white">
-            {/* <ExampleComponent addon /> */}
+            {/* <ExampleComponent sportId={sportId} /> */}
             <Outlet />
           </div>
           <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
