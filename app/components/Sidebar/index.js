@@ -235,7 +235,7 @@ function Sidebar({
                                 setSelectTournament(items.id);
                                 setSportId(items.sportId);
                                 naviagte(
-                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                  `?sId=${items.sportId}&eId=${items.id}`,
                                 );
                               }}
                               key={items.id}
@@ -335,7 +335,7 @@ function Sidebar({
                                 setSelectTournament(items.id);
                                 setSportId(items.sportId);
                                 naviagte(
-                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                  `?sId=${items.sportId}&eId=${items.id}`,
                                 );
                               }}
                               key={items.id}
