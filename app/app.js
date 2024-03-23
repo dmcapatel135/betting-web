@@ -18,6 +18,7 @@ import {
   Jackpot,
   HowToPlay,
   MobileBetSlip,
+  TermsAndCondition,
 } from '@containers/pageListAsync';
 // import ProtectedRoutes from './ProtctedRoutes';
 import Deposit from '@containers/Deposit';
@@ -73,6 +74,7 @@ function App() {
           <Route path="/dashboard/my-bets" element={<MyBets />} />
           <Route path="/dashboard/deposit" element={<Deposit />} />
           <Route path="/dashboard/withdraw" element={<Withdraw />} />
+          <Route path="/terms" element={<TermsAndCondition />} />
           <Route
             path="/dashboard/single-bets/:eventId"
             element={<SingleBetDetails />}

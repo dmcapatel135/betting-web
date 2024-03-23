@@ -252,7 +252,7 @@ function BetWallet({ stakeValue }) {
               {/* <div className="w-5 h-12 bg-yellow"></div> */}
               <span className="text-white font-[700] text-[13px] xxl:text-14  leading-4 px-2">
                 {gameRules?.rules[bonus?.length - 1]?.message}.
-                {gameRules?.minimumOdds}
+                {/* {gameRules?.minimumOdds} */}
                 {/* minimum odds. */}
                 {/* Congrats! These legs give you a 3% Win Bonus. Add 1 more for 5%.
             1.25 minimum odds. */}
