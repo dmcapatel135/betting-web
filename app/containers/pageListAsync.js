@@ -73,3 +73,7 @@ export const HowToPlay = loadable(() => import('./HowToPlay'), {
 export const MobileBetSlip = loadable(() => import('./MobileBetSlip'), {
   fallback: <Loading />,
 });
+
+export const TermsAndCondition = loadable(() => import('./TermsAndCondition'), {
+  fallback: <Loading />,
+});

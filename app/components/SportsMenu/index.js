@@ -82,10 +82,10 @@ function SportsMenu() {
     const date = new Date();
     const dateString = new Date(date);
     dateString.setDate(moment(date.getDate() + 1));
-    // let upcoming = moment(
-    //   dateString,
-    //   'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
-    // ).format('YYYY-MM-DD');
+    let upcoming = moment(
+      dateString,
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
+    ).format('YYYY-MM-DD');
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
@@ -100,28 +100,24 @@ function SportsMenu() {
         : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
-        ? `&fromDate=${moment(today)
-            .startOf('date')
-            .toISOString()}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
+        ? `&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `&fromDate=${moment(today)
-            .startOf('date')
-            .toISOString()}&toDate=${moment(today).endOf('date').toISOString()}`;
+        : `&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `fromDate=${moment(dateString).startOf('date').toISOString()}&tournamentId=${
+        ? `fromDate=${moment(upcoming).startOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `fromDate=${moment(dateString).startOf('date').toISOString()}`;
+        : `fromDate=${moment(upcoming).startOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${

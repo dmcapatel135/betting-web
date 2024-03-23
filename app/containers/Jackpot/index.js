@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { jackpotRules } from './constants';
 const TabsName = [
   {
     id: 1,
@@ -493,12 +494,19 @@ function Jackpot() {
       )}
       {step === 3 && (
         <div className="my-5">
-          <div className="border-[1px] border-blue rounded-md h-16 md:h-28 bg-gray-800 text-center justify-center py-3">
-            <h1 className="text-black text-12 md:text-20 font-[600]">
-              You&apos;ll be notified of any changes in the rules
-            </h1>
+          {/* <div className="border-[1px] border-blue rounded-md  bg-gray-800 px-5 py-3"> */}
+          <div>
+            {jackpotRules.map((item, index) => {
+              return (
+                <div key={index} className="text-black my-2 font-roboto">
+                  <h1 className="my-1 text-18 font-[700]">{item.rule}</h1>
+                  <p className="my-2 text-14">{item.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
+        // </div>
       )}
     </div>
   );

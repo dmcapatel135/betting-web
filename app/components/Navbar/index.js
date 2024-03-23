@@ -168,10 +168,11 @@ const Navbar = ({ tab, setTab }) => {
     }
   }, [navigate, event]);
 
-  console.log('---------search date length ', Object.values(searchData));
-
   return (
-    <nav className="sticky z-[999999] top-0 left-0">
+    <nav
+      className="sticky z-[999999] top-0 left-0"
+      // onMouseLeave={() => setSearchData({})}
+    >
       <div className="h-[64px] lg:h-[85px] bg-gradient-color-1 relative flex gap-2 md:gap-4 lg:gap-6 xl:gap-8 2xl:gap-16 items-center justify-between">
         <div className="flex items-center h-[48px] md:h-full">
           <img
@@ -211,7 +212,7 @@ const Navbar = ({ tab, setTab }) => {
                 {reactIcons.closecircle}
               </span>
             )}
-            {Object.values(searchData).length > 0 && (
+            {(Object.values(searchData)?.length > 0 || !searchData == {}) && (
               <div className="bg-white p-3 text-black w-full top-10 shadow-md rounded-sm max-h-fit min-h-20 absolute z-30">
                 <div>
                   {searchData.events.length > 0 && (
@@ -308,6 +309,14 @@ const Navbar = ({ tab, setTab }) => {
                       </div>
                     )} */}
                 </div>
+                {searchData?.events?.length == 0 &&
+                  searchData?.tournaments?.length == 0 && (
+                    <div className="text-center">
+                      <span className="text-14 font-[600] text-black">
+                        No Data Found
+                      </span>
+                    </div>
+                  )}
               </div>
             )}
           </div>
