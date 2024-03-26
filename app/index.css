@@ -367,3 +367,19 @@ tbody {
     ),
     linear-gradient(418deg, rgb(67, 18, 96), rgb(54, 21, 92));
 }
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blinking-span {
+  animation: blink 1s infinite;
+}

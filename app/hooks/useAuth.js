@@ -71,6 +71,7 @@ const useAuth = () => {
           mobile: data.dialCode + data.mobile,
         });
         if (response.status) {
+          setAuthCookie();
           toast.success(
             'Welcome! You have successfully logged in to the Bikosports Platform',
           );
