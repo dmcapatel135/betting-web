@@ -144,7 +144,7 @@ function Sidebar({
                       onClick={() => {
                         setSelectTournament(item.id);
                         setSportId(item.sportId);
-                        naviagte(`/?sId=${item.sportId}&eId=${item.id}`);
+                        naviagte(`?sId=${item.sportId}&eId=${item.id}`);
                       }}
                     >
                       {/* <img src={item.icon} alt="i" className="w-3 h-3" /> */}
@@ -235,7 +235,7 @@ function Sidebar({
                                 setSelectTournament(items.id);
                                 setSportId(items.sportId);
                                 naviagte(
-                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                  `?sId=${items.sportId}&eId=${items.id}`,
                                 );
                               }}
                               key={items.id}
@@ -335,7 +335,7 @@ function Sidebar({
                                 setSelectTournament(items.id);
                                 setSportId(items.sportId);
                                 naviagte(
-                                  `/?sId=${items.sportId}&eId=${items.id}`,
+                                  `?sId=${items.sportId}&eId=${items.id}`,
                                 );
                               }}
                               key={items.id}

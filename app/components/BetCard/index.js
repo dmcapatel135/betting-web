@@ -7,7 +7,7 @@ import { fetchBetDetailsAction } from '@actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
-function BetCard({ item, index, sportId }) {
+function BetCard({ item, sportId }) {
   const [searchParams] = useSearchParams();
 
   const [bets, setBets] = useState([]);
@@ -16,8 +16,6 @@ function BetCard({ item, index, sportId }) {
   const [data, setData] = useState({});
   const { setTab } = useContext(MyContext);
   const navigate = useNavigate();
-
-  console.log('----index ', index);
 
   useEffect(() => {
     setBets(selectedBet);
@@ -146,6 +144,7 @@ function BetCard({ item, index, sportId }) {
                 >
                   {data['1x2']?.outcomes?.length > 0 &&
                     data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
+                      console.log('-----innter item ', innerItem);
                       return (
                         <button
                           key={innerIndex}

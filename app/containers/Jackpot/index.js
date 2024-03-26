@@ -16,6 +16,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { jackpotRules } from './constants';
 const TabsName = [
   {
     id: 1,
@@ -453,29 +454,31 @@ function Jackpot() {
                   openResult={openResult}
                 />
                 {openResult == index && (
-                  <div className="my-2">
-                    <div className="bg-white border-[1px] rounded-md border-lightgray border-md px-3">
-                      <div className="flex justify-between py-2">
-                        <div className=" flex-1 text-black">
-                          <p className="text-10 md:text-12 mb-5">
-                            11:15 pm Wed 06/12
-                          </p>
-                          <span className="text-10 mt-20 text-gray-900">
+                  <>
+                    <div className="flex text-black justify-between text-12 py-2 px-3">
+                      <div className=" ">Match</div>
+                      <div className=" ">Result</div>
+                    </div>
+                    <div className="flex justify-between py-2 bg-white border-[1px] rounded-md border-lightgray border-md px-3 mb-2">
+                      <div className=" flex-1 text-black">
+                        <div className="text-12 md:text-14 font-[500] text-black">
+                          <span>Manchester United </span>
+                          <span>Chelsa FC</span>
+                        </div>
+                        <div className="text-10 md:text-12 flex flex-col xl2:flex-row md:gap-1 leading-snug">
+                          <span className="">11:15 pm Wed 06/12</span>
+                          <span className="">
                             Football/England/Premier League
                           </span>
                         </div>
-                        <div className="flex-1 text-12 md:text-14 font-[500] text-center text-black">
-                          <p>Manchester United </p>
-                          <p>Chelsa FC</p>
-                        </div>
-                        <div className="flex-1  mr-5 flex justify-end items-center">
-                          <p className="text-black text-10 md:text-12 font-[600]">
-                            Frosinone Calcio- (3:1)
-                          </p>
-                        </div>
+                      </div>
+                      <div className="flex-1 flex justify-end items-center">
+                        <p className="text-black text-10 md:text-12 font-[600]">
+                          Frosinone Calcio- (3:1)
+                        </p>
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             );
@@ -491,12 +494,19 @@ function Jackpot() {
       )}
       {step === 3 && (
         <div className="my-5">
-          <div className="border-[1px] border-blue rounded-md h-16 md:h-28 bg-gray-800 text-center justify-center py-3">
-            <h1 className="text-black text-12 md:text-20 font-[600]">
-              You&apos;ll be notified of any changes in the rules
-            </h1>
+          {/* <div className="border-[1px] border-blue rounded-md  bg-gray-800 px-5 py-3"> */}
+          <div>
+            {jackpotRules.map((item, index) => {
+              return (
+                <div key={index} className="text-black my-2 font-roboto">
+                  <h1 className="my-1 text-18 font-[700]">{item.rule}</h1>
+                  <p className="my-2 text-14">{item.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
+        // </div>
       )}
     </div>
   );

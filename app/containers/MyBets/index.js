@@ -269,7 +269,11 @@ function MyBets() {
                                               Team
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                              {innerItem.market}
+                                              {innerItem?.event?.competitors[0]
+                                                ?.name || 'N.A'}{' '}
+                                              - {''}
+                                              {innerItem?.event?.competitors[1]
+                                                ?.name || 'N.A'}
                                             </p>
                                           </div>
                                         </div>
@@ -285,8 +289,9 @@ function MyBets() {
                                               PICK
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
-                                              {innerItem.outcome}@
-                                              {innerItem.odds}
+                                              {/* {innerItem.outcome}@
+                                              {innerItem.odds} */}
+                                              {innerItem.outcome}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
@@ -294,8 +299,9 @@ function MyBets() {
                                               MKT
                                             </p>
                                             <p className="text-gray-900 flex-1 text-12 md:text-14 xxl:text-16 ">
-                                              {innerItem?.event?.competitors[0]
-                                                ?.name || 'N.A'}
+                                              {/* {innerItem?.event?.competitors[0]
+                                                ?.name || 'N.A'} */}
+                                              {innerItem.market}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
@@ -304,8 +310,13 @@ function MyBets() {
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                                               {innerItem?.status == 'Settled'
-                                                ? innerItem?.settlement?.result
-                                                : innerItem?.status}
+                                                ? innerItem?.settlement
+                                                  ? innerItem?.settlement
+                                                      ?.result
+                                                  : 'N.A'
+                                                : innerItem?.status
+                                                  ? innerItem?.status
+                                                  : 'N.A'}
                                             </p>
                                           </div>
                                         </div>

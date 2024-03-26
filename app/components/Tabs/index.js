@@ -4,7 +4,7 @@ import { MyContext } from '@components/MyContext/MyContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 function Tabs({ popularSports }) {
-  const { setSportId, sportId } = useContext(MyContext);
+  const { setSportId, sportId, setSelectTournament } = useContext(MyContext);
   const [searchParams] = useSearchParams(window.location.search);
   const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ function Tabs({ popularSports }) {
                 : 'bg-white text-black '
             } px-1 lg:px-0 xl:px-3 ml-3 mr-0 xl:mx-3 my-2 w-full md:w-fit rounded-lg flex-center`}
             onClick={() => {
+              setSelectTournament(null);
               setSportId(item.id);
               navigate(`${window.location.pathname}?sId=${item.id}`);
             }}

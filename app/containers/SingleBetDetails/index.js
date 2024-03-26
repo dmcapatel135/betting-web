@@ -777,7 +777,9 @@ function SigleBetDetails() {
                         >
                           <div className="flex-1 mr-2">
                             <button
-                              disabled={innerItem.active ? false : true}
+                              disabled={
+                                innerItem.market.status == 1 ? false : true
+                              }
                               onClick={() => {
                                 if (
                                   selectBet(
