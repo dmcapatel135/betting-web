@@ -22,6 +22,7 @@ function Sidebar({
   const [searchParams] = useSearchParams(window.location.search);
   const [leagues, setLeagues] = useState([]);
   const [isOpenOtherCountry, setIsOpenOtherCountry] = useState(false);
+  const [liveData, setLiveData] = useState([]);
 
   const {
     allTournaments,
@@ -50,6 +51,26 @@ function Sidebar({
   const handleManageUrl = (path) => {
     return `${path}${window.location.search}`;
   };
+
+  const getLiveMatchs = useCallback(async () => {
+    const response = await getReq(
+      `/sports/${sportId}/fixtures&haveActiveEvents=${true}&onlyLive=${true}`,
+    );
+    if (response.status) {
+      setLiveData(response.data);
+    }
+  }, [sportId]);
+
+  useEffect(() => {
+    // getLiveMatchs();
+    // let interval = setInterval(() => {
+    getLiveMatchs();
+    // }, 10000);
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, [getLiveMatchs]);
 
   return (
     <div
@@ -91,8 +112,10 @@ function Sidebar({
                   }
                 >
                   {item.title == 'NOW' ? (
-                    <div className="bg-blue w-14 px-1 flex items-center  text-white rounded-sm">
-                      <span className="w-3 h-3 rounded-full mx-1  bg-white"></span>
+                    <div className="bg-blue w-14 px-1  flex items-center  text-white rounded-sm">
+                      <span
+                        className={`w-3 h-3 rounded-full mx-1 ${liveData.length > 0 ? 'blinking-span  bg-red-500' : 'bg-white'}`}
+                      ></span>
                       <span className="text-[13px]">LIVE</span>
                     </div>
                   ) : (

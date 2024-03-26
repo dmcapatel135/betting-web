@@ -11,6 +11,7 @@ import { getReq } from '@utils/apiHandlers';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
+import moment from 'moment';
 // import { images } from '@utils/images';
 
 // import { Swiper, SwiperSlide } from 'swiper/react';
@@ -40,6 +41,7 @@ function SigleBetDetails() {
   const [eventName, setEventName] = useState();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [bets, setBets] = useState([]);
+  const [eventData, setEvenData] = useState();
   // const [isMobile, setIsMobile] = useState(false);
   // const [tab, setTab] = useState(1);
   const [loadNum, setLoadNum] = useState();
@@ -65,6 +67,7 @@ function SigleBetDetails() {
       `${response?.data?.competitors[0]?.name} -
         ${response?.data?.competitors[1]?.name}`,
     );
+    setEvenData(response.data);
   }, [eventId]);
 
   useEffect(() => {
@@ -739,9 +742,16 @@ function SigleBetDetails() {
             </div> */}
       </div>
       <div>
-        <div className="bg-yellow py-1 rounded-md mt-5 px-3">
+        <div className="bg-yellow py-1 flex justify-between rounded-md mt-5 px-3">
           <h1 className="text-white text-14 font-[600]">
             {eventName} - ALL MARKETS
+          </h1>
+          <h1 className="text-white text-14 font-[600]">
+            Start Time -{' '}
+            {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
+          </h1>
+          <h1 className="text-white text-14 font-[600]">
+            Status - {eventData?.status}
           </h1>
         </div>
       </div>
