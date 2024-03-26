@@ -100,24 +100,24 @@ function SportsMenu() {
         : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
-        ? `&upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
+        ? `upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `&upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
+        : `upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `&upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}&tournamentId=${
+        ? `upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `&upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}`;
+        : `upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
@@ -488,14 +488,24 @@ function SportsMenu() {
       )}
       {isLoading && <SkeletonLoader />}
       {allFixtures?.length == 0 && !isLoading && (
-        <div className="text-center flex flex-col items-center gap-5 mt-12 mb-3 text-black">
-          {/* <img
-            src="/images/bikoicon/oops.png"
-            className="w-[150px] object-contain"
+        <div className="text-center flex flex-col items-center gap-1 mt-3 mb-3 text-black">
+          <img
+            src="/images/bikoicon/nodata.jpg"
+            className="w-[250px] object-contain"
             alt=""
-          /> */}
+          />
           <span className="text-black md:text-14 2xl:text-18 font-[500] text-10">
             There are no matches.
+          </span>
+          <span>
+            All Matches are temporarily unavailable. Please refresh this page
+            and browse upcoming matches
+          </span>
+          <span
+            className="underline font-[500] text-16 cursor-pointer"
+            onClick={() => (window.location.href = '/dashboard/upcoming')}
+          >
+            Browse Upcoming Matches
           </span>
         </div>
       )}
