@@ -246,6 +246,7 @@ function SportsMenu() {
               <select
                 value={selectTournament}
                 onChange={(e) => {
+                  console.log('-------------e.target .value ', e.target.value);
                   setSelectTournament(e.target.value);
                 }}
                 className="w-full pl-2 my-2 bg-blue custom-select-drop font-[600] text-12 md:text-14 text-center text-white h-[32px] 2xl:h-[42px]  outline-none  rounded-[4px]"
