@@ -82,10 +82,10 @@ function SportsMenu() {
     const date = new Date();
     const dateString = new Date(date);
     dateString.setDate(moment(date.getDate() + 1));
-    let upcoming = moment(
-      dateString,
-      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
-    ).format('YYYY-MM-DD');
+    // let upcoming = moment(
+    //   dateString,
+    //   'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
+    // ).format('YYYY-MM-DD');
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
