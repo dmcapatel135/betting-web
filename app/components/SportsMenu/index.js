@@ -100,24 +100,24 @@ function SportsMenu() {
         : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
-        ? `&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
+        ? `&upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
+        : `&upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
       query = selectTournament
-        ? `fromDate=${moment(upcoming).startOf('date').toISOString()}&tournamentId=${
+        ? `&upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `fromDate=${moment(upcoming).startOf('date').toISOString()}`;
+        : `&upcoming=${true}&fromDate=${moment(upcoming).startOf('date').toISOString()}`;
     } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
