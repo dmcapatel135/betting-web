@@ -54,7 +54,7 @@ function Sidebar({
 
   const getLiveMatchs = useCallback(async () => {
     const response = await getReq(
-      `/sports/${sportId}/fixtures&haveActiveEvents=${true}&onlyLive=${true}`,
+      `/sports/${sportId}/fixtures?haveActiveEvents=${true}&onlyLive=${true}`,
     );
     if (response.status) {
       setLiveData(response.data);
