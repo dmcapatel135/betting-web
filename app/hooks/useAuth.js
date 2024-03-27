@@ -10,6 +10,7 @@ import {
   postReq,
   removeAuthCookie,
   setAuthCookie,
+  setToken,
   showErrorMessage,
 } from '@utils/apiHandlers';
 
@@ -21,6 +22,7 @@ const useAuth = () => {
     const response = await postReq('/auth/logout');
     if (response.status) {
       removeAuthCookie();
+      localStorage.removeItem('is_user_token');
       dispatch(cleanup());
       window.location = '/';
       return true;
@@ -48,6 +50,7 @@ const useAuth = () => {
         const response = await postReq('/auth/login', data);
         if (response.status) {
           setAuthCookie();
+          setToken(response.data.accessToken);
           toast.success(
             'Welcome! You have successfully logged in to the Bikosports Platform',
           );
