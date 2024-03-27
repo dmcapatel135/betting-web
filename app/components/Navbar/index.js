@@ -447,7 +447,7 @@ const Navbar = ({ tab, setTab }) => {
                 }`
               }
             >
-              <div className="my-2 text-center">
+              <div className="my-2 text-center relative">
                 <div className="flex justify-center relative">
                   <img
                     src={tab == item.id ? item.active_icon : item.icon}
@@ -467,15 +467,6 @@ const Navbar = ({ tab, setTab }) => {
                   {' '}
                   {item.title}
                 </span>
-                {/* {item.title == 'SEARCH' && (
-                  <div className="md:hidden top-5 absolute w-full z-30">
-                    <input
-                      type="text"
-                      placeholder="Search events and tournaments..."
-                      className="borde rounded-md  bg-white w-full h-8"
-                    />
-                  </div>
-                )} */}
               </div>
             </NavLink>
           ))}
@@ -489,6 +480,47 @@ const Navbar = ({ tab, setTab }) => {
                 isOpenMenuList={isOpenMenuList}
               />
             </div>
+          )}
+          {tab == 6 && (
+            <>
+              <div className="md:hidden   top-10 absolute w-full z-30">
+                <div className="flex justify-center items-center">
+                  <input
+                    type="text"
+                    placeholder="Search events and tournaments..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="borde rounded-md  px-3 text-black outline-none bg-white w-[350px] ml-2 h-7"
+                  />
+                  <span onClick={() => setTab(null)} className="text-20">
+                    {reactIcons.closecircle}
+                  </span>
+                </div>
+                <div className="w-[350px]  absolute z-30 bg-white ml-2 top-18">
+                  {searchData?.tournaments?.map((item) => {
+                    return (
+                      <li
+                        key={item.id}
+                        onClick={() => {
+                          setSelectTournament(item.id);
+                          setSportId(item.sport.id);
+                          setSearchData({});
+                          setSearch('');
+                        }}
+                        className="text-black list-none border-[1px] mb-2 p-2 rounded-md cursor-pointer py-1"
+                      >
+                        <p className="text-14 2xl:text-16 font-bold">
+                          {item.tournament}
+                        </p>
+                        <span className="text-12 2xl:text-14">
+                          {item?.sport?.name}/{item?.category?.name}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
           )}
         </div>
         <hr className="border-[1px]"></hr>
