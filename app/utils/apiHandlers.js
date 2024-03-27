@@ -5,6 +5,16 @@ import { toast } from 'react-toastify';
 const isDevelopment = NODE_ENV !== 'production';
 const isProductionApp = APP_ENV === 'production';
 
+export const setToken = (token) => {
+  if (isDevelopment) {
+    localStorage.setItem('is_user_token', token);
+  }
+};
+
+const authorize = () => {
+  return `Bearer ${localStorage.getItem('is_user_token')}`;
+};
+
 export const setAuthCookie = () => {
   return Cookies.set(
     isDevelopment
@@ -96,7 +106,15 @@ export const getReq = async (endpoint) => {
   const url = API_URL + endpoint;
 
   return await axios
-    .get(url, { withCredentials: true })
+    .get(
+      url,
+      {
+        headers: {
+          Authorization: authorize(),
+        },
+      },
+      { withCredentials: true },
+    )
     .then((response) => {
       return responseFormatter(true, response.data, null);
     })

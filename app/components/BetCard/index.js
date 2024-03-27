@@ -144,7 +144,6 @@ function BetCard({ item, sportId }) {
                 >
                   {data['1x2']?.outcomes?.length > 0 &&
                     data['1x2']?.outcomes?.map((innerItem, innerIndex) => {
-                      console.log('-----innter item ', innerItem);
                       return (
                         <button
                           key={innerIndex}
