@@ -75,10 +75,20 @@ function SigleBetDetails() {
   }, [getAllMarketData]);
 
   useEffect(() => {
+    getEventName();
+    let interval = setInterval(() => {
+      getEventName();
+    }, 30000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [eventId, getEventName]);
+
+  useEffect(() => {
     let interval = setInterval(() => {
       getAllMarketData();
     }, 1500);
-    getEventName();
 
     return () => {
       clearInterval(interval);

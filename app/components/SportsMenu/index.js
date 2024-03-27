@@ -373,7 +373,7 @@ function SportsMenu() {
           )}
         </div>
         <div className="flex-grow-0">
-          <div className="  h-5 w-6 md:w-16 text-black">
+          <div className="  h-5 w-6 hidden md:block md:w-16 text-black">
             <button
               onClick={() => {
                 setSportId(1);
