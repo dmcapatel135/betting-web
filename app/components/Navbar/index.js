@@ -467,15 +467,6 @@ const Navbar = ({ tab, setTab }) => {
                   {' '}
                   {item.title}
                 </span>
-                {/* {item.title == 'SEARCH' && (
-                  <div className="md:hidden top-5 absolute w-full z-30">
-                    <input
-                      type="text"
-                      placeholder="Search events and tournaments..."
-                      className="borde rounded-md  bg-white w-full h-8"
-                    />
-                  </div>
-                )} */}
               </div>
             </NavLink>
           ))}
