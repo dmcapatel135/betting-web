@@ -172,6 +172,8 @@ function SportsMenu() {
     getAllFixtures(queries, newPage);
   };
 
+  console.log('---------select tournament ', selectTournament);
+
   return (
     <>
       <div className="lg:block hidden">
@@ -246,12 +248,13 @@ function SportsMenu() {
               <select
                 value={selectTournament}
                 onChange={(e) => {
-                  console.log('-------------e.target .value ', e.target.value);
-                  setSelectTournament(e.target.value);
+                  if (e.target.value == 'Top Leagues & Countries')
+                    setSelectTournament(null);
+                  else setSelectTournament(e.target.value);
                 }}
                 className="w-full pl-2 my-2 bg-blue custom-select-drop font-[600] text-12 md:text-14 text-center text-white h-[32px] 2xl:h-[42px]  outline-none  rounded-[4px]"
               >
-                <option value="">Top Leagues & Countries</option>
+                <option>Top Leagues & Countries</option>
                 {allTournaments?.map((item) => {
                   return (
                     <option
@@ -376,8 +379,12 @@ function SportsMenu() {
           <div className="  h-5 w-6 hidden md:block md:w-16 text-black">
             <button
               onClick={() => {
-                setSportId(1);
+                var url = new URL(window.location.href);
+                url.searchParams.delete('sId');
+                url.searchParams.delete('eId');
+                navigate(url);
                 setSelectTournament(null);
+                setSportId(1);
               }}
               type="reset"
               className="btn border text-black ml-2 border-primary-700 h-[33px] !min-w-[65px] !text-12 !rounded-md hover:bg-primary-700"

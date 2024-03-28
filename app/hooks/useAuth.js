@@ -110,7 +110,7 @@ const useAuth = () => {
 
   const sendForgotPasswordCode = useCallback(async (data) => {
     const [valid, error] = await validateData(forgotPasswordSchema, {
-      mobile: data.dialCode + data.mobile,
+      mobile: data.mobile ? data.dialCode + data.mobile : '',
     });
     if (error) return [null, error];
     if (valid) {

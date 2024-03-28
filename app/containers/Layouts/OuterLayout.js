@@ -36,7 +36,8 @@ const OuterLayout = () => {
         sportId ?? searchParams.get('sId') ?? 1
       }/tournaments?haveActiveEvents=${true}`,
     );
-    setAllTournaments(response.data.map((d) => ({ ...d, sportId })));
+    let data = response.data.map((d) => ({ ...d, sportId }));
+    setAllTournaments(data.filter((item) => item.topLeague == true));
   }, [sportId, searchParams]);
 
   useEffect(() => {
@@ -56,9 +57,12 @@ const OuterLayout = () => {
       return { ...category, flag: country?.code };
     });
     setCategories(categoriesWithFlags.filter((item) => item.popular == true));
-    setOtherCountries(
-      categoriesWithFlags.filter((item) => item.popular == false),
-    );
+    console.log('----------categories with flages ', categoriesWithFlags);
+    let other = categoriesWithFlags
+      .filter((item) => item.popular == false)
+      .sort((a, b) => (a.name > b.name ? 1 : -1));
+    // var sortedData = other?
+    setOtherCountries(other);
   }, [sportId, searchParams]);
 
   useEffect(() => {
@@ -114,7 +118,7 @@ const OuterLayout = () => {
               setSelectTournament={setSelectTournament}
             />
           </div>
-          <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5 lg:pb-0 bg-white">
+          <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5  lg:pb-0 bg-white">
             {/* <ExampleComponent sportId={sportId} /> */}
             <Outlet />
           </div>

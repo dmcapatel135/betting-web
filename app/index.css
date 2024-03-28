@@ -383,3 +383,8 @@ tbody {
 .blinking-span {
   animation: blink 1s infinite;
 }
+
+.scroll-top-10 {
+  scroll-behavior: smooth;
+  scroll-margin-top: 100px;
+}

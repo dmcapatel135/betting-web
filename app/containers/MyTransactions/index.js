@@ -108,7 +108,7 @@ function MyTransactions() {
           onChange={(e) => setType(e.target.value)}
           className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-14 text-black"
         >
-          <option>Select</option>
+          <option>Type</option>
           <option>Credit</option>
           <option>Debit</option>
         </select>

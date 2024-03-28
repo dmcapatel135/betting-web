@@ -10,6 +10,8 @@ import ShareBetModal from '@components/ShareBetModal.js';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
 import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';
+// import ResultJackpotCard from '@components/ResultJackpotCard/ResultJackpotCard';
+// import JackpotPickMatchCard from '@components/JackpotPickMatchCard/JackpotPickMatchCard';
 
 const TabsName = [
   { tabName: 'All', id: 1, icon: '/images/bikoicon/sports_soccer.png' },
@@ -145,6 +147,8 @@ function MyBets() {
                               index={index}
                               getMyBetDetails={getMyBetDetails}
                             />
+                            {/* <ResultJackpotCard />
+                            <JackpotPickMatchCard /> */}
                             {/* <div className="mt-2  overflow-auto">
                               <table className="text-black  w-full  text-14">
                                 <thead className="bg-yellow h-12 rounded-t-md">
