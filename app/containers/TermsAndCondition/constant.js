@@ -804,7 +804,7 @@ export const termsAndCondition = [
     description: [
       {
         heading: 'CUSTOMER CARE NUMBER',
-        content: '022 222 0100',
+        content: '0222 220 100',
       },
       {
         heading: '',

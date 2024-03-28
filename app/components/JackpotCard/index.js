@@ -10,8 +10,8 @@ function JackpotCard({
   setStakeValue,
 }) {
   return (
-    <div className="bg-gray-800 border-[1px] border-blue rounded-md p-4">
-      <div className="flex gap-10 text-black">
+    <div className="bg-gradient border-[1px] border-blue rounded-md p-4">
+      <div className="flex gap-10 text-white">
         <h1 className="font-[700] text-14 md:text-16 2xl:text-22">
           TSH {formatNumber(item?.prizePool)}
         </h1>
@@ -35,7 +35,7 @@ function JackpotCard({
             setStakeValue(item.betAmount);
           }}
           className={`w-full text-12 md:text-14 2xl:text-16 h-[42px]  ${
-            index % 2 == 0 ? 'bg-[#BD1842]' : 'bg-[#006E8F]'
+            index % 2 == 0 ? 'bg-yellow' : 'bg-yellow'
           } text-white rounded-md `}
         >
           Play for TSH. {item.betAmount}
