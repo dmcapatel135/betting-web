@@ -761,7 +761,7 @@ function SigleBetDetails() {
             {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
           </h1>
           <h1 className="text-white text-14 font-[600]">
-            Status - {eventData?.status}
+            Status - {eventData?.matchStatusText}
           </h1>
         </div>
       </div>
