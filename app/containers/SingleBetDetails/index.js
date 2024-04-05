@@ -1,17 +1,13 @@
-import React, {
-  useCallback,
-  useEffect,
-  // useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Loading } from '@components';
 import { reactIcons } from '@utils/icons';
 // import ReactSimplyCarousel from 'react-simply-carousel';
-import { getReq } from '@utils/apiHandlers';
+// import { getReq } from '@utils/apiHandlers';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
 import moment from 'moment';
+import axios from 'axios';
 // import { images } from '@utils/images';
 
 // import { Swiper, SwiperSlide } from 'swiper/react';
@@ -49,51 +45,10 @@ function SigleBetDetails() {
   const dispatch = useDispatch();
   // const swiperRef = useRef(null) ;
 
-  const getAllMarketData = useCallback(async () => {
-    setIsLoading(true);
-    setLoadNum(loadNum + 1);
-    const response = await getReq(`/events/${eventId}/markets`);
-    if (response.status) {
-      setIsLoading(false);
-      setMergedData(response.data);
-    }
-    // setAllMarketData(response.data);
-  }, [eventId, loadNum]);
-
-  const getEventName = useCallback(async () => {
-    const response = await getReq(`/events/${eventId}`);
-    console.log(response);
-    setEventName(
-      `${response?.data?.competitors[0]?.name} -
-        ${response?.data?.competitors[1]?.name}`,
-    );
-    setEvenData(response.data);
-  }, [eventId]);
-
-  useEffect(() => {
-    getAllMarketData();
-  }, [getAllMarketData]);
-
-  useEffect(() => {
-    getEventName();
-    let interval = setInterval(() => {
-      getEventName();
-    }, 30000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [eventId, getEventName]);
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      getAllMarketData();
-    }, 1500);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [getAllMarketData, eventId, getEventName]);
+  // useEffect(() => {
+  //   getEventName();
+  //   getAllMarketData();
+  // }, []);
 
   // const updateState = (newObject) => {
   //   setMarketDataOdds((prevState) => {
@@ -179,6 +134,99 @@ function SigleBetDetails() {
   //     swiperRef.current.swiper.slideTo(2);
   //   }
   // };
+
+  const cancelMarketTokenSource = useRef(null);
+  const marketApiInstance = axios.create({
+    baseURL: API_URL,
+  });
+
+  const getAllMarketData = useCallback(async () => {
+    setIsLoading(true);
+    setLoadNum(loadNum + 1);
+
+    try {
+      const response = await marketApiInstance.get(
+        `/events/${eventId}/markets`,
+        {
+          cancelToken: cancelMarketTokenSource.current.token, // Access the cancel token from the useRef
+        },
+      );
+      // if (response.status) {
+      setMergedData(response.data);
+      setIsLoading(false);
+      // }
+      // setAllMarketData(response.data);
+    } catch (error) {
+      // Handle any errors from the API call
+      console.error(error);
+    }
+  }, [eventId, loadNum, marketApiInstance]);
+
+  useEffect(() => {
+    getAllMarketData();
+    cancelMarketTokenSource.current = axios.CancelToken.source();
+
+    let interval;
+    const makeNewAPICall = () => {
+      cancelMarketTokenSource.current.cancel('New API call initiated'); // Cancel the ongoing API request before making a new one
+      cancelMarketTokenSource.current = axios.CancelToken.source(); // Update the cancel token source
+      getAllMarketData();
+    };
+
+    interval = setInterval(makeNewAPICall, 2000);
+
+    return () => {
+      clearInterval(interval);
+      cancelMarketTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
+    };
+  }, [getAllMarketData]);
+
+  const apiInstance = axios.create({
+    baseURL: API_URL,
+    // Other custom configurations
+  });
+
+  const cancelTokenSource = useRef(null); // Initialize the cancel token source using useRef
+
+  const getEventName = useCallback(async () => {
+    try {
+      const response = await apiInstance.get(`/events/${eventId}`, {
+        cancelToken: cancelTokenSource.current.token, // Access the cancel token from the useRef
+      });
+      console.log(response);
+      setEventName(
+        `${response?.data?.competitors[0]?.name} - ${response?.data?.competitors[1]?.name}`,
+      );
+      setEvenData(response.data);
+    } catch (error) {
+      // Handle any errors from the API call
+      console.error(error);
+    }
+  }, [eventId, cancelTokenSource, setEventName, setEvenData, apiInstance]);
+
+  useEffect(() => {
+    getEventName();
+    cancelTokenSource.current = axios.CancelToken.source();
+
+    let interval;
+    const makeNewAPICall = () => {
+      cancelTokenSource.current.cancel('New API call initiated'); // Cancel the ongoing API request before making a new one
+      cancelTokenSource.current = axios.CancelToken.source(); // Update the cancel token source
+      getEventName();
+    };
+
+    interval = setInterval(makeNewAPICall, 2000);
+
+    return () => {
+      clearInterval(interval);
+      cancelTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
+    };
+  }, [getEventName]);
+
+  // useEffect(() => {
+  //   getEventName();
+  //   getAllMarketData();
+  // }, [getEventName, getAllMarketData]);
 
   return (
     <>
@@ -766,7 +814,7 @@ function SigleBetDetails() {
         </div>
       </div>
       <div>
-        {isLoading && loadNum == 1 && (
+        {isLoading && loadNum < 2 && (
           <div>
             <p className="text-black">Loading.....</p>
             <Loading />
