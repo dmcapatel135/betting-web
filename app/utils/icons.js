@@ -118,8 +118,10 @@ import { FaReceipt } from 'react-icons/fa';
 import { MdHelp } from 'react-icons/md';
 import { AiOutlineTransaction } from 'react-icons/ai';
 import { IoMdCloseCircle } from 'react-icons/io';
+import { PiReceiptFill } from 'react-icons/pi';
 
 export const reactIcons = {
+  receipt: <PiReceiptFill />,
   closecircle: <IoMdCloseCircle />,
   help: <MdHelp />,
   bets: <FaReceipt />,

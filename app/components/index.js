@@ -145,3 +145,11 @@ export const SkeletonLoader = loadable(() => import('./SkeletonLoader'), {
 export const SelectImage = loadable(() => import('./SelectImage'), {
   fallback: <Loading />,
 });
+
+export const InfoCard = loadable(() => import('./InfoCard'), {
+  fallback: <Loading />,
+});
+
+export const BettingInfoCard = loadable(() => import('./BettingInfoCard'), {
+  fallback: <Loading />,
+});
