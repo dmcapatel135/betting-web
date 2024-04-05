@@ -40,7 +40,7 @@ function SigleBetDetails() {
   const [eventData, setEvenData] = useState();
   // const [isMobile, setIsMobile] = useState(false);
   // const [tab, setTab] = useState(1);
-  const [loadNum, setLoadNum] = useState();
+  const [loadNum, setLoadNum] = useState(0);
 
   const dispatch = useDispatch();
   // const swiperRef = useRef(null) ;
@@ -142,7 +142,8 @@ function SigleBetDetails() {
 
   const getAllMarketData = useCallback(async () => {
     setIsLoading(true);
-    setLoadNum(loadNum + 1);
+
+    console.log('----------load num ', loadNum);
 
     try {
       const response = await marketApiInstance.get(
@@ -153,6 +154,7 @@ function SigleBetDetails() {
       );
       // if (response.status) {
       setMergedData(response.data);
+      setLoadNum(loadNum + 1);
       setIsLoading(false);
       // }
       // setAllMarketData(response.data);
@@ -179,7 +181,8 @@ function SigleBetDetails() {
       clearInterval(interval);
       cancelMarketTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
     };
-  }, [getAllMarketData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const apiInstance = axios.create({
     baseURL: API_URL,
@@ -221,12 +224,14 @@ function SigleBetDetails() {
       clearInterval(interval);
       cancelTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
     };
-  }, [getEventName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // useEffect(() => {
   //   getEventName();
   //   getAllMarketData();
-  // }, [getEventName, getAllMarketData]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
@@ -814,7 +819,7 @@ function SigleBetDetails() {
         </div>
       </div>
       <div>
-        {isLoading && loadNum < 2 && (
+        {isLoading && loadNum < 1 && (
           <div>
             <p className="text-black">Loading.....</p>
             <Loading />
