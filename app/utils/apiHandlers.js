@@ -11,9 +11,9 @@ export const setToken = (token) => {
   }
 };
 
-const authorize = () => {
-  return `Bearer ${localStorage.getItem('is_user_token')}`;
-};
+// const authorize = () => {
+//   return `Bearer ${localStorage.getItem('is_user_token')}`;
+// };
 
 export const setAuthCookie = () => {
   return Cookies.set(
@@ -108,11 +108,11 @@ export const getReq = async (endpoint) => {
   return await axios
     .get(
       url,
-      {
-        headers: {
-          Authorization: authorize(),
-        },
-      },
+      // {
+      //   headers: {
+      //     Authorization: authorize(),
+      //   },
+      // },
       { withCredentials: true },
     )
     .then((response) => {
