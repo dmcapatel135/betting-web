@@ -41,6 +41,7 @@ function SigleBetDetails() {
   // const [isMobile, setIsMobile] = useState(false);
   // const [tab, setTab] = useState(1);
   const [loadNum, setLoadNum] = useState(0);
+  const [loadEvent, setLoadEvent] = useState(0);
 
   const dispatch = useDispatch();
   // const swiperRef = useRef(null) ;
@@ -142,9 +143,6 @@ function SigleBetDetails() {
 
   const getAllMarketData = useCallback(async () => {
     setIsLoading(true);
-
-    console.log('----------load num ', loadNum);
-
     try {
       const response = await marketApiInstance.get(
         `/events/${eventId}/markets`,
@@ -154,7 +152,7 @@ function SigleBetDetails() {
       );
       // if (response.status) {
       setMergedData(response.data);
-      setLoadNum(loadNum + 1);
+      if (!loadNum) setLoadNum(1);
       setIsLoading(false);
       // }
       // setAllMarketData(response.data);
@@ -174,15 +172,14 @@ function SigleBetDetails() {
       cancelMarketTokenSource.current = axios.CancelToken.source(); // Update the cancel token source
       getAllMarketData();
     };
-
-    interval = setInterval(makeNewAPICall, 2000);
+    if (loadNum) interval = setInterval(makeNewAPICall, 1500);
 
     return () => {
       clearInterval(interval);
       cancelMarketTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loadNum == 1]);
 
   const apiInstance = axios.create({
     baseURL: API_URL,
@@ -197,6 +194,9 @@ function SigleBetDetails() {
         cancelToken: cancelTokenSource.current.token, // Access the cancel token from the useRef
       });
       console.log(response);
+      if (loadEvent) {
+        setLoadEvent(1);
+      }
       setEventName(
         `${response?.data?.competitors[0]?.name} - ${response?.data?.competitors[1]?.name}`,
       );
@@ -205,7 +205,14 @@ function SigleBetDetails() {
       // Handle any errors from the API call
       console.error(error);
     }
-  }, [eventId, cancelTokenSource, setEventName, setEvenData, apiInstance]);
+  }, [
+    eventId,
+    cancelTokenSource,
+    setEventName,
+    setEvenData,
+    apiInstance,
+    loadEvent,
+  ]);
 
   useEffect(() => {
     getEventName();
@@ -217,21 +224,21 @@ function SigleBetDetails() {
       cancelTokenSource.current = axios.CancelToken.source(); // Update the cancel token source
       getEventName();
     };
-
-    interval = setInterval(makeNewAPICall, 2000);
+    if (loadEvent) interval = setInterval(makeNewAPICall, 2000);
 
     return () => {
       clearInterval(interval);
       cancelTokenSource.current.cancel('Component unmounted'); // Cancel the ongoing API request when the component is unmounted
+      localStorage.removeItem('first');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loadEvent == 1]);
 
-  // useEffect(() => {
-  //   getEventName();
-  //   getAllMarketData();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    getEventName();
+    getAllMarketData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -821,7 +828,7 @@ function SigleBetDetails() {
       <div>
         {isLoading && loadNum < 1 && (
           <div>
-            <p className="text-black">Loading.....</p>
+            {/* <p className="text-black">Loading.....</p> */}
             <Loading />
           </div>
         )}
