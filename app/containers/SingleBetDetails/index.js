@@ -194,7 +194,7 @@ function SigleBetDetails() {
         cancelToken: cancelTokenSource.current.token, // Access the cancel token from the useRef
       });
       console.log(response);
-      if (loadEvent) {
+      if (!loadEvent) {
         setLoadEvent(1);
       }
       setEventName(

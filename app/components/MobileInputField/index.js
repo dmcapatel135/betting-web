@@ -13,8 +13,10 @@ function MobileInputField({
     <div className="relative">
       <div className="absolute">
         <select
+          readOnly
           name="dialCode"
-          className="w-20 custom-select text-14 text-center text-gray-900 h-[40px] bg-white outline-none border-[1px] border-[#FEAE04] rounded-l-[8px]"
+          disabled
+          className="w-20 custom-select text-14 text-center text-black h-[40px] bg-white outline-none border-[1px] border-[#FEAE04] rounded-l-[8px]"
           onChange={selectonChange}
           value={selectValue}
         >

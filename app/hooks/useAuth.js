@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { init, cleanup } from '@actions';
 import { validateData } from '@utils/validation';
-import { passwordRegex } from '@utils/regex';
+// import { passwordRegex } from '@utils/regex';
 import {
   postReq,
   removeAuthCookie,
@@ -13,6 +13,7 @@ import {
   setToken,
   showErrorMessage,
 } from '@utils/apiHandlers';
+import { passwordLengthRegex } from '@utils/regex';
 
 const useAuth = () => {
   const navigate = useNavigate();
@@ -179,10 +180,11 @@ const registerSchema = yup.object({
   password: yup
     .string()
     .required('Password is required')
-    .matches(
-      passwordRegex,
-      'Password must be atleast 8 characters including one uppercase letter, one special character and alphanumeric characters',
-    ),
+    .matches(passwordLengthRegex, 'Password must be atleast 4 characters'),
+  // .matches(
+  //   passwordRegex,
+  //   'Password must be atleast 8 characters including one uppercase letter, one special character and alphanumeric characters',
+  // ),
 });
 
 const forgotPasswordSchema = yup.object({
@@ -203,10 +205,11 @@ const resetPasswordSchema = yup.object({
   newPassword: yup
     .string()
     .required('New Password is required')
-    .matches(
-      passwordRegex,
-      'Password must be atleast 8 characters including one uppercase letter, one special character and alphanumeric characters',
-    ),
+    .matches(passwordLengthRegex, 'Password must be atleast 4 characters'),
+  // .matches(
+  //   passwordRegex,
+  //   'Password must be atleast 8 characters including one uppercase letter, one special character and alphanumeric characters',
+  // ),
   confirmPassword: yup
     .string()
     .required('Confirm Password is required')
