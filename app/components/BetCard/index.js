@@ -147,7 +147,7 @@ function BetCard({ item, sportId }) {
                       return (
                         <button
                           key={innerIndex}
-                          disabled={innerItem.active ? false : true}
+                          disabled={data['1x2'].status == 1 ? true : false}
                           onClick={() => {
                             if (
                               selectBet(
@@ -220,7 +220,7 @@ function BetCard({ item, sportId }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={innerItem.active ? false : true}
+                            disabled={data['Total'].status == 1 ? true : false}
                             onClick={() => {
                               if (
                                 selectBet(
@@ -292,7 +292,11 @@ function BetCard({ item, sportId }) {
                           return (
                             <button
                               key={innerIndex}
-                              disabled={innerItem.active ? false : true}
+                              disabled={
+                                data['Both teams to score'].status == 1
+                                  ? true
+                                  : false
+                              }
                               onClick={() => {
                                 if (
                                   selectBet(
@@ -370,7 +374,7 @@ function BetCard({ item, sportId }) {
                       return (
                         <button
                           key={innerIndex}
-                          disabled={innerItem.active ? false : true}
+                          disabled={data['1x2'].status == 1 ? true : false}
                           onClick={() => {
                             if (
                               selectBet(
@@ -445,7 +449,7 @@ function BetCard({ item, sportId }) {
                       return (
                         <button
                           key={innerIndex}
-                          disabled={innerItem.active ? false : true}
+                          disabled={data['Winner']?.status == 1 ? true : false}
                           onClick={() => {
                             if (
                               selectBet(
@@ -514,7 +518,7 @@ function BetCard({ item, sportId }) {
                       return (
                         <button
                           key={innerIndex}
-                          disabled={innerItem.active ? false : true}
+                          disabled={data['1x2'].status == 1 ? true : false}
                           onClick={() => {
                             if (
                               selectBet(
@@ -587,7 +591,11 @@ function BetCard({ item, sportId }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={innerItem.active ? false : true}
+                            disabled={
+                              data['Winner (incl. super over)'].status == 1
+                                ? true
+                                : false
+                            }
                             onClick={() => {
                               if (
                                 selectBet(
@@ -665,7 +673,7 @@ function BetCard({ item, sportId }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={innerItem.active ? false : true}
+                            disabled={data['Winner'].status == 1 ? true : false}
                             onClick={() => {
                               if (
                                 selectBet(
@@ -733,7 +741,9 @@ function BetCard({ item, sportId }) {
                           return (
                             <button
                               key={innerIndex}
-                              disabled={innerItem.active ? false : true}
+                              disabled={
+                                data['1st set - winner'].status ? true : false
+                              }
                               onClick={() => {
                                 if (
                                   selectBet(
@@ -809,7 +819,11 @@ function BetCard({ item, sportId }) {
                           return (
                             <button
                               key={innerIndex}
-                              disabled={innerItem.active ? false : true}
+                              disabled={
+                                data['2nd set - winner'].status == 1
+                                  ? true
+                                  : false
+                              }
                               onClick={() => {
                                 if (
                                   selectBet(
