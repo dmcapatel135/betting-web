@@ -644,7 +644,7 @@ function SigleBetDetails() {
                             } px-1 md:px-0 xl:px-3   w-16`}
                             onClick={() => setTab(item.title)}
                           >
-                            <div className="flex flex-1 cursor-pointer h-8 justify-center items-center">
+                            <div className="flex flex-1 {eventData?.matchTime ? eventData?.matchTime : '_:_'}cursor-pointer h-8 justify-center items-center">
                               <span className="px-2 leading-3 text-black   md:block hidden text-12 font-[400]  xxl:text-12">
                                 {item.title}
                               </span>
@@ -850,6 +850,7 @@ function SigleBetDetails() {
           </h1>
           <h1 className="text-white text-14 font-[600]">
             Status - {eventData?.matchStatusText}
+           {eventData?.matchTime ? eventData?.matchTime : '_:_'}
           </h1>
         </div>
       </div>
