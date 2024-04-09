@@ -812,7 +812,7 @@ function SigleBetDetails() {
             </div> */}
       </div>
       <div>
-         {eventData?.status === 'Live' && (
+        {eventData?.status === 'Live' && (
           <div className="my-2 flex justify-between">
             <div className="text-black">
               <p>
@@ -849,8 +849,8 @@ function SigleBetDetails() {
             {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
           </h1>
           <h1 className="text-white text-14 font-[600]">
-            Status - {eventData?.matchStatusText}
-           {eventData?.matchTime ? eventData?.matchTime : '_:_'}
+            Status - {eventData?.matchStatusText} |{' '}
+            {eventData?.matchTime ? eventData?.matchTime : '_:_'}
           </h1>
         </div>
       </div>
