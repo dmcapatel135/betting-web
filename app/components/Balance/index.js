@@ -1,4 +1,4 @@
-import { init } from '@actions';
+import { init, wallet } from '@actions';
 import { MyContext } from '@components/MyContext/MyContext';
 // import { getReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
@@ -12,10 +12,11 @@ function Balance() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userWallet = useSelector((state) => state.user);
+  const userWallet = useSelector((state) => state.wallet);
 
   useEffect(() => {
     dispatch(init());
+    dispatch(wallet());
   }, [dispatch]);
 
   return (

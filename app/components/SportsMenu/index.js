@@ -172,8 +172,6 @@ function SportsMenu() {
     getAllFixtures(queries, newPage);
   };
 
-  console.log('---------select tournament ', selectTournament);
-
   return (
     <>
       <div className="lg:block hidden">

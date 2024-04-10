@@ -8,6 +8,7 @@ function MobileInputField({
   value,
   selectValue,
   onKeyDown,
+  readOnly,
 }) {
   return (
     <div className="relative">
@@ -39,6 +40,7 @@ function MobileInputField({
         onChange={onChange}
         value={value}
         onKeyDown={onKeyDown}
+        readOnly={readOnly}
       />
     </div>
   );
@@ -50,5 +52,6 @@ MobileInputField.propTypes = {
   value: PropTypes.string,
   selectValue: PropTypes.string,
   onKeyDown: PropTypes.func,
+  readOnly: PropTypes.bool,
 };
 export default MobileInputField;

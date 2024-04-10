@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import {
   BetWallet,
-  Betslip,
+  // Betslip,
   CompanyContact,
   CustomerCareContact,
   Footer,
@@ -57,7 +57,6 @@ const OuterLayout = () => {
       return { ...category, flag: country?.code };
     });
     setCategories(categoriesWithFlags.filter((item) => item.popular == true));
-    console.log('----------categories with flages ', categoriesWithFlags);
     let other = categoriesWithFlags
       .filter((item) => item.popular == false)
       .sort((a, b) => (a.name > b.name ? 1 : -1));
@@ -124,7 +123,7 @@ const OuterLayout = () => {
           </div>
           <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
             <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
-              {selectedBet.length > 0 ? (
+              {/* {selectedBet.length > 0 ? (
                 <BetWallet />
               ) : isLoggedIn() ? (
                 <Betslip />
@@ -133,7 +132,20 @@ const OuterLayout = () => {
                   <img src={images.AppImg} alt="app" className="" />
                   <img src={images.contactImg} alt="app" className="py-2" />
                 </div>
-              )}
+              )} */}
+              {
+                //   selectedBet.length > 0 ? (
+                //   <BetWallet />
+                // ) :
+                selectedBet.length > 0 || isLoggedIn() ? (
+                  <BetWallet />
+                ) : (
+                  <div>
+                    <img src={images.AppImg} alt="app" className="" />
+                    <img src={images.contactImg} alt="app" className="py-2" />
+                  </div>
+                )
+              }
 
               <CompanyContact />
               <CustomerCareContact />

@@ -812,6 +812,38 @@ function SigleBetDetails() {
             </div> */}
       </div>
       <div>
+        {eventData?.status === 'Live' && (
+          <div className="my-2 flex justify-between">
+            <div className="text-black">
+              <p>
+                {
+                  eventData?.competitors?.find(
+                    (item) => item.qualifier == 'Home',
+                  ).name
+                }
+              </p>
+              <p>
+                {
+                  eventData?.competitors?.find(
+                    (item) => item.qualifier == 'Away',
+                  ).name
+                }
+              </p>
+            </div>
+            <div className="text-black">
+              <p>
+                {typeof eventData?.homeScore === 'number'
+                  ? eventData?.homeScore
+                  : 'N/A'}
+              </p>
+              <p>
+                {typeof eventData?.awayScore === 'number'
+                  ? eventData?.awayScore
+                  : 'N/A'}
+              </p>
+            </div>
+          </div>
+        )}
         <div className="bg-yellow py-1 flex justify-between rounded-md mt-5 px-3">
           <h1 className="text-white text-14 font-[600]">
             {eventName} - ALL MARKETS
@@ -821,7 +853,8 @@ function SigleBetDetails() {
             {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
           </h1>
           <h1 className="text-white text-14 font-[600]">
-            Status - {eventData?.matchStatusText}
+            Status - {eventData?.matchStatusText} |{' '}
+            {eventData?.matchTime ? eventData?.matchTime : '_:_'}
           </h1>
         </div>
       </div>

@@ -6,7 +6,7 @@ import {
   Pagination,
   SkeletonLoader,
 } from '@components';
-import ShareBetModal from '@components/ShareBetModal.js';
+import ShareBetModal from '@components/ShareBetModal';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
 import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';

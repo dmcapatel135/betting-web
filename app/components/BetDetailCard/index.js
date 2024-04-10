@@ -22,10 +22,8 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   };
 
   const handleRebet = (data) => {
-    console.log('----------data', data);
     let array = [];
     data.bets.forEach((element) => {
-      console.log('-----element ', element);
       let index = selectedBet.findIndex(
         (item) => item.eventId == element.eventId,
       );

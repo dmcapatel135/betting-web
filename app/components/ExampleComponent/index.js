@@ -6,7 +6,6 @@ const ExampleComponent = ({ addonBet, addon }) => {
     <>
       <div className="flex text-black items-start w-full px-1 md:px-3">
         {marketsName.map((item) => {
-          console.log('-------item ', item);
           return (
             <>
               <div className="h-6 md:h-8 2xl:h-[42px] flex justify-center items-center w-36 md:w-48 text-center text-10 md:text-12 bg-gradient-color-1 text-white rounded-[4px] font-[600]">

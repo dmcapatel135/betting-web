@@ -149,7 +149,7 @@ const Navbar = ({ tab, setTab }) => {
     setSearchData(response.data);
   };
 
-  const userWallet = useSelector((state) => state.user);
+  const userWallet = useSelector((state) => state.wallet);
 
   useEffect(() => {
     if (search?.trim()?.length > 2) {

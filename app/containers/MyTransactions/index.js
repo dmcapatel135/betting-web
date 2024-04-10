@@ -21,7 +21,7 @@ function MyTransactions() {
   );
   const [endDate, setEndDate] = useState(moment().endOf('month').toDate());
 
-  const userWallet = useSelector((state) => state.user);
+  const userWallet = useSelector((state) => state.wallet);
   const [queries, setQueries] = useState('');
   let pageCount = 10;
 
@@ -53,7 +53,6 @@ function MyTransactions() {
     let query = '';
     setPage(0);
     if (type) {
-      console.log('-----------tupeessd', type);
       query = query + `&type=${type}`;
     }
     if (startDate && endDate) {

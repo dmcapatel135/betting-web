@@ -26,3 +26,8 @@ export const fetchJackpotDetailsAction = (payload) => ({
   type: types.FETCH_JACKPOT_DETAILS,
   payload: payload,
 });
+
+export const wallet = (payload) => ({
+  type: types.WALLET,
+  payload: payload,
+});

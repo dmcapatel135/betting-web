@@ -84,6 +84,10 @@ function App() {
             element={<MyTransactions />}
           />
           <Route path="/dashboard/bet-slip" element={<MobileBetSlip />} />
+          <Route
+            path="/dashboard/bet-slip/:bookingcode"
+            element={<MobileBetSlip />}
+          />
           <Route path="/dashboard" element={<Batting />} />
         </Route>
 
