@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import {
   BetWallet,
   // Betslip,
@@ -29,6 +29,7 @@ const OuterLayout = () => {
   const [wallet, setWallet] = useState();
   const [otherCountries, setOtherCountries] = useState([]);
   const [gameRules, setGameRules] = useState();
+  const { bookingcode } = useParams();
 
   const getAllTournaments = useCallback(async () => {
     const response = await getReq(
@@ -137,7 +138,7 @@ const OuterLayout = () => {
                 //   selectedBet.length > 0 ? (
                 //   <BetWallet />
                 // ) :
-                selectedBet.length > 0 || isLoggedIn() ? (
+                selectedBet.length > 0 || isLoggedIn() || bookingcode ? (
                   <BetWallet />
                 ) : (
                   <div>

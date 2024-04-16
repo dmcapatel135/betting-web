@@ -36,6 +36,7 @@ function BetWallet({ stakeValue }) {
   const [copied, setCopied] = useState(false);
   const [codeErr, setCodeErr] = useState('');
   const [openShareBetModal, setOpenShareBetModal] = useState(false);
+  const [shareLoading, setShareLoading] = useState(false);
 
   // const navigate = useNavigate();
 
@@ -257,23 +258,44 @@ function BetWallet({ stakeValue }) {
     2,
   );
 
-  const handleGenerateBookingCode = async () => {
-    setOpenDailog(true);
-
-    setLoading(true);
+  const handleGenerateBookingCode = async (type) => {
+    // setOpenDailog(true);
+    if (type == 'share') {
+      setShareLoading(true);
+    } else {
+      setLoading(true);
+    }
     const data = {
       bets: shareData,
     };
     try {
       const response = await postReq('/share-bets', data);
-      setLoading(false);
+
       if (response.status) {
+        if (type == 'share') {
+          setShareLoading(false);
+          setOpenShareBetModal(true);
+        } else {
+          setLoading(false);
+          setOpenDailog(true);
+        }
         setCode(response.data);
-        setOpenDailog(true);
+      } else if (response.error) {
+        if (type == 'share') {
+          setShareLoading(false);
+          setOpenShareBetModal(true);
+        } else {
+          setLoading(false);
+          setOpenDailog(true);
+        }
+        toast.error(response.error.message);
       }
     } catch (error) {
-      setLoading(false);
-      console.log('');
+      if (type == 'share') {
+        setShareLoading(false);
+      } else {
+        setLoading(false);
+      }
     }
   };
 
@@ -288,7 +310,7 @@ function BetWallet({ stakeValue }) {
 
       try {
         const response = await getReq(
-          `/share-bets/${bookingcode ? bookingcode : code}`,
+          `/share-bets/${code ? code : bookingcode}`,
         );
         setBtnLoadLoading(false);
         if (response.status) {
@@ -306,8 +328,11 @@ function BetWallet({ stakeValue }) {
   );
 
   useEffect(() => {
+    console.log('------------outer----booking code ', bookingcode);
     if (bookingcode) {
       let type = 'url';
+      console.log('------------innner----booking code ', bookingcode);
+
       handleLoadBets(bookingcode, type);
       setCode(bookingcode);
     }
@@ -361,7 +386,6 @@ function BetWallet({ stakeValue }) {
             </button>
             <button
               onClick={() => {
-                // setOpenShareBetModal(true);
                 setSelectTournament(null);
                 setTab(null);
                 navigate('/join-now');
@@ -487,18 +511,36 @@ function BetWallet({ stakeValue }) {
       {bets.length > 0 && (
         <>
           <hr className="border bg-white"></hr>
-          <div className="px-3 my-5 flex justify-center ">
+          <div className="px-3 my-5 flex justify-between ">
             <button
-              className={`${loading ? 'bg-lightestgray text-gray-900' : 'bg-[#02CBDB] text-white'} h-10 flex px-10 justify-center items-center bg-[#02CBDB] rounded-[8px]`}
+              className={`${loading ? 'bg-lightestgray text-gray-900' : 'bg-[#02CBDB] text-white'} h-8 flex px-2 justify-center items-center bg-[#02CBDB] rounded-[4px]`}
               disabled={loading}
             >
               <span
                 className="text-14 font-[700] cursor-pointer"
                 onClick={() => {
-                  handleGenerateBookingCode();
+                  handleGenerateBookingCode('generate');
                 }}
               >
                 Generate Booking Code
+              </span>
+            </button>
+            <button
+              className={`${shareLoading ? 'bg-lightestgray text-gray-900' : 'bg-gradient-color-1 text-white'} h-8 flex px-2 justify-center items-center bg-[#02CBDB] rounded-[4px]`}
+              disabled={shareLoading}
+            >
+              <span
+                className="text-14 flex font-[700] cursor-pointer"
+                onClick={() => {
+                  handleGenerateBookingCode('share');
+                }}
+              >
+                <img
+                  src="/images/bikoicon/share.png"
+                  alt="icon"
+                  className="w-6 h-5"
+                />
+                <span>Share</span>
               </span>
             </button>
           </div>
