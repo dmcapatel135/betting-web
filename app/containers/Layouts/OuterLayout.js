@@ -15,6 +15,7 @@ import { getReq, isLoggedIn } from '@utils/apiHandlers';
 import { countryNameList } from '@api/country';
 import { images } from '@utils/images';
 import { useSelector } from 'react-redux';
+import { marketsName } from '@components/SportsMenu/constants';
 // import ExampleComponent from '@components/ExampleComponent';
 const OuterLayout = () => {
   const [params] = useSearchParams();
@@ -29,6 +30,11 @@ const OuterLayout = () => {
   const [wallet, setWallet] = useState();
   const [otherCountries, setOtherCountries] = useState([]);
   const [gameRules, setGameRules] = useState();
+  const [selectMarket, setSelectMarket] = useState();
+  const [marketData, setMarketData] = useState(
+    marketsName.find((item) => item.sportId == params.get('sId') || 1),
+  );
+
   const { bookingcode } = useParams();
 
   const getAllTournaments = useCallback(async () => {
@@ -107,6 +113,10 @@ const OuterLayout = () => {
           otherCountries,
           gameRules,
           getWalletBalance,
+          selectMarket,
+          setSelectMarket,
+          marketData,
+          setMarketData,
         }}
       >
         <Navbar tab={tab} setTab={setTab} />

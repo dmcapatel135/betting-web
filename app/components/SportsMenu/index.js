@@ -30,6 +30,8 @@ function SportsMenu() {
     setSelectTournament,
     tab,
     setTab,
+    marketData,
+    setMarketData,
   } = useContext(MyContext);
 
   // get all sports name
@@ -48,7 +50,12 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
-  }, [sportId]);
+    console.log(
+      '-------this is working ------------',
+      marketsName.find((item) => item.sportId == sportId),
+    );
+    setMarketData(marketsName.find((item) => item.sportId == sportId));
+  }, [sportId, setMarketData]);
 
   useEffect(() => {
     getAllSports();
@@ -278,8 +285,11 @@ function SportsMenu() {
               </select> */}
             </div>
             <div className="flex-1 md:hidden block">
-              <select className="w-full my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]">
-                <option>Market</option>
+              <select className="w-full px-2 my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]">
+                {/* <option>Market</option> */}
+                {marketData?.marketName?.map((item) => {
+                  return <option key={item.id}>{item.name}</option>;
+                })}
               </select>
             </div>
           </div>

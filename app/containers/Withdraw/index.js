@@ -74,7 +74,7 @@ function Withdraw() {
               <button
                 onClick={handleWithdrawAmount}
                 disabled={isLoading}
-                className={`w-full mt-4 ${isLoading ? 'bg-lightestgray text-gray-900' : ''} bg-yellow h-10 font-[700] text-14 rounded-lg`}
+                className={`w-full mt-4 ${isLoading ? 'bg-lightestgray text-gray-900' : 'bg-yellow text-white'}  h-10 font-[700] text-14 rounded-lg`}
               >
                 WITHDRAWAL
               </button>

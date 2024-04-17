@@ -1,17 +1,20 @@
+import { wallet } from '@actions';
 import { HeroSection, MobileInputField } from '@components';
 import { postReq } from '@utils/apiHandlers';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
 function Deposit() {
   const [paymentMethod, setPaymentMethod] = useState('Tigo');
   const [data, setData] = useState({
     amount: 0,
+    mobile: '',
   });
   const [amountErr, setAmountErr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleDepositAmount = async () => {
     if (!data.amount) {
@@ -24,6 +27,7 @@ function Deposit() {
       setIsLoading(false);
       if (response.status) {
         toast.success('Amount deposit successfully.');
+        dispatch(wallet());
       } else if (response.error) {
         toast.error(response.error.message || response.error.message[0]);
       }
@@ -52,9 +56,12 @@ function Deposit() {
             <div>
               <label className="text-black text-14">Your Mobile Number</label>
               <MobileInputField
-                readOnly={true}
-                value={user && user?.mobile?.slice(4, 13)}
+                // readOnly={true}
+                value={data.mobile}
                 selectValue={'+255'}
+                onChange={(e) =>
+                  setData((prev) => ({ ...prev, mobile: e.target.value }))
+                }
               />
             </div>
             <div className="my-2">
@@ -74,7 +81,7 @@ function Deposit() {
               <button
                 onClick={handleDepositAmount}
                 disabled={isLoading}
-                className={`w-full mt-4 ${isLoading ? 'bg-lightestgray text-gray-900' : ''} bg-yellow h-10 font-[700] text-14 rounded-lg`}
+                className={`w-full mt-4 ${isLoading ? 'bg-lightestgray text-gray-900 ' : 'bg-yellow text-white'}  h-10 font-[700] text-14 rounded-lg`}
               >
                 DEPOSIT
               </button>

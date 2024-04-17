@@ -283,10 +283,8 @@ function BetWallet({ stakeValue }) {
       } else if (response.error) {
         if (type == 'share') {
           setShareLoading(false);
-          setOpenShareBetModal(true);
         } else {
           setLoading(false);
-          setOpenDailog(true);
         }
         toast.error(response.error.message);
       }
@@ -601,7 +599,7 @@ function BetWallet({ stakeValue }) {
             <span className="text-black text-16">Your stake</span>
             <div className="h-[40px] border-[1px] border-yellow rounded-lg flex justify-between my-2">
               <div
-                onClick={() => setStake(stake - 1)}
+                onClick={() => setStake(parseInt(stake) - 1)}
                 className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-12 text-center rounded-l-lg"
               >
                 <span className="text-24">-</span>
@@ -615,7 +613,7 @@ function BetWallet({ stakeValue }) {
                 />
               </div>
               <div
-                onClick={() => setStake(stake + 1)}
+                onClick={() => setStake(parseInt(stake) + 1)}
                 className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-12 rounded-r-lg"
               >
                 <span className="text-24">+</span>
