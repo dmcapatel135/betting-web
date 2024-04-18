@@ -22,7 +22,7 @@ function Withdraw() {
       const response = await postReq('/payments/withdraw', data);
       setIsLoading(false);
       if (response.status) {
-        toast.success('Amount Withdraw successfully.');
+        toast.success('Amount Withdraw request recevied successfully.');
         setData((prev) => ({ ...prev, amount: 0 }));
       } else if (response.error) {
         toast.error(response.error.message || response.error.message[0]);

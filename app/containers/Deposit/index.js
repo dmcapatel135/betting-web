@@ -5,28 +5,43 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
+const initialState = {
+  amount: '',
+  mobile: '',
+  dialCode: '+255',
+};
+
 function Deposit() {
   const [paymentMethod, setPaymentMethod] = useState('Tigo');
-  const [data, setData] = useState({
-    amount: 0,
-    mobile: '',
-  });
+  const [data, setData] = useState(initialState);
   const [amountErr, setAmountErr] = useState('');
+  const [numberErr, setNumberErr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   // const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleDepositAmount = async () => {
-    if (!data.amount) {
+    const depositData = {
+      mobile: data.dialCode + data.mobile,
+      amount: data.amount,
+    };
+    if (!data.mobile) {
+      setNumberErr('This Field is required.');
+      return;
+    } else if (data.mobile?.length < 9) {
+      setNumberErr('Invalid phone number');
+      return;
+    } else if (!data.amount) {
       setAmountErr('This field is required.');
       return;
     }
     setIsLoading(true);
     try {
-      const response = await postReq('/payments/deposit', data);
+      const response = await postReq('/payments/deposit', depositData);
       setIsLoading(false);
       if (response.status) {
-        toast.success('Amount deposit successfully.');
+        toast.success('Amount deposit request received successfully.');
+        setData(initialState);
         dispatch(wallet());
       } else if (response.error) {
         toast.error(response.error.message || response.error.message[0]);
@@ -59,16 +74,19 @@ function Deposit() {
                 // readOnly={true}
                 value={data.mobile}
                 selectValue={'+255'}
-                onChange={(e) =>
-                  setData((prev) => ({ ...prev, mobile: e.target.value }))
-                }
+                onChange={(e) => {
+                  setNumberErr('');
+                  setData((prev) => ({ ...prev, mobile: e.target.value }));
+                }}
               />
+              <span className="text-red-500 text-14">{numberErr}</span>
             </div>
             <div className="my-2">
               <label className="text-black text-14">Amount to Deposit</label>
               <input
                 type="number"
                 placeholder="Enter Amount"
+                value={data.amount}
                 onChange={(e) => {
                   setData((prev) => ({ ...prev, amount: e.target.value }));
                   setAmountErr('');

@@ -483,20 +483,20 @@ const Navbar = ({ tab, setTab }) => {
           )}
           {tab == 6 && (
             <>
-              <div className="md:hidden   top-10 absolute w-full z-30">
+              <div className="md:hidden   top-20 absolute w-full z-30">
                 <div className="flex justify-center items-center">
                   <input
                     type="text"
                     placeholder="Search events and tournaments..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="borde rounded-md  px-3 text-black outline-none bg-white w-[350px] ml-2 h-7"
+                    className="border  rounded-md  px-3 text-black outline-none bg-white w-[350px] ml-2 h-8"
                   />
-                  <span onClick={() => setTab(null)} className="text-20">
+                  <span onClick={() => setTab(null)} className="text-24">
                     {reactIcons.closecircle}
                   </span>
                 </div>
-                <div className="w-[350px]  absolute z-30 bg-white ml-2 top-18">
+                <div className="w-[350px]  absolute z-30 bg-white  ml-[12px] top-18">
                   {searchData?.tournaments?.map((item) => {
                     return (
                       <li

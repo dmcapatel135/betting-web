@@ -326,10 +326,8 @@ function BetWallet({ stakeValue }) {
   );
 
   useEffect(() => {
-    console.log('------------outer----booking code ', bookingcode);
     if (bookingcode) {
       let type = 'url';
-      console.log('------------innner----booking code ', bookingcode);
 
       handleLoadBets(bookingcode, type);
       setCode(bookingcode);

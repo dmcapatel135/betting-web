@@ -47,7 +47,7 @@ function ShareBetModal({
       // onClose={{}}
       aria-labelledby="responsive-dialog-title"
     >
-      <div className="bg-white w-[450px] rounded-[20px] ">
+      <div className="bg-white w-[325px] md:w-[450px] rounded-[20px] ">
         {/* <DialogTitle id="responsive-dialog-title"> */}
         <div className="flex justify-between items-center h-8 rounded-t-sm bg-blue px-3">
           <span className="flex-1 text-center text-white">SHARE BET</span>
@@ -70,61 +70,67 @@ function ShareBetModal({
               SHARE THE LOVE, TELL YOUR FRIEND TO BET ON THIS BET
             </p>
             <div className="flex">
-              <a
-                href={
-                  'https://api.whatsapp.com/send?text=Placed this bet on ' +
-                  CLIENT_URL +
-                  'cheki mkeka wangu na ubeti  ' +
-                  CLIENT_URL +
-                  '/dashboard/bet-slip/' +
-                  code
-                }
-                target="blank"
-              >
-                <button className="bg-[#CDFFC7] flex items-center mr-2 font-[700] text-[#29A71A]  py-1 px-2 text-12 rounded-lg">
-                  <img
-                    src="/images/bikoicon/whatsapp.png"
-                    className="w-6 h-6 mr-3"
-                  />
-                  WhatsApp
-                </button>
-              </a>
-              <FacebookShareButton
-                url={CLIENT_URL + '/dashboard/bet-slip/' + code} // The URL you want to share
-                quote={
-                  'Placed this bet on' +
-                  CLIENT_URL +
-                  'cheki mkeka wangu na ubeti  '
-                } // The quote or description for the shared link
-                hashtag={'#Bikosports'} // The hashtag to include in the shared post
-              >
-                <button className="bg-[#D7E8FF] flex items-center mr-2 font-[700] text-[#1877F2]  py-1 px-2 text-12 rounded-lg">
-                  <img
-                    src="/images/bikoicon/facebookpop.png"
-                    className="w-6 h-6 mr-3"
-                  />
-                  Facebook
-                </button>
-              </FacebookShareButton>
-              <a
-                href={
-                  'https://twitter.com/intent/post?text=Placed this bet on ' +
-                  CLIENT_URL +
-                  'cheki mkeka wangu na ubeti  ' +
-                  CLIENT_URL +
-                  '/dashboard/bet-slip/' +
-                  code
-                }
-                target="blank"
-              >
-                <button className="bg-[#D4F4FF] flex items-center font-[700] text-[#03A9F4]  py-1 px-2 text-12 rounded-lg">
-                  <img
-                    src="/images/bikoicon/twitterpop.png"
-                    className="w-6 h-6 mr-3"
-                  />
-                  Twitter
-                </button>
-              </a>
+              <div className="flex-1">
+                <a
+                  href={
+                    'https://api.whatsapp.com/send?text=Placed this bet on ' +
+                    CLIENT_URL +
+                    'cheki mkeka wangu na ubeti  ' +
+                    CLIENT_URL +
+                    '/dashboard/bet-slip/' +
+                    code
+                  }
+                  target="blank"
+                >
+                  <button className="block text-center flex-1 md:flex bg-[#CDFFC7]  items-center mr-2 font-[700] text-[#29A71A]  py-1 px-2 text-12 rounded-lg">
+                    <img
+                      src="/images/bikoicon/whatsapp.png"
+                      className="w-6 h-6 mr-3"
+                    />
+                    WhatsApp
+                  </button>
+                </a>
+              </div>
+              <div className="flex-1">
+                <FacebookShareButton
+                  url={CLIENT_URL + '/dashboard/bet-slip/' + code} // The URL you want to share
+                  quote={
+                    'Placed this bet on' +
+                    CLIENT_URL +
+                    'cheki mkeka wangu na ubeti  '
+                  } // The quote or description for the shared link
+                  hashtag={'#Bikosports'} // The hashtag to include in the shared post
+                >
+                  <button className="bg-[#D7E8FF]  block md:flex items-center mr-2 font-[700] text-[#1877F2]  py-1 px-2 text-12 rounded-lg">
+                    <img
+                      src="/images/bikoicon/facebookpop.png"
+                      className="w-6 h-6 mr-3"
+                    />
+                    Facebook
+                  </button>
+                </FacebookShareButton>
+              </div>
+              <div className="flex-1">
+                <a
+                  href={
+                    'https://twitter.com/intent/post?text=Placed this bet on ' +
+                    CLIENT_URL +
+                    'cheki mkeka wangu na ubeti  ' +
+                    CLIENT_URL +
+                    '/dashboard/bet-slip/' +
+                    code
+                  }
+                  target="blank"
+                >
+                  <button className="bg-[#D4F4FF]  block md:flex items-center font-[700] text-[#03A9F4]  py-1 px-2 text-12 rounded-lg">
+                    <img
+                      src="/images/bikoicon/twitterpop.png"
+                      className="w-6 h-6 mr-3"
+                    />
+                    Twitter
+                  </button>
+                </a>
+              </div>
             </div>
             <div>
               <div className="my-2">
