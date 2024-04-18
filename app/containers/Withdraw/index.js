@@ -62,6 +62,7 @@ function Withdraw() {
               <input
                 type="text"
                 placeholder="Enter Amount"
+                value={data.amount}
                 onChange={(e) => {
                   setData((prev) => ({ ...prev, amount: e.target.value }));
                   setAmountErr('');
