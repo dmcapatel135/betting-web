@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 function Withdraw() {
   const [data, setData] = useState({
-    amount: 0,
+    amount: '',
   });
   const [amountErr, setAmountErr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,7 @@ function Withdraw() {
       setIsLoading(false);
       if (response.status) {
         toast.success('Amount Withdraw request recevied successfully.');
-        setData((prev) => ({ ...prev, amount: 0 }));
+        setData((prev) => ({ ...prev, amount: '' }));
       } else if (response.error) {
         toast.error(response.error.message || response.error.message[0]);
       }
