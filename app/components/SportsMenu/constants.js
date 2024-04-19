@@ -53,34 +53,36 @@ export const marketsName = [
   {
     sportId: 1,
     marketName: [
-      { name: '3 WAY', option: ['1', 'X', '2'] },
+      { id: 1, name: '3 WAY', option: ['1', 'X', '2'] },
       // { name: 'Over/Under(2.5)', option: ['Over', 'Under'] },
-      { name: 'Total', option: ['Over', 'Under'] },
-      { name: 'BOTH TEAMS TO SCORE', option: ['Yes', 'No'] },
+      { id: 18, name: 'Total', option: ['Over', 'Under'] },
+      { id: 29, name: 'Both teams to score', option: ['Yes', 'No'] },
     ],
   },
   {
     sportId: 2,
-    marketName: [{ name: '3 WAY', option: ['1', 'X', '2'] }],
+    marketName: [{ id: 1, name: '3 WAY', option: ['1', 'X', '2'] }],
   },
   {
     sportId: 10,
-    marketName: [{ name: 'Winner', option: ['1', '2'] }],
+    marketName: [{ id: 186, name: 'Winner', option: ['1', '2'] }],
   },
   {
     sportId: 12,
-    marketName: [{ name: '3 WAY', option: ['1', 'x', '2'] }],
+    marketName: [{ id: 1, name: '3 WAY', option: ['1', 'x', '2'] }],
   },
   {
     sportId: 21,
-    marketName: [{ name: 'Winner (incl. super over)', option: [1, 2] }],
+    marketName: [
+      { id: 340, name: 'Winner (incl. super over)', option: [1, 2] },
+    ],
   },
   {
     sportId: 5,
     marketName: [
-      { name: 'Winner', option: [1, 2] },
-      { name: '1st set - winner', option: [1, 2] },
-      { name: '2nd set - winner', option: [1, 2] },
+      { id: 186, name: 'Winner', option: [1, 2] },
+      { id: 202, name: '1st set - winner', option: [1, 2] },
+      { id: 202, name: '2nd set - winner', option: [1, 2] },
     ],
   },
 ];

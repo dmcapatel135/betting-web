@@ -9,6 +9,7 @@ import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+// import MobileMarketCard from '@components/MobileMarketCard';
 
 function SportsMenu() {
   const [allSports, setAllSports] = useState();
@@ -21,6 +22,8 @@ function SportsMenu() {
   const [hasMore, setHasMore] = useState(true);
   const [queries, setQueries] = useState();
   const [searchParams] = useSearchParams();
+  const [selectMarket, setSelectMarket] = useState('3 WAY');
+  const [mobileSelectMarketData, setMobileSelectMarketData] = useState([]);
   const navigate = useNavigate();
 
   const {
@@ -50,12 +53,7 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
-    console.log(
-      '-------this is working ------------',
-      marketsName.find((item) => item.sportId == sportId),
-    );
-    setMarketData(marketsName.find((item) => item.sportId == sportId));
-  }, [sportId, setMarketData]);
+  }, [sportId]);
 
   useEffect(() => {
     getAllSports();
@@ -179,6 +177,26 @@ function SportsMenu() {
     getAllFixtures(queries, newPage);
   };
 
+  useEffect(() => {
+    setMarketData([]);
+    setSelectMarket('');
+    const filteredData = marketsName.find((item) => item.sportId == sportId);
+    setMarketData(filteredData);
+
+    setMobileSelectMarketData(filteredData.marketName[0]);
+    setSelectMarket(filteredData.marketName[0].name);
+  }, [sportId]); //eslint-disable-line
+
+  useEffect(() => {
+    setMarketData(marketsName.find((item) => item.sportId == sportId));
+    setMobileSelectMarketData(
+      marketsName
+        .find((item) => item.sportId == sportId)
+        .marketName.find((item) => item.name == selectMarket),
+    );
+    setAllFixtures([...allFixtures]);
+  }, [selectMarket]); //eslint-disable-line
+
   return (
     <>
       <div className="lg:block hidden">
@@ -227,7 +245,7 @@ function SportsMenu() {
               );
             })}
           </select> */}
-          <div className="flex flex-col lg:flex-row lg:gap-3">
+          <div className="flex flex-col sm:flex-row sm:gap-3">
             <div className="flex-1">
               <select
                 value={sportId}
@@ -284,19 +302,27 @@ function SportsMenu() {
                 })}
               </select> */}
             </div>
-            <div className="flex-1 md:hidden block">
-              <select className="w-full px-2 my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]">
+            <div className="flex-1 lg:hidden block">
+              <select
+                value={selectMarket}
+                onChange={(e) => setSelectMarket(e.target.value)}
+                className="w-full px-2 my-2 bg-[#E79B24] custom-select-drop text-12 md:text-14 font-[600] text-center text-white  h-[32px]  outline-none  rounded-[4px]"
+              >
                 {/* <option>Market</option> */}
-                {marketData?.marketName?.map((item) => {
-                  return <option key={item.id}>{item.name}</option>;
+                {marketData?.marketName?.map((item, index) => {
+                  return (
+                    <option value={item.name} key={index}>
+                      {item.name}
+                    </option>
+                  );
                 })}
               </select>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex  mx-4 py-1 lg:px-2">
-        <div className="flex-grow-0 xxl:flex-1 pl-0">
+      <div className="flex lg:mx-4 py-1 lg:px-2 pl-1 lg:pl-0">
+        <div className="flex-grow-0 w-40   mt-9 md:mt-12 xxl:flex-1 pl-0">
           <div
             className={`h-6 md:h-8 2xl:h-[42px] lg:mx-1 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
               !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
@@ -309,78 +335,146 @@ function SportsMenu() {
             )}
           </div>
         </div>
-        <div className="flex-1 border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6 mr-2 md:mr-0">
-          {allFixtures.length > 0 && (
-            <div className="flex justify-end gap-4">
-              {marketsName
-                .filter(
-                  (item) =>
-                    item.sportId == (sportId || searchParams.get('sId')),
-                )[0]
-                ?.marketName.map((items, index) => {
+        <div className="flex-1 w-full lg:hidden flex justify-center sm:justify-end ">
+          {mobileSelectMarketData && (
+            <div className="text-black text-center">
+              <h1 className="text-12 font-[500] uppercase">
+                {mobileSelectMarketData?.name == 'Total'
+                  ? 'OVER/UNDER (2.5)'
+                  : mobileSelectMarketData?.name}
+              </h1>
+              <div className="flex justify-center mt-3 gap-3">
+                {mobileSelectMarketData?.option?.map((item) => {
                   return (
-                    <div
-                      key={index}
-                      // className={`${
-                      //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
-                      // } flex-1 `}
-                      className={`${
-                        items.name == 'Winner (incl. super over)'
-                          ? ''
-                          : items?.option?.length == 2
-                            ? ''
-                            : ''
-                      } ${index > 0 ? 'hidden xl:block' : ''} `}
-                    >
-                      <div
-                        className={`flex ${
-                          marketsName.filter(
-                            (item) => item.sportId == sportId,
-                          )[0]?.marketName.length == 1
-                            ? 'justify-between  md:justify-end 2xl:mx-4'
-                            : 'justify-center'
-                        }`}
+                    <div key={item} className="">
+                      <button
+                        className="border text-10 font-[600] flex justify-center items-center md:h-8 h-6 w-[36px] sm:w-[45px] 2xl:w-[48px] 2xl:h-[36px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                        // className="border text-12 border-black w-[36px] rounded-sm "
                       >
-                        <div
-                          style={{
-                            maxWidth: `${index === 0 ? 156 : 110}px`,
-                          }}
-                          className="w-full"
-                        >
-                          <div className="w-full flex justify-center">
-                            <h1 className="text-12 md:text-12 lg:text-[10px] flex-center text-center 2xl:text-14 font-[800] md:block text-black  mb-2 xl:h-[48px]">
-                              {items.name === 'Total'
-                                ? 'OVER/UNDER(2.5)'
-                                : items.name}
-                            </h1>
-                          </div>
-                          <div
-                            // className={`${items.option.length ==} flex justify-between`}
-                            className={`${
-                              items.option.length == 3 ? '' : ''
-                            }  flex ${
-                              index == 2 ? '' : 'mx-auto'
-                            } justify-center gap-2`}
-                          >
-                            {items.option?.map((itemss, innerIndex) => {
-                              return (
-                                <div
-                                  key={innerIndex}
-                                  className="border flex justify-center items-center md:h-8 h-6 w-[40px] md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
-                                >
-                                  <span className="text-gray-900  md:text-12 lg:text-12 2xl:text-14 font-[500] text-10">
-                                    {itemss || 1}
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
+                        {item}
+                      </button>
                     </div>
                   );
                 })}
+              </div>
             </div>
+          )}
+        </div>
+        <div className="flex-grow-0 w-12 md:hidden md:opacity-0">
+          <div className=" border-solid  md:w-16 2xl:w-[72px] text-black">
+            <button
+              onClick={() => {
+                var url = new URL(window.location.href);
+                url.searchParams.delete('sId');
+                url.searchParams.delete('eId');
+                navigate(url);
+                setSelectTournament(null);
+                setSportId(1);
+              }}
+              type="reset"
+              className=" border text-black  border-primary-700 h-[25px] !min-w-[50px] !text-12 !rounded-md hover:bg-primary-700"
+            >
+              Clear
+            </button>
+            {/* <div
+              onClick={() => {
+                // setTab(null);
+                navigate(
+                  `${item.onlyLive ? `/dashboard/single-bets/${item.eventId}?onlyLive=true` : `/dashboard/single-bets/${item.eventId}`}`,
+                );
+              }}
+              className="border mr-2 w-[40px] h-6 md:h-8 md:min-w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:max-w-fit font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer"
+            >
+              <img
+                src="/images/bikoicon/moving.png"
+                alt="icon"
+                className="mx-1"
+              />
+              <span className="text-10 md:text-10 2xl:text-12 pr-2">
+                {item.openMarkets}
+              </span>
+            </div> */}
+          </div>
+        </div>
+        <div className="flex-1 hidden lg:block border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6 mr-2 md:mr-0">
+          {allFixtures.length > 0 && (
+            <>
+              <div className=" sm:flex  justify-end gap-4">
+                {marketsName
+                  .filter(
+                    (item) =>
+                      item.sportId == (sportId || searchParams.get('sId')),
+                  )[0]
+                  ?.marketName.map((items, index) => {
+                    return (
+                      <div
+                        key={index}
+                        // className={`${
+                        //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
+                        // } flex-1 `}
+                        className={`${
+                          items.name == 'Winner (incl. super over)'
+                            ? ''
+                            : items?.option?.length == 2
+                              ? ''
+                              : ''
+                        } ${index > 0 ? 'hidden xl:block' : ''} `}
+                      >
+                        <div
+                          className={`flex ${
+                            marketsName.filter(
+                              (item) => item.sportId == sportId,
+                            )[0]?.marketName.length == 1
+                              ? 'justify-between  md:justify-end 2xl:mx-4'
+                              : 'justify-center'
+                          }`}
+                        >
+                          <div
+                            style={{
+                              maxWidth: `${index === 0 ? 156 : 110}px`,
+                            }}
+                            className="w-full"
+                          >
+                            <div className="w-full flex justify-center">
+                              <h1 className="text-12 uppercase md:text-12 lg:text-[10px] flex-center text-center 2xl:text-14 font-[800] md:block text-black  mb-2 xl:h-[48px]">
+                                {items.name === 'Total'
+                                  ? 'OVER/UNDER(2.5)'
+                                  : items.name}
+                              </h1>
+                            </div>
+                            <div
+                              // className={`${items.option.length ==} flex justify-between`}
+                              className={`${
+                                items.option.length == 3 ? '' : ''
+                              }  flex ${
+                                index == 2 ? '' : 'mx-auto'
+                              } justify-center gap-2`}
+                            >
+                              {items.option?.map((itemss, innerIndex) => {
+                                return (
+                                  <div
+                                    key={innerIndex}
+                                    className="border flex justify-center items-center md:h-8 h-6 w-[40px] md:w-[45px] 2xl:w-[48px] 2xl:h-[36px] border-[#A3A3A3] rounded-[4px] cursor-pointer "
+                                  >
+                                    <span className="text-gray-900  md:text-12 lg:text-12 2xl:text-14 font-[500] text-10">
+                                      {itemss || 1}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+              {/* <div>
+                {marketName.filter((item) => item.sportId == sportId)
+
+                }
+              </div> */}
+            </>
           )}
         </div>
         <div className="flex-grow-0">
@@ -395,7 +489,7 @@ function SportsMenu() {
                 setSportId(1);
               }}
               type="reset"
-              className="btn border text-black ml-2 border-primary-700 h-[33px] !min-w-[65px] !text-12 !rounded-md hover:bg-primary-700"
+              className=" border text-black ml-2 border-primary-700 h-[33px] !min-w-[60px] !text-12 !rounded-md hover:bg-primary-700"
             >
               Clear
             </button>
@@ -484,19 +578,38 @@ function SportsMenu() {
           >
             {allFixtures &&
               allFixtures?.map((item, index) => {
+                let market = selectMarket == '3 WAY' ? '1x2' : selectMarket;
+                let mobileMarket = item?.previewMarkets?.find(
+                  (mkt) => mkt.name == market,
+                );
                 return (
-                  <div key={index} className="my-3">
-                    <BetCard index={index} item={item} sportId={sportId} />
-                    {(index + 1) % 13 === 0 && (
-                      <div className="text-black my-3">
-                        <img
-                          src={images.bannerImg1}
-                          alt="main"
-                          className="w-full"
-                        />
-                      </div>
-                    )}
-                  </div>
+                  <>
+                    <div key={index} className="my-3 ">
+                      <BetCard
+                        index={index}
+                        item={item}
+                        sportId={sportId}
+                        market={mobileMarket}
+                        selectMarket={selectMarket}
+                      />
+                      {(index + 1) % 13 === 0 && (
+                        <div className="text-black my-3">
+                          <img
+                            src={images.bannerImg1}
+                            alt="main"
+                            className="w-full"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {/* <div className="my-3 block sm:hidden">
+                      <MobileMarketCard
+                        item={item}
+                        market={mobileMarket}
+                        openMarket={item.openMarkets}
+                      />
+                    </div> */}
+                  </>
                 );
               })}
           </InfiniteScroll>
@@ -507,18 +620,18 @@ function SportsMenu() {
         <div className="text-center flex flex-col items-center gap-1 mt-3 mb-3 text-black">
           <img
             src="/images/bikoicon/nodata.jpg"
-            className="w-[250px] object-contain"
+            className="w-[150px] md:w-[250px] object-contain"
             alt=""
           />
-          <span className="text-black md:text-14 2xl:text-18 font-[500] text-10">
+          <span className="text-black md:text-14 2xl:text-18 font-[500] text-12">
             There are no matches.
           </span>
-          <span>
+          <span className="text-black md:text-14 2xl:text-18 font-[500] text-12">
             All Matches are temporarily unavailable. Please refresh this page
             and browse upcoming matches
           </span>
           <span
-            className="underline font-[500] text-16 cursor-pointer"
+            className="underline font-[500] text-14 md:text-16 cursor-pointer"
             onClick={() => (window.location.href = '/dashboard/upcoming')}
           >
             Browse Upcoming Matches
