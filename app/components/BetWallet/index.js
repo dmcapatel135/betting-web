@@ -154,10 +154,10 @@ function BetWallet({ stakeValue }) {
   useEffect(() => {
     setBetData([]);
     if (bets.length > 0) {
-      setTotalOdd(1);
-      bets.map((item) => {
-        setTotalOdd((prevOdds) => prevOdds * item?.bet?.odds);
-      });
+      const totalOdds = bets
+        .map((b) => b.bet?.odds || 1)
+        .reduce((a, b) => a * b, 1);
+      setTotalOdd(totalOdds);
     }
 
     if (bets) {
@@ -194,11 +194,14 @@ function BetWallet({ stakeValue }) {
     }
   }, [bets]);
 
-  const percentageValue =
-    (totalOdd * stake * gameRules?.rules[bonus?.length - 1]?.percentage) / 100;
-  const calculation = isNaN(percentageValue)
-    ? (totalOdd * stake).toFixed(2)
-    : (totalOdd * stake + percentageValue).toFixed(2);
+  const totalWinnings = (totalOdd * stake).toFixed(2);
+  const winBonus = gameRules?.rules[bonus?.length - 1]?.percentage || 0;
+  const bongeBonus = winBonus
+    ? ((Number(totalWinnings) * Number(winBonus)) / 100).toFixed(2)
+    : 0;
+  const calculation = (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
+  const tax = (((calculation - stake) * 10) / 100).toFixed(2);
+  const netAmount = (calculation - tax).toFixed(2);
 
   const handlePlaceBet = async () => {
     if (isLoggedIn()) {
@@ -248,15 +251,6 @@ function BetWallet({ stakeValue }) {
     setGetShareData([]);
     setCodeErr('');
   };
-
-  const bongeBonus = (
-    (totalOdd * stake * gameRules?.rules[bonus?.length - 1]?.percentage) /
-    100
-  ).toFixed(2);
-  const tax = (((calculation - stake) * 10) / 100).toFixed(2);
-  const netAmount = (calculation - ((calculation - stake) * 10) / 100).toFixed(
-    2,
-  );
 
   const handleGenerateBookingCode = async (type) => {
     // setOpenDailog(true);
@@ -628,10 +622,7 @@ function BetWallet({ stakeValue }) {
               <span className="text-12">{totalOdd?.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-black">
-              <span className="text-12">
-                Bonge Bonus {gameRules?.rules[bonus?.length - 1]?.percentage}%
-                (TZS)
-              </span>
+              <span className="text-12">Bonge Bonus {winBonus}% (TZS)</span>
               <span className="text-12">
                 {/* {(
               (totalOdd *
@@ -645,19 +636,19 @@ function BetWallet({ stakeValue }) {
             <div className="flex justify-between text-black">
               <span className="text-12">Tax 10% (TZS)</span>
               <span className="text-12">
-                {tax === 'NaN' ? 0 : formatNumber(tax)}
+                {tax === 'NaN' ? '0.00' : formatNumber(tax)}
               </span>
             </div>
             <div className="flex justify-between text-black">
               <span className="text-12">Possible winnings (TZS)</span>
               <span className="text-12">
-                {calculation == 'NaN' ? 0 : formatNumber(calculation)}
+                {calculation == 'NaN' ? '0.00' : formatNumber(calculation)}
               </span>
             </div>
             <div className="flex justify-between text-black">
               <span className="text-12">Net Amount (TZS)</span>
               <span className="text-12">
-                {netAmount === 'NaN' ? 0 : formatNumber(netAmount)}
+                {netAmount === 'NaN' ? '0.00' : formatNumber(netAmount)}
               </span>
             </div>
           </div>

@@ -55,15 +55,15 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     dispatch(fetchBetDetailsAction(array));
   };
 
-  let possiblewin =
-    item.bets
-      .map((b) => b.odds)
-      .reduce((a, b) => a * b, 1)
-      .toFixed(2) *
-    item.stake *
-    parseInt(
-      !(item.winBonus == null) && !(item.winBonus == 0) ? item.winBonus : 1,
-    );
+  let possiblewin = (() => {
+    const totalOdds = item.bets.map((b) => b.odds).reduce((a, b) => a * b, 1);
+
+    const totalWinnings = (totalOdds * item.stake).toFixed(2);
+    const bonus = item.winBonus
+      ? ((Number(totalWinnings) * Number(item.winBonus)) / 100).toFixed(2)
+      : 0;
+    return Number(totalWinnings) + Number(bonus);
+  })();
 
   const handleButton = (status) => {
     if (status == 'Settled') {
@@ -205,7 +205,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   Bonge Bonus
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {item.winBonus ? item.winBonus : 0}
+                  {item.winBonus ? `${item.winBonus}%` : '0%'}
                 </p>
               </div>
             </div>
@@ -237,7 +237,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {formatNumber(item.wonAmount ? item.wonAmount : 0)}
+                  {formatNumber(item.wonAmount ? item.wonAmount : 'N/A')}
                 </p>
               </div>
             </div>
