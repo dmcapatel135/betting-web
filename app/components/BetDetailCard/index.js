@@ -5,7 +5,7 @@ import { postReq } from '@utils/apiHandlers';
 import { toast } from 'react-toastify';
 import { formatNumber } from '@utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBetDetailsAction } from '@actions';
+import { fetchBetDetailsAction, wallet } from '@actions';
 
 function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const handleCancelBet = async (id) => {
     const response = await postReq(`/users/me/bet-slips/${id}/cancel`);
     if (response.status) {
+      dispatch(wallet());
       toast.success('Bet cancelled successfully');
       getMyBetDetails();
     } else {

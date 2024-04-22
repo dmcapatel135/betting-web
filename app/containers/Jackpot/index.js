@@ -224,12 +224,19 @@ function Jackpot() {
   }, [selectedJackpot, jackpotFixtures]);
 
   const handleBuyTicket = async (jackpotEventId) => {
+    let channel;
+    if (window.matchMedia('(max-width: 575px)').matches) {
+      channel = 'Mobile';
+    } else {
+      channel = 'Website';
+    }
     if (isLoggedIn()) {
       setPlaceJackpotLoading(true);
       const data = {
         jackpotEventId: jackpotEventId,
         acceptOddsChange: true,
         bets: jackpotData,
+        channel: channel,
       };
 
       const response = await postReq('/users/me/bet-slips/jackpot', data);

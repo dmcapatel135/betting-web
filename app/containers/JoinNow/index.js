@@ -70,6 +70,12 @@ function JoinNow() {
   };
 
   const handleRegister = async (e) => {
+    let channel;
+    if (window.matchMedia('(max-width: 575px)').matches) {
+      channel = 'Mobile';
+    } else {
+      channel = 'Website';
+    }
     setIsLoading(true);
     e.preventDefault();
     const data = {
@@ -78,6 +84,7 @@ function JoinNow() {
       country: form.country,
       password: form.password,
       mobileVerificationCode: form.mobileVerificationCode,
+      channel: channel,
     };
     setError(error);
     const error = await register(data);

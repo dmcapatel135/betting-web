@@ -7,7 +7,7 @@ import { reactIcons } from '@utils/icons';
 import { getReq, isLoggedIn, postReq } from '@utils/apiHandlers';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { fetchBetDetailsAction } from '@actions';
+import { fetchBetDetailsAction, wallet } from '@actions';
 import { formatNumber } from '@utils/constants';
 import { MyContext } from '@components/MyContext/MyContext';
 import { CircularProgress } from '@mui/material';
@@ -204,18 +204,26 @@ function BetWallet({ stakeValue }) {
   const netAmount = (calculation - tax).toFixed(2);
 
   const handlePlaceBet = async () => {
+    let channel;
+    if (window.matchMedia('(max-width: 575px)').matches) {
+      channel = 'Mobile';
+    } else {
+      channel = 'Website';
+    }
     if (isLoggedIn()) {
       setIsLoading(true);
       const data = {
         stake: stake,
         acceptOddsChange: oddChange,
         bets: betData,
+        channel: channel,
       };
       const response = await postReq('/users/me/bet-slips', data);
       setIsLoading(false);
       if (response.status) {
         dispatch(fetchBetDetailsAction([]));
         toast.success('Congrats ! Bet place successfully');
+        dispatch(wallet());
       } else if (response.error) {
         toast.error(response.error.message);
       }
