@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Outlet, useParams, useSearchParams } from 'react-router-dom';
+import { Link, Outlet, useParams, useSearchParams } from 'react-router-dom';
 import {
   BetWallet,
   // Betslip,
@@ -31,9 +31,12 @@ const OuterLayout = () => {
   const [otherCountries, setOtherCountries] = useState([]);
   const [gameRules, setGameRules] = useState();
   const [selectMarket, setSelectMarket] = useState();
+  const [bonus, setBonus] = useState([]);
+  const [totalOdds, setTotalOdds] = useState();
   const [marketData, setMarketData] = useState(
     marketsName.find((item) => item.sportId == params.get('sId') || 1),
   );
+  const selectedBet = useSelector((state) => state.bet.selectedBet);
 
   const { bookingcode } = useParams();
 
@@ -96,7 +99,34 @@ const OuterLayout = () => {
   useEffect(() => {
     getGamesRules();
   }, []);
-  const selectedBet = useSelector((state) => state.bet.selectedBet);
+
+  useEffect(() => {
+    const rule = selectedBet?.filter(
+      (item) => item?.bet?.odds >= gameRules?.minimumOdds,
+    );
+    setBonus(rule);
+    if (selectedBet?.length > 0) {
+      const totalOdds = selectedBet
+        .map((b) => b.bet?.odds || 1)
+        .reduce((a, b) => a * b, 1);
+      setTotalOdds(totalOdds);
+    }
+  }, [selectedBet, gameRules]);
+
+  const handleMobileBetslip = () => {
+    const validPaths = [
+      '/',
+      '/dashboard/upcoming',
+      '/dashboard/live-now',
+      '/dashboard/popular',
+    ];
+    if (validPaths.includes(window.location.pathname)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
       <MyContext.Provider
@@ -119,52 +149,71 @@ const OuterLayout = () => {
           setMarketData,
         }}
       >
-        <Navbar tab={tab} setTab={setTab} />
-        <div className="flex gap-4 h-hull">
-          <div className="w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
-            <Sidebar
-              tab={tab}
-              setTab={setTab}
-              setSelectTournament={setSelectTournament}
-            />
-          </div>
-          <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5  lg:pb-0 bg-white">
-            {/* <ExampleComponent sportId={sportId} /> */}
-            <Outlet />
-          </div>
-          <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
-            <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
-              {/* {selectedBet.length > 0 ? (
-                <BetWallet />
-              ) : isLoggedIn() ? (
-                <Betslip />
-              ) : (
-                <div>
-                  <img src={images.AppImg} alt="app" className="" />
-                  <img src={images.contactImg} alt="app" className="py-2" />
+        <div className="relative">
+          <Navbar tab={tab} setTab={setTab} />
+          <div className="flex gap-4 h-hull">
+            <div className="w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
+              <Sidebar
+                tab={tab}
+                setTab={setTab}
+                setSelectTournament={setSelectTournament}
+              />
+            </div>
+            <div className=" flex-1 overflow-x-auto relative">
+              {handleMobileBetslip() && (
+                <div className="fixed bg-gradient-color-1 text-black h-fit bottom-0 lg:hidden block z-50 w-full">
+                  {!(selectedBet.length > gameRules?.rules?.length) &&
+                    gameRules?.rules[bonus?.length - 1]?.message && (
+                      <div className="text-center bg-yellow py-2 text-14 text-white">
+                        <p> {gameRules?.rules[bonus?.length - 1]?.message}</p>
+                      </div>
+                    )}
+                  <div className="text-white py-2 flex items-center justify-around">
+                    <div className="text-14 flex font-[500] items-center gap-2">
+                      <p>BETSLIP</p>
+                      <div className="rounded-full flex justify-center items-center w-6 h-6 bg-white text-black">
+                        <p>{selectedBet.length}</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-center text-white text-14 items-center gap-2">
+                      <p>Odds : </p>
+                      <p>{totalOdds ? totalOdds?.toFixed(2) : 0}</p>
+                    </div>
+                    <div>
+                      <Link
+                        to={isLoggedIn() ? '/dashboard/bet-slip' : '/login'}
+                      >
+                        <button className="bg-yellow px-3 py-1 text-white text-12 font-[600] rounded-md">
+                          BET NOW
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              )} */}
-              {
-                //   selectedBet.length > 0 ? (
-                //   <BetWallet />
-                // ) :
-                selectedBet.length > 0 || isLoggedIn() || bookingcode ? (
+              )}
+              <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5  lg:pb-0 bg-white ">
+                <Outlet />
+              </div>
+            </div>
+            <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
+              <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
+                {selectedBet.length > 0 || isLoggedIn() || bookingcode ? (
                   <BetWallet />
                 ) : (
                   <div>
                     <img src={images.AppImg} alt="app" className="" />
                     <img src={images.contactImg} alt="app" className="py-2" />
                   </div>
-                )
-              }
+                )}
 
-              <CompanyContact />
-              <CustomerCareContact />
-              <TalkToUs />
+                <CompanyContact />
+                <CustomerCareContact />
+                <TalkToUs />
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
-        <Footer />
       </MyContext.Provider>
     </>
   );

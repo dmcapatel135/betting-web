@@ -269,7 +269,7 @@ function SportsMenu() {
             </div>
             <div className="flex-1">
               <select
-                value={selectTournament}
+                value={selectTournament || 'Top Leagues & Countries'}
                 onChange={(e) => {
                   if (e.target.value == 'Top Leagues & Countries')
                     setSelectTournament(null);

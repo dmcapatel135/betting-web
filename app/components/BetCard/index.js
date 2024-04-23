@@ -98,9 +98,20 @@ function BetCard({ item, sportId, market, selectMarket }) {
     dispatch(fetchBetDetailsAction(updatedBets));
   };
 
+  const handleSelectEvent = (eventId) => {
+    let selectedEvent = selectedBet.find((item) => item.eventId == eventId);
+    if (selectedEvent) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
-      <div className="border hidden lg:block rounded-[8px] border-[#A3A3A3] text-black">
+      <div
+        className={`border hidden lg:block rounded-[8px] ${handleSelectEvent(item.eventId) ? 'bg-[#ececff]' : 'border-[#A3A3A3]'} text-black`}
+      >
         <div className="flex items-center w-full md:pr-2">
           <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
             <div className="items-center w-36 md:w-48 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
@@ -945,7 +956,9 @@ function BetCard({ item, sportId, market, selectMarket }) {
           </div>
         </div>
       </div>
-      <div className="border flex items-center lg:hidden rounded-[8px] border-lightgray text-black">
+      <div
+        className={`border flex items-center lg:hidden rounded-[8px] ${handleSelectEvent(item.eventId) ? 'bg-[#ececff] ' : 'border-[#A3A3A3]'} text-black`}
+      >
         <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
           <div className="items-center w-40 md:w-52 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
             <div className="flex items-center">

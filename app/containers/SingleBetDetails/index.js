@@ -844,7 +844,7 @@ function SigleBetDetails() {
             </div>
           </div>
         )}
-        <div className="bg-yellow py-1 flex justify-between rounded-md mt-5 px-3">
+        <div className="bg-yellow py-1 block md:flex justify-between rounded-md mt-5 px-3">
           <h1 className="text-white text-14 font-[600]">
             {eventName} - ALL MARKETS
           </h1>

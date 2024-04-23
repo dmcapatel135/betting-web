@@ -10,6 +10,7 @@ import ShareBetModal from '@components/ShareBetModal';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
 import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';
+import { reactIcons } from '@utils/icons';
 // import ResultJackpotCard from '@components/ResultJackpotCard/ResultJackpotCard';
 // import JackpotPickMatchCard from '@components/JackpotPickMatchCard/JackpotPickMatchCard';
 
@@ -107,6 +108,21 @@ function MyBets() {
   //   // setPage(newPage);
   //   getMyBetDetails(queries, newPage);
   // };
+
+  const handleBetStatus = (innerItem) => {
+    console.log('--------innerItem', innerItem.status);
+    if (innerItem?.status == 'Settled') {
+      if (innerItem?.settlement?.result == 'Won') {
+        return 'Won';
+      } else if (innerItem?.settlement?.result == 'Lost') {
+        return 'Lost';
+      } else {
+        return 'N.A';
+      }
+    } else if (innerItem?.status) {
+      return innerItem?.status;
+    }
+  };
 
   const handleClear = () => {
     setStartDate(moment().startOf('month').toDate());
@@ -233,13 +249,24 @@ function MyBets() {
                                   key={innerIndex}
                                   className="border border-green/50  shadow-md rounded-[8px] mt-2"
                                 >
+                                  <div className="flex justify-end mx-3">
+                                    <span
+                                      className={`${handleBetStatus(innerItem) == 'Pending' ? 'text-black text-16' : handleBetStatus(innerItem) == 'Won' ? 'text-[#00FF00] text-24' : 'text-red-500 text-24'}  mt-2`}
+                                    >
+                                      {handleBetStatus(innerItem) == 'Won'
+                                        ? reactIcons.success
+                                        : handleBetStatus(innerItem) == 'Lost'
+                                          ? reactIcons.close
+                                          : handleBetStatus(innerItem)}
+                                    </span>
+                                  </div>
                                   <div className="grid gap-2 grid-cols-6 xl:grid-cols-12 p-3">
                                     <div className="col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
-                                        <div className="flex flex-col justify-between h-full">
+                                        <div className="flex flex-col  h-full">
                                           <div className="flex gap-2">
                                             <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
-                                              MATCH START TIME
+                                              START TIME
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                                               {moment(
@@ -247,7 +274,7 @@ function MyBets() {
                                               ).format('DD-MM-yy hh:mm A')}
                                             </p>
                                           </div>
-                                          <div className="flex gap-2">
+                                          {/* <div className="flex gap-2">
                                             <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               GAME
                                             </p>
@@ -267,18 +294,26 @@ function MyBets() {
                                                   ?.name
                                               }
                                             </p>
-                                          </div>
+                                          </div> */}
                                           <div className="flex gap-2">
                                             <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Team
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                              {innerItem?.event?.competitors[0]
-                                                ?.name || 'N.A'}{' '}
-                                              - {''}
-                                              {innerItem?.event?.competitors[1]
-                                                ?.name || 'N.A'}
-                                            </p>
+                                            <div>
+                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                                                {innerItem?.event
+                                                  ?.competitors[0]?.name ||
+                                                  'N.A'}{' '}
+                                              </p>
+                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
+                                                Vs {''}
+                                              </p>
+                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                                                {innerItem?.event
+                                                  ?.competitors[1]?.name ||
+                                                  'N.A'}
+                                              </p>
+                                            </div>
                                           </div>
                                         </div>
                                         <div className="hidden xl:flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>

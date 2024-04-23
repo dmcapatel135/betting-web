@@ -388,3 +388,8 @@ tbody {
   scroll-behavior: smooth;
   scroll-margin-top: 100px;
 }
+
+.scroll-top-12 {
+  scroll-behavior: smooth;
+  scroll-margin-top: 130px;
+}

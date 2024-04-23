@@ -29,7 +29,7 @@ function TermsAndCondition() {
               <div
                 id={item.id}
                 key={item.id}
-                className="text-black my-3 scroll-top-10"
+                className="text-black my-3 scroll-top-12  lg:scroll-top-10"
               >
                 <div className="flex mt-3 mb-5">
                   <h1 className="text-18 font-[700]">{item.rule}</h1>

@@ -685,7 +685,7 @@ function BetWallet({ stakeValue }) {
       )}
       {openDialog && (
         <div className="absolute top-0 bg-[#0000002e]  w-full backdrop-blur-[2px] h-full rounded-[8px] ">
-          <div className="lg:w-[245px] w-[300px] 2xl:w-[300px] h-fit pb-5 bg-white z-50 m-4 lg:m-2 2xl:m-4">
+          <div className="lg:w-[245px] w-[300px] xl:w-[280px] h-fit pb-5 bg-white z-50 m-4 lg:m-2 2xl:m-4">
             <div className="flex justify-between py-1 px-2 ">
               <div className="flex text-gray-900">
                 <img src="/images/bikoicon/person_play.png" className="h-5" />
@@ -701,10 +701,10 @@ function BetWallet({ stakeValue }) {
               </span>
             </div>
             <div>
-              <div className="lg:w-[200px] w-[280px] 2xl:w-[280px] border-[1px] border-yellow my-2 h-8 mx-3">
+              <div className="lg:w-[255px] w-[280px]  2xl:w-[280px] border-[1px] border-yellow my-2 h-8 mx-3">
                 <div className="h-8 flex justify-between">
                   <div className="lg:w-24 w-28 2xl:w-28 bg-yellow">
-                    <span className="text-10 font-[600] 2xl:text-12 text-white leading-3 px-3">
+                    <span className="text-[11px] font-[600] 2xl:text-12 text-white leading-3 px-3">
                       Booking Code
                     </span>
                   </div>
