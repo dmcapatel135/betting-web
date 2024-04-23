@@ -194,10 +194,11 @@ function BetWallet({ stakeValue }) {
     }
   }, [bets]);
 
-  const totalWinnings = (totalOdd * stake).toFixed(2);
+  const totalWinnings = totalOdd.toFixed(2) * stake;
+
   const winBonus = gameRules?.rules[bonus?.length - 1]?.percentage || 0;
   const bongeBonus = winBonus
-    ? ((Number(totalWinnings) * Number(winBonus)) / 100).toFixed(2)
+    ? (Number(totalWinnings) * parseInt(winBonus)) / 100
     : 0;
   const calculation = (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
   const tax = (((calculation - stake) * 10) / 100).toFixed(2);

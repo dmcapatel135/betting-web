@@ -11,7 +11,7 @@ const Footer = () => {
   const LinkData = [
     { link: 'Terms & Conditions', path: '/terms' },
     { link: 'FAQs', path: '/faqs' },
-    { link: 'How to Play', path: '/how-to-play' },
+    { link: 'How to Play', path: '/dashboard/how-to-play' },
   ];
   return (
     <footer className="bg-gradient-color-1">

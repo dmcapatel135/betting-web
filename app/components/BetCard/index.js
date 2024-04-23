@@ -103,7 +103,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
       <div className="border hidden lg:block rounded-[8px] border-[#A3A3A3] text-black">
         <div className="flex items-center w-full md:pr-2">
           <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
-            <div className="items-center w-36 md:w-52 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
+            <div className="items-center w-36 md:w-48 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
               <div className="flex items-center">
                 <img src="/images/bikoicon/acute.png" />
                 <p className="text-10 ml-1 md:text-10">
