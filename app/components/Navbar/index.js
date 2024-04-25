@@ -437,6 +437,7 @@ const Navbar = ({ tab, setTab }) => {
               onClick={() => {
                 setTab(item.id);
                 if (item.title == 'MENU') setIsOpenMenuList(!isOpenMenuList);
+                else setIsOpenMenuList(false);
               }}
               to={item.path}
               className={({ isActive }) =>

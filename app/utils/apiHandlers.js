@@ -16,15 +16,15 @@ export const setToken = (token) => {
 // const authorize = () => {
 //   return `Bearer ${localStorage.getItem('is_user_token')}`;
 // };
-const handleLogout = async () => {
-  const response = await postReq('/auth/logout');
-  if (response.status) {
-    removeAuthCookie();
-    localStorage.removeItem('is_user_token');
-    window.location = '/';
-    return true;
-  }
-};
+// const handleLogout = async () => {
+//   const response = await postReq('/auth/logout');
+//   if (response.status) {
+//     removeAuthCookie();
+//     localStorage.removeItem('is_user_token');
+//     window.location = '/';
+//     return true;
+//   }
+// };
 
 let header = isDevelopment
   ? {
@@ -105,7 +105,10 @@ export const postReq = async (endpoint, data) => {
     })
     .catch((err) => {
       if (err.response.data.status == 401) {
-        handleLogout();
+        // handleLogout();
+        removeAuthCookie();
+        localStorage.removeItem('is_user_token');
+        window.location = '/';
       } else {
         return handleApiError(err);
       }
@@ -122,7 +125,10 @@ export const patchReq = async (endpoint, data) => {
     })
     .catch((err) => {
       if (err.response.data.status == 401) {
-        handleLogout();
+        // handleLogout();
+        removeAuthCookie();
+        localStorage.removeItem('is_user_token');
+        window.location = '/';
       } else {
         return handleApiError(err);
       }
@@ -139,7 +145,10 @@ export const getReq = async (endpoint) => {
     })
     .catch((err) => {
       if (err.response.data.status == 401) {
-        handleLogout();
+        // handleLogout();
+        removeAuthCookie();
+        localStorage.removeItem('is_user_token');
+        window.location = '/';
       } else {
         return handleApiError(err);
       }

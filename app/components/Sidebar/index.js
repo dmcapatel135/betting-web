@@ -17,11 +17,11 @@ function Sidebar({
 }) {
   const naviagte = useNavigate();
   const [isOpenTournament, setIsOpenTournament] = useState(true);
-  const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(false);
+  const [isOpenpopularCountry, setIsOpenpopularCountry] = useState(true);
   const [isOpenLeague, setIsOpenLeague] = useState(false);
   const [searchParams] = useSearchParams(window.location.search);
   const [leagues, setLeagues] = useState([]);
-  const [isOpenOtherCountry, setIsOpenOtherCountry] = useState(false);
+  const [isOpenOtherCountry, setIsOpenOtherCountry] = useState(true);
   const [liveData, setLiveData] = useState([]);
 
   const {
@@ -142,7 +142,7 @@ function Sidebar({
             className="flex justify-between items-center cursor-pointer rounded-l-md h-10 px-3 bg-gradient-color-2 my-2"
             onClick={() => {
               setIsOpenTournament(!isOpenTournament);
-              setIsOpenpopularCountry(false);
+              // setIsOpenpopularCountry(false);
             }}
           >
             <h3 className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
@@ -196,8 +196,8 @@ function Sidebar({
           <div
             className="flex justify-between items-center cursor-pointer rounded-l-md h-10 px-3 bg-gradient-color-1 my-2"
             onClick={() => {
-              setIsOpenTournament(false);
-              setIsOpenOtherCountry(false);
+              // setIsOpenTournament(false);
+              // setIsOpenOtherCountry(false);
               setIsOpenpopularCountry(!isOpenpopularCountry);
             }}
           >
@@ -211,7 +211,7 @@ function Sidebar({
           {isOpenpopularCountry && (
             <div className="pl-2 overflow-y-auto custom-scroll-sm max-h-64">
               <ul>
-                {categories.map((item) => {
+                {categories?.map((item) => {
                   return (
                     <div key={item.id} className="px-3">
                       <li
@@ -283,7 +283,7 @@ function Sidebar({
                   );
                 })}
               </ul>
-              {categories.length == 0 && (
+              {categories?.length == 0 && (
                 <div>
                   <span className="text-black font-[500] text-14">
                     No popular countries at this moment
@@ -297,9 +297,9 @@ function Sidebar({
         <div className="text-black pl-3">
           <div
             onClick={() => {
-              setIsOpenTournament(false);
+              // setIsOpenTournament(false);
               setIsOpenOtherCountry(!isOpenOtherCountry);
-              setIsOpenpopularCountry(false);
+              // setIsOpenpopularCountry(false);
             }}
             className="flex justify-between cursor-pointer items-center rounded-l-md h-10 px-3 bg-gradient-color-2 my-2"
           >
