@@ -110,7 +110,6 @@ function MyBets() {
   // };
 
   const handleBetStatus = (innerItem) => {
-    console.log('--------innerItem', innerItem.status);
     if (innerItem?.status == 'Settled') {
       if (innerItem?.settlement?.result == 'Won') {
         return 'Won';
@@ -129,6 +128,7 @@ function MyBets() {
     setEndDate(moment().endOf('month').toDate());
     setStatus('');
     setQueries('');
+    setStep(1);
   };
 
   return (
@@ -256,7 +256,7 @@ function MyBets() {
                                       {handleBetStatus(innerItem) == 'Won'
                                         ? reactIcons.success
                                         : handleBetStatus(innerItem) == 'Lost'
-                                          ? reactIcons.close
+                                          ? reactIcons.closecircle
                                           : handleBetStatus(innerItem)}
                                     </span>
                                   </div>
@@ -319,7 +319,7 @@ function MyBets() {
                                         <div className="hidden xl:flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
                                       </div>
                                     </div>
-                                    <hr className="w-full col-span-6 xl:col-span-12 xl:hidden border-t border-t-green/50"></hr>
+                                    <hr className="w-full col-span-6 xl:col-span-12 hidden border-t border-t-green/50"></hr>
                                     <div className="col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex  h-full flex-col justify-between 2xl:gap-2">

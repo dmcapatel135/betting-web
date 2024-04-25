@@ -57,6 +57,7 @@ const useAuth = () => {
           );
           dispatch(init());
           navigateAuthenticatedUser();
+          window.location.reload();
         } else {
           showErrorMessage(response.error.message);
         }
@@ -81,6 +82,7 @@ const useAuth = () => {
           );
           dispatch(init());
           navigateAuthenticatedUser();
+          window.location.reload();
         } else {
           showErrorMessage(response.error.message);
         }

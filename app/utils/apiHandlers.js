@@ -1,7 +1,9 @@
+// import { useAuth } from '@hooks';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 
+// const { logout } = useAuth(); // eslint-disable-line
 const isDevelopment = NODE_ENV !== 'production';
 const isProductionApp = APP_ENV === 'production';
 
@@ -14,6 +16,23 @@ export const setToken = (token) => {
 // const authorize = () => {
 //   return `Bearer ${localStorage.getItem('is_user_token')}`;
 // };
+const handleLogout = async () => {
+  const response = await postReq('/auth/logout');
+  if (response.status) {
+    removeAuthCookie();
+    localStorage.removeItem('is_user_token');
+    window.location = '/';
+    return true;
+  }
+};
+
+let header = isDevelopment
+  ? {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('is_user_token')}`,
+      },
+    }
+  : { withCredentials: true };
 
 export const setAuthCookie = () => {
   return Cookies.set(
@@ -80,12 +99,16 @@ export const postReq = async (endpoint, data) => {
   const url = API_URL + endpoint;
 
   return await axios
-    .post(url, data, { withCredentials: true })
+    .post(url, data, header)
     .then((response) => {
       return responseFormatter(true, response.data, null);
     })
     .catch((err) => {
-      return handleApiError(err);
+      if (err.response.data.status == 401) {
+        handleLogout();
+      } else {
+        return handleApiError(err);
+      }
     });
 };
 
@@ -93,12 +116,16 @@ export const patchReq = async (endpoint, data) => {
   const url = API_URL + endpoint;
 
   return await axios
-    .patch(url, data, { withCredentials: true })
+    .patch(url, data, header)
     .then((response) => {
       return responseFormatter(true, response.data, null);
     })
     .catch((err) => {
-      return handleApiError(err);
+      if (err.response.data.status == 401) {
+        handleLogout();
+      } else {
+        return handleApiError(err);
+      }
     });
 };
 
@@ -106,19 +133,15 @@ export const getReq = async (endpoint) => {
   const url = API_URL + endpoint;
 
   return await axios
-    .get(
-      url,
-      // {
-      //   headers: {
-      //     Authorization: authorize(),
-      //   },
-      // },
-      { withCredentials: true },
-    )
+    .get(url, header)
     .then((response) => {
       return responseFormatter(true, response.data, null);
     })
     .catch((err) => {
-      return handleApiError(err);
+      if (err.response.data.status == 401) {
+        handleLogout();
+      } else {
+        return handleApiError(err);
+      }
     });
 };

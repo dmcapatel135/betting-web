@@ -44,9 +44,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             element?.event?.competitors[0]?.name +
             '-' +
             element?.event?.competitors[1]?.name,
-          specifiers: element?.specifiers
-            ? element?.specifiers.join('|')
-            : null,
+          specifiers: element?.specifiers ? element?.specifiers : null,
         });
       } else {
         console.log('');
@@ -80,6 +78,19 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
       return false;
     } else {
       return true;
+    }
+  };
+
+  const statusHandler = (bets) => {
+    if (bets.find((item) => item.status == 'Pending')) {
+      return 'Pending';
+    } else if (bets.find((item) => item.status == 'Settled')) {
+      let result = bets.find((item) => item.settlement.result == 'Lost');
+      if (result) {
+        return 'Lost';
+      } else {
+        return 'Won';
+      }
     }
   };
 
@@ -186,6 +197,15 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         </div>
       </div> */}
       <div className="grid gap-2 grid-cols-6 md:grid-cols-12 p-3">
+        <div className="col-span-full">
+          <div className="flex justify-end">
+            <p
+              className={`${statusHandler(item.bets) == 'Pending' ? 'text-gray-400' : statusHandler(item.bets) == 'Lost' ? 'text-red-500' : 'text-greencolor'} font-[600]`}
+            >
+              {statusHandler(item.bets)}
+            </p>
+          </div>
+        </div>
         <div className="col-span-6 md:col-span-6 2xl:col-span-6">
           <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex flex-col justify-between h-full">
@@ -256,7 +276,9 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {formatNumber(item.wonAmount ? item.wonAmount : 'N/A')}
+                  {formatNumber(
+                    !isNaN(item.wonAmount) ? item.wonAmount : 'N/A',
+                  )}
                 </p>
               </div>
               <div className="flex gap-7 ">

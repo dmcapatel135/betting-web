@@ -1211,6 +1211,15 @@ export const countryList = [
   },
 ];
 
-export function formatNumber(number) {
-  return number?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// export function formatNumber(number) {
+//   return number?.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// }
+
+export function formatNumber(amount) {
+  const formattedAmount = new Intl.NumberFormat('en-TZ', {
+    style: 'currency',
+    currency: 'TZS',
+  }).format(amount);
+
+  return formattedAmount.replace('TSh', '').trim();
 }

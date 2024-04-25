@@ -59,7 +59,7 @@ module.exports = {
         },
         maroon: '#C6224E',
         blue: '#3F1F63',
-        // green: '#098224',
+        greencolor: '#098224',
         green: '#6D2299',
         bluewhalelight: '#006E8F',
         lightgray: '#999999',

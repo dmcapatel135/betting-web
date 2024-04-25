@@ -330,7 +330,7 @@ function SportsMenu() {
           >
             {!(tab == 3) && (
               <p className="">
-                {moment(new Date()).format('dddd, MMMM Do YYYY').toUpperCase()}
+                {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()}
               </p>
             )}
           </div>
