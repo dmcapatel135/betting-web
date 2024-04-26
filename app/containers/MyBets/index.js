@@ -10,7 +10,7 @@ import ShareBetModal from '@components/ShareBetModal';
 import { getReq } from '@utils/apiHandlers';
 import moment from 'moment';
 import DateRangePickerCustom from '@components/FormElements/DateRangePickerCustom';
-import { reactIcons } from '@utils/icons';
+// import { reactIcons } from '@utils/icons';
 // import ResultJackpotCard from '@components/ResultJackpotCard/ResultJackpotCard';
 // import JackpotPickMatchCard from '@components/JackpotPickMatchCard/JackpotPickMatchCard';
 
@@ -251,21 +251,26 @@ function MyBets() {
                                 >
                                   <div className="flex justify-end mx-3">
                                     <span
-                                      className={`${handleBetStatus(innerItem) == 'Pending' ? 'text-black text-16' : handleBetStatus(innerItem) == 'Won' ? 'text-[#00FF00] text-24' : 'text-red-500 text-24'}  mt-2`}
+                                      className={`${handleBetStatus(innerItem) == 'Pending' ? 'text-gray-400 font-[600] text-16' : handleBetStatus(innerItem) == 'Won' ? 'text-[#00FF00] text-24' : 'text-red-500 text-16'}  mt-2`}
                                     >
-                                      {handleBetStatus(innerItem) == 'Won'
-                                        ? reactIcons.success
-                                        : handleBetStatus(innerItem) == 'Lost'
-                                          ? reactIcons.closecircle
-                                          : handleBetStatus(innerItem)}
+                                      {handleBetStatus(innerItem) == 'Won' ? (
+                                        // reactIcons.success
+                                        <div className="w-6 h-6 rounded-full bg-greencolor"></div>
+                                      ) : handleBetStatus(innerItem) ==
+                                        'Lost' ? (
+                                        // reactIcons.closecircle
+                                        <div className="w-6 h-6 rounded-full bg-red-500"></div>
+                                      ) : (
+                                        handleBetStatus(innerItem)
+                                      )}
                                     </span>
                                   </div>
                                   <div className="grid gap-2 grid-cols-6 xl:grid-cols-12 p-3">
-                                    <div className="col-span-6">
+                                    <div className="col-span-4 md:col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex flex-col  h-full">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900 w-[75px]  md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               START TIME
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -296,22 +301,48 @@ function MyBets() {
                                             </p>
                                           </div> */}
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[75px]  md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Team
                                             </p>
                                             <div>
                                               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                                {innerItem?.event
+                                                {/* {innerItem?.event
                                                   ?.competitors[0]?.name ||
-                                                  'N.A'}{' '}
+                                                  'N.A'}{' '} */}
+                                                {
+                                                  innerItem?.event?.competitors?.find(
+                                                    (item) =>
+                                                      item.qualifier == 'Home',
+                                                  ).name
+                                                }
+                                                .......
+                                                <strong>
+                                                  {innerItem?.event?.homeScore
+                                                    ? innerItem?.event
+                                                        ?.homeScore
+                                                    : 'N/A'}
+                                                </strong>
                                               </p>
                                               <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
                                                 Vs {''}
                                               </p>
                                               <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                                {innerItem?.event
+                                                {/* {innerItem?.event
                                                   ?.competitors[1]?.name ||
-                                                  'N.A'}
+                                                  'N.A'} */}
+                                                {
+                                                  innerItem?.event?.competitors?.find(
+                                                    (item) =>
+                                                      item.qualifier == 'Away',
+                                                  ).name
+                                                }{' '}
+                                                .......
+                                                <strong>
+                                                  {innerItem?.event?.awayScore
+                                                    ? innerItem?.event
+                                                        ?.awayScore
+                                                    : 'N/A'}
+                                                </strong>
                                               </p>
                                             </div>
                                           </div>
@@ -320,11 +351,11 @@ function MyBets() {
                                       </div>
                                     </div>
                                     <hr className="w-full col-span-6 xl:col-span-12 hidden border-t border-t-green/50"></hr>
-                                    <div className="col-span-6">
+                                    <div className="col-span-2 md:col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex  h-full flex-col justify-between 2xl:gap-2">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               PICK
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
@@ -334,7 +365,7 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MKT
                                             </p>
                                             <p className="text-gray-900 flex-1 text-12 md:text-14 xxl:text-16 ">
@@ -344,8 +375,8 @@ function MyBets() {
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
-                                              STATUS
+                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                              Result
                                             </p>
                                             <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                                               {innerItem?.status == 'Settled'

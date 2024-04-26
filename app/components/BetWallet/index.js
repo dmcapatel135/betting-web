@@ -472,7 +472,13 @@ function BetWallet({ stakeValue }) {
         )}
         {bets.length == 0 && (
           <div className="text-center">
-            <div className="my-5 flex justify-center  h-56">
+            <div
+              onClick={() => {
+                navigate('/');
+                setSelectTournament(null);
+              }}
+              className="my-5 flex justify-center cursor-pointer  h-56"
+            >
               <img
                 src={images.emptybetslip}
                 alt="beticon"
@@ -601,7 +607,9 @@ function BetWallet({ stakeValue }) {
             <span className="text-black text-16">Your stake</span>
             <div className="h-[40px] border-[1px] border-yellow rounded-lg flex justify-between my-2">
               <div
-                onClick={() => setStake(parseInt(stake) - 1)}
+                onClick={() => {
+                  if (stake > 0) setStake(parseInt(stake) - 500);
+                }}
                 className="h-[38px] flex justify-center items-center cursor-pointer bg-[#C2C4C6] w-12 text-center rounded-l-lg"
               >
                 <span className="text-24">-</span>
@@ -615,7 +623,7 @@ function BetWallet({ stakeValue }) {
                 />
               </div>
               <div
-                onClick={() => setStake(parseInt(stake) + 1)}
+                onClick={() => setStake(parseInt(stake) + 500)}
                 className="h-[38px] flex justify-center items-center cursor-pointer bg-yellow w-12 rounded-r-lg"
               >
                 <span className="text-24">+</span>

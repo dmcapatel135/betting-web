@@ -94,7 +94,7 @@ function Sidebar({
             {navigations.map((item, index) => (
               <div
                 key={index}
-                className={`${item.title === 'HOME' ? 'lg:block hidden' : ''}`}
+                className={`${item.title === 'HOME' ? 'lg:block hidden' : ''} ${item.order}`}
               >
                 <NavLink
                   key={index}
@@ -104,7 +104,7 @@ function Sidebar({
                   }}
                   to={item.state ? handleManageUrl(item.path) : item.path}
                   className={({ isActive }) =>
-                    `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]   cursor-pointer  2xl:text-base ${
+                    `px-3 py-2 lg:py-2  md:text-16 xxl:text-20 h-10 text-gray-900 font-[500]    cursor-pointer  2xl:text-base ${
                       isActive
                         ? 'bg-gradient-color-1 text-white flex rounded-l-md items-center gap-3'
                         : ' hover:bg-primary-yellow  flex items-center gap-3'

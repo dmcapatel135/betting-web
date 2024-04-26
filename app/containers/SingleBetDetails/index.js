@@ -852,10 +852,16 @@ function SigleBetDetails() {
             Start Time -{' '}
             {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
           </h1>
-          <h1 className="text-white text-14 font-[600]">
-            Status - {eventData?.matchStatusText} |{' '}
-            {eventData?.matchTime ? eventData?.matchTime : '_:_'}
-          </h1>
+          <div className="flex  justify-between">
+            <h1 className="text-white text-14 font-[600]">
+              Status - {eventData?.matchStatusText} |{' '}
+              {eventData?.matchTime ? eventData?.matchTime : '_:_'}
+            </h1>
+            <div className="md:hidden flex gap-2 items-center">
+              <span className="text-12 font-[600]">STATISTICS</span>
+              <span className="text-white text-20">{reactIcons.bargraph}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -879,6 +885,10 @@ function SigleBetDetails() {
                   </div>
                   <div className="grid grid-cols-12">
                     {item.outcomes.map((innerItem, innerIndex) => {
+                      console.log(
+                        '-------------innner item --------',
+                        innerItem.name,
+                      );
                       return (
                         <div
                           key={innerIndex}
@@ -927,12 +937,12 @@ function SigleBetDetails() {
                                 )
                                   ? 'bg-green text-white'
                                   : ''
-                              } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-3`}
+                              } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-1 md:px-3`}
                             >
-                              <span className="text-center font-[700] leading-3 flex-1">
+                              <span className="text-left md:text-center font-[700] leading-3 flex-1">
                                 {innerItem.name}
                               </span>
-                              <span className="text-[700]">
+                              <span className="font-[700]">
                                 {innerItem.active == 1 &&
                                 innerItem?.market?.status == 1 ? (
                                   innerItem.odds

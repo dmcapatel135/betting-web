@@ -16,6 +16,7 @@ export const navigations = [
     title: 'NOW',
     path: '/dashboard/live-now',
     id: 4,
+    order: 'order-2',
   },
   {
     icon: images.upcomingIcon,
@@ -24,6 +25,7 @@ export const navigations = [
     state: true,
     path: '/dashboard/upcoming',
     id: 3,
+    order: 'order-3',
   },
   {
     icon: images.jackpotIcon,
@@ -32,6 +34,7 @@ export const navigations = [
     state: false,
     path: '/dashboard/jackpot',
     id: 5,
+    order: 'order-4',
   },
   {
     icon: images.popularIcon,
@@ -40,6 +43,7 @@ export const navigations = [
     state: true,
     path: '/dashboard/popular',
     id: 1,
+    order: 'order-1',
   },
   {
     icon: '/images/bikoicon/how-to-play.svg',
@@ -48,6 +52,7 @@ export const navigations = [
     state: false,
     path: '/dashboard/how-to-play',
     id: 8,
+    order: 'order-5',
   },
 ];
 

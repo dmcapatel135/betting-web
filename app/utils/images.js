@@ -16,8 +16,8 @@ export const images = {
   virtualsportIconActive: '/images/bikoicon/virtualsportwhite.png',
   jackpotIcon: '/images/bikoicon/jackpot.png',
   jackpotIconActive: '/images/bikoicon/jackpotwhite.png',
-  popularIcon: '/images/bikoicon/popular.png',
-  popularIconActive: '/images/bikoicon/popularwhite.png',
+  popularIcon: '/images/bikoicon/popular_icon_b.png',
+  popularIconActive: '/images/bikoicon/popular_icon.png',
   soccerIcon: '/images/bikoicon/',
   soccerIconActive: '/images/bikoicon/',
   basketballIcon: '/images/bikoicon/',
@@ -33,5 +33,5 @@ export const images = {
   headtohead: '/images/bikoicon/headtohead.png',
   standing: '/images/bikoicon/standing.png',
   authside: '/images/bikoicon/authside.png',
-  emptybetslip: '/images/bikoicon/emptybetslip.png',
+  emptybetslip: '/images/bikoicon/new.png',
 };

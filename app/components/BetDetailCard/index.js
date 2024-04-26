@@ -25,29 +25,31 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const handleRebet = (data) => {
     let array = [];
     data.bets.forEach((element) => {
-      let index = selectedBet.findIndex(
-        (item) => item.eventId == element.eventId,
-      );
-      if (index == -1) {
-        array.push({
-          // sportId: ,
-          eventId: element.eventId,
-          bet: {
-            id: element.outcomeId,
-            odds: element.odds,
-            probabilities: '',
-            active: '',
-            name: element.outcome,
-          },
-          betDetails: { id: element.marketId, name: element.market },
-          eventNames:
-            element?.event?.competitors[0]?.name +
-            '-' +
-            element?.event?.competitors[1]?.name,
-          specifiers: element?.specifiers ? element?.specifiers : null,
-        });
-      } else {
-        console.log('');
+      if (element.status == 'Pending') {
+        let index = selectedBet.findIndex(
+          (item) => item.eventId == element.eventId,
+        );
+        if (index == -1) {
+          array.push({
+            // sportId: ,
+            eventId: element.eventId,
+            bet: {
+              id: element.outcomeId,
+              odds: element.odds,
+              probabilities: '',
+              active: '',
+              name: element.outcome,
+            },
+            betDetails: { id: element.marketId, name: element.market },
+            eventNames:
+              element?.event?.competitors[0]?.name +
+              '-' +
+              element?.event?.competitors[1]?.name,
+            specifiers: element?.specifiers ? element?.specifiers : null,
+          });
+        } else {
+          console.log('');
+        }
       }
     });
     array = [...array, ...selectedBet];
@@ -95,7 +97,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   };
 
   return (
-    <div className="border border-green  shadow-md rounded-[8px]">
+    <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
       {/* <div className="grid grid-cols-12 p-3">
         <div className="col-span-6   md:col-span-4">
           <div className="flex justify-between">
@@ -196,7 +198,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
       </div> */}
-      <div className="grid gap-2 grid-cols-6 md:grid-cols-12 p-3">
+      <div
+        onClick={() => setShowBets(item.id)}
+        className="grid gap-2 grid-cols-6 md:grid-cols-12 p-3"
+      >
         <div className="col-span-full">
           <div className="flex justify-end">
             <p
@@ -206,19 +211,19 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             </p>
           </div>
         </div>
-        <div className="col-span-6 md:col-span-6 2xl:col-span-6">
+        <div className="col-span-3 md:col-span-6 2xl:col-span-6">
           <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex flex-col justify-between h-full">
-              <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
-                  Placed Date
+              <div className="flex gap-4">
+                <p className="text-gray-900 min-w-[75px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Date Placed
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                   {moment(item.createdAt).format('DD-MM-YYYY  hh:mm A')}
                 </p>
               </div>
-              <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <div className="flex gap-4">
+                <p className="text-gray-900 min-w-[75px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Betslip ID
                 </p>
                 <p
@@ -228,16 +233,16 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   {item.id}
                 </p>
               </div>
-              <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
-                  Bonge Bonus
+              <div className="flex gap-4 ">
+                <p className="text-gray-900 min-w-[75px] m md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Stake TSH
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {bonus}
+                  {formatNumber(item.stake)}
                 </p>
               </div>
-              <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <div className="flex gap-4">
+                <p className="text-gray-900 min-w-[75px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Total Odds
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -252,27 +257,35 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
         <div className="w-full col-span-6 xl:col-span-12 hidden border-t border-t-green/50"></div>
-        <div className="col-span-6 xl:col-span-6 2xl:col-span-6">
+        <div className="col-span-3 xl:col-span-6 2xl:col-span-6">
           <div className="flex justify-between items-center 2xl:gap-2 h-full">
             <div className="flex  h-full flex-col justify-between">
-              <div className="flex gap-2">
-                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <div className="flex gap-4">
+                <p className="text-gray-900 min-w-[80px] md:min-w-[140px] lg:min-w-[120px] xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Matches
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
                   {item.bets.length}
                 </p>
               </div>
-              <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
-                  Possible Win TSH
+              <div className="flex gap-4">
+                <p className="text-gray-900 min-w-[80px] md:min-w-[140px] lg:min-w-[120px] xl:min-w-[140px]  text-12 md:text-14 xxl:text-16 font-[600]">
+                  Bonge Bonus
+                </p>
+                <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                  {formatNumber(bonus)}
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <p className="text-gray-900 w-[80px] md:min-w-[140px] lg:min-w-[120px] xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
+                  Possible Won Amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                   {formatNumber(possiblewin?.toFixed(2))}
                 </p>
               </div>
-              <div className="flex gap-2 ">
-                <p className="text-gray-900 min-w-[100px] md:w-[120px] text-12 md:text-14 xxl:text-16 font-[600]">
+              <div className="flex gap-4 ">
+                <p className="text-gray-900 min-w-[80px] md:min-w-[140px] lg:min-w-[120px] xl:min-w-[140px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
@@ -281,14 +294,14 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   )}
                 </p>
               </div>
-              <div className="flex gap-7 ">
-                <p className="text-gray-900 min-w-[100px] md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
+              {/* <div className="flex gap-7 ">
+                <p className="text-gray-900 min-w-[75px] m md:w-[100px] lg:w-[120px] xl:w-[100px] text-12 md:text-14 xxl:text-16 font-[600]">
                   Stake TSH
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
                   {formatNumber(item.stake)}
                 </p>
-              </div>
+              </div> */}
             </div>
             {/* <div className="w-[1px] hidden 2xl:flex min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div> */}
           </div>
@@ -326,7 +339,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
           </div>
         </div>
       </div>
-      <hr className="border-t border-t-green/50 mx-3"></hr>
+      {item.status == 'Pending' ||
+        (item.status == 'Cancelled' && (
+          <hr className="border-t border-t-green/50 mx-3"></hr>
+        ))}
       <div className="flex gap-2 sm:gap-4 justify-end my-2 px-3">
         {handleButton(item.status) && (
           <button
@@ -344,7 +360,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
             <span className="text-black">Cancelled</span>
           </div>
         )}
-        {!(item.status == 'Cancelled') && (
+        {item.status == 'Pending' && (
           <>
             <button className="btn bg-bluewhalelight">
               <img

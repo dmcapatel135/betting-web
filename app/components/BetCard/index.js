@@ -107,6 +107,17 @@ function BetCard({ item, sportId, market, selectMarket }) {
     }
   };
 
+  // function subtractMinutes(date, minutes) {
+  //   return new Date(date.getTime() - minutes * 60000);
+  // }
+  // console.log(
+  //   '-----------dsfdsfs',
+  //   moment(subtractMinutes(new Date(), 5)).format(
+  //     'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
+  //   ),
+  //   moment(item?.startTime).format('ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)'),
+  // );
+
   return (
     <>
       <div
@@ -142,6 +153,23 @@ function BetCard({ item, sportId, market, selectMarket }) {
                 {item?.sport?.name}/{item?.category?.name}/
                 {item?.tournament?.name}
               </span>
+              {/* {moment(subtractMinutes(new Date(), 10)).format(
+                'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
+              ) ==
+                moment(item?.startTime).format(
+                  'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
+                ) && (
+                <span className="text-red-500">
+                  {moment(subtractMinutes(new Date(), 5)).format(
+                    'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
+                  ) ==
+                  moment(item?.startTime).format(
+                    'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
+                  )
+                    ? 'Live'
+                    : ''}
+                </span>
+              )} */}
             </div>
           </div>
           <div className="flex-1 border-black">
@@ -1026,7 +1054,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
                     )
                       ? 'bg-green text-white border-green'
                       : ''
-                  } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px] md:rounded-[4px]  w-[36px] h-6 md:h-8  sm:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
+                  } bg-[#EAEAEA] flex justify-center items-center text-center border-[#A3A3A3] border-[1px] font-[600] text-black text-[11px] rounded-[4px] md:rounded-[4px]  w-[36px] h-6 md:h-8  sm:w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 py-2 px-3`}
                   key={mkt.id}
                   // className="text-black border text-12 border-black w-[36px] rounded-sm"
                 >
@@ -1082,7 +1110,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
                 alt="icon"
                 className="mx-1"
               />
-              <span className="text-10 md:text-10 2xl:text-12 pr-2">
+              <span className="text-[11px] font-[700] md:text-10 2xl:text-12 pr-2">
                 {item.openMarkets}
               </span>
             </div>

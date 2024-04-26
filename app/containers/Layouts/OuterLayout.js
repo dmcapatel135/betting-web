@@ -169,12 +169,14 @@ const OuterLayout = () => {
                       </div>
                     )}
                   <div className="text-white py-2 flex items-center justify-around">
-                    <div className="text-14 flex font-[500] items-center gap-2">
-                      <p>BETSLIP</p>
-                      <div className="rounded-full flex justify-center items-center w-6 h-6 bg-white text-black">
-                        <p>{selectedBet.length}</p>
-                      </div>
-                    </div>
+                    <Link to="/dashboard/bet-slip">
+                      <button className="text-14 flex font-[500] bg-yellow px-2 py-1 rounded-md items-center gap-2">
+                        <p>BETSLIP</p>
+                        <div className="rounded-full flex justify-center items-center w-6 h-6 bg-white text-black">
+                          <p>{selectedBet.length}</p>
+                        </div>
+                      </button>
+                    </Link>
                     <div className="flex justify-center text-white text-14 items-center gap-2">
                       <p>Odds : </p>
                       <p>{totalOdds ? totalOdds?.toFixed(2) : 0}</p>

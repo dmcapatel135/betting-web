@@ -245,7 +245,7 @@ function SportsMenu() {
               );
             })}
           </select> */}
-          <div className="flex flex-col sm:flex-row sm:gap-3">
+          <div className="flex flex-row gap-2 sm:gap-3">
             <div className="flex-1">
               <select
                 value={sportId}
@@ -324,12 +324,12 @@ function SportsMenu() {
       <div className="flex lg:mx-4 py-1 lg:px-2 pl-1 lg:pl-0">
         <div className="flex-grow-0 w-40   mt-9 md:mt-12 xxl:flex-1 pl-0">
           <div
-            className={`h-6 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
+            className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
               !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
             } text-white px-1 rounded-[4px]  font-[600]`}
           >
             {!(tab == 3) && (
-              <p className="">
+              <p className="leading-3">
                 {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()}
               </p>
             )}

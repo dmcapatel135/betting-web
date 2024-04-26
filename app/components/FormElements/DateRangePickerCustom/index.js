@@ -16,7 +16,7 @@ const DateRangePickerCustom = ({
 }) => {
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
-      className="flex justify-between w-full pr-8 h-full items-center text-14"
+      className="flex justify-between w-full pr-4 md:pr-8 h-full items-center text-14"
       onClick={onClick}
       ref={ref}
     >
