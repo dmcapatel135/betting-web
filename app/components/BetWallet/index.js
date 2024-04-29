@@ -693,7 +693,7 @@ function BetWallet({ stakeValue }) {
       )}
       {openDialog && (
         <div className="absolute top-0 bg-[#0000002e]  w-full backdrop-blur-[2px] h-full rounded-[8px] ">
-          <div className="lg:w-[245px] w-[300px] xl:w-[280px] h-fit pb-5 bg-white z-50 m-4 lg:m-2 2xl:m-4">
+          <div className="lg:w-[245px] w-[300px] xl:w-[330px] h-fit pb-5 bg-white z-50 m-4 lg:m-2 2xl:m-4">
             <div className="flex justify-between py-1 px-2 ">
               <div className="flex text-gray-900">
                 <img src="/images/bikoicon/person_play.png" className="h-5" />

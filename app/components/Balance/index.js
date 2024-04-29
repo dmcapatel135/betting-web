@@ -1,5 +1,6 @@
 import { init, wallet } from '@actions';
 import { MyContext } from '@components/MyContext/MyContext';
+import { isLoggedIn } from '@utils/apiHandlers';
 // import { getReq } from '@utils/apiHandlers';
 import { formatNumber } from '@utils/constants';
 import React, { useContext, useEffect } from 'react';
@@ -15,8 +16,15 @@ function Balance() {
   const userWallet = useSelector((state) => state.wallet);
 
   useEffect(() => {
+    let interval;
     dispatch(init());
     dispatch(wallet());
+    interval = setInterval(() => {
+      dispatch(wallet());
+    }, 10000);
+    if (!isLoggedIn()) {
+      clearInterval(interval);
+    }
   }, [dispatch]);
 
   return (

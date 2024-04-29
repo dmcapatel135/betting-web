@@ -57,19 +57,19 @@ function Sidebar({
       `/sports/${sportId}/fixtures?haveActiveEvents=${true}&onlyLive=${true}`,
     );
     if (response.status) {
-      setLiveData(response.data);
+      setLiveData(response.data.data);
     }
   }, [sportId]);
 
   useEffect(() => {
-    // getLiveMatchs();
-    // let interval = setInterval(() => {
     getLiveMatchs();
-    // }, 10000);
+    let interval = setInterval(() => {
+      getLiveMatchs();
+    }, 60000);
 
-    // return () => {
-    //   clearInterval(interval);
-    // };
+    return () => {
+      clearInterval(interval);
+    };
   }, [getLiveMatchs]);
 
   return (

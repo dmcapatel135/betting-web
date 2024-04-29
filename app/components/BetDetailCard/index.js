@@ -96,6 +96,8 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
+  console.log('---------item won amount----', isNaN(item.wonAmount));
+
   return (
     <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
       {/* <div className="grid grid-cols-12 p-3">
@@ -289,9 +291,11 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   Won amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {formatNumber(
-                    !isNaN(item.wonAmount) ? item.wonAmount : 'N/A',
-                  )}
+                  {!item.wonAmount
+                    ? '-'
+                    : formatNumber(
+                        !isNaN(item.wonAmount) ? item.wonAmount : 'N/A',
+                      )}
                 </p>
               </div>
               {/* <div className="flex gap-7 ">
