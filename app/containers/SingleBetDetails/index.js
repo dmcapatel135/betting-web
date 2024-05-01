@@ -285,7 +285,7 @@ function SigleBetDetails() {
           // )} */}
           <div className="text-black bg-white border border-lightgray py-1 px-3">
             <span className="text-12">
-              Statistics are for reference only, bikosports cannot guarantee
+              Statistics are for reference only, BikoSports cannot guarantee
               their accuracy.
             </span>
           </div>
