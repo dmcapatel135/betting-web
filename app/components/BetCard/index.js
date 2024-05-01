@@ -127,7 +127,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
                   <img
                     src="/images/bikoicon/live-now-active.png"
                     alt="icon"
-                    className="md:block hidden  ml-1"
+                    className="md:block hidden  ml-1 w-7"
                   />
                 )}
               </div>
