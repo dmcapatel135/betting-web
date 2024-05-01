@@ -18,11 +18,11 @@ import moment from 'moment';
 
 const mobileMenuList = [
   {
-    id: 2,
+    id: 3,
     title: 'HOME',
     icon: '/images/bikoicon/home.png',
     active_icon: '/images/bikoicon/home-active.png',
-    path: '/',
+    path: '/dashboard/upcoming',
   },
   {
     id: 1,
@@ -435,9 +435,13 @@ const Navbar = ({ tab, setTab }) => {
               key={index}
               end
               onClick={() => {
-                setTab(item.id);
-                if (item.title == 'MENU') setIsOpenMenuList(!isOpenMenuList);
-                else setIsOpenMenuList(false);
+                if (item.title == 'MENU') {
+                  setIsOpenMenuList(!isOpenMenuList);
+                  setTab(item.id);
+                } else {
+                  setIsOpenMenuList(false);
+                  setTab(item.id);
+                }
               }}
               to={item.path}
               className={({ isActive }) =>
@@ -641,7 +645,7 @@ const Navbar = ({ tab, setTab }) => {
 };
 
 Navbar.propTypes = {
-  tab: PropTypes.string,
+  tab: PropTypes.number,
   setTab: PropTypes.func,
   setSelectTournament: PropTypes.number,
 };

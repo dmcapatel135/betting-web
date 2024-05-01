@@ -20,6 +20,7 @@ function MyTransactions() {
     moment().startOf('month').toDate(),
   );
   const [endDate, setEndDate] = useState(moment().endOf('month').toDate());
+  const [isLoading, setIsLoading] = useState(false);
 
   const userWallet = useSelector((state) => state.wallet);
   const [queries, setQueries] = useState('');
@@ -33,21 +34,27 @@ function MyTransactions() {
 
   const handleGetTransactions = useCallback(
     async (query) => {
+      setIsLoading(true);
       const response = await getReq(
-        `/users/me/transactions?skip=${page * pageCount}&take=${pageSize}${query ? query : ''}`,
+        `/users/me/transactions?skip=${page * pageCount}&take=${pageSize}&fromDate=${moment(
+          startDate,
+        )
+          .startOf('date')
+          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}${query ? query : ''}`,
       );
 
+      setIsLoading(false);
       if (response.status) {
         setDataCount(response.data.count);
         setMyTransactions(response.data.data);
       }
     },
-    [setMyTransactions, page, pageSize, pageCount],
+    [setMyTransactions, page, pageSize, pageCount, startDate, endDate],
   );
 
   useEffect(() => {
-    handleGetTransactions(queries);
-  }, [page]); // eslint-disable-line
+    if (startDate && endDate) handleGetTransactions(queries);
+  }, [page, queries, startDate, endDate]); // eslint-disable-line
 
   useEffect(() => {
     let query = '';
@@ -55,17 +62,17 @@ function MyTransactions() {
     if (type) {
       query = query + `&type=${type}`;
     }
-    if (startDate && endDate) {
-      query =
-        query +
-        `&fromDate=${moment(startDate)
-          .startOf('date')
-          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
-    }
+    // if (startDate && endDate) {
+    //   query =
+    //     query +
+    //     `&fromDate=${moment(startDate)
+    //       .startOf('date')
+    //       .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
+    // }
 
     setQueries(query);
-    handleGetTransactions(query);
-  }, [startDate, endDate, type]); // eslint-disable-line
+    // handleGetTransactions(query);
+  }, [type]); // eslint-disable-line
 
   const handleClear = () => {
     setStartDate(moment().startOf('month').toDate());
@@ -107,7 +114,7 @@ function MyTransactions() {
           onChange={(e) => setType(e.target.value)}
           className=" px-3 h-[42px] outline-none rounded-[4px] bg-white border border-blue text-14 text-black"
         >
-          <option>Type</option>
+          <option value={''}>Type</option>
           <option>Credit</option>
           <option>Debit</option>
         </select>
@@ -165,7 +172,7 @@ function MyTransactions() {
                 );
               })}
               <tr>
-                {myTransactions.length == 0 && (
+                {myTransactions.length == 0 && !isLoading && (
                   <div className="text-center my-3 text-black w-full">
                     <span className="text-14 text-black">No Data Found</span>
                   </div>

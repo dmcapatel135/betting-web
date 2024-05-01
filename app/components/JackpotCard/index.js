@@ -50,7 +50,7 @@ JackpotCard.propTypes = {
   item: PropTypes.object,
   index: PropTypes.number,
   handleGetJackpotFixtures: PropTypes.func,
-  setStakeValue: PropTypes.number,
+  setStakeValue: PropTypes.func,
 };
 
 export default JackpotCard;

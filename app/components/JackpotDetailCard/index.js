@@ -24,7 +24,7 @@ function JackpotDetailCard({ fixtures, jackpotId }) {
       bets.splice(index, 1); // Remove the element at the found index
       dispatch(fetchJackpotDetailsAction(bets)); // Dispatch the updated array
     } else {
-      console.log('Bet not found');
+      console.log('');
     }
   };
 

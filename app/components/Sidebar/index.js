@@ -7,6 +7,7 @@ import { reactIcons } from '@utils/icons';
 import { navigations } from './constants';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
+// import { CircularProgress } from '@mui/material';
 
 function Sidebar({
   isMobileSidebar,
@@ -23,6 +24,7 @@ function Sidebar({
   const [leagues, setLeagues] = useState([]);
   const [isOpenOtherCountry, setIsOpenOtherCountry] = useState(true);
   const [liveData, setLiveData] = useState([]);
+  // const [leagueLoading, setLeagueLoading] = useState(false);
 
   const {
     allTournaments,
@@ -45,7 +47,10 @@ function Sidebar({
   );
 
   useEffect(() => {
-    if (isOpenLeague) getLeagues(isOpenLeague);
+    if (isOpenLeague) {
+      setLeagues([]);
+      getLeagues(isOpenLeague);
+    }
   }, [isOpenLeague, getLeagues]);
 
   const handleManageUrl = (path) => {
@@ -53,9 +58,11 @@ function Sidebar({
   };
 
   const getLiveMatchs = useCallback(async () => {
+    // setLeagueLoading(true);
     const response = await getReq(
-      `/sports/${sportId}/fixtures?haveActiveEvents=${true}&onlyLive=${true}`,
+      `/sports/${sportId}/fixtures?skip=0&take=1&haveActiveEvents=${true}&onlyLive=${true}`,
     );
+    // setLeagueLoading(false);
     if (response.status) {
       setLiveData(response.data.data);
     }
@@ -94,12 +101,15 @@ function Sidebar({
             {navigations.map((item, index) => (
               <div
                 key={index}
-                className={`${item.title === 'HOME' ? 'lg:block hidden' : ''} ${item.order}`}
+                className={`${item.title == 'UPCOMING' || item.title == 'HOME' ? 'lg:block hidden' : ''} ${item.order}`}
               >
                 <NavLink
                   key={index}
                   end
                   onClick={() => {
+                    if (window.matchMedia('(max-width: 575px)').matches) {
+                      setIsOpenMenuList(!isOpenMenuList);
+                    }
                     setTab(item.id);
                   }}
                   to={item.state ? handleManageUrl(item.path) : item.path}
@@ -201,9 +211,9 @@ function Sidebar({
               setIsOpenpopularCountry(!isOpenpopularCountry);
             }}
           >
-            <h className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
+            <h1 className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               POPULAR COUNTRIES
-            </h>
+            </h1>
             <span className="text-white">
               {isOpenpopularCountry ? reactIcons.arrowup : reactIcons.arrowdown}
             </span>
@@ -251,7 +261,7 @@ function Sidebar({
                         {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>
                       {isOpenLeague == item.id &&
-                        leagues?.map((items) => {
+                        leagues?.map((items, ind) => {
                           return (
                             <div
                               onClick={() => {
@@ -261,7 +271,7 @@ function Sidebar({
                                   `?sId=${items.sportId}&eId=${items.id}`,
                                 );
                               }}
-                              key={items.id}
+                              key={ind}
                               className={`px-5 cursor-pointer ${
                                 items.id == selectTournament
                                   ? 'bg-yellow text-white'
@@ -279,6 +289,9 @@ function Sidebar({
                             </div>
                           );
                         })}
+                      {/* {leagueLoading && (
+                        <CircularProgress color="inherit" size={20} />
+                      )} */}
                     </div>
                   );
                 })}
@@ -303,9 +316,9 @@ function Sidebar({
             }}
             className="flex justify-between cursor-pointer items-center rounded-l-md h-10 px-3 bg-gradient-color-2 my-2"
           >
-            <h className="text-white  text-12 leading-3 lg:leading-none lg:text-14 xxl:text-18 ">
+            <h1 className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               OTHER COUNTRIES
-            </h>
+            </h1>
             <span className="text-white">{reactIcons.arrowdown}</span>
           </div>
           {isOpenOtherCountry && (
@@ -379,6 +392,9 @@ function Sidebar({
                             </div>
                           );
                         })}
+                      {/* {leagueLoading && (
+                        <CircularProgress color="inherit" size={20} />
+                      )} */}
                     </div>
                   );
                 })}
@@ -392,9 +408,9 @@ function Sidebar({
 }
 Sidebar.propTypes = {
   isMobileSidebar: PropTypes.bool,
-  tab: PropTypes.string,
-  setTab: PropTypes.string,
-  setIsOpenMenuList: PropTypes.bool,
+  tab: PropTypes.number,
+  setTab: PropTypes.func,
+  setIsOpenMenuList: PropTypes.func,
   isOpenMenuList: PropTypes.bool,
 };
 

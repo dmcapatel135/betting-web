@@ -42,7 +42,7 @@ export const navigations = [
     title: 'POPULAR',
     state: true,
     path: '/dashboard/popular',
-    id: 1,
+    id: 9,
     order: 'order-1',
   },
   {

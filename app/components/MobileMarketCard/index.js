@@ -3,12 +3,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-function MobileMarketCard({ item, market }) {
+function MobileMarketCard({ item }) {
   const navigate = useNavigate();
+
+  // const handleMarket = (market) => {
+  //   if()
+  // };
+
   return (
     <div className="border flex items-center  border-lightgray text-black">
       <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
-        <div className="items-center w-40 md:w-full xxl:w-full xxl:text-center text-[8px] md:text-10 ">
+        <div className="items-center w-40 md:w-96 xxl:w-96 xxl:text-center text-[8px] md:text-10 ">
           <div className="flex items-center">
             <img src="/images/bikoicon/acute.png" />
             <p className="text-10 ml-1 md:text-10">
@@ -37,20 +42,25 @@ function MobileMarketCard({ item, market }) {
           </span>
         </div>
       </div>
-      <div className="flex-1 ">
-        <div className="flex gap-3 justify-center">
-          {market?.outcomes?.map((mkt) => {
-            return (
-              <button
-                key={mkt.id}
-                className="text-black border text-12 border-black w-[36px] rounded-sm"
-              >
-                {mkt.odds}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      <div className="flex-grow w-16"></div>
+      {item.previewMarkets.map((mkt, index) => {
+        return (
+          <div className="flex-1" key={index}>
+            <div className="flex gap-3 justify-center">
+              {mkt?.outcomes?.map((mkt) => {
+                return (
+                  <button
+                    key={mkt.id}
+                    className="text-black border text-12 border-black h-9 w-[45px] rounded-sm"
+                  >
+                    {mkt.odds}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
       <div className="flex-grow-0">
         <div className=" border-solid md:w-16 2xl:w-[72px] text-black">
           <div
@@ -80,7 +90,7 @@ function MobileMarketCard({ item, market }) {
 MobileMarketCard.propTypes = {
   openMarket: PropTypes.number,
   item: PropTypes.object,
-  market: PropTypes.object,
+  // market: PropTypes.object,
 };
 
 export default MobileMarketCard;

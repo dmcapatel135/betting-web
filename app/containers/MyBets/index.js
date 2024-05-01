@@ -47,7 +47,11 @@ function MyBets() {
       setIsLoading(true);
       setPageSize(10);
       const response = await getReq(
-        `/users/me/bet-slips?skip=${page * pageCount}&take=${pageSize}${query ? query : ''}`,
+        `/users/me/bet-slips?skip=${page * pageCount}&take=${pageSize}&fromDate=${moment(
+          startDate,
+        )
+          .startOf('date')
+          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}${query ? query : ''}`,
       );
       if (response.status) {
         setIsLoading(false);
@@ -55,12 +59,12 @@ function MyBets() {
         setDataCount(response.data.count);
       }
     },
-    [pageSize, page, pageCount],
+    [pageSize, page, pageCount, startDate, endDate],
   );
 
   useEffect(() => {
-    getMyBetDetails(queries);
-  }, [page]); // eslint-disable-line
+    if ((startDate, endDate)) getMyBetDetails(queries);
+  }, [page, queries, startDate, endDate]); // eslint-disable-line
 
   useEffect(() => {
     setMyBets([]);
@@ -71,16 +75,16 @@ function MyBets() {
     } else {
       query = `&type=Normal${status ? `&status=${status}` : ''}`;
     }
-    if (startDate && endDate) {
-      query =
-        query +
-        `&fromDate=${moment(startDate)
-          .startOf('date')
-          .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
-    }
+    // if (startDate && endDate) {
+    //   query =
+    //     query +
+    //     `&fromDate=${moment(startDate)
+    //       .startOf('date')
+    //       .toISOString()}&toDate=${moment(endDate).endOf('date').toISOString()}`;
+    // }
     setQueries(query);
-    getMyBetDetails(query);
-  }, [status, betType, startDate, endDate]); // eslint-disable-line
+    // getMyBetDetails(query);
+  }, [status, betType]); // eslint-disable-line
 
   // useEffect(() => {
   //   if (showBets) {
@@ -315,12 +319,12 @@ function MyBets() {
                                                       item.qualifier == 'Home',
                                                   ).name
                                                 }
-                                                .......
-                                                <strong>
+
+                                                <strong className="ml-5">
                                                   {innerItem?.event?.homeScore
                                                     ? innerItem?.event
                                                         ?.homeScore
-                                                    : 'N/A'}
+                                                    : ''}
                                                 </strong>
                                               </p>
                                               <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
@@ -335,13 +339,12 @@ function MyBets() {
                                                     (item) =>
                                                       item.qualifier == 'Away',
                                                   ).name
-                                                }{' '}
-                                                .......
-                                                <strong>
+                                                }
+                                                <strong className="ml-5">
                                                   {innerItem?.event?.awayScore
                                                     ? innerItem?.event
                                                         ?.awayScore
-                                                    : 'N/A'}
+                                                    : ''}
                                                 </strong>
                                               </p>
                                             </div>

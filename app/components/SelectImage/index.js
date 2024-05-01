@@ -49,10 +49,10 @@ function SelectImage({
 }
 
 SelectImage.propTypes = {
-  optionList: PropTypes.func,
+  optionList: PropTypes.array,
   selectValue: PropTypes.object,
-  setSelectValue: PropTypes.object,
+  setSelectValue: PropTypes.func,
   select: PropTypes.bool,
-  setSelect: PropTypes.bool,
+  setSelect: PropTypes.func,
 };
 export default SelectImage;

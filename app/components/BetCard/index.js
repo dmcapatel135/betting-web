@@ -7,7 +7,7 @@ import { fetchBetDetailsAction } from '@actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
-function BetCard({ item, sportId, market, selectMarket }) {
+function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
   const [searchParams] = useSearchParams();
 
   const [bets, setBets] = useState([]);
@@ -107,25 +107,14 @@ function BetCard({ item, sportId, market, selectMarket }) {
     }
   };
 
-  // function subtractMinutes(date, minutes) {
-  //   return new Date(date.getTime() - minutes * 60000);
-  // }
-  // console.log(
-  //   '-----------dsfdsfs',
-  //   moment(subtractMinutes(new Date(), 5)).format(
-  //     'ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)',
-  //   ),
-  //   moment(item?.startTime).format('ddd MMM DD YYYY HH:mm:ss [GMT]Z (z)'),
-  // );
-
   return (
     <>
       <div
         className={`border hidden lg:block rounded-[8px] ${handleSelectEvent(item.eventId) ? 'bg-[#ececff]' : 'border-[#A3A3A3]'} text-black`}
       >
         <div className="flex items-center w-full md:pr-2">
-          <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
-            <div className="items-center w-36 md:w-48 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
+          <div className="flex-grow-0 2xl:flex-1 pl-2 py-2]">
+            <div className="items-center  md:w-[360px] lg:w-48 xl:w-48 2xl:w-[460px] 2xl:text-left text-[8px] md:text-10 ">
               <div className="flex items-center">
                 <img src="/images/bikoicon/acute.png" />
                 <p className="text-10 ml-1 md:text-10">
@@ -134,22 +123,50 @@ function BetCard({ item, sportId, market, selectMarket }) {
                     {moment(item?.startTime).format('ddd MM/DD')}
                   </span>
                 </p>
-                {item.popular && (
+                {item.status == 'Live' && (
                   <img
-                    src="/images/bikoicon/vector.png"
+                    src="/images/bikoicon/live-now-active.png"
                     alt="icon"
                     className="md:block hidden  ml-1"
                   />
                 )}
               </div>
-              <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-                {item?.competitors[0]?.name || 'N.A'}
-                {/* v/s{' '} */}
-              </h2>
-              <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-                {item?.competitors[1]?.name || 'N.A'}{' '}
-              </h2>
-              <span className="text-[9px]  leading-none md:text-10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                    {item?.competitors?.find((item) => item.qualifier == 'Home')
+                      ?.name || 'N.A'}{' '}
+                    {/* v/s{' '} */}
+                  </h2>
+                  <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                    {item?.competitors?.find((item) => item.qualifier == 'Away')
+                      ?.name || 'N.A'}{' '}
+                  </h2>
+                </div>
+                <div>
+                  {item.status == 'Live' && (
+                    <div className="text-blue text-14 font-[600]  flex-grow   text-center px-3">
+                      <h1>{item.homeScore}</h1>
+                      <h1>{item.awayScore}</h1>
+                    </div>
+                  )}
+                  {item.popular && !(item.status == 'Live') && (
+                    <div className="text-blue text-14 font-[600]  flex-grow  flex  justify-center px-3">
+                      {item.popular && (
+                        <img
+                          src="/images/bikoicon/vector.png"
+                          alt="icon"
+                          className="md:block hidden  ml-1 w-4 h-6"
+                        />
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <span
+                className="text-[9px]  leading-none md:text-10"
+                style={{ lineHeight: '13px' }}
+              >
                 {item?.sport?.name}/{item?.category?.name}/
                 {item?.tournament?.name}
               </span>
@@ -187,7 +204,11 @@ function BetCard({ item, sportId, market, selectMarket }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={data['1x2'].status == 1 ? false : true}
+                            disabled={
+                              data['1x2'].status == 1 && innerItem.odds
+                                ? false
+                                : true
+                            }
                             onClick={() => {
                               if (
                                 selectBet(
@@ -262,7 +283,9 @@ function BetCard({ item, sportId, market, selectMarket }) {
                               <button
                                 key={innerIndex}
                                 disabled={
-                                  data['Total'].status == 1 ? false : true
+                                  data['Total'].status == 1 && innerItem.odds
+                                    ? false
+                                    : true
                                 }
                                 onClick={() => {
                                   if (
@@ -340,7 +363,8 @@ function BetCard({ item, sportId, market, selectMarket }) {
                               <button
                                 key={innerIndex}
                                 disabled={
-                                  data['Both teams to score'].status == 1
+                                  data['Both teams to score'].status == 1 &&
+                                  innerItem.odds
                                     ? false
                                     : true
                                 }
@@ -424,7 +448,11 @@ function BetCard({ item, sportId, market, selectMarket }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={data['1x2'].status == 1 ? false : true}
+                            disabled={
+                              data['1x2'].status == 1 && innerItem.odds
+                                ? false
+                                : true
+                            }
                             onClick={() => {
                               if (
                                 selectBet(
@@ -500,7 +528,9 @@ function BetCard({ item, sportId, market, selectMarket }) {
                           <button
                             key={innerIndex}
                             disabled={
-                              data['Winner']?.status == 1 ? false : true
+                              data['Winner']?.status == 1 && innerItem.odds
+                                ? false
+                                : true
                             }
                             onClick={() => {
                               if (
@@ -570,7 +600,11 @@ function BetCard({ item, sportId, market, selectMarket }) {
                         return (
                           <button
                             key={innerIndex}
-                            disabled={data['1x2'].status == 1 ? false : true}
+                            disabled={
+                              data['1x2'].status == 1 && innerItem.odds
+                                ? false
+                                : true
+                            }
                             onClick={() => {
                               if (
                                 selectBet(
@@ -644,7 +678,8 @@ function BetCard({ item, sportId, market, selectMarket }) {
                             <button
                               key={innerIndex}
                               disabled={
-                                data['Winner (incl. super over)'].status == 1
+                                data['Winner (incl. super over)'].status == 1 &&
+                                innerItem.odds
                                   ? false
                                   : true
                               }
@@ -721,7 +756,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
                   <div className="">
                     <div
                       className="
-                      flex gap-2 mx-auto justify-between"
+                      flex gap-3 mx-auto justify-between"
                     >
                       {data['Winner']?.outcomes?.length > 0 &&
                         data['Winner']?.outcomes?.map(
@@ -730,7 +765,9 @@ function BetCard({ item, sportId, market, selectMarket }) {
                               <button
                                 key={innerIndex}
                                 disabled={
-                                  data['Winner'].status == 1 ? false : true
+                                  data['Winner'].status == 1 && innerItem.odds
+                                    ? false
+                                    : true
                                 }
                                 onClick={() => {
                                   if (
@@ -784,11 +821,11 @@ function BetCard({ item, sportId, market, selectMarket }) {
                         )}
                       {(data['Winner']?.outcomes?.length == 0 ||
                         data['Winner'] === undefined) && (
-                        <div className="flex justify-between">
-                          <button className="bg-[#EAEAEA] flex justify-center w-[52px]  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px]  items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                        <div className="flex gap-2 mx-auto justify-between">
+                          <button className="bg-[#EAEAEA] flex justify-center w-[52px]  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px]  items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                             -
                           </button>
-                          <button className="bg-[#EAEAEA] flex justify-center  w-[52px]  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center mr-1 border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
+                          <button className="bg-[#EAEAEA] flex justify-center  w-[52px]  2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:w-[45px] items-center  border-[#A3A3A3] border-[1px] text-black text-10 rounded-[4px]  py-2 px-3">
                             -
                           </button>
                         </div>
@@ -804,7 +841,10 @@ function BetCard({ item, sportId, market, selectMarket }) {
                               <button
                                 key={innerIndex}
                                 disabled={
-                                  data['1st set - winner'].status ? false : true
+                                  data['1st set - winner'].status == 1 &&
+                                  innerItem.odds
+                                    ? false
+                                    : true
                                 }
                                 onClick={() => {
                                   if (
@@ -885,7 +925,8 @@ function BetCard({ item, sportId, market, selectMarket }) {
                               <button
                                 key={innerIndex}
                                 disabled={
-                                  data['2nd set - winner'].status == 1
+                                  data['2nd set - winner'].status == 1 &&
+                                  innerItem.odds
                                     ? false
                                     : true
                                 }
@@ -967,6 +1008,12 @@ function BetCard({ item, sportId, market, selectMarket }) {
                   setTab(null);
                   navigate(
                     `${item.onlyLive ? `/dashboard/single-bets/${item.eventId}?onlyLive=true` : `/dashboard/single-bets/${item.eventId}`}`,
+                    {
+                      state: {
+                        data: scrollPosition,
+                        url: window.location.pathname,
+                      },
+                    },
                   );
                 }}
                 className="border mr-2 w-[40px] h-6 md:h-8 md:min-w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:max-w-fit font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer"
@@ -987,8 +1034,8 @@ function BetCard({ item, sportId, market, selectMarket }) {
       <div
         className={`border flex items-center lg:hidden rounded-[8px] ${handleSelectEvent(item.eventId) ? 'bg-[#ececff] ' : 'border-[#A3A3A3]'} text-black`}
       >
-        <div className="flex-grow-0 xxl:flex-1 pl-2 py-2]">
-          <div className="items-center w-40 md:w-52 xxl:w-full xxl:text-center text-[8px] md:text-10 ">
+        <div className="flex-grow-0 2xl:flex-1 pl-2 py-2]">
+          <div className="items-center w-40 sm:w-80 md:w-52 2xl:w-full 2xl:text-center text-[8px] md:text-10 ">
             <div className="flex items-center">
               <img src="/images/bikoicon/acute.png" />
               <p className="text-10 ml-1 md:text-10">
@@ -997,25 +1044,49 @@ function BetCard({ item, sportId, market, selectMarket }) {
                   {moment(item?.startTime).format('ddd MM/DD')}
                 </span>
               </p>
-              {item.popular && (
+              {item.status == 'Live' && (
                 <img
-                  src="/images/bikoicon/vector.png"
+                  src="/images/bikoicon/live-now-active.png"
                   alt="icon"
-                  className="md:block hidden  ml-1"
+                  className="md:hidden block  ml-1"
                 />
               )}
             </div>
-            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-              {item?.competitors[0]?.name || 'N.A'}
-              {/* v/s{' '} */}
-            </h2>
-            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-              {item?.competitors[1]?.name || 'N.A'}{' '}
-            </h2>
-            <span className="text-[9px]  leading-none md:text-10">
+            <div className="flex justify-between">
+              <div>
+                <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                  {item?.competitors?.find((item) => item.qualifier == 'Home')
+                    ?.name || 'N.A'}
+                  {/* v/s{' '} */}
+                </h2>
+                <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                  {item?.competitors?.find((item) => item.qualifier == 'Away')
+                    ?.name || 'N.A'}
+                </h2>
+              </div>
+              <div>
+                {item.status == 'Live' && (
+                  <div className="text-blue  leading-3 text-12  w-2 text-start px-1">
+                    <h1>{item.homeScore}</h1>
+                    <h1>{item.awayScore}</h1>
+                  </div>
+                )}
+                {item.popular && !(item.status == 'Live') && (
+                  <img
+                    src="/images/bikoicon/vector.png"
+                    alt="icon"
+                    className="md:hidden block  ml-1"
+                  />
+                )}
+              </div>
+            </div>
+            <p
+              className="text-[9px] leading-5 md:text-10"
+              style={{ lineHeight: '13px' }}
+            >
               {item?.sport?.name}/{item?.category?.name}/
               {item?.tournament?.name}
-            </span>
+            </p>
           </div>
         </div>
         <div className="flex-1 ">
@@ -1023,7 +1094,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
             {market?.outcomes?.map((mkt) => {
               return (
                 <button
-                  disabled={market.status == 1 ? false : true}
+                  disabled={market.status == 1 && mkt.odds ? false : true}
                   onClick={() => {
                     if (
                       selectBet(
@@ -1098,9 +1169,15 @@ function BetCard({ item, sportId, market, selectMarket }) {
           <div className=" border-solid sm:flex  md:justify-center w-12 sm:pl-1 md:pl-0 md:w-16 2xl:w-[72px] text-black">
             <div
               onClick={() => {
-                // setTab(null);
+                setTab(null);
                 navigate(
                   `${item.onlyLive ? `/dashboard/single-bets/${item.eventId}?onlyLive=true` : `/dashboard/single-bets/${item.eventId}`}`,
+                  {
+                    state: {
+                      data: scrollPosition,
+                      url: window.location.pathname,
+                    },
+                  },
                 );
               }}
               className="border mr-2  sm:mr-0 w-[40px] h-6 md:h-8 md:min-w-[45px] 2xl:w-[48px] 2xl:h-[36px] 2xl:text-14 md:max-w-fit font-[500] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer"
@@ -1123,11 +1200,12 @@ function BetCard({ item, sportId, market, selectMarket }) {
 
 BetCard.propTypes = {
   item: PropTypes.object,
-  sportId: PropTypes.string,
+  sportId: PropTypes.number,
   handleSelectBet: PropTypes.func,
   index: PropTypes.number,
   market: PropTypes.object,
   selectMarket: PropTypes.string,
+  scrollPosition: PropTypes.number,
 };
 
 export default BetCard;

@@ -2,28 +2,28 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './index.css';
 
-const WidgetChart = ({ eventId }) => {
+const WidgetStatisticsChart = ({ eventId }) => {
   useEffect(() => {
     // Create script element
     const scriptCode = `(function(a,b,c,d,e,f,g,h,i){a[e]||(i=a[e]=function(){(a[e].q=a[e].q||[]).push(arguments)},i.l=1*new Date,i.o=f,
 g=b.createElement(c),h=b.getElementsByTagName(c)[0],g.async=1,g.src=d,g.setAttribute("n",e),h.parentNode.insertBefore(g,h)
-)})(window,document,"script", "https://widgets.sir.sportradar.com/697e93551b60e2cb46fbcaca262ebaf1/widgetloader", "SIR", {
+)})(window,document,"script", "https://widgets.sir.sportradar.com/3ce7b7ceaafea16ca3e9692394b97eda/widgetloader", "SIR", {
     theme: false, // using custom theme
     language: "en"
 })`;
     const script = document.createElement('script');
     script.innerHTML = scriptCode;
     script.src =
-      'https://widgets.sir.sportradar.com/697e93551b60e2cb46fbcaca262ebaf1/widgetloader';
+      'https://widgets.sir.sportradar.com/3ce7b7ceaafea16ca3e9692394b97eda/widgetloader';
     script.async = true;
 
     // Define onload handler
     script.onload = () => {
-      window.SIR('addWidget', '.sr-widget', 'match.lmtPlus', {
-        layout: 'double',
-        scoreboard: 'disable',
-        detailedScoreboard: 'disable',
-        tabsPosition: 'top',
+      window.SIR('addWidget', '.sr-widget-1', 'headToHead.button', {
+        layout: 'inline', // Adjust layout to show the full widget vertically
+        disableScoreboard: true,
+        components: ['headtohead', 'form', 'teamstats', 'lastmatches'],
+        gamePulseBtnEnable: true,
         matchId: eventId,
       });
     };
@@ -46,8 +46,8 @@ g=b.createElement(c),h=b.getElementsByTagName(c)[0],g.async=1,g.src=d,g.setAttri
   );
 };
 
-WidgetChart.propTypes = {
+WidgetStatisticsChart.propTypes = {
   eventId: PropTypes.number,
 };
 
-export default WidgetChart;
+export default WidgetStatisticsChart;

@@ -96,8 +96,6 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
-  console.log('---------item won amount----', isNaN(item.wonAmount));
-
   return (
     <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
       {/* <div className="grid grid-cols-12 p-3">

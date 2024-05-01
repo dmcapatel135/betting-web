@@ -8,7 +8,7 @@ import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 // import MobileMarketCard from '@components/MobileMarketCard';
 
 function SportsMenu() {
@@ -24,7 +24,9 @@ function SportsMenu() {
   const [searchParams] = useSearchParams();
   const [selectMarket, setSelectMarket] = useState('3 WAY');
   const [mobileSelectMarketData, setMobileSelectMarketData] = useState([]);
+  const [scrollPosition, setScrollPosition] = useState(location?.state?.data);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     sportId,
@@ -64,33 +66,19 @@ function SportsMenu() {
     const response = await getReq(
       `/sports/${sportId}/tournaments?haveActiveEvents=${true}`,
     );
-    // if (sportId == 1)
     setAllTournaments(response.data?.filter((item) => item.topLeague == true));
-    // else {
-    //   setAllTournaments(response.data);
-    // }
   }, [sportId]);
 
   useEffect(() => {
     getAllTournaments();
   }, [sportId, getAllTournaments]);
 
-  // useEffect(() => {
-  //   const today = new Date();
-  //   getAllFixtures(today.toISOString);
-  // }, [getAllFixtures]);
-
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
-    // let interval = setInterval(() => {
     const date = new Date();
     const dateString = new Date(date);
     dateString.setDate(moment(date.getDate() + 1));
-    // let upcoming = moment(
-    //   dateString,
-    //   'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (India Standard Time)',
-    // ).format('YYYY-MM-DD');
     let today = date.toISOString();
     let query = `date=${today}`;
     if (window.location.pathname == '/dashboard/popular' && sportId) {
@@ -136,7 +124,6 @@ function SportsMenu() {
     }
     setQueries(query);
     getAllFixtures(query);
-    // }, 5000);
   }, [sportId, getAllFixtures, tab, selectTournament, searchParams]);
 
   const getAllFixtures = useCallback(
@@ -153,12 +140,12 @@ function SportsMenu() {
               : 1
         }/fixtures?skip=${newPage ? newPage : page}&take=${pageSize}&${query}`,
       );
+      setScrollPosition(window.scrollY);
 
       setIsLoading(false);
       if (response.data.data.length > 0) {
         setAllFixtures((prevState) => [...prevState, ...response.data.data]);
       } else {
-        // setAllFixtures([...response.data.data]);
         setHasMore(false);
         setTimeout(() => {
           window.scrollTo({
@@ -176,6 +163,8 @@ function SportsMenu() {
     setPage(newPage);
     getAllFixtures(queries, newPage);
   };
+
+  // console.log('--------------scroll position -------', scrollPosition);
 
   useEffect(() => {
     setMarketData([]);
@@ -196,6 +185,15 @@ function SportsMenu() {
     );
     setAllFixtures([...allFixtures]);
   }, [selectMarket]); //eslint-disable-line
+
+  useEffect(() => {
+    window.scrollTo(0, scrollPosition);
+  }, [scrollPosition, allFixtures]);
+
+  // console.log('---------------location ', location?.state?.data);
+  useEffect(() => {
+    if (location?.state?.data) setScrollPosition(location?.state?.data);
+  }, [location]);
 
   return (
     <>
@@ -277,7 +275,11 @@ function SportsMenu() {
                 }}
                 className="w-full pl-2 my-2 bg-blue custom-select-drop font-[600] text-12 md:text-14 text-center text-white h-[32px] 2xl:h-[42px]  outline-none  rounded-[4px]"
               >
-                <option>Top Leagues & Countries</option>
+                <option value="Top Leagues & Countries">
+                  {window.matchMedia('(max-width: 575px)').matches
+                    ? 'Top Leagues'
+                    : 'Top Leagues & Countries'}
+                </option>
                 {allTournaments?.map((item) => {
                   return (
                     <option
@@ -362,7 +364,7 @@ function SportsMenu() {
         </div>
         <div className="flex-grow-0 w-12 md:hidden md:opacity-0">
           <div className=" border-solid  md:w-16 2xl:w-[72px] text-black">
-            <button
+            {/* <button
               onClick={() => {
                 var url = new URL(window.location.href);
                 url.searchParams.delete('sId');
@@ -370,12 +372,13 @@ function SportsMenu() {
                 navigate(url);
                 setSelectTournament(null);
                 setSportId(1);
+                setTab(2);
               }}
               type="reset"
               className=" border text-black  border-primary-700 h-[25px] !min-w-[50px] !text-12 !rounded-md hover:bg-primary-700"
             >
               Clear
-            </button>
+            </button> */}
             {/* <div
               onClick={() => {
                 // setTab(null);
@@ -479,7 +482,7 @@ function SportsMenu() {
         </div>
         <div className="flex-grow-0">
           <div className="  h-5 w-6 hidden md:block md:w-16 text-black">
-            <button
+            {/* <button
               onClick={() => {
                 var url = new URL(window.location.href);
                 url.searchParams.delete('sId');
@@ -492,7 +495,7 @@ function SportsMenu() {
               className=" border text-black ml-2 border-primary-700 h-[33px] !min-w-[60px] !text-12 !rounded-md hover:bg-primary-700"
             >
               Clear
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -584,13 +587,14 @@ function SportsMenu() {
                 );
                 return (
                   <>
-                    <div key={index} className="my-3 ">
+                    <div key={index} className="my-3" id="container">
                       <BetCard
                         index={index}
                         item={item}
                         sportId={sportId}
                         market={mobileMarket}
                         selectMarket={selectMarket}
+                        scrollPosition={scrollPosition}
                       />
                       {(index + 1) % 13 === 0 && (
                         <div className="text-black my-3">
@@ -602,7 +606,7 @@ function SportsMenu() {
                         </div>
                       )}
                     </div>
-                    {/* <div className="my-3 block sm:hidden">
+                    {/* <div className="my-3 block ">
                       <MobileMarketCard
                         item={item}
                         market={mobileMarket}

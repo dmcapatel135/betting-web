@@ -1,64 +1,31 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Loading } from '@components';
 import { reactIcons } from '@utils/icons';
-// import ReactSimplyCarousel from 'react-simply-carousel';
-// import { getReq } from '@utils/apiHandlers';
-import { Link, useParams } from 'react-router-dom';
+
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
-// import moment from 'moment';
 import axios from 'axios';
 import WidgetChart from '@components/WidgetChart';
 import moment from 'moment';
-// import { images } from '@utils/images';
-
-// import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
-// import 'swiper/css';
-// import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
-
-// import { Pagination, Navigation } from 'swiper/modules';
-
-// const TabsName = [
-//   { id: 1, title: 'Board', icon: images.board },
-//   { id: 2, title: 'Head to head', icon: images.headtohead },
-//   { id: 3, title: 'Standing', icon: images.standing },
-//   { id: 4, title: 'Linups', icon: images.lineups },
-// ];
+// import WidgetStatisticsChart from '@components/WidgetStatisticsChart';
 
 function SigleBetDetails() {
   const { eventId, sId } = useParams();
-  // const [step, setStep] = useState(isMobile ? 'Board' : 'Head to head');
-  // const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-  // const [allMarketData, setAllMarketData] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
-  // const [marketDataOdds, setMarketDataOdds] = useState();
   const [mergedData, setMergedData] = useState([]);
   const [eventName, setEventName] = useState();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [bets, setBets] = useState([]);
   const [eventData, setEvenData] = useState();
-  // const [isMobile, setIsMobile] = useState(false);
-  // const [tab, setTab] = useState(1);
   const [loadNum, setLoadNum] = useState(0);
   const [loadEvent, setLoadEvent] = useState(0);
   const [open, setOpen] = useState(false);
+  const location = useLocation(location?.state);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  // const swiperRef = useRef(null) ;
-
-  // useEffect(() => {
-  //   getEventName();
-  //   getAllMarketData();
-  // }, []);
-
-  // const updateState = (newObject) => {
-  //   setMarketDataOdds((prevState) => {
-  //     return { ...prevState, ...newObject };
-  //   });
-  // };
 
   const addToBetSlip = (eventId, bet, betDetails, specifiers) => {
     setBets((prev) => {
@@ -119,26 +86,6 @@ function SigleBetDetails() {
     dispatch(fetchBetDetailsAction(updatedBets));
   };
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsMobile(window.innerWidth <= 768); // Adjust the breakpoint as needed
-  //   };
-
-  //   window.addEventListener('resize', handleResize);
-  //   handleResize(); // Check on initial render
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
-
-  // const handleSlideChange = () => {
-  //   // console.log('-----index ', index);
-  //   if (swiperRef.current && swiperRef.current.swiper) {
-  //     swiperRef.current.swiper.slideTo(2);
-  //   }
-  // };
-
   const cancelMarketTokenSource = useRef(null);
   const marketApiInstance = axios.create({
     baseURL: API_URL,
@@ -161,7 +108,7 @@ function SigleBetDetails() {
       // setAllMarketData(response.data);
     } catch (error) {
       // Handle any errors from the API call
-      console.error(error);
+      // console.error(error);
     }
   }, [eventId, loadNum, marketApiInstance]);
 
@@ -196,7 +143,6 @@ function SigleBetDetails() {
       const response = await apiInstance.get(`/events/${eventId}`, {
         cancelToken: cancelTokenSource.current.token, // Access the cancel token from the useRef
       });
-      console.log(response);
       if (!loadEvent) {
         setLoadEvent(1);
       }
@@ -205,8 +151,7 @@ function SigleBetDetails() {
       );
       setEvenData(response.data);
     } catch (error) {
-      // Handle any errors from the API call
-      console.error(error);
+      console.log('');
     }
   }, [
     eventId,
@@ -248,20 +193,38 @@ function SigleBetDetails() {
       <div className="border border-lightgray rounded-md px-2">
         <div className="flex">
           <div>
-            <Link to="/dashboard">
-              <button className="text-black flex gap-1 items-center cursor-pointer">
-                <span className="text-16 font-[600]">
-                  {reactIcons.arrowleft}
-                </span>
-                <span className="text-14">Back</span>
-              </button>
-            </Link>
+            {/* <Link to="/dashboard"> */}
+            <button
+              onClick={() =>
+                navigate(`${location?.state?.url}`, {
+                  state: { data: location?.state?.data },
+                })
+              }
+              className="text-black flex gap-1 items-center cursor-pointer"
+            >
+              <span className="text-16 font-[600]">{reactIcons.arrowleft}</span>
+              <span className="text-14">Back</span>
+            </button>
+            {/* </Link> */}
           </div>
           <div className="flex-1 flex justify-center">
             <div className="border border-lightgray px-3">
-              <h1 className="text-black text-14 font-[600]">
-                {moment(eventData?.startTime).format('hh:mm a ddd DD-MM')}
-              </h1>
+              {eventData?.status == 'Live' ? (
+                <div className="flex  justify-between">
+                  <h1 className="text-black text-14 font-[600]">
+                    {eventData?.matchStatusText} |{' '}
+                    {eventData?.matchTime ? eventData?.matchTime : '_:_'}
+                  </h1>
+                  {/* <div className="md:hidden flex gap-2 items-center">
+              <span className="text-12 font-[400]">Statistics</span>
+              <span className="text-white text-20">{reactIcons.bargraph}</span>
+            </div> */}
+                </div>
+              ) : (
+                <h1 className="text-black text-14 font-[600]">
+                  {moment(eventData?.startTime).format('hh:mm a ddd DD-MM')}
+                </h1>
+              )}
             </div>
           </div>
         </div>
@@ -293,28 +256,33 @@ function SigleBetDetails() {
             </p>
           </div>
         </div>
-        <div
-          className="flex justify-between items-center cursor-pointer"
-          onClick={() => setOpen(!open)}
-        >
-          <div className="text-black">
-            <span className="text-black text-14">
-              {eventData?.tournament?.category?.sport?.name}/
-              {eventData?.tournament?.category?.name}/
-              {eventData?.tournament?.name}
-            </span>
+        {eventData && (
+          <div
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => setOpen(!open)}
+          >
+            <div className="text-black">
+              <span className="text-black text-14">
+                {eventData?.tournament?.category?.sport?.name}/
+                {eventData?.tournament?.category?.name}/
+                {eventData?.tournament?.name}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-14 text-black font-[400]">Statistics</span>
+              <span className="text-black text-20">
+                {open ? reactIcons.close : reactIcons.bargraph}
+              </span>
+            </div>
           </div>
-          <div className="flex items-center">
-            <span className="text-14 text-black font-[400]">Statistics</span>
-            <span className="text-black text-20">
-              {open ? reactIcons.close : reactIcons.bargraph}
-            </span>
-          </div>
-        </div>
+        )}
       </div>
       {open && (
         <div className=" text-black w-full h-full border border-[#a5dee3] my-2 rounded-sm bg-[#a5dee3]">
+          {/* {eventData?.status == 'Live' ? ( */}
           <WidgetChart eventId={eventId} />
+          {/* // ) : ( // <WidgetStatisticsChart eventId={eventId} />
+          // )} */}
           <div className="text-black bg-white border border-lightgray py-1 px-3">
             <span className="text-12">
               Statistics are for reference only, bikosports cannot guarantee
@@ -362,16 +330,16 @@ function SigleBetDetails() {
             Start Time -{' '}
             {moment(eventData?.startTime).format('DD-MM-YYYY hh:mm A')}
           </h1> */}
-          <div className="flex  justify-between">
+          {/* <div className="flex  justify-between">
             <h1 className="text-white text-14 font-[600]">
               {eventData?.matchStatusText} |{' '}
               {eventData?.matchTime ? eventData?.matchTime : '_:_'}
-            </h1>
-            {/* <div className="md:hidden flex gap-2 items-center">
+            </h1> */}
+          {/* <div className="md:hidden flex gap-2 items-center">
               <span className="text-12 font-[400]">Statistics</span>
               <span className="text-white text-20">{reactIcons.bargraph}</span>
             </div> */}
-          </div>
+          {/* </div> */}
         </div>
       </div>
       <div>
@@ -407,7 +375,9 @@ function SigleBetDetails() {
                           <div className="flex-1 mr-2">
                             <button
                               disabled={
-                                innerItem.market.status == 1 ? false : true
+                                innerItem.market.status == 1 && innerItem.odds
+                                  ? false
+                                  : true
                               }
                               onClick={() => {
                                 if (
@@ -539,11 +509,11 @@ function SigleBetDetails() {
               </div>
             );
           })}
-        {/* {mergedData?.length == 0 && !isLoading && (
-              <div className="text-center mt-5 text-black">
-                <span>No markets found</span>
-              </div>
-            )} */}
+        {mergedData?.length == 0 && !isLoading && (
+          <div className="text-center mt-5 text-black">
+            <span>Theare is no active markets </span>
+          </div>
+        )}
       </div>
     </>
   );
