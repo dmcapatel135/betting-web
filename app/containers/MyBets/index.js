@@ -447,7 +447,7 @@ function MyBets() {
             <div>
               <div
                 className="flex  justify-between flex-wrap items-center gap-6 rounded-lg border text-primary-200 
-               border-primary-200 px-4 py-2"
+               border-primary-200 px-2 md:px-4 py-2"
               >
                 <div>
                   <button
@@ -479,7 +479,7 @@ function MyBets() {
                   <button
                     onClick={handleClear}
                     type="reset"
-                    className="btn border text-black ml-2 border-primary-700 h-[33px] !rounded-md hover:bg-primary-700"
+                    className="btn border   text-black ml-2 border-primary-700 h-[33px] !rounded-md hover:bg-primary-700"
                   >
                     Clear
                   </button>

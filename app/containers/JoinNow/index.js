@@ -29,7 +29,6 @@ function JoinNow() {
   const [verificationResponse, setVerificationResponse] = useState(null);
   const { register, sendRegisterCode } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [terms, setTerms] = useState(false);
 
   function findCountryNameByDialCode(dialCode) {
     const country = countryList.find((c) => c.dial_code === dialCode);
@@ -55,6 +54,7 @@ function JoinNow() {
       country: form.country,
       password: form.password,
       type: 'register',
+      termsAndCondition: form.termsAndCondition,
     };
     setError({});
     const [response, error] = await sendRegisterCode(data);
@@ -85,6 +85,7 @@ function JoinNow() {
       password: form.password,
       mobileVerificationCode: form.mobileVerificationCode,
       channel: channel,
+      termsAndCondition: form.termsAndCondition,
     };
     setError(error);
     const error = await register(data);
@@ -232,7 +233,7 @@ function JoinNow() {
                     <input
                       type="checkbox"
                       name="termsAndCondition"
-                      checked={terms}
+                      checked={form.termsAndCondition}
                       onClick={(e) => {
                         setFormData({
                           ...form,
@@ -241,7 +242,12 @@ function JoinNow() {
                       }}
                     />
                     <span
-                      onClick={() => setTerms(!terms)}
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          termsAndCondition: !form.termsAndCondition,
+                        }))
+                      }
                       className="checkmark top-[5px] left-[-20px] md:left-[-5px] lg:left-[-12px]"
                     ></span>
                     <span className="text-gray-900 text-10 md:text-12 2xl:text-14 md:ml-4 lg:ml-2 ">
@@ -250,6 +256,9 @@ function JoinNow() {
                         Terms and Conditions
                       </Link>
                     </span>
+                    <div className="text-[#FF0000] text-12">
+                      {error.termsAndCondition}
+                    </div>
                     <div className="text-center">
                       <p className="text-gray-900 text-10 md:text-12 2xl:text-14">
                         Already have an account?{' '}

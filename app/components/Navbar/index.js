@@ -495,94 +495,99 @@ const Navbar = ({ tab, setTab }) => {
                     placeholder="Search events and tournaments..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="border  rounded-md  px-3 text-black outline-none bg-white w-[350px] ml-2 h-8"
+                    className="border  rounded-md  px-3 text-black outline-none text-16 bg-white w-full ml-2 h-8"
                   />
                   <span onClick={() => setTab(null)} className="text-24">
                     {reactIcons.closecircle}
                   </span>
                 </div>
-                <div className="w-[350px]  absolute z-30 bg-white  ml-[12px] top-18">
-                  <div>
-                    {searchData?.events?.length > 0 && (
-                      <div
-                        className="text-black px-overflow-y-auto custom-scroll-sm max-h-60 h-full mt-2
+                {(Object.values(searchData)?.length > 0 ||
+                  !searchData == {}) && (
+                  <div className="w-[91%] absolute z-30 bg-white rounded-md  ml-[9px] top-18">
+                    <div>
+                      {searchData?.events?.length > 0 && (
+                        <div
+                          className="text-black px-overflow-y-auto custom-scroll-sm max-h-60 h-full mt-2
                       "
-                      >
-                        <span className="text-blue text-14 2xl:text-20 font-[800] px-2">
-                          EVENTS
-                        </span>
+                        >
+                          <span className="text-blue text-14 2xl:text-20 font-[800] px-2">
+                            EVENTS
+                          </span>
+                        </div>
+                      )}
+                      <div className="overflow-y-auto custom-scroll-sm max-h-60 h-full px-2 mt-2">
+                        {searchData?.events?.map((item) => {
+                          return (
+                            <li
+                              key={item.id}
+                              onClick={() => setEvent(item)}
+                              className="text-black list-none cursor-pointer border-[1px] rounded-md mb-2 p-2 hover:text-blue"
+                            >
+                              <div className="flex items-center">
+                                <img src="/images/bikoicon/acute.png" />
+                                <p className="text-10 ml-1 md:text-10">
+                                  {moment(item?.startTime).format('hh:mm A')}{' '}
+                                  <span className="font-[600]">
+                                    {moment(item?.startTime).format(
+                                      'ddd MM/DD',
+                                    )}
+                                  </span>
+                                </p>
+                                {item.popular && (
+                                  <img
+                                    src="/images/bikoicon/vector.png"
+                                    alt="icon"
+                                    className="md:block hidden  ml-1"
+                                  />
+                                )}
+                              </div>
+                              <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                                {item?.competitors[0]?.name || 'N.A'}
+                                {/* v/s{' '} */}
+                              </h2>
+                              <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
+                                {item?.competitors[1]?.name || 'N.A'}{' '}
+                              </h2>
+                              <span className="text-[9px]  leading-none md:text-10">
+                                {item?.sport?.name}/{item?.category?.name}/
+                                {item?.tournament?.name}
+                              </span>
+                            </li>
+                          );
+                        })}
                       </div>
-                    )}
-                    <div className="overflow-y-auto custom-scroll-sm max-h-60 h-full px-2 mt-2">
-                      {searchData?.events?.map((item) => {
-                        return (
-                          <li
-                            key={item.id}
-                            onClick={() => setEvent(item)}
-                            className="text-black list-none cursor-pointer border-[1px] rounded-md mb-2 p-2 hover:text-blue"
-                          >
-                            <div className="flex items-center">
-                              <img src="/images/bikoicon/acute.png" />
-                              <p className="text-10 ml-1 md:text-10">
-                                {moment(item?.startTime).format('hh:mm A')}{' '}
-                                <span className="font-[600]">
-                                  {moment(item?.startTime).format('ddd MM/DD')}
-                                </span>
-                              </p>
-                              {item.popular && (
-                                <img
-                                  src="/images/bikoicon/vector.png"
-                                  alt="icon"
-                                  className="md:block hidden  ml-1"
-                                />
-                              )}
-                            </div>
-                            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-                              {item?.competitors[0]?.name || 'N.A'}
-                              {/* v/s{' '} */}
-                            </h2>
-                            <h2 className="text-10 md:text-14 leading-3 md:leading-5 font-[700]">
-                              {item?.competitors[1]?.name || 'N.A'}{' '}
-                            </h2>
-                            <span className="text-[9px]  leading-none md:text-10">
-                              {item?.sport?.name}/{item?.category?.name}/
-                              {item?.tournament?.name}
-                            </span>
-                          </li>
-                        );
-                      })}
-                    </div>
 
-                    {/* {searchData.events.length == 0 && (
+                      {/* {searchData.events.length == 0 && (
                       <div className="text-center">
                         <span className="text-14 text-black my-2 text-[400]">
                           No events found
                         </span>
                       </div>
                     )} */}
+                    </div>
+                    {searchData?.tournaments?.map((item) => {
+                      return (
+                        <li
+                          key={item.id}
+                          onClick={() => {
+                            setSelectTournament(item.id);
+                            setSportId(item.sport.id);
+                            setSearchData({});
+                            setSearch('');
+                          }}
+                          className="text-black list-none border-[1px] mb-2 p-2 rounded-md cursor-pointer py-1"
+                        >
+                          <p className="text-14 2xl:text-16 font-bold">
+                            {item.tournament}
+                          </p>
+                          <span className="text-12 2xl:text-14">
+                            {item?.sport?.name}/{item?.category?.name}
+                          </span>
+                        </li>
+                      );
+                    })}
                   </div>
-                  {searchData?.tournaments?.map((item) => {
-                    return (
-                      <li
-                        key={item.id}
-                        onClick={() => {
-                          setSelectTournament(item.id);
-                          setSportId(item.sport.id);
-                          setSearchData({});
-                          setSearch('');
-                        }}
-                        className="text-black list-none border-[1px] mb-2 p-2 rounded-md cursor-pointer py-1"
-                      >
-                        <p className="text-14 2xl:text-16 font-bold">
-                          {item.tournament}
-                        </p>
-                        <span className="text-12 2xl:text-14">
-                          {item?.sport?.name}/{item?.category?.name}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </div>
+                )}
               </div>
             </>
           )}

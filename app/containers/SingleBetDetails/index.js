@@ -196,14 +196,21 @@ function SigleBetDetails() {
             {/* <Link to="/dashboard"> */}
             <button
               onClick={() =>
-                navigate(`${location?.state?.url}`, {
-                  state: { data: location?.state?.data },
-                })
+                navigate(
+                  `${location?.state?.url ? location?.state?.url : '/'}`,
+                  {
+                    state: {
+                      data: location?.state?.data ? location?.state?.data : 0,
+                    },
+                  },
+                )
               }
-              className="text-black flex gap-1 items-center cursor-pointer"
+              className="text-black flex gap-0 items-center cursor-pointer"
             >
-              <span className="text-16 font-[600]">{reactIcons.arrowleft}</span>
-              <span className="text-14">Back</span>
+              <span className="text-14 md:text-16 font-[600]">
+                {reactIcons.arrowleft}
+              </span>
+              <span className="text-12 md:text-14">Back</span>
             </button>
             {/* </Link> */}
           </div>
@@ -221,15 +228,15 @@ function SigleBetDetails() {
             </div> */}
                 </div>
               ) : (
-                <h1 className="text-black text-14 font-[600]">
-                  {moment(eventData?.startTime).format('hh:mm a ddd DD-MM')}
+                <h1 className="text-black text-12 md:text-14 font-[600]">
+                  {moment(eventData?.startTime).format('hh:mm a ddd DD/MM')}
                 </h1>
               )}
             </div>
           </div>
         </div>
         <div className="my-2 flex justify-between">
-          <div className="text-black font-[600]">
+          <div className="text-black text-14 md:text-16 font-[600]">
             <p>
               {
                 eventData?.competitors?.find((item) => item.qualifier == 'Home')
@@ -243,7 +250,7 @@ function SigleBetDetails() {
               }
             </p>
           </div>
-          <div className="text-black">
+          <div className="text-black text-14 md:text-16">
             <p>
               {typeof eventData?.homeScore === 'number'
                 ? eventData?.homeScore
@@ -262,7 +269,7 @@ function SigleBetDetails() {
             onClick={() => setOpen(!open)}
           >
             <div className="text-black">
-              <span className="text-black text-14">
+              <span className="text-black text-12  md:text-14">
                 {eventData?.tournament?.category?.sport?.name}/
                 {eventData?.tournament?.category?.name}/
                 {eventData?.tournament?.name}
@@ -413,7 +420,7 @@ function SigleBetDetails() {
                                 )
                                   ? 'bg-green text-white'
                                   : ''
-                              } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full py-1 md:py-2 px-1 md:px-3`}
+                              } bg-[#EAEAEA] flex justify-between  items-center border-[#A3A3A3] border-[1px] text-black text-10 md:text-12 rounded-md w-full h-full py-1 md:py-2 px-1 md:px-3`}
                             >
                               <span className="text-left md:text-center font-[700] leading-3 flex-1">
                                 {innerItem.name}

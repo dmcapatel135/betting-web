@@ -2,13 +2,30 @@ import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { marketDummyData } from './constant';
 
-function MobileMarketCard({ item }) {
+function MobileMarketCard({ item, sportId }) {
   const navigate = useNavigate();
 
-  // const handleMarket = (market) => {
-  //   if()
-  // };
+  const handleMarket = (market) => {
+    let array = [];
+    for (let item of marketDummyData[0]?.previewMarket) {
+      let index = market.indexOf((_item) => _item.name == item.name);
+      console.log('----------item ', index);
+      if (index !== -1) {
+        array[index] = market[index];
+      } else {
+        console.log('---------else condition ----', item);
+        array.push(item);
+      }
+    }
+    console.log('-------------array ', array);
+    return array;
+    // if (sportId == 1 && market?.length == 3) {
+    //     return market
+    // } else if(sportId == 1 && market) {
+    // }
+  };
 
   return (
     <div className="border flex items-center  border-lightgray text-black">
@@ -43,7 +60,7 @@ function MobileMarketCard({ item }) {
         </div>
       </div>
       <div className="flex-grow w-16"></div>
-      {item.previewMarkets.map((mkt, index) => {
+      {handleMarket(item.previewMarkets)?.map((mkt, index) => {
         return (
           <div className="flex-1" key={index}>
             <div className="flex gap-3 justify-center">
@@ -90,7 +107,7 @@ function MobileMarketCard({ item }) {
 MobileMarketCard.propTypes = {
   openMarket: PropTypes.number,
   item: PropTypes.object,
-  // market: PropTypes.object,
+  sportId: PropTypes.number,
 };
 
 export default MobileMarketCard;

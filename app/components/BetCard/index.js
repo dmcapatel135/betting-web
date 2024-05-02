@@ -7,7 +7,7 @@ import { fetchBetDetailsAction } from '@actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
 
-function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
+function BetCard({ item, sportId, market, selectMarket }) {
   const [searchParams] = useSearchParams();
 
   const [bets, setBets] = useState([]);
@@ -120,7 +120,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
                 <p className="text-10 ml-1 md:text-10">
                   {moment(item?.startTime).format('hh:mm A')}{' '}
                   <span className="font-[600]">
-                    {moment(item?.startTime).format('ddd MM/DD')}
+                    {moment(item?.startTime).format('ddd DD/MM')}
                   </span>
                 </p>
                 {item.status == 'Live' && (
@@ -145,7 +145,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
                 </div>
                 <div>
                   {item.status == 'Live' && (
-                    <div className="text-blue text-14 font-[600]  flex-grow   text-center px-3">
+                    <div className="text-yellow text-14 font-[600]  flex-grow   text-center px-3">
                       <h1>{item.homeScore}</h1>
                       <h1>{item.awayScore}</h1>
                     </div>
@@ -1010,7 +1010,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
                     `${item.onlyLive ? `/dashboard/single-bets/${item.eventId}?onlyLive=true` : `/dashboard/single-bets/${item.eventId}`}`,
                     {
                       state: {
-                        data: scrollPosition,
+                        data: window.scrollY,
                         url: window.location.pathname,
                       },
                     },
@@ -1041,7 +1041,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
               <p className="text-10 ml-1 md:text-10">
                 {moment(item?.startTime).format('hh:mm A')}{' '}
                 <span className="font-[600]">
-                  {moment(item?.startTime).format('ddd MM/DD')}
+                  {moment(item?.startTime).format('ddd DD/MM')}
                 </span>
               </p>
               {item.status == 'Live' && (
@@ -1066,7 +1066,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
               </div>
               <div>
                 {item.status == 'Live' && (
-                  <div className="text-blue  leading-3 text-12  w-2 text-start px-1">
+                  <div className="text-yellow  leading-3 text-12  w-2 text-start px-1">
                     <h1>{item.homeScore}</h1>
                     <h1>{item.awayScore}</h1>
                   </div>
@@ -1081,7 +1081,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
               </div>
             </div>
             <p
-              className="text-[9px] leading-5 md:text-10"
+              className="text-[9px] leading-5 md:text-10 py-1"
               style={{ lineHeight: '13px' }}
             >
               {item?.sport?.name}/{item?.category?.name}/
@@ -1174,7 +1174,7 @@ function BetCard({ item, sportId, market, selectMarket, scrollPosition }) {
                   `${item.onlyLive ? `/dashboard/single-bets/${item.eventId}?onlyLive=true` : `/dashboard/single-bets/${item.eventId}`}`,
                   {
                     state: {
-                      data: scrollPosition,
+                      data: window.scrollY,
                       url: window.location.pathname,
                     },
                   },
@@ -1205,7 +1205,6 @@ BetCard.propTypes = {
   index: PropTypes.number,
   market: PropTypes.object,
   selectMarket: PropTypes.string,
-  scrollPosition: PropTypes.number,
 };
 
 export default BetCard;

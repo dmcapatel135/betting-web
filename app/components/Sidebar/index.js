@@ -58,11 +58,9 @@ function Sidebar({
   };
 
   const getLiveMatchs = useCallback(async () => {
-    // setLeagueLoading(true);
     const response = await getReq(
       `/sports/${sportId}/fixtures?skip=0&take=1&haveActiveEvents=${true}&onlyLive=${true}`,
     );
-    // setLeagueLoading(false);
     if (response.status) {
       setLiveData(response.data.data);
     }
@@ -254,44 +252,51 @@ function Sidebar({
                               {item.activeEvents}
                             </span>
                             <span className="text-12 pl-2">
-                              {reactIcons.arrowdown}
+                              {isOpenLeague == item.id
+                                ? reactIcons.arrowup
+                                : reactIcons.arrowdown}
                             </span>
                           </div>
                         </div>
                         {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>
-                      {isOpenLeague == item.id &&
-                        leagues?.map((items, ind) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                setSelectTournament(items.id);
-                                setSportId(items.sportId);
-                                naviagte(
-                                  `?sId=${items.sportId}&eId=${items.id}`,
-                                );
-                              }}
-                              key={ind}
-                              className={`px-5 cursor-pointer ${
-                                items.id == selectTournament
-                                  ? 'bg-yellow text-white'
-                                  : 'bg-white'
-                              } hover:text-blue`}
-                            >
-                              <li className="flex justify-between">
-                                <span className="text-12 font-[500]">
-                                  {items.name}
-                                </span>
-                                <span className="text-12 font-[500]">
-                                  {items.activeEvents}
-                                </span>
-                              </li>
-                            </div>
-                          );
-                        })}
-                      {/* {leagueLoading && (
-                        <CircularProgress color="inherit" size={20} />
-                      )} */}
+                      <div>
+                        {isOpenLeague == item.id &&
+                          leagues.length > 0 &&
+                          leagues?.map((items, ind) => {
+                            return (
+                              <div
+                                onClick={() => {
+                                  setSelectTournament(items.id);
+                                  setSportId(items.sportId);
+                                  naviagte(
+                                    `?sId=${items.sportId}&eId=${items.id}`,
+                                  );
+                                }}
+                                key={ind}
+                                className={`px-5 cursor-pointer ${
+                                  items.id == selectTournament
+                                    ? 'bg-yellow text-white'
+                                    : 'bg-white'
+                                } hover:text-blue`}
+                              >
+                                <li className="flex justify-between">
+                                  <span className="text-12 font-[500]">
+                                    {items.name}
+                                  </span>
+                                  <span className="text-12 font-[500]">
+                                    {items.activeEvents}
+                                  </span>
+                                </li>
+                              </div>
+                            );
+                          })}
+                        {isOpenLeague == item.id && leagues.length == 0 && (
+                          <div className="text-black leading-3 px-5">
+                            <span>.....</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -319,7 +324,10 @@ function Sidebar({
             <h1 className="text-white text-14 font-[500] leading-3 lg:leading-none lg:text-14 xxl:text-18">
               OTHER COUNTRIES
             </h1>
-            <span className="text-white">{reactIcons.arrowdown}</span>
+            <span className="text-white">
+              {' '}
+              {isOpenOtherCountry ? reactIcons.arrowup : reactIcons.arrowdown}
+            </span>
           </div>
           {isOpenOtherCountry && (
             <div className="pl-2 overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
@@ -357,44 +365,51 @@ function Sidebar({
                               {item.activeEvents}
                             </span>
                             <span className="text-12 pl-2">
-                              {reactIcons.arrowdown}
+                              {isOpenLeague == item.id
+                                ? reactIcons.arrowup
+                                : reactIcons.arrowdown}
                             </span>
                           </div>
                         </div>
                         {/* <span>{reactIcons.arrowdown}</span> */}
                       </li>
-                      {isOpenLeague == item.id &&
-                        leagues?.map((items) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                setSelectTournament(items.id);
-                                setSportId(items.sportId);
-                                naviagte(
-                                  `?sId=${items.sportId}&eId=${items.id}`,
-                                );
-                              }}
-                              key={items.id}
-                              className={`px-5 cursor-pointer ${
-                                items.id == selectTournament
-                                  ? 'bg-yellow text-white'
-                                  : 'bg-white'
-                              } hover:text-blue`}
-                            >
-                              <li className="flex justify-between">
-                                <span className="text-12 font-[500]">
-                                  {items.name}
-                                </span>
-                                <span className="text-12 font-[500]">
-                                  {items.activeEvents}
-                                </span>
-                              </li>
-                            </div>
-                          );
-                        })}
-                      {/* {leagueLoading && (
-                        <CircularProgress color="inherit" size={20} />
-                      )} */}
+                      <div>
+                        {isOpenLeague == item.id &&
+                          leagues?.map((items) => {
+                            return (
+                              <div
+                                onClick={() => {
+                                  setSelectTournament(items.id);
+                                  setSportId(items.sportId);
+                                  naviagte(
+                                    `?sId=${items.sportId}&eId=${items.id}`,
+                                  );
+                                }}
+                                key={items.id}
+                                className={`px-5 cursor-pointer ${
+                                  items.id == selectTournament
+                                    ? 'bg-yellow text-white'
+                                    : 'bg-white'
+                                } hover:text-blue`}
+                              >
+                                <li className="flex justify-between">
+                                  <span className="text-12 font-[500]">
+                                    {items.name}
+                                  </span>
+                                  <span className="text-12 font-[500]">
+                                    {items.activeEvents}
+                                  </span>
+                                </li>
+                              </div>
+                            );
+                          })}
+                        {isOpenLeague == item.id && leagues.length == 0 && (
+                          // <CircularProgress color="inherit" size={20} />
+                          <div className="text-black px-5">
+                            <span>.....</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}

@@ -11,6 +11,8 @@ import { images } from '@utils/images';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 // import MobileMarketCard from '@components/MobileMarketCard';
 
+let currentDate = null;
+
 function SportsMenu() {
   const [allSports, setAllSports] = useState();
   const [popularSports, setPopularSports] = useState();
@@ -24,7 +26,6 @@ function SportsMenu() {
   const [searchParams] = useSearchParams();
   const [selectMarket, setSelectMarket] = useState('3 WAY');
   const [mobileSelectMarketData, setMobileSelectMarketData] = useState([]);
-  const [scrollPosition, setScrollPosition] = useState(location?.state?.data);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -51,6 +52,10 @@ function SportsMenu() {
     });
     setPopularSports(mergedArray);
   };
+
+  useEffect(() => {
+    currentDate = null;
+  }, [tab]);
 
   useEffect(() => {
     setAllFixtures([]);
@@ -81,7 +86,7 @@ function SportsMenu() {
     dateString.setDate(moment(date.getDate() + 1));
     let today = date.toISOString();
     let query = `date=${today}`;
-    if (window.location.pathname == '/dashboard/popular' && sportId) {
+    if (window.location.pathname.includes('/dashboard/popular') && sportId) {
       query = selectTournament
         ? `tournamentId=${
             selectTournament
@@ -93,15 +98,18 @@ function SportsMenu() {
         : `popular=${true}`;
     } else if (window.location.pathname == '/' && sportId) {
       query = selectTournament
-        ? `upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}&tournamentId=${
+        ? `upcoming=${true}&fromDate=${window.matchMedia('(max-width: 575px)').matches ? moment(today).toISOString() : today}${window.matchMedia('(max-width: 575px)').matches ? '' : `&toDate=${moment(today).endOf('date').toISOString()}`}&tournamentId=${
             selectTournament
               ? selectTournament
               : searchParams.get('eId')
                 ? searchParams.get('eId')
                 : 1
           }`
-        : `upcoming=${true}&fromDate=${today}&toDate=${moment(today).endOf('date').toISOString()}`;
-    } else if (window.location.pathname == '/dashboard/upcoming' && sportId) {
+        : `upcoming=${true}&fromDate=${window.matchMedia('(max-width: 575px)').matches ? moment(today).toISOString() : today}${window.matchMedia('(max-width: 575px)').matches ? '' : `&toDate=${moment(today).endOf('date').toISOString()}`}`;
+    } else if (
+      window.location.pathname.includes('/dashboard/upcoming') &&
+      sportId
+    ) {
       query = selectTournament
         ? `upcoming=${true}&fromDate=${moment(today).toISOString()}&tournamentId=${
             selectTournament
@@ -111,7 +119,10 @@ function SportsMenu() {
                 : 1
           }`
         : `upcoming=${true}&fromDate=${moment(today).toISOString()}`;
-    } else if (window.location.pathname == '/dashboard/live-now' && sportId) {
+    } else if (
+      window.location.pathname.includes('/dashboard/live-now') &&
+      sportId
+    ) {
       query = selectTournament
         ? `onlyLive=${true}&tournamentId=${
             selectTournament
@@ -140,7 +151,6 @@ function SportsMenu() {
               : 1
         }/fixtures?skip=${newPage ? newPage : page}&take=${pageSize}&${query}`,
       );
-      setScrollPosition(window.scrollY);
 
       setIsLoading(false);
       if (response.data.data.length > 0) {
@@ -164,8 +174,6 @@ function SportsMenu() {
     getAllFixtures(queries, newPage);
   };
 
-  // console.log('--------------scroll position -------', scrollPosition);
-
   useEffect(() => {
     setMarketData([]);
     setSelectMarket('');
@@ -187,14 +195,25 @@ function SportsMenu() {
   }, [selectMarket]); //eslint-disable-line
 
   useEffect(() => {
-    window.scrollTo(0, scrollPosition);
-  }, [scrollPosition, allFixtures]);
+    if (location?.state?.data && allFixtures.length > 0)
+      window.scrollTo(0, location?.state?.data - 50);
+  }, [location, allFixtures]);
 
-  // console.log('---------------location ', location?.state?.data);
-  useEffect(() => {
-    if (location?.state?.data) setScrollPosition(location?.state?.data);
-  }, [location]);
-
+  const handleTodayDate = (pathname) => {
+    if (
+      window.matchMedia('(max-width: 575px)').matches &&
+      (pathname.includes('/') || pathname.includes('/dashboard/upcoming'))
+    ) {
+      return false;
+    } else if (
+      pathname.includes('/dashboard/upcoming') ||
+      pathname.includes('/dashboard/popular')
+    ) {
+      return false;
+    } else if (pathname.includes('/')) {
+      return true;
+    }
+  };
   return (
     <>
       <div className="lg:block hidden">
@@ -325,17 +344,17 @@ function SportsMenu() {
       </div>
       <div className="flex lg:mx-4 py-1 lg:px-2 pl-1 lg:pl-0">
         <div className="flex-grow-0 w-40   mt-9 md:mt-12 xxl:flex-1 pl-0">
-          <div
-            className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
-              !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
-            } text-white px-1 rounded-[4px]  font-[600]`}
-          >
-            {!(tab == 3) && (
+          {handleTodayDate(window.location.pathname) && (
+            <div
+              className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
+                !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
+              } text-white px-1 rounded-[4px]  font-[600]`}
+            >
               <p className="leading-3">
                 {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()}
               </p>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className="flex-1 w-full lg:hidden flex justify-center sm:justify-end ">
           {mobileSelectMarketData && (
@@ -585,16 +604,40 @@ function SportsMenu() {
                 let mobileMarket = item?.previewMarkets?.find(
                   (mkt) => mkt.name == market,
                 );
+                let isFromNewDate = false;
+                if (
+                  currentDate !== moment(item.startTime).format('YYYY-MM-DD')
+                ) {
+                  isFromNewDate = true;
+                  currentDate = moment(item.startTime).format('YYYY-MM-DD');
+                }
                 return (
                   <>
                     <div key={index} className="my-3" id="container">
+                      {item.startTime &&
+                        (window.location.pathname.includes(
+                          '/dashboard/popular',
+                        ) ||
+                          window.location.pathname.includes(
+                            '/dashboard/upcoming',
+                          ) ||
+                          (window.matchMedia('max-width:575').matches &&
+                            window.location.pathname.includes('/'))) &&
+                        isFromNewDate && (
+                          <div className="flex my-2 items-center px-2 py-0 md:py-1  bg-yellow rounded-md">
+                            <h1 className="text-12 md:text-14 font-[700]">
+                              {moment(item.startTime)
+                                .format('dddd, DD MMM ')
+                                .toUpperCase()}
+                            </h1>
+                          </div>
+                        )}
                       <BetCard
                         index={index}
                         item={item}
                         sportId={sportId}
                         market={mobileMarket}
                         selectMarket={selectMarket}
-                        scrollPosition={scrollPosition}
                       />
                       {(index + 1) % 13 === 0 && (
                         <div className="text-black my-3">
@@ -611,6 +654,7 @@ function SportsMenu() {
                         item={item}
                         market={mobileMarket}
                         openMarket={item.openMarkets}
+                        sportId={sportId}
                       />
                     </div> */}
                   </>

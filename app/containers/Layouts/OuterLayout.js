@@ -199,7 +199,7 @@ const OuterLayout = () => {
             </div>
             <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
               <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
-                {selectedBet.length > 0 || isLoggedIn() || bookingcode ? (
+                {selectedBet?.length > 0 || isLoggedIn() || bookingcode ? (
                   <BetWallet />
                 ) : (
                   <div>

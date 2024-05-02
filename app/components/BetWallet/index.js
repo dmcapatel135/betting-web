@@ -23,7 +23,7 @@ function BetWallet({ stakeValue }) {
   const [betData, setBetData] = useState([]);
   const bets = useSelector((state) => state.bet.selectedBet);
   const [stake, setStake] = useState(stakeValue || 1000);
-  const [oddChange, setOddChange] = useState(false);
+  const [oddChange, setOddChange] = useState(true);
   const [totalSport, setTotalSport] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const selectedBet = useSelector((state) => state.bet.selectedBet);
@@ -190,7 +190,7 @@ function BetWallet({ stakeValue }) {
     }
 
     if (bets.length === 0) {
-      setOddChange(0);
+      setOddChange(true);
     }
   }, [bets]);
 

@@ -69,6 +69,7 @@ const useAuth = () => {
   const register = useCallback(
     async (data) => {
       const [valid, error] = await validateData(registerSchema, data);
+      console.log('-----------valid ', valid, '-----------erorro ', error);
       if (error) return error;
       if (valid) {
         const response = await postReq('/auth/register', {
@@ -95,6 +96,7 @@ const useAuth = () => {
     const [valid, error] = await validateData(registerSchema, data);
     if (error) return [null, error];
     if (valid) {
+      console.log('-----working for otp');
       const response = await postReq('/auth/send-code', {
         // email: data.email,
         dialCode: data.dialCode,
@@ -102,6 +104,8 @@ const useAuth = () => {
         country: data.country,
         type: data.type,
       });
+      console.log('-----working for otp', response);
+
       if (response.status) {
         return [response.data];
       } else {
@@ -183,6 +187,7 @@ const registerSchema = yup.object({
     .string()
     .required('Password is required')
     .matches(passwordLengthRegex, 'Password must be atleast 4 characters'),
+  termsAndCondition: yup.string().required('This field is required'),
   // .matches(
   //   passwordRegex,
   //   'Password must be atleast 8 characters including one uppercase letter, one special character and alphanumeric characters',
