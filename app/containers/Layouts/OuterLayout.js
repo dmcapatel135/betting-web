@@ -24,7 +24,7 @@ const OuterLayout = () => {
   );
   const [allTournaments, setAllTournaments] = useState();
   const [categories, setCategories] = useState();
-  const [tab, setTab] = useState(3);
+  const [tab, setTab] = useState(2);
   const [searchParams] = useSearchParams();
   const [wallet, setWallet] = useState();
   const [otherCountries, setOtherCountries] = useState([]);

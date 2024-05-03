@@ -269,19 +269,27 @@ function MyBets() {
                                       )}
                                     </span>
                                   </div>
-                                  <div className="grid gap-2 grid-cols-6 xl:grid-cols-12 p-3">
+                                  <div className="grid gap-2 grid-cols-6 md:grid-cols-12 p-3">
                                     <div className="col-span-4 md:col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex flex-col  h-full">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 w-[75px]  md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900 w-[75px] hidden   md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               START TIME
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                              {moment(
-                                                innerItem.event.startTime,
-                                              ).format('DD-MM-yy hh:mm A')}
-                                            </p>
+                                            <div className="flex items-center gap-1">
+                                              <img
+                                                src="/images/bikoicon/acute.png"
+                                                className="w-6 h-5"
+                                              />
+                                              <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16 ">
+                                                {moment(
+                                                  innerItem?.event?.startTime,
+                                                )
+                                                  .format('dddd, DD MMM ')
+                                                  .toUpperCase()}
+                                              </p>
+                                            </div>
                                           </div>
                                           {/* <div className="flex gap-2">
                                             <p className="text-gray-900  w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
@@ -305,83 +313,92 @@ function MyBets() {
                                             </p>
                                           </div> */}
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  w-[75px]  md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900 hidden   w-[75px]  md:w-[132px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Team
                                             </p>
                                             <div>
-                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                                {/* {innerItem?.event
+                                              <div className="flex gap-16 items-center">
+                                                <div className="flex-1">
+                                                  <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16 ">
+                                                    {/* {innerItem?.event
                                                   ?.competitors[0]?.name ||
                                                   'N.A'}{' '} */}
-                                                {
-                                                  innerItem?.event?.competitors?.find(
-                                                    (item) =>
-                                                      item.qualifier == 'Home',
-                                                  ).name
-                                                }
-
-                                                <strong className="ml-5">
+                                                    {
+                                                      innerItem?.event?.competitors?.find(
+                                                        (item) =>
+                                                          item.qualifier ==
+                                                          'Home',
+                                                      ).name
+                                                    }
+                                                  </p>
+                                                </div>
+                                                <strong className="text-yellow font-[700] text-12 md:text-14 xxl:text-16">
                                                   {innerItem?.event?.homeScore
                                                     ? innerItem?.event
                                                         ?.homeScore
                                                     : ''}
                                                 </strong>
-                                              </p>
-                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
+                                              </div>
+                                              {/* <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
                                                 Vs {''}
-                                              </p>
-                                              <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                                                {/* {innerItem?.event
+                                              </p> */}
+                                              <div className="flex items-center gap-16">
+                                                <div className="flex-1">
+                                                  <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16 ">
+                                                    {/* {innerItem?.event
                                                   ?.competitors[1]?.name ||
                                                   'N.A'} */}
-                                                {
-                                                  innerItem?.event?.competitors?.find(
-                                                    (item) =>
-                                                      item.qualifier == 'Away',
-                                                  ).name
-                                                }
-                                                <strong className="ml-5">
+                                                    {
+                                                      innerItem?.event?.competitors?.find(
+                                                        (item) =>
+                                                          item.qualifier ==
+                                                          'Away',
+                                                      ).name
+                                                    }
+                                                  </p>
+                                                </div>
+                                                <strong className="text-yellow font-[700] text-12 md:text-14 xxl:text-16">
                                                   {innerItem?.event?.awayScore
                                                     ? innerItem?.event
                                                         ?.awayScore
                                                     : ''}
                                                 </strong>
-                                              </p>
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="hidden xl:flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
+                                        <div className="flex w-[1px] min-h-[90px] h-full mr-2 md:mx-2 border-r border-r-green/50"></div>
                                       </div>
                                     </div>
-                                    <hr className="w-full col-span-6 xl:col-span-12 hidden border-t border-t-green/50"></hr>
+                                    {/* <div className="w-1  inline-block border-t border-t-green/50"></div> */}
                                     <div className="col-span-2 md:col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
-                                        <div className="flex  h-full flex-col justify-between 2xl:gap-2">
+                                        <div className="flex  flex-col justify-between ">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900 hidden w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               PICK
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16">
+                                            <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16">
                                               {/* {innerItem.outcome}@
                                               {innerItem.odds} */}
                                               {innerItem.outcome}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900 hidden   w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MKT
                                             </p>
-                                            <p className="text-gray-900 flex-1 text-12 md:text-14 xxl:text-16 ">
+                                            <p className="text-gray-900 flex-1 font-[700] text-12 md:text-14 xxl:text-16 ">
                                               {/* {innerItem?.event?.competitors[0]
                                                 ?.name || 'N.A'} */}
                                               {innerItem.market}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[35px] hidden   md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Result
                                             </p>
-                                            <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
+                                            <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16 ">
                                               {innerItem?.status == 'Settled'
                                                 ? innerItem?.settlement
                                                   ? innerItem?.settlement

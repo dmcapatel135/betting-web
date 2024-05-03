@@ -25,6 +25,13 @@ g=b.createElement(c),h=b.getElementsByTagName(c)[0],g.async=1,g.src=d,g.setAttri
         detailedScoreboard: 'disable',
         tabsPosition: 'top',
         matchId: eventId,
+        logo: [
+          '/images/bikoicon/matchlogo.png',
+          '/images/bikoicon/matchlogo.png',
+          '/images/bikoicon/matchlogo.png',
+        ],
+        pitchLogo: '/images/bikoicon/matchlogo.png',
+        // goalBannerImage: '/images/bikoicon/matchlogo.png',
       });
     };
 

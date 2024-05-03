@@ -7,6 +7,7 @@ import { reactIcons } from '@utils/icons';
 import { navigations } from './constants';
 import { MyContext } from '@components/MyContext/MyContext';
 import { getReq } from '@utils/apiHandlers';
+import { BeatLoader } from 'react-spinners';
 // import { CircularProgress } from '@mui/material';
 
 function Sidebar({
@@ -291,8 +292,12 @@ function Sidebar({
                             );
                           })}
                         {isOpenLeague == item.id && leagues.length == 0 && (
-                          <div className="text-black leading-3 px-5">
-                            <span>.....</span>
+                          <div className="text-black flex justify-center my-1 leading-3 px-5">
+                            <BeatLoader
+                              color="#3F1F63"
+                              className="absolute ax-center z-[1]"
+                              size={8}
+                            />
                           </div>
                         )}
                       </div>
@@ -403,9 +408,12 @@ function Sidebar({
                             );
                           })}
                         {isOpenLeague == item.id && leagues.length == 0 && (
-                          // <CircularProgress color="inherit" size={20} />
-                          <div className="text-black px-5">
-                            <span>.....</span>
+                          <div className="text-black flex justify-center my-1 leading-3 px-5">
+                            <BeatLoader
+                              color="#3F1F63"
+                              className="absolute ax-center z-[1]"
+                              size={8}
+                            />
                           </div>
                         )}
                       </div>

@@ -1847,5 +1847,5 @@ $base: #FFFFFF;
 }
 
 .sr-bb .srt-logo-powered-by-dark {
-  display: none;
+  /* display: none; */
 }

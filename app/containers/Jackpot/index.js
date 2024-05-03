@@ -225,7 +225,7 @@ function Jackpot() {
 
   const handleBuyTicket = async (jackpotEventId) => {
     let channel;
-    if (window.matchMedia('(max-width: 575px)').matches) {
+    if (window.matchMedia('(max-width: 991px)').matches) {
       channel = 'Mobile';
     } else {
       channel = 'Website';

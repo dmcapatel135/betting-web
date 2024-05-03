@@ -71,7 +71,7 @@ function JoinNow() {
 
   const handleRegister = async (e) => {
     let channel;
-    if (window.matchMedia('(max-width: 575px)').matches) {
+    if (window.matchMedia('(max-width: 991)').matches) {
       channel = 'Mobile';
     } else {
       channel = 'Website';
