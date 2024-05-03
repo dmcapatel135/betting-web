@@ -16,7 +16,6 @@ import { countryNameList } from '@api/country';
 import { images } from '@utils/images';
 import { useSelector } from 'react-redux';
 import { marketsName } from '@components/SportsMenu/constants';
-// import ExampleComponent from '@components/ExampleComponent';
 const OuterLayout = () => {
   const [params] = useSearchParams();
   const [sportId, setSportId] = useState(params.get('sId') || 1);
@@ -25,7 +24,7 @@ const OuterLayout = () => {
   );
   const [allTournaments, setAllTournaments] = useState();
   const [categories, setCategories] = useState();
-  const [tab, setTab] = useState(2);
+  const [tab, setTab] = useState(3);
   const [searchParams] = useSearchParams();
   const [wallet, setWallet] = useState();
   const [otherCountries, setOtherCountries] = useState([]);
@@ -36,6 +35,7 @@ const OuterLayout = () => {
   const [marketData, setMarketData] = useState(
     marketsName.find((item) => item.sportId == params.get('sId') || 1),
   );
+  const [date, setDate] = useState(null);
   const selectedBet = useSelector((state) => state.bet.selectedBet);
 
   const { bookingcode } = useParams();
@@ -147,10 +147,17 @@ const OuterLayout = () => {
           setSelectMarket,
           marketData,
           setMarketData,
+          date,
+          setDate,
         }}
       >
         <div className="relative">
-          <Navbar tab={tab} setTab={setTab} />
+          <Navbar
+            tab={tab}
+            setTab={setTab}
+            // setCurrentDate={setCurrentDate}
+            // currentDate={currentDate}
+          />
           <div className="flex gap-4 h-hull">
             <div className="w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
               <Sidebar

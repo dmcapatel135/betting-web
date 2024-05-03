@@ -67,7 +67,6 @@ function Sidebar({
   }, [sportId]);
 
   useEffect(() => {
-    getLiveMatchs();
     let interval = setInterval(() => {
       getLiveMatchs();
     }, 60000);

@@ -22,14 +22,16 @@ const mobileMenuList = [
     title: 'HOME',
     icon: '/images/bikoicon/home.png',
     active_icon: '/images/bikoicon/home-active.png',
-    path: '/dashboard/upcoming',
+    path: '/',
+    match: 'home',
   },
   {
     id: 1,
     title: 'MENU',
     icon: '/images/bikoicon/menu_mobile.png',
     active_icon: '/images/bikoicon/menu-icon.png',
-    path: '',
+    // path: '',
+    match: 'menu',
   },
   {
     id: 4,
@@ -37,6 +39,7 @@ const mobileMenuList = [
     icon: '/images/bikoicon/livenowwhite.png',
     active_icon: '/images/bikoicon/live-now-active.png',
     path: '/dashboard/live-now',
+    match: 'live',
   },
   {
     id: 5,
@@ -44,13 +47,15 @@ const mobileMenuList = [
     icon: '/images/bikoicon/jackpotwhite.png',
     active_icon: '/images/bikoicon/jackpot-active.png',
     path: '/dashboard/jackpot',
+    match: 'jackpot',
   },
   {
     id: 6,
     title: 'SEARCH',
     icon: '/images/bikoicon/search.png',
     active_icon: '/images/bikoicon/search-active.png',
-    path: '/',
+    // path: '/',
+    match: 'search',
   },
   {
     id: 7,
@@ -58,6 +63,7 @@ const mobileMenuList = [
     icon: '/images/bikoicon/slip.png',
     active_icon: '/images/bikoicon/slip-active.png',
     path: '/dashboard/bet-slip',
+    match: 'slip',
   },
 ];
 
@@ -142,7 +148,8 @@ const Navbar = ({ tab, setTab }) => {
   const [searchData, setSearchData] = useState({});
   const [event, setEvent] = useState();
 
-  const { setSelectTournament, setSportId } = useContext(MyContext);
+  const { setSelectTournament, setSportId, setDate, date } =
+    useContext(MyContext);
 
   const getSearchEventTournament = async (query) => {
     const response = await getReq(`/search?search=${query}`);
@@ -437,10 +444,10 @@ const Navbar = ({ tab, setTab }) => {
               onClick={() => {
                 if (item.title == 'MENU') {
                   setIsOpenMenuList(!isOpenMenuList);
-                  setTab(item.id);
                 } else {
                   setIsOpenMenuList(false);
                   setTab(item.id);
+                  setDate(!date);
                 }
               }}
               to={item.path}
@@ -455,7 +462,11 @@ const Navbar = ({ tab, setTab }) => {
               <div className="my-2 text-center relative">
                 <div className="flex justify-center relative">
                   <img
-                    src={tab == item.id ? item.active_icon : item.icon}
+                    src={
+                      window.location.pathname == item.path
+                        ? item.active_icon
+                        : item.icon
+                    }
                     className="w-5 h-5"
                   />
                   {item.title === 'SLIP' && (
@@ -466,7 +477,9 @@ const Navbar = ({ tab, setTab }) => {
                 </div>
                 <span
                   className={`${
-                    tab == item.id ? 'text-yellow' : 'text-white'
+                    window.location.pathname == item.path
+                      ? 'text-yellow'
+                      : 'text-white'
                   } text-10 `}
                 >
                   {' '}

@@ -9,6 +9,7 @@ import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+
 // import MobileMarketCard from '@components/MobileMarketCard';
 
 let currentDate = null;
@@ -26,6 +27,7 @@ function SportsMenu() {
   const [searchParams] = useSearchParams();
   const [selectMarket, setSelectMarket] = useState('3 WAY');
   const [mobileSelectMarketData, setMobileSelectMarketData] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -38,6 +40,7 @@ function SportsMenu() {
     setTab,
     marketData,
     setMarketData,
+    date,
   } = useContext(MyContext);
 
   // get all sports name
@@ -55,7 +58,7 @@ function SportsMenu() {
 
   useEffect(() => {
     currentDate = null;
-  }, [tab]);
+  }, [date, tab, sportId]);
 
   useEffect(() => {
     setAllFixtures([]);
@@ -81,6 +84,7 @@ function SportsMenu() {
   useEffect(() => {
     setAllFixtures([]);
     setPage(0);
+    let newPage = 0;
     const date = new Date();
     const dateString = new Date(date);
     dateString.setDate(moment(date.getDate() + 1));
@@ -134,7 +138,7 @@ function SportsMenu() {
         : `onlyLive=${true}`;
     }
     setQueries(query);
-    getAllFixtures(query);
+    getAllFixtures(query, newPage);
   }, [sportId, getAllFixtures, tab, selectTournament, searchParams]);
 
   const getAllFixtures = useCallback(
@@ -149,7 +153,7 @@ function SportsMenu() {
             : searchParams.get('sId')
               ? searchParams.get('sId')
               : 1
-        }/fixtures?skip=${newPage ? newPage : page}&take=${pageSize}&${query}`,
+        }/fixtures?skip=${newPage}&take=${pageSize}&${query}`,
       );
 
       setIsLoading(false);
@@ -165,7 +169,7 @@ function SportsMenu() {
         }, 3000);
       }
     },
-    [sportId, page, pageSize, searchParams],
+    [sportId, pageSize, searchParams],
   );
 
   const fetchMoreData = () => {
@@ -202,7 +206,7 @@ function SportsMenu() {
   const handleTodayDate = (pathname) => {
     if (
       window.matchMedia('(max-width: 575px)').matches &&
-      (pathname.includes('/') || pathname.includes('/dashboard/upcoming'))
+      (pathname == '/' || pathname.includes('/dashboard/upcoming'))
     ) {
       return false;
     } else if (
@@ -214,6 +218,19 @@ function SportsMenu() {
       return true;
     }
   };
+
+  const handleShowDateSection = (pathname) => {
+    if (window.matchMedia('(max-width: 575px)').matches && pathname == '/') {
+      return true;
+    } else if (pathname.includes('/dashboard/upcoming')) {
+      return true;
+    } else if (pathname.includes('/dashboard/popular')) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
       <div className="lg:block hidden">
@@ -351,7 +368,8 @@ function SportsMenu() {
               } text-white px-1 rounded-[4px]  font-[600]`}
             >
               <p className="leading-3">
-                {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()}
+                {/* {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()} */}
+                {moment(new Date()).format('dddd, DD MMM ').toUpperCase()}
               </p>
             </div>
           )}
@@ -604,6 +622,7 @@ function SportsMenu() {
                 let mobileMarket = item?.previewMarkets?.find(
                   (mkt) => mkt.name == market,
                 );
+
                 let isFromNewDate = false;
                 if (
                   currentDate !== moment(item.startTime).format('YYYY-MM-DD')
@@ -611,18 +630,12 @@ function SportsMenu() {
                   isFromNewDate = true;
                   currentDate = moment(item.startTime).format('YYYY-MM-DD');
                 }
+
                 return (
                   <>
                     <div key={index} className="my-3" id="container">
                       {item.startTime &&
-                        (window.location.pathname.includes(
-                          '/dashboard/popular',
-                        ) ||
-                          window.location.pathname.includes(
-                            '/dashboard/upcoming',
-                          ) ||
-                          (window.matchMedia('max-width:575').matches &&
-                            window.location.pathname.includes('/'))) &&
+                        handleShowDateSection(window.location.pathname) &&
                         isFromNewDate && (
                           <div className="flex my-2 items-center px-2 py-0 md:py-1  bg-yellow rounded-md">
                             <h1 className="text-12 md:text-14 font-[700]">
