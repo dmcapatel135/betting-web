@@ -8,6 +8,7 @@ import { fetchBetDetailsAction } from '@actions';
 import axios from 'axios';
 import WidgetChart from '@components/WidgetChart';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 // import WidgetStatisticsChart from '@components/WidgetStatisticsChart';
 
 function SigleBetDetails() {
@@ -28,34 +29,44 @@ function SigleBetDetails() {
   const dispatch = useDispatch();
 
   const addToBetSlip = (eventId, bet, betDetails, specifiers) => {
-    setBets((prev) => {
-      const index = prev.findIndex((item) => item.eventId == parseInt(eventId));
-      if (index !== -1) {
-        // If eventId already exists, update bet and betDetails
-        const updatedBets = [...prev];
-        updatedBets[index] = {
-          ...updatedBets[index],
-          sportId: sId,
-          bet: bet,
-          betDetails: betDetails,
-          eventNames: eventName,
-          specifiers: specifiers,
-        };
-        return updatedBets;
-      } else {
-        return [
-          ...prev,
-          {
-            eventId: eventId,
+    if (
+      selectedBet.length < 30 ||
+      (selectedBet.length == 30 &&
+        selectedBet.find((item) => item.eventId == eventId))
+    ) {
+      setBets((prev) => {
+        const index = prev.findIndex(
+          (item) => item.eventId == parseInt(eventId),
+        );
+        if (index !== -1) {
+          // If eventId already exists, update bet and betDetails
+          const updatedBets = [...prev];
+          updatedBets[index] = {
+            ...updatedBets[index],
             sportId: sId,
             bet: bet,
             betDetails: betDetails,
             eventNames: eventName,
             specifiers: specifiers,
-          },
-        ];
-      }
-    });
+          };
+          return updatedBets;
+        } else {
+          return [
+            ...prev,
+            {
+              eventId: eventId,
+              sportId: sId,
+              bet: bet,
+              betDetails: betDetails,
+              eventNames: eventName,
+              specifiers: specifiers,
+            },
+          ];
+        }
+      });
+    } else {
+      toast.error('You have reached a maximum number of games');
+    }
   };
 
   useEffect(() => {

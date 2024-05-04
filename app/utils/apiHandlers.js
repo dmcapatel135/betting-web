@@ -95,6 +95,27 @@ const handleApiError = (err) => {
   return responseFormatter(false, null, err.response.data);
 };
 
+export const postApiReq = async (endpoint, data) => {
+  const url = API_URL + endpoint;
+
+  return await axios
+    .post(url, data, header)
+    .then((response) => {
+      return responseFormatter(true, response.data, null);
+    })
+    .catch((err) => {
+      if (err.response.data.status == 401) {
+        // handleLogout();
+        removeAuthCookie();
+        localStorage.removeItem('is_user_token');
+        // window.location = '/';
+        return handleApiError(err);
+      } else {
+        return handleApiError(err);
+      }
+    });
+};
+
 export const postReq = async (endpoint, data) => {
   const url = API_URL + endpoint;
 

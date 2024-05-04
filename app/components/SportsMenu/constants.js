@@ -53,36 +53,67 @@ export const marketsName = [
   {
     sportId: 1,
     marketName: [
-      { id: 1, name: '3 WAY', option: ['1', 'X', '2'] },
+      { id: 1, name: '3 WAY', displayName: '3 WAY', option: ['1', 'X', '2'] },
       // { name: 'Over/Under(2.5)', option: ['Over', 'Under'] },
-      { id: 18, name: 'Total', option: ['Over', 'Under'] },
-      { id: 29, name: 'Both teams to score', option: ['Yes', 'No'] },
+      {
+        id: 18,
+        name: 'Total',
+        displayName: 'OVER/UNDER (2.5)',
+        option: ['Over', 'Under'],
+      },
+      {
+        id: 29,
+        displayName: 'BOTH TEAMS TO SCORE',
+        name: 'Both teams to score',
+        option: ['Yes', 'No'],
+      },
     ],
   },
   {
     sportId: 2,
-    marketName: [{ id: 1, name: '3 WAY', option: ['1', 'X', '2'] }],
+    marketName: [
+      { id: 1, displayName: '3 WAY', name: '3 WAY', option: ['1', 'X', '2'] },
+    ],
   },
   {
     sportId: 10,
-    marketName: [{ id: 186, name: 'Winner', option: ['1', '2'] }],
+    marketName: [
+      { id: 186, displayName: 'WINNER', name: 'Winner', option: ['1', '2'] },
+    ],
   },
   {
     sportId: 12,
-    marketName: [{ id: 1, name: '3 WAY', option: ['1', 'x', '2'] }],
+    marketName: [
+      { id: 1, displayName: '3 WAY', name: '3 WAY', option: ['1', 'x', '2'] },
+    ],
   },
   {
     sportId: 21,
     marketName: [
-      { id: 340, name: 'Winner (incl. super over)', option: [1, 2] },
+      {
+        id: 340,
+        displayName: 'WINNER (INCL. SUPER OVER)',
+        name: 'Winner (incl. super over)',
+        option: [1, 2],
+      },
     ],
   },
   {
     sportId: 5,
     marketName: [
-      { id: 186, name: 'Winner', option: [1, 2] },
-      { id: 202, name: '1st set - winner', option: [1, 2] },
-      { id: 202, name: '2nd set - winner', option: [1, 2] },
+      { id: 186, displayName: 'WINNER', name: 'Winner', option: [1, 2] },
+      {
+        id: 202,
+        displayName: '1ST SET - WINNER',
+        name: '1st set - winner',
+        option: [1, 2],
+      },
+      {
+        id: 202,
+        displayName: '2ND SET - WINNER',
+        name: '2nd set - winner',
+        option: [1, 2],
+      },
     ],
   },
 ];

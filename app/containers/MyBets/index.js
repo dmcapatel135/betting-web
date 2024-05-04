@@ -286,7 +286,9 @@ function MyBets() {
                                                 {moment(
                                                   innerItem?.event?.startTime,
                                                 )
-                                                  .format('dddd, DD MMM ')
+                                                  .format(
+                                                    'dddd, DD MMM hh:mm A',
+                                                  )
                                                   .toUpperCase()}
                                               </p>
                                             </div>
@@ -375,30 +377,30 @@ function MyBets() {
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex  flex-col justify-between ">
                                           <div className="flex gap-2">
-                                            <p className="text-gray-900 hidden w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               PICK
                                             </p>
-                                            <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16">
+                                            <p className="text-gray-900  text-12 md:text-14 xxl:text-16">
                                               {/* {innerItem.outcome}@
                                               {innerItem.odds} */}
                                               {innerItem.outcome}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900 hidden   w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900    w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               MKT
                                             </p>
-                                            <p className="text-gray-900 flex-1 font-[700] text-12 md:text-14 xxl:text-16 ">
+                                            <p className="text-gray-900 flex-1  text-12 md:text-14 xxl:text-16 ">
                                               {/* {innerItem?.event?.competitors[0]
                                                 ?.name || 'N.A'} */}
                                               {innerItem.market}
                                             </p>
                                           </div>
                                           <div className="flex gap-2 ">
-                                            <p className="text-gray-900  w-[35px] hidden   md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                            <p className="text-gray-900  w-[35px]    md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               Result
                                             </p>
-                                            <p className="text-gray-900 font-[700] text-12 md:text-14 xxl:text-16 ">
+                                            <p className="text-gray-900  text-12 md:text-14 xxl:text-16 ">
                                               {innerItem?.status == 'Settled'
                                                 ? innerItem?.settlement
                                                   ? innerItem?.settlement

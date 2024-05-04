@@ -334,7 +334,7 @@ const Navbar = ({ tab, setTab }) => {
           className="flex items-center justify-end gap-2 lg:gap-4 pr-2 lg:pr-4 lg:mx-2 "
         >
           {/* <div className="flex justify-between"> */}
-          {isLoggedIn() ? (
+          {isLoggedIn() && userWallet ? (
             <div className="text-white pr-1">
               <span className="text-12 md:text-16 font-[700]">
                 TSH{' '}

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { MyContext } from '@components/MyContext/MyContext';
+import { toast } from 'react-toastify';
 
 function BetCard({ item, sportId, market, selectMarket }) {
   const [searchParams] = useSearchParams();
@@ -29,35 +30,43 @@ function BetCard({ item, sportId, market, selectMarket }) {
     sportId,
     specifiers,
   ) => {
-    setBets((prev) => {
-      const index = prev.findIndex((item) => item.eventId == eventId);
-      if (index !== -1) {
-        // If eventId already exists, update bet and betDetails
-        const updatedBets = [...prev];
-        updatedBets[index] = {
-          ...updatedBets[index],
-          sportId: sportId,
-          bet: bet,
-          betDetails: betDetails,
-          competitors: competitors,
-          specifiers: specifiers ? specifiers.join('|') : null,
-        };
-        return updatedBets;
-      } else {
-        // If eventId doesn't exist, push a new object
-        return [
-          ...prev,
-          {
+    if (
+      selectedBet.length < 30 ||
+      (selectedBet.length == 30 &&
+        selectedBet.find((item) => item.eventId == eventId))
+    ) {
+      setBets((prev) => {
+        const index = prev.findIndex((item) => item.eventId == eventId);
+        if (index !== -1) {
+          // If eventId already exists, update bet and betDetails
+          const updatedBets = [...prev];
+          updatedBets[index] = {
+            ...updatedBets[index],
             sportId: sportId,
-            eventId: eventId,
             bet: bet,
             betDetails: betDetails,
-            eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+            competitors: competitors,
             specifiers: specifiers ? specifiers.join('|') : null,
-          },
-        ];
-      }
-    });
+          };
+          return updatedBets;
+        } else {
+          // If eventId doesn't exist, push a new object
+          return [
+            ...prev,
+            {
+              sportId: sportId,
+              eventId: eventId,
+              bet: bet,
+              betDetails: betDetails,
+              eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+              specifiers: specifiers ? specifiers.join('|') : null,
+            },
+          ];
+        }
+      });
+    } else {
+      toast.error('You have reached a maximum number of games');
+    }
   };
 
   useEffect(() => {
@@ -114,7 +123,7 @@ function BetCard({ item, sportId, market, selectMarket }) {
       >
         <div className="flex items-center w-full md:pr-2">
           <div className="flex-grow-0 2xl:flex-1 pl-2 py-2]">
-            <div className="items-center  md:w-[360px] lg:w-48 xl:w-48 2xl:w-[460px] 2xl:text-left text-[8px] md:text-10 ">
+            <div className="items-center  md:w-[360px] lg:w-48 xl:w-48 2xl:w-[335px] 2xl:text-left text-[8px] md:text-10 ">
               <div className="flex items-center">
                 <img src="/images/bikoicon/acute.png" />
                 <p className="text-10 ml-1 md:text-10">

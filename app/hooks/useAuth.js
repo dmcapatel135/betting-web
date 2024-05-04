@@ -7,6 +7,7 @@ import { init, cleanup } from '@actions';
 import { validateData } from '@utils/validation';
 // import { passwordRegex } from '@utils/regex';
 import {
+  postApiReq,
   postReq,
   removeAuthCookie,
   setAuthCookie,
@@ -48,7 +49,7 @@ const useAuth = () => {
       const [valid, error] = await validateData(loginSchema, data);
       if (error) return error;
       if (valid) {
-        const response = await postReq('/auth/login', data);
+        const response = await postApiReq('/auth/login', data);
         if (response.status) {
           setAuthCookie();
           setToken(response.data.accessToken);
@@ -69,7 +70,6 @@ const useAuth = () => {
   const register = useCallback(
     async (data) => {
       const [valid, error] = await validateData(registerSchema, data);
-      console.log('-----------valid ', valid, '-----------erorro ', error);
       if (error) return error;
       if (valid) {
         const response = await postReq('/auth/register', {
@@ -78,6 +78,7 @@ const useAuth = () => {
         });
         if (response.status) {
           setAuthCookie();
+          setToken(response.data.accessToken);
           toast.success(
             'Welcome! You have successfully logged in to the Bikosports Platform',
           );
@@ -96,7 +97,6 @@ const useAuth = () => {
     const [valid, error] = await validateData(registerSchema, data);
     if (error) return [null, error];
     if (valid) {
-      console.log('-----working for otp');
       const response = await postReq('/auth/send-code', {
         // email: data.email,
         dialCode: data.dialCode,
@@ -104,7 +104,6 @@ const useAuth = () => {
         country: data.country,
         type: data.type,
       });
-      console.log('-----working for otp', response);
 
       if (response.status) {
         return [response.data];

@@ -552,6 +552,15 @@ function BetWallet({ stakeValue }) {
           </div>
         </>
       )}
+      {/* {selectedBet.length > 29 && (
+        <div className="px-3">
+          <div className="bg-yellow px-3 py-1 rounded-[4px]">
+            <span className="text-white text-14 font-[500]">
+              You have reached a maximum number of games
+            </span>
+          </div>
+        </div>
+      )} */}
       <div className="border-t-[1px] mb-2 my-5 border-blue  overflow-y-auto custom-scroll-sm max-h-64 min-h-8">
         {bets?.map((item, index) => {
           return (

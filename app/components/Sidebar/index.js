@@ -68,6 +68,7 @@ function Sidebar({
   }, [sportId]);
 
   useEffect(() => {
+    getLiveMatchs();
     let interval = setInterval(() => {
       getLiveMatchs();
     }, 60000);
@@ -243,7 +244,7 @@ function Sidebar({
                               ></i>
                             </span>
                             {/* <img src={item.flag} alt="i" className="w-3 h-3" /> */}
-                            <span className="text-10 mx-2 font-[500] text-black">
+                            <span className="text-10 mx-2 2xl:text-[13px] font-[500] text-black">
                               {item.name}
                             </span>
                           </div>

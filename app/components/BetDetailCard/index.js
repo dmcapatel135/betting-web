@@ -63,7 +63,6 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
               ];
             }
           });
-          // getEventDetails(eventId);
         }
       } catch (error) {
         console.error(error);
@@ -93,13 +92,17 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         array.push(item);
       }
     }
-    dispatch(fetchBetDetailsAction(array));
+    if (array.length > 30) {
+      toast.error('You have reached a maximum number of games');
+    } else {
+      dispatch(fetchBetDetailsAction(array));
+    }
   }, [rebetData, dispatch]); //eslint-disable-line
 
   // const handleRebet = (data) => {
   //   let array = [];
   //   data.bets.forEach((element) => {
-  //     if (element.status == 'Pending') {
+  //     if (element.ptus == 'Pending') {
   //       let index = selectedBet.findIndex(
   //         (item) => item.eventId == element.eventId,
   //       );

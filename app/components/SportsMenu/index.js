@@ -668,6 +668,12 @@ function SportsMenu() {
                         market={mobileMarket}
                         openMarket={item.openMarkets}
                         sportId={sportId}
+                        index={index}
+                        handleTodayDate={handleTodayDate}
+                        handleShowDateSection={handleShowDateSection}
+                        tab={tab}
+                        isFromNewDate={isFromNewDate}
+                        setTab={setTab}
                       />
                     </div> */}
                   </>
