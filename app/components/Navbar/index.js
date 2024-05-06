@@ -347,7 +347,7 @@ const Navbar = ({ tab, setTab }) => {
             </div>
           ) : (
             <button
-              className={`h-[42px] w-[110px] font-[700] text-14 ${window.location.pathname == '/login' ? 'bg-gradient-color-2' : 'bg-darkjunglegreen border border-lightgray'} hover:bg-black rounded-[8px] order-2 md:order-1`}
+              className={`h-[35px] md:h-[42px]  w-[75px] md:w-[110px] font-[700] text-12 md:text-14 ${window.location.pathname == '/login' ? 'bg-gradient-color-2' : 'bg-darkjunglegreen border border-lightgray'} hover:bg-black rounded-[8px] order-2 md:order-1`}
               onClick={() => {
                 // setTab(null);
                 // setSelectTournament(null);
@@ -364,13 +364,13 @@ const Navbar = ({ tab, setTab }) => {
                 // setTab(null);
                 navigate('/dashboard/deposit');
               }}
-              className="h-[42px] w-[80px] xl:w-[110px] border-[1px] font-[400] md:font-[700] text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
+              className="h-[35px] md:h-[42px] w-[80px] xl:w-[110px] border-[1px] font-[400] md:font-[700] text-12 md:text-14 xxl:text-18 bg-darkjunglegreen hover:bg-gradient-color-2 border-lightgray rounded-[8px] order-2 md:order-1"
             >
               Deposit
             </button>
           ) : (
             <button
-              className={`h-[42px] w-[110px]  text-14 font-[400] md:font-[700] xxl:text-18 ${window.location.pathname == '/join-now' ? 'bg-gradient-color-2' : 'bg-darkjunglegreen border border-lightgray'}  hover:bg-gradient-color-2  rounded-[8px] order-1 md:order-2`}
+              className={`h-[35px] md:h-[42px] w-[75px] md:w-[110px]  text-12 md:text-14 font-[400] md:font-[700] xxl:text-18 ${window.location.pathname == '/join-now' ? 'bg-gradient-color-2' : 'bg-darkjunglegreen border border-lightgray'}  hover:bg-gradient-color-2  rounded-[8px] order-1 md:order-2`}
               onClick={() => {
                 // setTab(null);
                 // setSelectTournament(null);

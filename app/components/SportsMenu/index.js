@@ -3,14 +3,14 @@ import { getReq } from '@utils/apiHandlers';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { marketsName, sport, tabsName } from './constants';
 import PropTypes from 'prop-types';
-import { BetCard, SkeletonLoader } from '@components';
+import { SkeletonLoader } from '@components';
 import { MyContext } from '@components/MyContext/MyContext';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { images } from '@utils/images';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-// import MobileMarketCard from '@components/MobileMarketCard';
+import MobileMarketCard from '@components/MobileMarketCard';
 
 let currentDate = null;
 
@@ -158,6 +158,7 @@ function SportsMenu() {
 
       setIsLoading(false);
       if (response.data.data.length > 0) {
+        setHasMore(true);
         setAllFixtures((prevState) => [...prevState, ...response.data.data]);
       } else {
         setHasMore(false);
@@ -230,6 +231,8 @@ function SportsMenu() {
       return false;
     }
   };
+
+  console.log('------------mobiless ', mobileSelectMarketData);
 
   return (
     <>
@@ -359,8 +362,8 @@ function SportsMenu() {
           </div>
         </div>
       </div>
-      <div className="flex lg:mx-4 py-1 lg:px-2 pl-1 lg:pl-0">
-        <div className="flex-grow-0 w-40   mt-9 md:mt-12 xxl:flex-1 pl-0">
+      <div className="flex lg:mx-4 py-1 lg:px-2 pl-1 lg:pl-0 lg:hidden">
+        <div className="flex-grow-0 w-36   mt-9 md:mt-12 xxl:flex-1 pl-0">
           {handleTodayDate(window.location.pathname) && (
             <div
               className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
@@ -368,7 +371,6 @@ function SportsMenu() {
               } text-white px-1 rounded-[4px]  font-[600]`}
             >
               <p className="leading-3">
-                {/* {moment(new Date()).format('dddd, MMM Do YYYY').toUpperCase()} */}
                 {moment(new Date()).format('dddd, DD MMM ').toUpperCase()}
               </p>
             </div>
@@ -376,13 +378,16 @@ function SportsMenu() {
         </div>
         <div className="flex-1 w-full lg:hidden flex justify-center sm:justify-end ">
           {mobileSelectMarketData && (
-            <div className="text-black text-center">
+            <div
+              className={`text-black text-center ${mobileSelectMarketData?.option?.length == 2 ? 'w-[105px]' : 'w-[156px]'}`}
+            >
               <h1 className="text-12 font-[500] uppercase">
-                {mobileSelectMarketData?.name == 'Total'
+                {/* {mobileSelectMarketData?.name == 'Total'
                   ? 'OVER/UNDER (2.5)'
-                  : mobileSelectMarketData?.name}
+                  : mobileSelectMarketData?.name} */}
+                {mobileSelectMarketData?.displayName}
               </h1>
-              <div className="flex justify-center mt-3 gap-3">
+              <div className="flex justify-center mt-3 gap-2">
                 {mobileSelectMarketData?.option?.map((item) => {
                   return (
                     <div key={item} className="">
@@ -436,7 +441,7 @@ function SportsMenu() {
             </div> */}
           </div>
         </div>
-        <div className="flex-1 hidden lg:block border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6 mr-2 md:mr-0">
+        {/* <div className="flex-1 hidden lg:block border-black pr-3 xl:pr-0 xl2:pr-3 2xl:pr-6 mr-2 md:mr-0">
           {allFixtures.length > 0 && (
             <>
               <div className=" sm:flex  justify-end gap-4">
@@ -449,9 +454,6 @@ function SportsMenu() {
                     return (
                       <div
                         key={index}
-                        // className={`${
-                        //   index > 0 ? 'hidden lg:block text-center' : ' text-center'
-                        // } flex-1 `}
                         className={`${
                           items.name == 'Winner (incl. super over)'
                             ? ''
@@ -483,7 +485,6 @@ function SportsMenu() {
                               </h1>
                             </div>
                             <div
-                              // className={`${items.option.length ==} flex justify-between`}
                               className={`${
                                 items.option.length == 3 ? '' : ''
                               }  flex ${
@@ -509,14 +510,9 @@ function SportsMenu() {
                     );
                   })}
               </div>
-              {/* <div>
-                {marketName.filter((item) => item.sportId == sportId)
-
-                }
-              </div> */}
             </>
           )}
-        </div>
+        </div> */}
         <div className="flex-grow-0">
           <div className="  h-5 w-6 hidden md:block md:w-16 text-black">
             {/* <button
@@ -637,7 +633,7 @@ function SportsMenu() {
                       {item.startTime &&
                         handleShowDateSection(window.location.pathname) &&
                         isFromNewDate && (
-                          <div className="flex my-2 items-center px-2 py-0 md:py-1  bg-yellow rounded-md">
+                          <div className="flex my-2 items-center px-2 py-0 md:py-1 lg:hidden  bg-yellow rounded-md">
                             <h1 className="text-12 md:text-14 font-[700]">
                               {moment(item.startTime)
                                 .format('dddd, DD MMM ')
@@ -645,13 +641,13 @@ function SportsMenu() {
                             </h1>
                           </div>
                         )}
-                      <BetCard
+                      {/* <BetCard
                         index={index}
                         item={item}
                         sportId={sportId}
                         market={mobileMarket}
                         selectMarket={selectMarket}
-                      />
+                      /> */}
                       {(index + 1) % 13 === 0 && (
                         <div className="text-black my-3">
                           <img
@@ -662,7 +658,7 @@ function SportsMenu() {
                         </div>
                       )}
                     </div>
-                    {/* <div className="my-3 block ">
+                    <div className="my-3 block ">
                       <MobileMarketCard
                         item={item}
                         market={mobileMarket}
@@ -674,8 +670,11 @@ function SportsMenu() {
                         tab={tab}
                         isFromNewDate={isFromNewDate}
                         setTab={setTab}
+                        // sportId={sportId}
+                        // market={mobileMarket}
+                        selectMarket={selectMarket}
                       />
-                    </div> */}
+                    </div>
                   </>
                 );
               })}

@@ -11,21 +11,21 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '1',
-            odds: '-',
+            odds: null,
             probabilities: 0.383522,
             active: 1,
             name: 'Taraz',
           },
           {
             id: '2',
-            odds: '-',
+            odds: null,
             probabilities: 0.264233,
             active: 1,
             name: 'draw',
           },
           {
             id: '3',
-            odds: '-',
+            odds: null,
             probabilities: 0.352239,
             active: 1,
             name: 'Akzhaiyk Uralsk',
@@ -41,14 +41,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '74',
-            odds: '-',
+            odds: null,
             probabilities: 0.557231,
             active: 1,
             name: 'yes',
           },
           {
             id: '76',
-            odds: '-',
+            odds: null,
             probabilities: 0.442769,
             active: 1,
             name: 'no',
@@ -66,14 +66,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '12',
-            odds: '-',
+            odds: null,
             probabilities: 0.512292,
             active: 1,
             name: 'over 2.5',
           },
           {
             id: '13',
-            odds: '-',
+            odds: null,
             probabilities: 0.487708,
             active: 1,
             name: 'under 2.5',
@@ -94,21 +94,21 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '1',
-            odds: '-',
+            odds: null,
             probabilities: 0.636089,
             active: 1,
             name: 'Rizing Zephyr',
           },
           {
             id: '2',
-            odds: '-',
+            odds: null,
             probabilities: 0.0579909,
             active: 1,
             name: 'draw',
           },
           {
             id: '3',
-            odds: '-',
+            odds: null,
             probabilities: 0.30592,
             active: 1,
             name: 'Yamagata',
@@ -129,14 +129,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '4',
-            odds: '-',
+            odds: '',
             probabilities: 0.309019,
             active: 1,
             name: 'Sakai, Shoki',
           },
           {
             id: '5',
-            odds: '-',
+            odds: '',
             probabilities: 0.690985,
             active: 1,
             name: 'Toyoshima, Ryota',
@@ -157,21 +157,21 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '1',
-            odds: '-',
+            odds: '',
             probabilities: 0.423234,
             active: 1,
             name: 'Ireland',
           },
           {
             id: '2',
-            odds: '-',
+            odds: '',
             probabilities: 0.0549035,
             active: 1,
             name: 'draw',
           },
           {
             id: '3',
-            odds: '-',
+            odds: '',
             probabilities: 0.521861,
             active: 1,
             name: 'Fiji',
@@ -192,14 +192,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '4',
-            odds: 1.71,
+            odds: '',
             probabilities: 0.546176,
             active: 1,
             name: 'Royal Challengers Bengaluru',
           },
           {
             id: '5',
-            odds: 2.02,
+            odds: '',
             probabilities: 0.45383,
             active: 1,
             name: 'Gujarat Titans',
@@ -220,14 +220,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '4',
-            odds: '-',
+            odds: '',
             probabilities: 0.83687,
             active: 1,
             name: 'Wqf1',
           },
           {
             id: '5',
-            odds: '-',
+            odds: '',
             probabilities: 0.163134,
             active: 1,
             name: 'Wqf2',
@@ -244,14 +244,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '4',
-            odds: '-',
+            odds: '',
             probabilities: 0.7918716788618,
             active: 1,
             name: 'Wqf1',
           },
           {
             id: '5',
-            odds: '-',
+            odds: '',
             probabilities: 0.2081309171702596,
             active: 1,
             name: 'Wqf2',
@@ -269,14 +269,14 @@ export const marketDummyData = [
         outcomes: [
           {
             id: '4',
-            odds: '-',
+            odds: '',
             probabilities: 0.7818,
             active: 1,
             name: 'Wqf1',
           },
           {
             id: '5',
-            odds: 3.85,
+            odds: '',
             probabilities: 0.2182,
             active: '-',
             name: 'Wqf2',

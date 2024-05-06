@@ -159,7 +159,7 @@ const OuterLayout = () => {
             // currentDate={currentDate}
           />
           <div className="flex gap-4 h-hull">
-            <div className="w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
+            <div className="lg:w-[205px] xl:w-[240px] flex-shrink-0 xl2:min-w-[290px] lg:block hidden">
               <Sidebar
                 tab={tab}
                 setTab={setTab}
@@ -200,11 +200,11 @@ const OuterLayout = () => {
                   </div>
                 </div>
               )}
-              <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-5  lg:pb-0 bg-white ">
+              <div className="flex-1 overflow-x-auto px-2 lg:px-0 py-3 md:py-5  lg:pb-0 bg-white ">
                 <Outlet />
               </div>
             </div>
-            <div className="hidden lg:block w-[280px] xl:w-[320px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
+            <div className="hidden lg:block lg:w-[200px] xl:w-[300px] 2xl:w-[350px] 3xl:w-[400px] pt-5 border-l pb-2 px-2 xl:px-3 2xl:px-4 border-[#A3A3A3]">
               <div className="sticky top-[90px] h-[calc(100svh-85px)] overflow-y-auto scrollbar-width">
                 {selectedBet?.length > 0 || isLoggedIn() || bookingcode ? (
                   <BetWallet />
