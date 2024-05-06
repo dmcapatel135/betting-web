@@ -37,7 +37,7 @@ const Pagination = ({ dataCount, pageSize, setPage, page }) => {
   );
 };
 Pagination.propTypes = {
-  setPage: PropTypes.number,
+  setPage: PropTypes.func,
   pageCount: PropTypes.number,
   pageSize: PropTypes.number,
   dataCount: PropTypes.number,

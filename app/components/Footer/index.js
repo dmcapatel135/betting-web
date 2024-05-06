@@ -4,9 +4,15 @@ import React from 'react';
 
 const Footer = () => {
   const icons = [
-    { icon: reactIcons.facebook2 },
-    { icon: reactIcons.instagram },
-    { icon: reactIcons.twitter },
+    {
+      icon: reactIcons.facebook2,
+      path: 'https://www.facebook.com/bikosports',
+    },
+    {
+      icon: reactIcons.instagram,
+      path: 'https://www.instagram.com/bikosports',
+    },
+    { icon: reactIcons.twitter, path: 'https://www.twitter.com/bikosports' },
   ];
   const LinkData = [
     { link: 'Terms & Conditions', path: '/terms' },
@@ -32,7 +38,9 @@ const Footer = () => {
                 </span>
                 <div className="flex gap-2 lg:gap-4 text-22 lg:text-36 text-primary-700 my-2 lg:my-5">
                   {icons.map((item, index) => (
+                    // <a href={item.path} target="blank" key={index}>
                     <span key={index}>{item.icon}</span>
+                    // </a>
                   ))}
                 </div>
               </div>

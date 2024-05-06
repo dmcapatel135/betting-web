@@ -286,3 +286,44 @@ export const marketDummyData = [
     ],
   },
 ];
+
+export const marketOutcomes = [
+  {
+    id: '1',
+    odds: null,
+    probabilities: 0.383522,
+    active: 1,
+    name: 'Taraz',
+  },
+  {
+    id: '2',
+    odds: null,
+    probabilities: 0.264233,
+    active: 1,
+    name: 'draw',
+  },
+  {
+    id: '3',
+    odds: null,
+    probabilities: 0.352239,
+    active: 1,
+    name: 'Akzhaiyk Uralsk',
+  },
+];
+
+export const marketOutcomesTwoOdds = [
+  {
+    id: '1',
+    odds: null,
+    probabilities: 0.383522,
+    active: 1,
+    name: 'Taraz',
+  },
+  {
+    id: '2',
+    odds: null,
+    probabilities: 0.264233,
+    active: 1,
+    name: 'draw',
+  },
+];

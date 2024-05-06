@@ -232,8 +232,6 @@ function SportsMenu() {
     }
   };
 
-  console.log('------------mobiless ', mobileSelectMarketData);
-
   return (
     <>
       <div className="lg:block hidden">
@@ -712,7 +710,7 @@ SportsMenu.propTypes = {
   sportId: PropTypes.number,
   setSportId: PropTypes.func,
   tab: PropTypes.number,
-  setTab: PropTypes.number,
+  setTab: PropTypes.func,
   selectTournament: PropTypes.string,
   setSelectTournament: PropTypes.string,
 };

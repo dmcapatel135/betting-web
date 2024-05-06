@@ -478,7 +478,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
 }
 BetDetailCard.propTypes = {
   item: PropTypes.object,
-  setShowBets: PropTypes.string,
+  setShowBets: PropTypes.func,
   // index: PropTypes.number,
   getMyBetDetails: PropTypes.func,
 };

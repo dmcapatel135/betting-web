@@ -180,7 +180,7 @@ const OuterLayout = () => {
                       <button className="text-14 flex font-[500] bg-yellow px-2 py-1 rounded-md items-center gap-2">
                         <p>BETSLIP</p>
                         <div className="rounded-full flex justify-center items-center w-6 h-6 bg-white text-black">
-                          <p>{selectedBet.length}</p>
+                          <p className="text-12">{selectedBet.length}</p>
                         </div>
                       </button>
                     </Link>

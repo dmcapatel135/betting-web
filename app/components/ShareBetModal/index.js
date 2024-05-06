@@ -47,7 +47,7 @@ function ShareBetModal({
       // onClose={{}}
       aria-labelledby="responsive-dialog-title"
     >
-      <div className="bg-white w-[325px] md:w-[450px] rounded-[20px] ">
+      <div className="bg-white w-[296px] md:w-[450px] rounded-[20px] ">
         {/* <DialogTitle id="responsive-dialog-title"> */}
         <div className="flex justify-between items-center h-8 rounded-t-sm bg-blue px-3">
           <span className="flex-1 text-center text-white">SHARE BET</span>
@@ -179,9 +179,9 @@ function ShareBetModal({
 }
 ShareBetModal.propTypes = {
   openShareBetModal: PropTypes.bool,
-  setOpenShareBetModal: PropTypes.bool,
+  setOpenShareBetModal: PropTypes.func,
   code: PropTypes.string,
-  setCode: PropTypes.string,
+  setCode: PropTypes.func,
 };
 
 export default ShareBetModal;

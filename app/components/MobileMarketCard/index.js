@@ -2,7 +2,11 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { marketDummyData } from './constant';
+import {
+  marketDummyData,
+  marketOutcomes,
+  marketOutcomesTwoOdds,
+} from './constant';
 import { marketsName } from '@components/SportsMenu/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
@@ -297,7 +301,9 @@ function MobileMarketCard({
                       <div className="flex justify-center my-2 w-full gap-1 xl:gap-2">
                         {(market?.outcomes.length > 0
                           ? market.outcomes
-                          : []
+                          : market.name == '1x2'
+                            ? marketOutcomes
+                            : marketOutcomesTwoOdds
                         )?.map((outcome) => {
                           return (
                             <button
@@ -572,7 +578,7 @@ MobileMarketCard.propTypes = {
   handleShowDateSection: PropTypes.func,
   handleTodayDate: PropTypes.func,
   tab: PropTypes.number,
-  isFromNewDate: PropTypes.string,
+  isFromNewDate: PropTypes.bool,
   setTab: PropTypes.number,
   market: PropTypes.object,
   selectMarket: PropTypes.string,
