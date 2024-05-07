@@ -1,7 +1,7 @@
 export const images = {
   bannerImg: '/images/bikoicon/banner.jpeg',
   bannerImg1: '/images/bikoicon/banner1.jpeg',
-  contactImg: '/images/bikoicon/contact.png',
+  contactImg: '/images/bikoicon/contact.jpg',
   AppImg: '/images/bikoicon/appimg.jpg',
   football: '/images/bikoicon/football.png',
   bikoSport: '/images/bikoicon/bikosports.png',

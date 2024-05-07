@@ -201,8 +201,18 @@ function BetWallet({ stakeValue }) {
     ? (Number(totalWinnings) * parseInt(winBonus)) / 100
     : 0;
   const calculation = (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
+  // const calculation =
+  //   (Number(totalWinnings) + Number(bongeBonus)).toFixed(2) > 50000000
+  //     ? 50000000
+  //     : (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
   const tax = (((calculation - stake) * 10) / 100).toFixed(2);
   const netAmount = (calculation - tax).toFixed(2);
+
+  // useEffect(() => {
+  //   if (calculation == 50000000) {
+  //     toast.info('Your maximum possible won will be 50,000,000');
+  //   }
+  // }, [calculation]);
 
   const handlePlaceBet = async () => {
     let channel;
@@ -660,15 +670,15 @@ function BetWallet({ stakeValue }) {
               </span>
             </div>
             <div className="flex justify-between text-black">
-              <span className="text-12">Tax 10% (TZS)</span>
-              <span className="text-12">
-                {tax === 'NaN' ? '0.00' : formatNumber(tax)}
-              </span>
-            </div>
-            <div className="flex justify-between text-black">
               <span className="text-12">Possible winnings (TZS)</span>
               <span className="text-12">
                 {calculation == 'NaN' ? '0.00' : formatNumber(calculation)}
+              </span>
+            </div>
+            <div className="flex justify-between text-black">
+              <span className="text-12">Tax 10% (TZS)</span>
+              <span className="text-12">
+                {tax === 'NaN' ? '0.00' : formatNumber(tax)}
               </span>
             </div>
             <div className="flex justify-between text-black">

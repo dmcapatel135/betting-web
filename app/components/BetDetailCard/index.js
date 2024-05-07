@@ -6,11 +6,15 @@ import { toast } from 'react-toastify';
 import { formatNumber } from '@utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction, wallet } from '@actions';
+import ShareBetModal from '@components/ShareBetModal';
 
 function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const dispatch = useDispatch();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [rebetData, setRebetData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [openShareBetModal, setOpenShareBetModal] = useState(false);
+  const [code, setCode] = useState();
 
   const handleCancelBet = async (id) => {
     const response = await postReq(`/users/me/bet-slips/${id}/cancel`);
@@ -173,8 +177,45 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
+  function BetsData(data) {
+    return data.map((bet) => {
+      return {
+        eventId: bet.eventId,
+        marketId: bet.marketId,
+        specifiers: bet.specifiers ? [bet.specifiers] : null,
+        outcomeId: bet.outcomeId,
+      };
+    });
+  }
+
+  const handleShareBets = async (betsData) => {
+    setLoading(true);
+    const data = {
+      bets: BetsData(betsData.bets),
+    };
+    try {
+      const response = await postReq('/share-bets', data);
+      if (response.status) {
+        setOpenShareBetModal(true);
+        setLoading(false);
+        setCode(response.data);
+      } else if (response.error) {
+        setLoading(false);
+        toast.error(response.error.message);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
+      <ShareBetModal
+        openShareBetModal={openShareBetModal}
+        setOpenShareBetModal={setOpenShareBetModal}
+        setCode={setCode}
+        code={code}
+      />
       {/* <div className="grid grid-cols-12 p-3">
         <div className="col-span-6   md:col-span-4">
           <div className="flex justify-between">
@@ -441,7 +482,11 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         )}
         {item.status == 'Pending' && (
           <>
-            <button className="btn bg-bluewhalelight">
+            <button
+              onClick={() => handleShareBets(item)}
+              className={`btn ${loading ? 'bg-lightgray text-black' : 'bg-bluewhalelight text-white'}`}
+              disabled={loading}
+            >
               <img
                 src="/images/bikoicon/share.png"
                 alt="icon"

@@ -152,11 +152,11 @@ function MobileMarketCard({
         {index == 0 && (
           <div className="flex borde">
             <div className="flex-shrink">
-              <div className="text-black lg:w-44 xl:w-52  2xl:w-80">
-                <div className="flex-grow-0 w-40   mt-9 md:mt-12 xxl:flex-1 pl-0">
+              <div className="text-black lg:w-40 xl:w-52  2xl:w-80">
+                <div className="flex-grow-0 w-32   mt-9 md:mt-12 xxl:flex-1 pl-0">
                   {handleTodayDate(window.location.pathname) && (
                     <div
-                      className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-36 md:w-48 xxl:w-full text-center text-10 md:text-12  ${
+                      className={`h-fit py-2 md:h-8 2xl:h-[42px] lg:mx-0 flex justify-center items-center w-32 md:w-40 xxl:w-full text-center text-10 md:text-12  ${
                         !(tab == 3) ? 'bg-gradient-color-1' : 'bg-white'
                       } text-white px-1 rounded-[4px]  font-[600]`}
                     >
@@ -228,7 +228,7 @@ function MobileMarketCard({
           className={`flex items-center border ${handleSelectEvent(item.eventId) ? 'bg-[#ececff]' : 'border-gray-700'}  rounded-md`}
         >
           <div className="flex-shrink">
-            <div className="text-black lg:w-44 xl:w-52 2xl:w-80">
+            <div className="text-black lg:w-40 xl:w-52 2xl:w-80">
               <div className="px-2">
                 <div className="flex items-center">
                   <img src="/images/bikoicon/acute.png" />
@@ -281,7 +281,7 @@ function MobileMarketCard({
                   </div>
                 </div>
                 <span
-                  className="text-[9px]  leading-none md:text-10"
+                  className="text-[9px] md:text-10"
                   style={{ lineHeight: '13px' }}
                 >
                   {item?.sport?.name}/{item?.category?.name}/

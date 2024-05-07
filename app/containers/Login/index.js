@@ -18,6 +18,7 @@ function Login() {
   const [error, setError] = useState({});
   const [form, setFormData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  // const [remember, setRemember] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -27,15 +28,42 @@ function Login() {
     }
   });
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('username') && localStorage.getItem('password')) {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       emailOrMobile: localStorage.getItem('username'),
+  //       password: btoa(localStorage.getItem('password')),
+  //     }));
+  //     setRemember(true);
+  //   }
+  // }, []);
+
+  // const handleRemeber = (remember) => {
+  //   if (remember) {
+  //     localStorage.setItem('username', form.emailOrMobile);
+  //     localStorage.setItem('password', atob(form.password));
+  //   } else {
+  //     localStorage.removeItem('username');
+  //     localStorage.removeItem('password');
+  //   }
+  // };
+
   const handleSubmit = async () => {
     setIsLoading(true);
     // e.preventDefault();
+
     const data = {
       emailOrMobile: form.dialCode + form.emailOrMobile,
       password: form.password,
     };
     setError({});
     const error = await login(data);
+    // if (!error && remember) {
+    //   handleRemeber(remember);
+    // } else {
+    //   handleRemeber(remember);
+    // }
     setIsLoading(false);
     if (error) {
       setError(error);
@@ -115,7 +143,17 @@ function Login() {
                     {renderError(error.password)}
                   </div>
                 </div>
-                <div className="flex mb-2 justify-end">
+                <div className="flex mb-2 justify-end items-center">
+                  {/* <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={remember}
+                      onChange={(e) => setRemember(e.target.checked)}
+                    />
+                    <span className="text-gray-900 text-10 md:text-12 cursor-pointer">
+                      Remember me
+                    </span>
+                  </div> */}
                   <span
                     className="text-gray-900 text-10 md:text-12 cursor-pointer"
                     onClick={() => navigate('/forgot-password')}

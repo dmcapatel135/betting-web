@@ -335,7 +335,8 @@ function MyBets() {
                                                   </p>
                                                 </div>
                                                 <strong className="text-yellow font-[700] text-12 md:text-14 xxl:text-16">
-                                                  {innerItem?.event?.homeScore
+                                                  {typeof innerItem?.event
+                                                    ?.homeScore == 'number'
                                                     ? innerItem?.event
                                                         ?.homeScore
                                                     : ''}
@@ -360,7 +361,8 @@ function MyBets() {
                                                   </p>
                                                 </div>
                                                 <strong className="text-yellow font-[700] text-12 md:text-14 xxl:text-16">
-                                                  {innerItem?.event?.awayScore
+                                                  {typeof innerItem?.event
+                                                    ?.awayScore == 'number'
                                                     ? innerItem?.event
                                                         ?.awayScore
                                                     : ''}
@@ -376,6 +378,16 @@ function MyBets() {
                                     <div className="col-span-2 md:col-span-6">
                                       <div className="flex justify-between items-center 2xl:gap-2 h-full">
                                         <div className="flex  flex-col justify-between ">
+                                          <div className="flex gap-2">
+                                            <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
+                                              ODDS
+                                            </p>
+                                            <p className="text-gray-900  text-12 md:text-14 xxl:text-16">
+                                              {/* {innerItem.outcome}@
+                                              {innerItem.odds} */}
+                                              {innerItem.odds}
+                                            </p>
+                                          </div>
                                           <div className="flex gap-2">
                                             <p className="text-gray-900  w-[35px]  md:w-[132px] xl:w-[60px] text-12 md:text-14 xxl:text-16 font-[600]">
                                               PICK

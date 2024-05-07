@@ -1,8 +1,8 @@
 import { wallet } from '@actions';
 import { HeroSection, MobileInputField } from '@components';
 import { postReq } from '@utils/apiHandlers';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -17,8 +17,13 @@ function Deposit() {
   const [amountErr, setAmountErr] = useState('');
   const [numberErr, setNumberErr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user)
+      setData((prev) => ({ ...prev, mobile: user?.mobile?.slice(4, 13) }));
+  }, [user]);
 
   const handleDepositAmount = async () => {
     const depositData = {
@@ -71,7 +76,7 @@ function Deposit() {
             <div>
               <label className="text-black text-14">Your Mobile Number</label>
               <MobileInputField
-                // readOnly={true}
+                readOnly={true}
                 value={data.mobile}
                 selectValue={'+255'}
                 onChange={(e) => {
