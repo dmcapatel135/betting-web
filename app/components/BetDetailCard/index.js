@@ -12,7 +12,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const dispatch = useDispatch();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [rebetData, setRebetData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [openShareBetModal, setOpenShareBetModal] = useState(false);
   const [code, setCode] = useState();
 
@@ -177,36 +177,36 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
-  function BetsData(data) {
-    return data.map((bet) => {
-      return {
-        eventId: bet.eventId,
-        marketId: bet.marketId,
-        specifiers: bet.specifiers ? [bet.specifiers] : null,
-        outcomeId: bet.outcomeId,
-      };
-    });
-  }
+  // function BetsData(data) {
+  //   return data.map((bet) => {
+  //     return {
+  //       eventId: bet.eventId,
+  //       marketId: bet.marketId,
+  //       specifiers: bet.specifiers ? [bet.specifiers] : null,
+  //       outcomeId: bet.outcomeId,
+  //     };
+  //   });
+  // }
 
-  const handleShareBets = async (betsData) => {
-    setLoading(true);
-    const data = {
-      bets: BetsData(betsData.bets),
-    };
-    try {
-      const response = await postReq('/share-bets', data);
-      if (response.status) {
-        setOpenShareBetModal(true);
-        setLoading(false);
-        setCode(response.data);
-      } else if (response.error) {
-        setLoading(false);
-        toast.error(response.error.message);
-      }
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+  // const handleShareBets = async (betsData) => {
+  //   setLoading(true);
+  //   const data = {
+  //     bets: BetsData(betsData.bets),
+  //   };
+  //   try {
+  //     const response = await postReq('/share-bets', data);
+  //     if (response.status) {
+  //       setOpenShareBetModal(true);
+  //       setLoading(false);
+  //       setCode(response.data);
+  //     } else if (response.error) {
+  //       setLoading(false);
+  //       toast.error(response.error.message);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
@@ -483,9 +483,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         {item.status == 'Pending' && (
           <>
             <button
-              onClick={() => handleShareBets(item)}
-              className={`btn ${loading ? 'bg-lightgray text-black' : 'bg-bluewhalelight text-white'}`}
-              disabled={loading}
+              // onClick={() => handleShareBets(item)}
+              className="btn bg-bluewhalelight text-white "
+              // className={`btn ${loading ? 'bg-lightgray text-black' : 'bg-bluewhalelight text-white'}`}
+              // disabled={loading}
             >
               <img
                 src="/images/bikoicon/share.png"

@@ -37,6 +37,7 @@ function BetWallet({ stakeValue }) {
   const [codeErr, setCodeErr] = useState('');
   const [openShareBetModal, setOpenShareBetModal] = useState(false);
   const [shareLoading, setShareLoading] = useState(false);
+  const [stakeErr, setStakeErr] = useState('');
 
   // const navigate = useNavigate();
 
@@ -200,48 +201,56 @@ function BetWallet({ stakeValue }) {
   const bongeBonus = winBonus
     ? (Number(totalWinnings) * parseInt(winBonus)) / 100
     : 0;
-  const calculation = (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
-  // const calculation =
-  //   (Number(totalWinnings) + Number(bongeBonus)).toFixed(2) > 50000000
-  //     ? 50000000
-  //     : (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
-  const tax = (((calculation - stake) * 10) / 100).toFixed(2);
-  const netAmount = (calculation - tax).toFixed(2);
+  // const calculation = (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
+  const calculation =
+    (Number(totalWinnings) + Number(bongeBonus)).toFixed(2) > 50000000
+      ? 50000000
+      : (Number(totalWinnings) + Number(bongeBonus)).toFixed(2);
+  const tax =
+    calculation == 50000000
+      ? (calculation * 10) / 100
+      : (((calculation - stake) * 10) / 100).toFixed(2);
+  const netAmount =
+    calculation == 50000000
+      ? calculation - tax
+      : (calculation - tax).toFixed(2);
 
-  // useEffect(() => {
-  //   if (calculation == 50000000) {
-  //     toast.info('Your maximum possible won will be 50,000,000');
-  //   }
-  // }, [calculation]);
+  useEffect(() => {
+    if (calculation == 50000000 && calculation) {
+      toast.info('Your maximum possible won will be 50,000,000');
+    }
+  }, [calculation]);
 
   const handlePlaceBet = async () => {
     let channel;
-    if (window.matchMedia('(max-width: 575px)').matches) {
-      channel = 'Mobile';
-    } else {
-      channel = 'Website';
-    }
-    if (isLoggedIn()) {
-      setIsLoading(true);
-      const data = {
-        stake: stake,
-        acceptOddsChange: oddChange,
-        bets: betData,
-        channel: channel,
-      };
-      const response = await postReq('/users/me/bet-slips', data);
-      setIsLoading(false);
-      if (response.status) {
-        dispatch(fetchBetDetailsAction([]));
-        toast.success('Congrats ! Bet place successfully');
-        dispatch(wallet());
-      } else if (response.error) {
-        toast.error(response.error.message);
+    if (stake <= 500000 && stake >= 1) {
+      if (window.matchMedia('(max-width: 575px)').matches) {
+        channel = 'Mobile';
+      } else {
+        channel = 'Website';
       }
-    } else {
-      setSelectTournament(null);
-      setTab(null);
-      navigate('/login');
+      if (isLoggedIn()) {
+        setIsLoading(true);
+        const data = {
+          stake: stake,
+          acceptOddsChange: oddChange,
+          bets: betData,
+          channel: channel,
+        };
+        const response = await postReq('/users/me/bet-slips', data);
+        setIsLoading(false);
+        if (response.status) {
+          dispatch(fetchBetDetailsAction([]));
+          toast.success('Congrats ! Bet place successfully');
+          dispatch(wallet());
+        } else if (response.error) {
+          toast.error(response.error.message);
+        }
+      } else {
+        setSelectTournament(null);
+        setTab(null);
+        navigate('/login');
+      }
     }
   };
 
@@ -529,7 +538,7 @@ function BetWallet({ stakeValue }) {
           <hr className="border bg-white"></hr>
           <div className="px-3 my-5 flex justify-between ">
             <button
-              className={`${loading ? 'bg-lightestgray text-gray-900' : 'bg-[#02CBDB] text-white'} h-8 flex px-2 justify-center items-center bg-[#02CBDB] rounded-[4px]`}
+              className={`${loading ? 'bg-lightestgray text-gray-900' : 'bg-[#02CBDB] text-white'} h-8 flex px-3 lg:px-1 xl:px-2 justify-center items-center bg-[#02CBDB] rounded-[4px]`}
               disabled={loading}
             >
               <span
@@ -638,7 +647,15 @@ function BetWallet({ stakeValue }) {
                   className="text-black w-full text-center text-14 outline-none border-none h-8"
                   placeholder="Your Stake"
                   value={stake}
-                  onChange={(e) => setStake(e.target.value)}
+                  onChange={(e) => {
+                    setStake(e.target.value);
+                    setStakeErr(' ');
+                    if (e.target.value > 500000) {
+                      setStakeErr(`Maximum stake is ${formatNumber(500000)}`);
+                    } else if (e.target.value < 1) {
+                      setStakeErr('Minimum stake is 1');
+                    }
+                  }}
                 />
               </div>
               <div
@@ -648,8 +665,10 @@ function BetWallet({ stakeValue }) {
                 <span className="text-24">+</span>
               </div>
             </div>
-            {!stake && (
-              <span className="text-12 text-black">Min stake is 1</span>
+            {stakeErr && (
+              <span className="text-12 font-[500] text-red-500">
+                {stakeErr}
+              </span>
             )}
           </div>
           <div className="px-3">
@@ -691,7 +710,7 @@ function BetWallet({ stakeValue }) {
           <div className="flex my-3 px-3 ">
             <button
               onClick={handleClearAllBet}
-              className="border-[1px] border-yellow w-32 hover:bg-yellow hover:text-white text-gray-900 text-14 font-[700] rounded-md"
+              className="border-[1px] border-yellow w-32 hover:bg-yellow hover:text-white text-gray-900 text-14 lg:text-12 xl:text-14 font-[700] rounded-md"
             >
               CLEAR ALL
             </button>
@@ -702,7 +721,7 @@ function BetWallet({ stakeValue }) {
                 isLoading
                   ? 'bg-lightestgray hover:bg-lightestgray border-lightestgray '
                   : 'border-yellow'
-              } border-[1px] h-10 ml-3 text-gray-900  w-52 hover:text-white hover:bg-yellow text-14 font-[700] rounded-md`}
+              } border-[1px] h-10 ml-3 text-gray-900  w-52 hover:text-white hover:bg-yellow text-14 lg:text-12 xl:text-14 font-[700] rounded-md`}
             >
               {isLoading && <CircularProgress color="inherit" size={20} />}
               PLACE BET

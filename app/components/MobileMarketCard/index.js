@@ -11,6 +11,7 @@ import { marketsName } from '@components/SportsMenu/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBetDetailsAction } from '@actions';
 import { reactIcons } from '@utils/icons';
+import { toast } from 'react-toastify';
 
 function MobileMarketCard({
   item,
@@ -60,6 +61,44 @@ function MobileMarketCard({
     setBets(selectedBet);
   }, [selectedBet]);
 
+  // const addToBetSlip = (
+  //   eventId,
+  //   bet,
+  //   betDetails,
+  //   competitors,
+  //   sportId,
+  //   specifiers,
+  // ) => {
+  //   setBets((prev) => {
+  //     const index = prev.findIndex((item) => item.eventId == eventId);
+  //     if (index !== -1) {
+  //       // If eventId already exists, update bet and betDetails
+  //       const updatedBets = [...prev];
+  //       updatedBets[index] = {
+  //         ...updatedBets[index],
+  //         sportId: sportId,
+  //         bet: bet,
+  //         betDetails: betDetails,
+  //         competitors: competitors,
+  //         specifiers: specifiers ? specifiers.join('|') : null,
+  //       };
+  //       return updatedBets;
+  //     } else {
+  //       // If eventId doesn't exist, push a new object
+  //       return [
+  //         ...prev,
+  //         {
+  //           sportId: sportId,
+  //           eventId: eventId,
+  //           bet: bet,
+  //           betDetails: betDetails,
+  //           eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+  //           specifiers: specifiers ? specifiers.join('|') : null,
+  //         },
+  //       ];
+  //     }
+  //   });
+  // };
   const addToBetSlip = (
     eventId,
     bet,
@@ -68,35 +107,43 @@ function MobileMarketCard({
     sportId,
     specifiers,
   ) => {
-    setBets((prev) => {
-      const index = prev.findIndex((item) => item.eventId == eventId);
-      if (index !== -1) {
-        // If eventId already exists, update bet and betDetails
-        const updatedBets = [...prev];
-        updatedBets[index] = {
-          ...updatedBets[index],
-          sportId: sportId,
-          bet: bet,
-          betDetails: betDetails,
-          competitors: competitors,
-          specifiers: specifiers ? specifiers.join('|') : null,
-        };
-        return updatedBets;
-      } else {
-        // If eventId doesn't exist, push a new object
-        return [
-          ...prev,
-          {
+    if (
+      selectedBet.length < 30 ||
+      (selectedBet.length == 30 &&
+        selectedBet.find((item) => item.eventId == eventId))
+    ) {
+      setBets((prev) => {
+        const index = prev.findIndex((item) => item.eventId == eventId);
+        if (index !== -1) {
+          // If eventId already exists, update bet and betDetails
+          const updatedBets = [...prev];
+          updatedBets[index] = {
+            ...updatedBets[index],
             sportId: sportId,
-            eventId: eventId,
             bet: bet,
             betDetails: betDetails,
-            eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+            competitors: competitors,
             specifiers: specifiers ? specifiers.join('|') : null,
-          },
-        ];
-      }
-    });
+          };
+          return updatedBets;
+        } else {
+          // If eventId doesn't exist, push a new object
+          return [
+            ...prev,
+            {
+              sportId: sportId,
+              eventId: eventId,
+              bet: bet,
+              betDetails: betDetails,
+              eventNames: competitors[0]?.name + '-' + competitors[1]?.name,
+              specifiers: specifiers ? specifiers.join('|') : null,
+            },
+          ];
+        }
+      });
+    } else {
+      toast.error('You have reached a maximum number of games');
+    }
   };
 
   useEffect(() => {
@@ -181,7 +228,7 @@ function MobileMarketCard({
                     return (
                       <div key={index} className="flex-shrink">
                         <div
-                          className={`text-black ${items.option.length > 2 ? 'lg:w-[140px] xl:w-36 2xl:w-44' : 'lg:w-[100px] xl:w-[110px] 2xl:w-[140px]'}  text-center`}
+                          className={`text-black ${items.option.length > 2 ? 'lg:w-[125px] xl:w-36 2xl:w-44' : 'lg:w-[85px] xl:w-[110px] 2xl:w-[140px]'}  text-center`}
                         >
                           <div className="h-12">
                             <h1 className="font-[700] lg:text-12 xl:text-[13px] 2xl:text-14">
@@ -193,7 +240,7 @@ function MobileMarketCard({
                               return (
                                 <div
                                   key={_index}
-                                  className="lg:w-[44px] xl:w-[46px] 2xl:w-[52px] border border-lightgray py-1 text-center rounded-[4px] text-gray-900 font-[600]"
+                                  className="lg:w-[40px] xl:w-[46px] 2xl:w-[52px] border border-lightgray py-1 text-center rounded-[4px] text-gray-900 font-[600]"
                                 >
                                   <button className="lg:text-12 xl:text-12 2xl:text-14">
                                     {opt}
@@ -296,7 +343,7 @@ function MobileMarketCard({
                 return (
                   <div key={index} className="flex-shrink">
                     <div
-                      className={`text-black ${market.outcomes.length > 2 ? 'lg:w-[140px]  xl:w-36   2xl:w-44' : 'lg:w-[100px] xl:w-[110px] 2xl:w-[140px]'}  text-center`}
+                      className={`text-black ${market.outcomes.length > 2 ? 'lg:w-[125px]  xl:w-36   2xl:w-44' : 'lg:w-[85px] xl:w-[110px] 2xl:w-[140px]'}  text-center`}
                     >
                       <div className="flex justify-center my-2 w-full gap-1 xl:gap-2">
                         {(market?.outcomes.length > 0
@@ -324,7 +371,7 @@ function MobileMarketCard({
                                 )
                                   ? 'bg-green  text-white'
                                   : 'bg-[#EAEAEA] text-black'
-                              } border-gray-700 h-9 lg:w-[44px] xl:w-[46px] 2xl:w-[52px] font-[700] flex justify-center items-center rounded-[4px]`}
+                              } border-gray-700 h-9 lg:w-[40px] xl:w-[46px] 2xl:w-[52px] font-[700] flex justify-center items-center rounded-[4px]`}
                               onClick={() => {
                                 if (
                                   selectBet(
@@ -388,7 +435,7 @@ function MobileMarketCard({
                     },
                   );
                 }}
-                className="border mr-2 lg:w-[46px] xl:w-[48px]  2xl:w-[52px]  2xl:text-14 py-1 h-9 font-[700] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer"
+                className="border mr-2 lg:w-[40px] xl:w-[48px]  2xl:w-[52px]  2xl:text-14 py-1 h-9 font-[700] flex justify-center items-center text-10 bg-[#EAEAEA] border-[#A3A3A3] rounded-[4px] cursor-pointer"
               >
                 <img
                   src="/images/bikoicon/moving.png"
