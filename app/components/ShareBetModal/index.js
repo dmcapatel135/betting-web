@@ -10,6 +10,7 @@ function ShareBetModal({
   setOpenShareBetModal,
   code,
   setCode,
+  betSlip,
 }) {
   // const [copyLink, setCopyLink] = useState('');
   // const [copyCode, setCopyCode] = useState('');
@@ -73,12 +74,17 @@ function ShareBetModal({
               <div className="flex-1">
                 <a
                   href={
-                    'https://api.whatsapp.com/send?text=Placed this bet on ' +
-                    CLIENT_URL +
-                    'cheki mkeka wangu na ubeti  ' +
-                    CLIENT_URL +
-                    '/dashboard/bet-slip/' +
-                    code
+                    betSlip
+                      ? 'https://api.whatsapp.com/send?text=Placed this bet on ' +
+                        CLIENT_URL +
+                        'cheki mkeka wangu na ubeti  ' +
+                        CLIENT_URL +
+                        '/dashboard/bet-slip/' +
+                        code
+                      : 'https://api.whatsapp.com/send?text= Placed this bet on ' +
+                        CLIENT_URL +
+                        '/dashboard/bet-slip/' +
+                        code
                   }
                   target="blank"
                 >
@@ -95,9 +101,11 @@ function ShareBetModal({
                 <FacebookShareButton
                   url={CLIENT_URL + '/dashboard/bet-slip/' + code} // The URL you want to share
                   quote={
-                    'Placed this bet on' +
-                    CLIENT_URL +
-                    'cheki mkeka wangu na ubeti  '
+                    betSlip
+                      ? 'Placed this bet on' +
+                        CLIENT_URL +
+                        'cheki mkeka wangu na ubeti  '
+                      : CLIENT_URL
                   } // The quote or description for the shared link
                   hashtag={'#Bikosports'} // The hashtag to include in the shared post
                 >
@@ -113,12 +121,17 @@ function ShareBetModal({
               <div className="flex-1">
                 <a
                   href={
-                    'https://twitter.com/intent/post?text=Placed this bet on ' +
-                    CLIENT_URL +
-                    'cheki mkeka wangu na ubeti  ' +
-                    CLIENT_URL +
-                    '/dashboard/bet-slip/' +
-                    code
+                    betSlip
+                      ? 'https://twitter.com/intent/post?text=Placed this bet on ' +
+                        CLIENT_URL +
+                        'cheki mkeka wangu na ubeti  ' +
+                        CLIENT_URL +
+                        '/dashboard/bet-slip/' +
+                        code
+                      : 'https://twitter.com/intent/post?text=' +
+                        CLIENT_URL +
+                        '/dashboard/bet-slip/' +
+                        code
                   }
                   target="blank"
                 >
@@ -182,6 +195,7 @@ ShareBetModal.propTypes = {
   setOpenShareBetModal: PropTypes.func,
   code: PropTypes.string,
   setCode: PropTypes.func,
+  betSlip: PropTypes.bool,
 };
 
 export default ShareBetModal;

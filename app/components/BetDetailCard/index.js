@@ -12,7 +12,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
   const dispatch = useDispatch();
   const selectedBet = useSelector((state) => state.bet.selectedBet);
   const [rebetData, setRebetData] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [openShareBetModal, setOpenShareBetModal] = useState(false);
   const [code, setCode] = useState();
 
@@ -144,15 +144,20 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     ? ((Number(totalWinnings) * Number(item.winBonus)) / 100).toFixed(2)
     : 0;
 
-  let possiblewin = (() => {
-    const totalOdds = item.bets.map((b) => b.odds).reduce((a, b) => a * b, 1);
+  let possiblewin =
+    (Number(totalWinnings) + Number(bonus)).toFixed(2) > 50000000
+      ? 50000000
+      : (Number(totalWinnings) + Number(bonus)).toFixed(2);
 
-    const totalWinnings = (totalOdds.toFixed(2) * item.stake).toFixed(2);
-    const bonus = item.winBonus
-      ? ((Number(totalWinnings) * Number(item.winBonus)) / 100).toFixed(2)
-      : 0;
-    return Number(totalWinnings) + Number(bonus);
-  })();
+  // let possiblewin = (() => {
+  //   const totalOdds = item.bets.map((b) => b.odds).reduce((a, b) => a * b, 1);
+
+  //   const totalWinnings = (totalOdds.toFixed(2) * item.stake).toFixed(2);
+  //   const bonus = item.winBonus
+  //     ? ((Number(totalWinnings) * Number(item.winBonus)) / 100).toFixed(2)
+  //     : 0;
+  //   return Number(totalWinnings) + Number(bonus);
+  // })();
 
   const handleButton = (status) => {
     if (status == 'Settled') {
@@ -177,36 +182,36 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
     }
   };
 
-  // function BetsData(data) {
-  //   return data.map((bet) => {
-  //     return {
-  //       eventId: bet.eventId,
-  //       marketId: bet.marketId,
-  //       specifiers: bet.specifiers ? [bet.specifiers] : null,
-  //       outcomeId: bet.outcomeId,
-  //     };
-  //   });
-  // }
+  function BetsData(data) {
+    return data.map((bet) => {
+      return {
+        eventId: bet.eventId,
+        marketId: bet.marketId,
+        specifiers: bet.specifiers ? [bet.specifiers] : null,
+        outcomeId: bet.outcomeId,
+      };
+    });
+  }
 
-  // const handleShareBets = async (betsData) => {
-  //   setLoading(true);
-  //   const data = {
-  //     bets: BetsData(betsData.bets),
-  //   };
-  //   try {
-  //     const response = await postReq('/share-bets', data);
-  //     if (response.status) {
-  //       setOpenShareBetModal(true);
-  //       setLoading(false);
-  //       setCode(response.data);
-  //     } else if (response.error) {
-  //       setLoading(false);
-  //       toast.error(response.error.message);
-  //     }
-  //   } catch (error) {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleShareBets = async (betsData) => {
+    setLoading(true);
+    const data = {
+      bets: BetsData(betsData.bets),
+    };
+    try {
+      const response = await postReq('/share-bets', data);
+      if (response.status) {
+        setOpenShareBetModal(true);
+        setLoading(false);
+        setCode(response.data);
+      } else if (response.error) {
+        setLoading(false);
+        toast.error(response.error.message);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="border border-green cursor-pointer shadow-md rounded-[8px]">
@@ -215,6 +220,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         setOpenShareBetModal={setOpenShareBetModal}
         setCode={setCode}
         code={code}
+        betSlip={true}
       />
       {/* <div className="grid grid-cols-12 p-3">
         <div className="col-span-6   md:col-span-4">
@@ -399,7 +405,7 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
                   Possible Won Amount
                 </p>
                 <p className="text-gray-900 text-12 md:text-14 xxl:text-16 ">
-                  {formatNumber(possiblewin?.toFixed(2))}
+                  {formatNumber(possiblewin)}
                 </p>
               </div>
               <div className="flex gap-4 ">
@@ -483,10 +489,10 @@ function BetDetailCard({ item, setShowBets, getMyBetDetails }) {
         {item.status == 'Pending' && (
           <>
             <button
-              // onClick={() => handleShareBets(item)}
-              className="btn bg-bluewhalelight text-white "
-              // className={`btn ${loading ? 'bg-lightgray text-black' : 'bg-bluewhalelight text-white'}`}
-              // disabled={loading}
+              onClick={() => handleShareBets(item)}
+              // className="btn bg-bluewhalelight text-white "
+              className={`btn ${loading ? 'bg-lightgray text-black' : 'bg-bluewhalelight text-white'}`}
+              disabled={loading}
             >
               <img
                 src="/images/bikoicon/share.png"
